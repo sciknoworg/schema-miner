@@ -1,0 +1,115 @@
+Based on the provided research paper and the current JSON schema, the schema can be refined to better represent the details of the ALD process, particularly focusing on the selective growth mechanism of AlOx using dimethylaluminum isopropoxide (DMAI) as a precursor. The research paper provides detailed insights into the reaction mechanisms, the role of co-reactants, and the conditions under which the ALD process operates, which can be used to enhance the schema.
+
+Here is the refined JSON schema incorporating the insights from the research paper:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "precursor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the precursor used in the ALD process."
+        },
+        "formula": {
+          "type": "string",
+          "description": "Chemical formula of the precursor."
+        },
+        "reactionMechanism": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string",
+                "description": "Step description in the reaction mechanism."
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Products formed in this step."
+              }
+            }
+          },
+          "description": "Detailed reaction mechanism of the precursor with the surface."
+        },
+        "selectivity": {
+          "type": "string",
+          "description": "Description of the precursor's selectivity towards specific sites on the substrate."
+        }
+      }
+    },
+    "coReactants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the co-reactant."
+          },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "with": {
+                  "type": "string",
+                  "description": "Substance the co-reactant reacts with."
+                },
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Products formed during the reaction."
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "List of co-reactants and their specific reactions in the ALD process."
+    },
+    "processConditions": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "string",
+          "description": "Temperature range for the ALD process."
+        },
+        "pressure": {
+          "type": "string",
+          "description": "Pressure conditions during the ALD process."
+        },
+        "cycleParameters": {
+          "type": "object",
+          "properties": {
+            "numberOfCycles": {
+              "type": "integer",
+              "description": "Number of cycles in the ALD process."
+            },
+            "cycleTime": {
+              "type": "string",
+              "description": "Duration of each cycle in the ALD process."
+            }
+          },
+          "description": "Parameters defining the cycles in the ALD process."
+        }
+      }
+    }
+  }
+}
+```
+
+### Changes Made:
+1. **Selectivity Property**: Added under the precursor to describe the precursor's selectivity towards specific sites on the substrate, which is crucial for understanding the selective growth mechanism described in the paper.
+2. **Cycle Parameters**: Added under process conditions to detail the number of cycles and the duration of each cycle, which are important for achieving the desired coating properties and are discussed in the paper.
+
+These refinements ensure that the schema is more comprehensive and accurately represents the complexities and specifics of the ALD process as described in the research paper.

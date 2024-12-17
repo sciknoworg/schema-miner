@@ -1,0 +1,1513 @@
+Atomistic Kinetic Monte Carlo Study of Atomic Layer
+Deposition Derived from Density Functional Theory
+Mahdi Shirazi and Simon D. Elliott*
+To describe the atomic layer deposition (ALD) reactions of
+HfO2 from Hf(N(CH 3)2)4 and H 2O, a three-dimensional on-lattice
+kinetic Monte-Carlo model is developed. In this model, all
+atomistic reaction pathways in density functional theory (DFT)
+are implemented as reaction events on the lattice. This con-
+tains all steps, from the early stage of adsorption of each ALD
+precursor, kinetics of the surface protons, interaction between
+the remaining precursors (steric effect), influence of remaining
+fragments on adsorption sites (blocking), densification of each
+ALD precursor, migration of each ALD precursors, and cooper-
+ation between the remaining precursors to adsorb H2O (coop-
+erative effect). The essential chemistry of the ALD reactions
+depends on the local environment at the surface. The coordi-
+nation number and a neighbor list are used to implement the
+dependencies. The validity and necessity of the proposed reac-
+tion pathways are statistically established at the mesoscale.
+The formation of one monolayer of precursor fragments is
+shown at the end of the metal pulse. Adsorption and dissocia-
+tion of the H 2O precursor onto that layer is described, leading
+to the delivery of oxygen and protons to the surface during
+the H 2O pulse. Through these processes, the remaining precur-
+sor fragments desorb from the surface, leaving the surface
+with bulk-like and OH-terminated HfO2, ready for the next
+cycle. The migration of the low coordinated remaining precur-
+sor fragments is also proposed. This process introduces a slow
+reordering motion (crawling) at the mesoscale, leading to
+the smooth and conformal thin film that is characteristic of
+ALD. VC 2013 Wiley Periodicals, Inc.
+DOI: 10.1002/jcc.23491
+Introduction
+Thin film materials, with thicknesses of the order of 1–100 nm,
+have a wide variety of technological applications. For their use in
+microelectronics, thin films must exhibit a high level of confor-
+mality, uniform stoichiometry, and controlled thickness. Atomic
+layer deposition (ALD) is an emerging low-temperature deposi-
+tion technique providing relatively accurate control of composi-
+tion and good conformality over high-aspect-ratio structures. [1,2]
+The films are capable of being used in nonplanar structures such
+as three-dimensional (3D) transistors. Use of thin film materials in
+the food packaging and pharmaceutical industry allow consider-
+able savings in raw materials.[3] In addition, they can improve the
+humidity tolerance and performance of polymers. Developing
+new ALD processes require better understanding of how film
+growth depends on the chemicals being used.
+ALD is a variant of chemical vapor deposition (CVD), in
+which two or more gaseous precursors are allowed to flow
+separately into a reactor in alternate pulses. Inert gas is admit-
+ted between each pulse to purge the remaining precursor
+from the reactor and avoid gas-phase reactions. Because of
+this, the precursors react with the substrate only. In the ideal
+case, ALD surface reactions are self-limiting, meaning that
+reactions cease after the formation of one monolayer of pre-
+cursor fragments at the end of the pulse. Growth of the prod-
+uct film, therefore, takes place at the level of a submonolayer
+in each cycle, conformally coating all exposed surfaces if the
+dose in each pulse is sufficient.
+The surface chemistry of ALD has not been fully investi-
+gated either experimentally or computationally, even for
+popular systems such as HfO 2 and ZrO 2. Different ALD precur-
+sors and processing conditions are observed experimentally to
+give different film properties [4] (e.g., morphology, conformality,
+thickness) and our assumption is that this is largely due to dif-
+ferences in the reaction pathways at the atomic scale accumu-
+lating over thousands of reaction events. A realistic ALD
+growth mechanism is extremely intricate and may consist of
+standard ALD acid/base reactions, structural relaxation, CVD-
+like reactions, and of influential factors such as steric hin-
+drance, coreagent population, and the cooperative effects that
+we introduce in this article. The dependence of these mecha-
+nisms on temperature, the partial pressure of the precursor,
+pulse and purge times determines the measured process
+parameters such as ALD growth rate and film properties.
+Modeling a complete ALD process requires integration of
+three modeling scales: a model for the reactive flow of the
+vapor-phase species on the scale of the whole reactor and
+within microscopic features, [5] a model for the evolution of the
+atomic structure at the growth surface, and a model for
+the reaction kinetics in both the vapor and at the surface. The
+overall ALD growth dynamics across all three scales is too
+complicated to be fully modeled. This article describes the
+M. Shirazi S. D. Elliott
+Tyndall National Institute, University College Cork, Lee Maltings, Cork, Ireland
+E-mail: simon.elliott@tyndall.ie
+Contract grant sponsor: Science Foundation Ireland (SFI) [Functional
+Oxides and Related Materials for Electronics (FORME), www.tyndall.ie/
+forme]
+VC 2013 Wiley Periodicals, Inc.
+244 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+FULL PAPER WWW.C-CHEM.ORG
+
+
+reaction kinetics and structural relaxation at the growing sur-
+face, ignoring fluid dynamics and pressure fluctuations at
+either the feature or reactor scale. The information used in this
+model is obtained from an electronic structure model. [6] Before
+we describe our model in detail, we will briefly survey the
+existing literature on similar ALD models.
+A simple analytical model, based on the mass balance of
+chemisorption, relates the growth rate to the size of the reac-
+tant and the chemisorption events.[7,8] Steric hindrance of the
+ligands controls the saturation of chemisorption at the adsorp-
+tion sites. This model can be used for various ALD systems [9] if
+the mechanism is known. Although it can estimate growth
+rates, it does not give insights into the fundamental surface
+chemistry or predict properties such as the morphology of the
+film.
+Another approach is to perform all-atom molecular dynamics
+(MD) simulations using an empirical interatomic potential. This
+technique has been used to model the growth of Al2O3 from
+Al(CH3)3 and H 2O.[10] Experimental results [11] show that ALD
+using this system is possible at low temperatures and, therefore,
+a relatively low activation energy for the gaseous by-product
+methane is expected. Hence, applying the interatomic potential
+for the amorphous alumina surface seems to be a well-suited
+approach to describing the structural relaxation during ALD
+growth. However, using MD simulation is unsuitable for ALD
+systems whose primary reactions fall into the category of the
+rare event.[12] Also, experimentally measured O/Al ratios vary
+between 1.34 and 1.70 depending on growth temperature. [11]
+In this situation, due to the process of densification, which is a
+driving force for the ALD reactions, [6] the Al atoms should exist
+at higher coordination number (c.n.) (i.e., c.n. 55o r6 )t h a nt h e
+calculated value (c.n. 53 or 4). Therefore, a denser film than
+that actually obtained would be expected and the interatomic
+potential does not adequately describe the structural relaxation
+taking place during ALD growth.
+Another approach is kinetic Monte-Carlo (KMC), [13] a power-
+ful method for describing the stochastic time evolution of
+interdependent events. KMC is used in a wide range of areas
+from chemistry to biology. In KMC modeling, the true dynami-
+cal information (atomic positions and momenta) is dismissed
+and the atomic trajectories are replaced by a set of discrete
+positions, chosen from a set of predetermined possible atomic
+sites. KMC is ideally suited for modeling reaction events in sur-
+face science, involving adsorption, desorption, cooperative
+reaction, and structural relaxation at the surface of the grow-
+ing film. [14,15] The method can reach simulation times of orders
+of magnitude longer than ab initio MD, while preserving a
+level of atomic detail. KMC can accommodate events at differ-
+ent time scales, including rare events. There are many KMC
+approaches, from coarse-grained model systems with hypo-
+thetical input values, to realistic atomic simulation with accu-
+rate chemical kinetics for the making and breaking of bonds.
+In the latter, a proper evaluation of surface kinetics at the
+mesoscopic scale is possible by using accurate information
+from first principles the electronic-structure calculations.
+Neizvestny et al. [16] used KMC as a coarse-grained model to
+simulate the ALD process. To reproduce the experimental
+situation, hypothetical activation energies were used. However,
+the idea of KMC approach that we follow here is to carry the
+accuracy of electronic structure calculation theories to the
+mesoscopic scale. Along these lines a ground-breaking KMC
+model for ALD was proposed by Dkhissi et al. [17] that consid-
+ered the ALD reactions and activation energies from density
+functional theory (DFT) calculations. They used a complicated
+lattice-based KMC to describe the growth of HfO 2 from HfCl 4
+and H 2O on Si. A lattice framework was used to describe the
+transition between silicon crystal substrate and the oxide thin
+film. However, the complexity of the densification process on
+the growing surface was not implemented, insofar as changes
+in Hf and O c.n. from the gas to solid phase [6] and associated
+structural relaxation, was not considered. The steric demand of
+the precursor fragments was only partially accounted for.
+As a general rule, an accurate description of a system by
+KMC requires a complete set of reaction pathways because
+the absence of an important reaction pathway results in a
+poor description. As will be shown in this study, the absence
+of cooperation between the remaining ligands to adsorb H 2O
+molecules[6] (which we term the cooperative effect) result in
+overestimation of the growth rate. In this study, multiple pro-
+ton diffusion, steric effects, structural relaxation, and coopera-
+tive effects are included for the first time in ALD growth
+simulation and the necessity of including these in the meso-
+scale chemistry is justified.
+Another major concern with the input data to the model is
+the accuracy of activation energies, which affects the growth
+rate and time evolution. The chemistry presented here has
+been obtained byab initio calculations using DFT. [6] There is a
+systematic error due to the approximate DFT exchange-
+correlation functional that often results in underestimated acti-
+vation energies for breaking and making bonds. This can in
+principle be overcome by using more accurate methods [18,19]
+rather than DFT. However, owing to the complicated reaction
+pathways that result from cooperative effects, computing large
+cells with many atoms (e.g., 500 atoms) is necessary, which is
+too computationally demanding for the more accurate meth-
+ods. Hence, at the present time, we rely on the activation
+energies calculated using DFT. If all activation energies are
+underestimated, then the time taken to saturation during ALD
+will be too short, but the sequence of reactions will be
+correct.
+The chemical reactions that can occur at a given site
+depend not only on the chemical identity of that site but also
+on the spatial environment-both local bonding to adjacent
+atoms (described via the c.n.) and steric effects due to more
+distant species. Hence, to implement the surface chemistry dis-
+cussed earlier, a lattice-based KMC is used and the spatial envi-
+ronment is described through the c.n. and a neighbor list.
+Clearly, a lattice-based KMC does not explain the morphology
+of the film during ALD (e.g., crystalline vs. amorphous). In this
+study, we present only on-lattice KMC. However, the morphol-
+ogy of the film as a function of temperature could be studied
+by off-lattice KMC. [20] This means that the reported ALD reac-
+tions and their activation energies could be used for future
+off-lattice studies.
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 245
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+In the next section, some background of KMC simulations is
+described. However, the main part of this article is explaining
+how DFT-derived reaction pathways were implemented into
+lattice-KMC (Reaction Events section) and then evaluating how
+that played out as surface intermediates and growth behavior
+(Results and Discussion section).
+Computational Detail
+Transition-state theory
+The common approach to modeling chemical kinetics is using
+transition-state theory (TST). In TST, the rate constant for the
+transition from a minimum A to a minimum B is estimated
+from the equilibrium flux crossing a dividing surface separat-
+ing the two minima. The dividing surface is the hyperplane
+perpendicular to the reaction coordinate and the transition
+state (TS) is where the two intersect. Here, there are two
+assumptions. First, it is supposed that the system has reached
+thermal equilibrium between A and TS. Second, it is assumed
+that successful transitions through the dividing surface from A
+to B are uncorrelated, meaning that each forward transition
+through the dividing surface moves the system from A to B.
+For these assumptions to be valid, the best choice of dividing
+surface is near the saddle point in the minimum energy path
+between A and B, where the entire equilibrium flux is mini-
+mized. If thermal motion around the saddle point and the
+minima can be described by second-order expansions (har-
+monic vibrational modes) then the transition between the two
+minima can be explained by harmonic TST (hTST). From these
+assumptions, the rate constant kAB for the transition from min-
+imum A to minimum B can be derived from the Markovian
+state-to-state dynamics equation:
+kTST
+AB ðTÞ5A exp ðEa=kBTÞ (1)
+where Ea is activation energy and the prefactor is determined
+from
+A5f TST
+AB ðTÞðkBT=hÞ (2)
+where h is Planck’s constant, kB is the Boltzmann constant, T is
+temperature and where
+f TST
+AB ðTÞ5ðqvib
+TS =qvib
+A Þ (3)
+where qvib
+TS and qvib
+A are the vibrational partition functions at
+the TS and at the bound state A, respectively.
+Thus, to evaluate kTST
+AB , static information about the potential
+energy surface (PES) at the initial minimum A and at the TS
+and the partition functions at those locations are typically
+required. In most cases involving surface-bound reactants and
+products, the vibrational properties of the system at the mini-
+mum and TS are found to be similar. Internal rotational com-
+ponents of species at the surface have a tiny influence on the
+vibrational partition function. This inaccuracy in prefactor is
+negligible in comparison with inaccuracy of activation energy
+in exponential factor. Hence, we consider the ratio f TST
+AB ðTÞ/C24 1,
+eq. (3). However, gas-surface reactions include large changes
+in entropy and so this assumption does not apply. The prefac-
+tor has values of the order of 1012–1013 s21 depending on
+temperature. In hTST, the key information from the PES which
+is entered into eq. (1) is Ea, the potential energy of the TS rela-
+tive to the (meta)stable initial minimum. In ALD, many TSs cor-
+respond to situations where bonds are made or broken. Ea for
+such situations can be obtained from ab initio quantum chem-
+istry models. These models, in the Born–Oppenheimer presen-
+tation, treat electrons adiabatically at every configuration of
+atomic positions and atomic dynamics take place on the
+resulting PES.
+However, hTST certainly cannot be used for the adsorption
+process (A 5gas-phase, B 5adsorbate on surface). Adsorption
+of the precursor takes place with a probability given by Max-
+well–Boltzmann statistics. The molecular flux or impingement
+rate to the adsorption sites is obtained from
+kads
+n;B ðT; PnÞ5Sn;BðTÞPnAucﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ ﬃ2pmnkBTp (4)
+where Sn;BðTÞ is the sticking coefficient that quantifies the frac-
+tion of molecules that stick to an adsorption site (for simplicity,
+it was assumed that Sn;B51). Pn and mn are the partial pres-
+sure and the mass of precursor molecules, respectively. Auc is
+the area of the surface unit-cell including site B and n is a
+label for different precursor. [15,21] In this study, the desorption
+rates are described using eq. (1), because the activation ener-
+gies for desorption can be calculated by the nudged elastic
+band (NEB) method.
+Time evolution
+A KMC simulation consists of a sequence of separate hops
+from one minimum to another (known as “events”) taking
+place at sites within the simulation cell. The random choice of
+which event at which location after which amount of time is
+governed by KMC. Starting from a given minimum, the KMC
+algorithm determines which minimum to hop to and the
+appropriate time step Dt, therefore, changes at each KMC iter-
+ation. The system clock is advanced by this time:
+t5t1Dt (5)
+Each pathway, therefore, has its own probability (Poisson)
+distribution function for time evolution. The probability of
+event m consisting of hopping from minimum i to minimum j
+at a given site is given by eq. (6):
+pmðDtÞ5kij exp ð2kijDtÞ (6)
+The system has many possible events each with a fixed
+probability that is obtained its rate constant kij using eq. (1).
+To advance the dynamics of the system in time, many numeri-
+cal KMC algorithms have been suggested in the literature. [13]
+The first-reaction method [22] uses eq. (7) to determine the
+timestep for each possible event.
+FULL PAPER WWW.C-CHEM.ORG
+246 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+Dtm5ln ðqmÞ
+km
+(7)
+where m 51,...,N. This algorithm has been used for ALD
+modeling.[17,23]
+A random number qm 2/C138 0; 1/C138 for each of the N possible
+events is generated, so that the timesteps are properly
+weighted by the rate constants. The pathway with the shortest
+timestep is chosen and executed. The system moves to the
+new state (minimum), and the system clock is advanced by
+the corresponding shortest timestep. In this algorithm, many
+random numbers must be generated, all of which are dis-
+carded apart from one.
+Another commonly used algorithm was proposed by Bortz,
+Kalos and Lebowitz (BKL) [24] and is also referred as the Gilles-
+pie, N-fold way, or residence-time algorithm. Initially, the BKL
+algorithm as with any KMC algorithm, begins by finding all N
+possible pathways across all the sites in the simulation cell.
+The corresponding N different rate constants are obtained
+using eq. (1). The algorithm accumulates all the possible
+events together with their associated rates into an event list.
+Then, the total rate constant is obtained by summing all the
+individual rate constants:
+ktot 5
+XN
+m51
+km (8)
+Then, in contrast to the first-reaction method, only two ran-
+dom numbers q1 and q2 2/C138 0; 1/C138 are generated. When N is
+large, generating and processing two random numbers instead
+ofN random numbers makes a large computational difference.
+Hence, the first-reaction method is not as computationally effi-
+cient as the BKL method. q1 is used to select one of the possi-
+ble events via eq. (9). Obviously, an event with a large rate
+constant is more likely to occur. Therefore, the algorithm
+searches for the event q in the event list that fulfills eq. (9).
+and the event q is executed.
+Xq21
+i51
+ki /C20 q1ktot /C20
+Xq
+i51
+ki (9)
+An update of the event list is needed after each execution
+of an event. Even if the system includes thousands of potential
+events, typically only a few events are removed and a few
+events are added (in the order of 1–10) to the event list after
+each execution. It is most efficient to preserve the event list
+and simply modify the executed event and affected events in
+the vicinity of that site. Therefore, reinitialization of all possible
+events in each iteration is not required, an enormous compu-
+tational saving. In fact, updates of the event list have a much
+higher impact on the computational cost than generating the
+random numbers. In this respect, the first reaction method
+and BKL algorithm perform similarly well.
+The other important aspect of the BKL algorithm is the time
+step and how the system clock is advanced. By executing the
+chosen event, the system moves to the new state and the sys-
+tem clock is advanced by the equation below:
+t5t2lnðq2Þ
+ktot
+(10)
+where q2 is the second random number. The time evolution is
+independent of the chosen event, but does depend on the
+total sumktot . This means that when high rate events (fast
+processes) become dominant—not only in terms of weight
+but also in terms of number—the simulation advances
+extremely slowly. Such disparity between low and high rate
+events occurs when the system is trapped in a set of adjacent
+minima (a “superbasin”). In this situation, a more advanced
+model[25] is needed that reduces the occurrence of frequent
+events. Our KMC model is also faced with the problem of this
+disparity (see subsection Proton diffusion).
+Some of the events observed during ab initio MD are highly
+exothermic and barrierless or have a small barrier (less than
+0.2 eV) and so may be thought of as deterministic, rather than
+stochastic. To implement these processes in the stochastic
+model, a small barrier (0.2 eV) is assigned to each of the deter-
+ministic processes. The definition of a small barrier can be
+problematic because it can create a disparity in the rate of
+reactions and disturb the time evolution of the system. How-
+ever, the reverse of these deterministic process is extremely
+rare and, therefore, the reverse reaction is omitted from our
+event list.
+A larger system typically means more events. More events
+in the total event list means that the sum ktot in the BKL
+approach becomes larger, even though the same reaction list
+is used. Hence, the system clock progresses slower for a large
+system than for small one, which is physically correct. How-
+ever, to achieve a realistic cycle time for an ALD process with
+a reasonable computational time, some fast processes are
+ignored.
+The system size and the fast processes, therefore, largely
+dictate the progress of the simulation time. In order to tackle
+a realistic ALD system, many reactions have to be included
+(see Reaction Events section).
+KMC solver
+The ALD application was developed as a new feature in the
+stochastic parallel particle kinetic simulator (SPPARKS) [26,27]
+code. SPPARKS is written in a modular fashion, allowing new
+functionality to be added in a straightforward manner. All pos-
+sible events are specified before the simulation begins. The
+event list consists of all possible events at each site. Rejection
+KMC is chosen as the KMC solver for choosing an event from
+the event list. This KMC solver uses the previously defined
+BKL-algorithm[24] to update the system clock by eq. (10). The
+solver executes the chosen event and modifies the occupation
+of sites. The event list is updated by removing events that
+have become invalid at modified sites and adding new events
+for these sites to the event list.
+Lattice site
+To track the surface evolution and film morphology, a lattice-
+based KMC method is used. The lattice can in principle be two
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 247
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+dimensional (2D) or 3D. Tracking in three dimensions is much
+more difficult than in two dimensions due to the far greater
+topological complexity. However, to accurately translate the
+chemistry in the atomic scale to the mesoscale for ALD, 3D
+tracking is deemed necessary. The capability to describe the
+system in 3D makes modern KMC a powerful tool to explain
+both reaction kinetics and film morphology. The two precur-
+sors considered in this study are Hf(N(CH 3)2)4 and H 2O. In this
+article, the ligand N(CH 3)2 is referred to as X for simplicity.
+The lattice sites are defined based on monoclinic HfO 2
+(space group P2 1/c)[28] as this is the most stable crystalline
+structure of the oxide after deposition and annealing. The 3D
+lattice sites are occupied by either Hf or O atoms during the
+ALD simulation. In the monoclinic structure, every site of the
+cation sublattice is surrounded by seven anion sites and every
+site of the anion sublattice is surrounded by three or four cat-
+ion sites (Fig. 1). Based on the counted number of first neigh-
+bor atoms of a cation or anion, the c.n. was defined. Every
+cation or anion site can have a c.n. ranging from 0 up to 7 or
+4, respectively. We exclude bonds to H when quoting the c.n.
+of O.
+The crystallographic directions h111i define the x,y, and z
+axes of the coordinate system. Periodicity is imposed in x and
+y but not in z. Two smooth layers of fixed oxygen and
+hydroxyl in the x-y plane are considered as the substrate in
+this example. The first cycle starts with a HfX 4 pulse. The crys-
+tal growth is then in the 1z direction. Each lattice site is asso-
+ciated with three variables describing the state of this site.
+– The first variable contains the information regarding the
+chemical identity of the site. This variable is updated fre-
+quently during the KMC simulation.
+– Each lattice site also has a neighbor list that carries the
+information about the local bonding. Local bonding indicates
+which site is connected to which site and this assists in
+defining the reaction events in KMC. Structural relaxation,
+cooperative reactions, and steric hindrance are implemented
+using the neighbor list.
+– Finally, each lattice site is associated with a discrete vari-
+able describing the c.n. of the site. This variable, together with
+the neighbor list, allows us to implement the complicated
+chemistry at the surface. For instance, by densification of the
+hafnium atom of the precursor to the surface, the c.n. of a cat-
+ion site can change from 0 to a limit of 3–8.
+Pulse time and purge time
+In the ALD process, gaseous precursors are admitted to the
+reactor in alternate pulses separated by periods of purging. To
+implement this in KMC, the respective adsorption reactions are
+turned on and off as simulation time advances. Adsorption
+reactions occur alternately as time progresses.
+Reaction Events
+Event type
+In our KMC model, reaction events are defined and used to
+implement the chemistry of ALD obtained from DFT calcula-
+tions.[6] For every position, geometry optimization was carried
+out by DFT calculations. The minima obtained from the DFT
+calculations are mapped onto the lattice sites for the subse-
+quent KMC calculations. The events taking place within the
+KMC calculation modify the chemical occupation of the sites.
+This corresponds to the transition of the system from one min-
+imum to another in the DFT calculation. The frequency of an
+event is derived using eq. (1) from an activation energy
+obtained from NEB[29] calculation with DFT.
+We consider that three types of events occur, each with dif-
+ferent dependencies on neighbors. Here, the site under
+Figure 1. (A) DFT optimized surface structure of hydroxylated HfO 2.[6] Terminal hydroxyl group (a), terminal adsorbed water (b), bridging hydroxyl (c), three
+coordinated oxygen (d), four coordinated oxygen (e), and seven coordinated hafnium (f ) are highlighted. (Red 5O, White 5H, large grey 5Hf ). (B) Sche-
+matic 2D diagram illustrating mapping of the same surface structure. Blue and red boxes show the cation and anion sites, respectively. The dashed line s
+show the connection between sites in this 2D diagram but the actual c.n. in three dimensions is also given.
+FULL PAPER WWW.C-CHEM.ORG
+248 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+consideration is specified by wð0Þ. The first and second neigh-
+bors of the involved site are identified by wð1Þ and wð2Þ,
+respectively. The occupation of the first or second neighbor
+site may also change as a result of an event at wð0Þ.
+Type a. This type of event only changes the occupation of a
+single site. The event is dependent on the c.n. at that site and
+on the pulse/purge stage of the ALD cycle. For instance, OH (0)
+! OH-HfX4
+(0) only occurs for the hydroxyl group with a c.n. of
+oxygen 51 (excluding H) during the hafnium precursor pulse.
+The possibility of adsorption, therefore, is limited to the anion
+site with OH occupation during the metal pulse.
+Type b. This event modifies the occupation of a site wð0Þ and
+the second neighbor of this site wð2Þ. Clearly, the possibility of
+this event occurring depends on the characteristics of the site
+and on those of its second neighbor. As with typea, events,
+there can be a dependence on the c.n. and on the pulse/
+purge stage of the ALD cycle. For example, consider an
+adsorbate site as an anion site occupied with adsorbed HfX4,
+whose first and second neighbors are cation and anion sites,
+respectively. Then, the event [OH-HfX 4](0) 1OH(2) ! [OH-
+Hf(HX)X3](0) 1O(2) only occurs when there is a proton OH (2) in
+the second neighbor of the adsorbate site.
+Type c. This event type changes the occupation of a site and
+of its first neighbor. For instance, [OH-HfX 2](0) 1VAC(1) !
+OH(0) 1HfX2(1) shows the motion of a hafnium precursor frag-
+ment to an adjacent vacant cation site. In this case, the event
+changes the occupation of the adsorbate sitewð0Þ (anion sub-
+lattice) and the vacancy site wð1Þ (cation sublattice). Following
+an event of this type, the c.n.’s of both adsorbate and vacancy
+sites must be updated.
+In the following discussion, the atomic-scale chemistry of
+the surface determined [6] from DFT is translated into discrete
+events in order to describe the KMC simulation in more detail.
+Hf precursor adsorption
+Molecular HfX 4 chemisorption takes place with a probability
+given by eq. (4). There are three criteria that adsorption sites
+of HfX 4 must satisfy as outlined below.
+– First, DFT calculations [6] have shown that the adsorption
+sites are singly coordinated oxygen and hydroxyl groups
+(wð0Þ 5O or OH with c.n. 51). In other words, the bridging
+oxygen and crystalline oxygen with c.n. >1 are unsuitable for
+adsorption.
+– Second, the adsorption sites can be blocked due to the
+remaining X at neighboring sites. There are different rules for
+remaining ligands of HfX 4, HfX 3, HfX 2, and HfX as discussed in
+subsection Steric effect.
+– Third, the adsorption sites can be blocked due to O at
+neighboring sites. As anion sites are occupied by oxygen dur-
+ing the oxygen pulse, low coordinated O or OH (c.n51) in
+the sublayers become inaccessible to the precursor metal. To
+prevent the adsorption at these sites, the number of oxygen
+atoms occupying second neighbors of the relevant oxygen
+site are counted. If this number is greater than 4/5 of the total
+sites, then the relevant site is blocked. This process only hap-
+pens during the Hf pulse.
+If all sites are occupied or blocked, the incident hafnium
+precursors are assumed to be reflected back to the gas phase.
+HfX4 desorption
+The reverse of HfX 4 adsorption is desorption. As with adsorp-
+tion, the desorption event is of type a. Neighboring sites are
+unblocked via desorption of HfX 4. In our KMC calculation,
+desorption of charged precursor fragments like [HfX 3]1 or
+intermediates like [Hf(HX)X 3]1 is not allowed.
+Proton diffusion
+In our KMC model, various types of proton diffusion are
+defined. There is a strong correlation between these diffusion
+events and other reactions. For example, the ready availability
+of protons contributes to the facile elimination of ligands.
+Increased eliminations during the metal pulse lead to a higher
+rate of growth. [30] As one of the aims of this model is to judge
+exactly how the rate of growth is affected by these diffusion
+events, they are sorted into four types below.
+– Proton diffusion from oxygen to oxygen
+Proton diffusion from oxygen to oxygen is the reaction that
+allows mobility of protons across the surface. The c.n. of oxy-
+gen (at an anion site) is used to distinguish between the pro-
+ton diffusion barriers. DFT calculations show that it is
+energetically favorable for protons to move from high c.n. oxy-
+gen to low c.n. oxygen. Hence, under-coordinated oxygen
+(with c.n. 51 or 2) are the Br /C239nsted basic sites that are actively
+involved in proton diffusion. A one coordinated oxygen is a
+hyperactive site. It spontaneously decomposes a neighboring
+H2O molecule (type b) or takes a proton from a higher coordi-
+nated oxygen (c.n. /C21 2). According to DFT calculations, both
+of these reactions are barrierless. A two coordinated oxygen is
+less active than a one coordinated oxygen. The two coordi-
+nated oxygen faces a large barrier to taking a proton from a
+neighboring oxygen (c.n.51). After depletion of protons at
+the surface due to desorption as HX, some oxygen atoms
+acquire a higher c.n due to densification, whereas the other
+oxygen atoms acquire a reduced c.n. and become more
+Br/C239nsted basic. These latter under-coordinated oxygen
+undergo a form of proton diffusion from oxygen to oxygen
+with the same c.n. A 0.75-eV barrier for these one or two coor-
+dinated oxygen atoms is obtained by DFT.
+– Proton diffusion from oxygen to ligand nitrogen (from
+anion to anion site)
+The other type of proton diffusion is from the surface oxy-
+gen to the nitrogen of the precursor and its reverse. In the
+case of alkylamide, [6] it has been shown that there are stable
+geometries with a proton bound to the nitrogen. The forma-
+tion of HX in this manner is necessary prior to ligand
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 249
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+elimination by desorption of HX. However, the activation
+energy strongly depends on the distance between N and O. If
+we suppose that HfX4
+(0) is anchored to an OH (0) group at the
+surface (type a), the most accessible proton for hopping to
+the N (0) of the precursor is not the anchor OH (0), but rather
+the second neighbor protons (OH (2)), because the N (0)-O(2) dis-
+tance is shorter. The activation energies for proton diffusion
+from the surface oxygen to the nitrogen of the ligand and its
+reverse range from 0.05 to 0.30 eV. To map this proton hop-
+ping behavior into KMC, type b events are introduced that
+change the occupation of the site and its second neighbor.
+In comparison to the barrier to rotation for the protonated
+ligand discussed in subsection Rotation of the protonated
+ligand, diffusion of the proton from nitrogen back to the oxy-
+gen has a lower barrier. This means that proton diffusion
+between the surface oxygen and the nitrogen and its reverse
+is much faster than rotation of the protonated ligand. The
+most likely events which occur are low barrier events. Hence,
+the KMC simulation advances extremely slowly, especially con-
+sidering that the sum of probabilities is over a large number
+of sites, giving a total rate that is enormously large (superba-
+sin) (subsection Time evolution). To overcome this difficulty,
+we propose that only the presence of a proton on surface oxy-
+gen is necessary for protonation and rotation of the ligand. In
+other words, we remove (filter) proton diffusion from the sur-
+face oxygen to the nitrogen and its reverse from the reaction
+list. Otherwise, the realistic ALD time will be inaccessible to
+the current KMC simulation. A side-effect of this is that time
+evolution of the system does not correspond to the realistic
+ALD time.
+– Proton diffusion from oxygen to nitrogen (from anion to
+cation site)
+This diffusion describes proton hopping from oxygen ( wð0Þ)
+to the first neighbour nitrogen of the densified precursor
+(wð1Þ) which is explained in subsection Densification of HfX 2.
+This diffusion occurs from the anion site to the cation site
+(typec).
+– Proton diffusion from nitrogen to nitrogen
+Proton diffusion within the adsorbed precursor consists of
+proton hopping from nitrogen near the surface to the top-
+most nitrogen of the precursor. This diffusion is of typea.
+In this calculation, no particular ligand orientation for proton
+diffusion is considered.
+Rotation of the protonated ligand
+After diffusion of a proton from the surface oxygen to the
+ligand nitrogen, there is a second reaction that facilitates elim-
+ination of HX, namely rotation of the protonated ligand. Acti-
+vation energies of 0.42–0.51 eV are calculated for the rotation
+of alkylamide ligand. [6] To implement this reaction in combina-
+tion with proton diffusion from the surface oxygen to the
+nitrogen, event typeb is used.
+Elimination of the ligand
+It is commonly assumed that protonated ligands (HX) rapidly
+desorb following proton transfer from the surface to the
+remaining fragment during ALD. However, we have shown [6]
+that further proton transfer to the remaining fragment before
+desorption facilitates the ligand elimination. For instance, the
+activation energy for desorption of the first HX after the first
+protonation and rotation is 0.89 eV. This energy decreases to
+0.39 eV after the second protonation. A third protonation
+allows spontaneous desorption ( Ea 50 eV) of two HX and den-
+sification of the metal precursor. In order to map the desorp-
+tion of HX into the KMC model, the occupation of a single site
+is modified (type a). Neighboring sites have no direct influence
+on the desorption event. The last HX desorption from the Hf
+precursor is an endothermic reaction. Such an event takes
+place only if either of the following occurs:
+– The Hf of the precursor is densified into an empty cation
+site surrounded by least six oxygen atoms; conversely, an
+empty site in the subsurface layer.
+– The c.n. of Hf of the precursor is increased by adsorption
+of H 2O during the oxygen pulse, as explained later.
+Densification of HfX2
+Ab initio MD calculations [6] show that after elimination of two
+ligands from the adsorbed HfX 4, the Hf atom of the remaining
+HfX2 fragment becomes strongly bonded to nearby under-
+coordinated oxygen at the surface. This structural relaxation is
+termed “densification” and is implemented in the KMC model
+as event typec with a small barrier (0.2 eV). The O-HfX 2
+(0) rem-
+nant moves from the anion site where it was adsorbed to one
+of the neighboring cation sites wð1Þ where the Hf belongs
+(Fig. 2). To implement densification in the KMC simulation, the
+c.n. of the anion and cation sites involved in densification are
+modified. As mentioned above, every site wð0Þ of the anion
+sublattice is connected to 2 or 3 cation sites wð1Þ at the sur-
+face. To determine which cation site is chosen, a random pro-
+cedure is used, which is not strictly correct. The correct
+dependence on c.n. is included via the migration process (see
+subsection Migration of HfX 2).
+Typically hafnium, together with the remaining fragments,
+forms three or four bonds to the smooth surface following
+densification (Fig. 7). In this case, densification is highly exo-
+thermic ( DG /C20 24 eV) and an enormous activation energy is
+needed for the reverse reaction. Also, densification into the
+sublayers (filling gaps in a rough surface) is expected to be
+even more exothermic than on a smooth surface. This means
+that a huge amount of energy is needed to detach the haf-
+nium (with the remaining precursor) from three or four oxygen
+atoms, which is not possible energetically in the ALD process.
+Hence, the reversal of densification is neglected in our
+calculation.
+The hafnium should finally become densified to the cation
+site that has highest c.n. to surface oxygen. In other words,
+stronger attraction from higher number of Br /C239nsted base sites
+FULL PAPER WWW.C-CHEM.ORG
+250 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+is hypothetically applied to the hafnium than less one. For
+instance, in Figure 2, the five-coordinated empty site exerts a
+stronger attraction to the hafnium than the empty two-
+coordinated site. Therefore, the hafnium of the precursor
+should densify to the cation site with a higher c.n. rather than
+moving randomly. This tendency will be included using the
+migration process (subsection Migration of HfX 2).
+Migration of HfX2
+In our KMC model, densification happens all over the surface.
+It may happen into the sublayer, in which case a high c.n. for
+Hf to previously under-coordinated oxygen is obtained, or it
+may happen by reorganization of bonding at the smooth sur-
+face, typically leading to a Hf c.n. of 3 or 4 from the under-
+coordinated oxygen. In the cases discussed earlier, hafnium
+with its remaining ligands has a total c.n. of 5 at least. How-
+ever, densification may also happen when there is a low popu-
+lation of surface oxygen (Fig. 3). In this case, the hafnium is
+not coordinatively saturated. For instance, if HfX 2 contains two
+bonds due to the bonding to the surface oxygen, it has total
+c.n. of 4. In this situation, DFT calculations show that the haf-
+nium of the precursor keeps its two ligands and no HX
+desorption has been seen, as the activation energy is high.
+The mobility of this four-coordinated HfX 2 has been seen dur-
+ing ab initio MD.[6]
+The migration process is only defined for three- or four-
+coordinated HfX 2 (Ea 50.40 and 0.50 eV, respectively). In this
+picture, a HfX 2
+(0) fragment that has migrated to a cation site,
+can come back to an oxygen atom O (1) at an anion site. The
+reverse can also take place (O-HfX 2
+(0) anion site to wð1Þ cation
+site) as shown in Figure 3. In this situation, migration events
+continue until the metal of the precursor becomes five or
+more coordinated in total. For instance, if HfX 2 does densify
+into possible sites with c.n. 5 5 or 7 (Fig. 3), the hafnium atom
+remains pinned at this cation site. No reverse migration is
+then possible any more. In this manner, any concerns regard-
+ing the occurrence of random densification in the low coordi-
+nated cation site are addressed.
+The migration combined processes of random densification
+and introduce a slow motion of Hf fragments over the low
+coordinated anion sites of the oxygen-covered surface. We call
+this motion “crawling.” The precursor fragment crawls over
+areas with a low population of surface oxygen until the haf-
+nium of the precursor finds a site that is abundant in oxygen
+and thus obtains a high enough c.n. from the surface oxygen.
+This mechanism allows subsurface vacancies to be filled. Our
+tests show that this mechanism has a profound effect on film
+growth in KMC.
+Steric effect
+The metal cation in the precursor molecule is surrounded by
+ligands that are often large, as in the current case of
+X5N(CH3)2. These ligands take up substantial space at the sur-
+face when the precursor molecule or its fragments are adsorbed.
+Many potential adsorption sites around such a fragment, there-
+fore, lose their capability to adsorb further precursors. This steric
+effect is obviously an important consideration, which affects the
+rate of ALD growth and the statistics of the different configura-
+tions in the KMC calculation. To model the interactions between
+the remaining fragments of the precursors, and their secondary
+influence on the adsorption sites, DFT calculations are used. Fig-
+ure 4 shows the optimized structure of two neighboring HfX3
+precursors at the surface, where both are anchored to under-
+coordinated oxygen at the surface. The distance between the
+hafnium atoms of the fragments is 8.4 A˚. Optimizing the geome-
+try from other adsorption sites for HfX 3, no shorter Hf-Hf dis-
+tance could be obtained, so this may be viewed as a minimum
+value. The sites where closer approach was impossible (the
+highlighted oxygen atoms in Fig. 4) have, therefore, temporarily
+lost their ability to adsorb another precursor molecule. We term
+this process “blocking.”
+To implement this blocking at the surface, the neighbor list
+of the site is used. Following adsorption of HfX 4 at the OH (0)
+(c.n. 51) site, the relevant neighboring anion sites (the second
+neighbors wð2Þ and fourth neighbors wð4Þ) are flagged as
+blocked and drop out from the reaction list for adsorption
+(Fig. 5). Similar blocking ofwð2Þ and wð4Þ is also applied when
+fragments of precursors remain, namely HfX 3
+(0) and HfX 2
+(0)
+Figure 2. Schematic diagram of densification of HfX 2 into empty cation sites.
+The presence of more under-coordinated oxygen around the left-hand cation
+site applies speculatively a stronger attractive force on the HfX2 adsorbate
+than that at the right-hand site. The thicker black arrow indicates the stron-
+ger attraction where reverse densification is impossible. Red arrows show
+migration process. (Same scheme as Fig. 1). [Color figure can be viewed in
+the online issue, which is available at wileyonlinelibrary.com.]
+Figure 3. Schematic diagram of densification and migration of HfO 2 (Same
+scheme as Fig. 1). Black arrows show potential densification where reverse
+densification is impossible. Red arrows show migration process. The migration
+process occurs until a c.n. greater than 2 is obtained by hafnium of the precur-
+sor. [Color figure can be viewed in the online issue, which is available at
+wileyonlinelibrary.com.]
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 251
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+before densification. Implementation of blocking after densifi-
+cation is slightly different, as now HfX 2
+(0) is on a cation site.
+The neighboring anion sites that it blocks are wð1Þ and wð3Þ
+(see Fig. 6).
+The other potential steric effect is the blocking of Hf frag-
+ments from densifying at a cation sites, due to the existence of
+fragments at adjacent sites. When hafnium, together with the
+remaining ligands, is densified to a cation site wð0Þ, it might pre-
+vent further densification in the neighboring cation sites wð2Þ.
+However, DFT calculations show that densification of such frag-
+ments to adjacent cation sites is possible. Figure 7 shows three
+neighboring HfX2 in which ligands are aligned to each other.
+The distance between Hf-Hf in the HfX 2 is slightly stretched to
+minimize repulsion between the remaining fragments. Applying
+the blocking process to the adjacent anion sites ensures that
+there is enough surface area available for these fragments.
+DFT calculations show that as many HfX as possible can be
+densified into the adjacent cation positions. In Figure 8, four
+HfX are densified into adjacent cation positions. The typical
+minimum distance between Hf-Hf in bulk HfO 2 is 3.3 A˚. In Fig-
+ure 8, the distance between the highlighted Hf in the cluster
+is also 3.3 A˚. This means that the repulsion between the
+remaining ligands declines in a surface covered with HfX when
+compared to HfX 2. The presence of HfX does not prevent
+adsorption at next neighboring anion sites wð3Þ. Therefore, fol-
+lowing desorption of HX from HfX 2 to leave HfX, blocking is
+lifted from all the surrounding anion sites.
+H2O adsorption
+The probability of H 2O adsorption from the gas phase, like
+HfX4 adsorption, is described by Maxwell–Boltzmann statistics
+[eq. (4)]. In DFT simulations, we find that adsorption of Lewis
+basic H 2O takes place at specific sites of sufficient Lewis acid-
+ity, namely Hf atoms that are not coordinatively saturated. For
+instance, the X fragments in adsorbed HfX 3 push H 2O away
+Figure 5. Schematic 2D diagram of blocking after adsorption of the unden-
+sified hafnium precursor. The filled boxes show blocked sites with respect
+to further adsorption of HfX4 due to the presence of HfX 4 adsorbate at the
+surface site on the left (Same scheme as Fig. 1). [Color figure can be
+viewed in the online issue, which is available at wileyonlinelibrary.com.]
+Figure 6. Schematic diagram of blocking after densification of the hafnium
+precursor onto a cation site. The presence of HfX 2 at the cation site pre-
+cludes adsorption (filled boxes) at fewer sites than in HfX 4 at an anion site
+(Fig. 5). [Color figure can be viewed in the online issue, which is available
+at wileyonlinelibrary.com.]
+Figure 7. A cluster of three HfX 2 in adjacent cation/cation sites (DFT). The
+highlighted oxygen atoms are some of those that are blocked with respect
+to adsorption of another hafnium precursor. The Hf-Hf distance is stretched
+(3.9 A˚) to minimize repulsion between the aligned ligands. [Color figure can
+be viewed in the online issue, which is available at wileyonlinelibrary.com.]
+Figure 4. Steric hindrance between two HfX 3 from DFT calculation. Steric
+hindrance leads to a change in the adsorption pattern of the precursors in
+ALD. Some of the blocked sites are highlighted indicating that they are
+unable to adsorb the next Hf precursor. (Red 5O, White 5H, large
+grey 5Hf, dark grey 5C, and blue 5N). [Color figure can be viewed in the
+online issue, which is available at wileyonlinelibrary.com.]
+FULL PAPER WWW.C-CHEM.ORG
+252 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+from Hf and prevent bonding of the water molecule. Results
+from ab initio MD and DFT calculations show that adsorption of
+aH 2O molecule to an existing HfX occurs, provided that another
+HfX exists as a second neighbor of this HfX site, a so-called
+“cooperative” reaction.[6] Therefore, adsorption of H 2O occurs at
+a pair of HfX or low coordinated Hf. The H 2Om o l e c u l ei si n i t i a l l y
+bridging between under-coordinated (Fig. 9) hafnium, and is
+then decomposed by the neighboring oxygen or nitrogen into
+H 1OH. The adsorption of H 2O is, therefore, a type b event.
+There is no steric blocking of adjacent sites by adsorbed H 2O.
+H2O densification and ligand exchange
+Possible H2O adsorptions at the HfX-H 2O(0) (cation site) clusters
+are followed by densification of the H 2O molecule on to the
+wð1Þ anion sublattice so that oxygen becomes coordinated to a
+greater number of neighboring Hf. Similar to HfX 2, densification
+of a H 2O molecule is a type c event which changes the occupa-
+tion of an anion and its neighboring cation site. Upon densifica-
+tion, the c.n. of affected sites are updated, particularly the
+neighboring HfX. The result of DFT calculations demonstrates
+that the presence of bridging O atoms in the neighborhood of
+the HfX significantly enhances the rate of desorption of HX at
+this site. Thus, densification of H 2O and the resulting increase in
+the c.n. of the HfX sites means that desorption of the remaining
+HX is more likely to occur during the oxygen pulse. The net
+effect is an exchange of X 2 with OH 2, albeit via an indirect
+route and with a change in surface location. This process is a
+combination of structural relaxation and a cooperative effect.
+As mentioned earlier, desorption of the last HX from HfX
+has an activation energy which depends on the c.n of the cat-
+ion site. For instance, barriers to desorption of HX from five,
+six, and seven coordinated Hf(HX) in the cation sites are 1.64,
+0.83, and 0.56 eV, respectively. Hence, desorption of this HX is
+facilitated by densification of a H2O molecule to a neighboring
+anion site, as this causes the c.n. to increase. Desorption of
+the last ligand from seven or eight coordinated HfX leaves Hf
+in the cation site with bulk-like coordination to O.
+H2O migration
+After adsorption of a H 2O molecule, it is densified into an
+empty anion site, chosen randomly. In most cases, the adsorbed
+H2O molecule is quickly dissociated by neighboring oxygen
+atoms to yield OH 1OH (subsection H 2O decomposition). These
+oxygen are usually strongly basic. However, in some cases, the
+H2O molecule densifies to a low coordinated anion site and so
+becomes attached to fewer Hf atoms. As with HfX 2 migration
+above, migration of H 2O is introduced so as to allow the mole-
+cule to escape from such less favorable sites. This event is type
+c. Activation energies for migration of a water molecule from
+anion to cation sites depend on the c.n. achieved as a result of
+densification: 0.43, 0.83, and 1.20 eV, respectively for one, two,
+and three coordinated H 2O. However, when migration of the
+H2O molecule is removed from the reaction list, the effect on
+the growth rate and quality of film is found to be insignificant.
+We conclude that the difference between random densification
+and densification incorporating H2O migration is negligible.
+H2O decomposition
+Results of DFT calculations show that the densified H 2O mole-
+cule is easily dissociated by the loss of H 1 to basic oxygen or
+nitrogen atoms. In order to include this in KMC model, the
+H2O molecule is decomposed into OH 1OH due to the exis-
+tence of under-coordinated oxygen at a neighboring anion
+site wð2Þ (type b). Figure 10 shows how the proton of densi-
+fied H 2O can be abstracted by oxygen at neighboring anion
+sites. DFT calculations show that only one or two coordinated
+oxygen can dissociate the H 2O molecule, and that the dissocia-
+tion rate strongly depends on the c.n. of the neighboring
+anion site. This reaction was not observed for more highly
+coordinated oxygen neighbors (c.n.53 or 4).
+H2O desorption
+An adsorbed H 2O molecule decomposes due to the existence
+of adjacent Lewis bases (low coordinated oxygen, c.n 51o r
+Figure 8. A cluster of four HfX in adjacent cation/anion sites (DFT). The dis-
+tance between highlighted hafnium atoms (3.3 A ˚) shows that repulsion
+between the aligned ligands is less problematic than in the case depicted
+in Figure 7. [Color figure can be viewed in the online issue, which is avail-
+able at wileyonlinelibrary.com.]
+Figure 9. Schematic diagram of H 2O molecule adsorption in two dimen-
+sions. H 2O adsorption occurs in the cation site, due to the presence of
+another HfX (2) at the neighboring cation site (cooperative event). Densifica-
+tion of the H 2O molecule (red arrow) occurs randomly into an empty anion
+site wð1Þ. (Same scheme as Fig. 1). [Color figure can be viewed in the
+online issue, which is available at wileyonlinelibrary.com.]
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 253
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+2). In the absence of Lewis basic sites, it remains as a molecule
+of H 2O and can possibly desorb from the system. Ab initio MD
+shows that desorption of a H 2O molecule happens more read-
+ily than desorption of the metal precursor. No other process
+for desorption of oxygen is considered here, as the other O-
+containing fragments are charged (O 2
+2,O H 2, [OHfX] 1 etc.).
+NEB calculations show that an activation energy of 0.46 eV is
+required to detach H2O with c.n. 51 for O (excluding H) from
+fully coordinated hafnium with c.n. 57 and 0.83 eV for that
+from c.n. 56. Such energy barriers can be easily overcome
+during the ALD process, especially if the temperature is
+increased. This event is type a.
+Neglected reactions
+As every site of the anion sublattice is connected to three or
+four cation sites, through densification oxygen can obtain up
+to c.n.54 to Hf over the span of the oxygen pulse. We con-
+sider oxygen with c.n. 53 or 4 as bulk-like oxygen. However,
+some of the oxygen remains one or two coordinated to Hf.
+One-coordinated oxygen (possibly with H) is the active sites
+for adsorbing HfX4 in the next pulse. The activation energy
+computed with DFT for hopping of O or OH after densification
+Figure 10. Schematic diagram of H 2O molecule decomposition in two dimen-
+sions. The activation energies for proton transfer are specified by the different
+c.n. of the two oxygen neighbors. The thicker arrow indicates stronger attrac-
+tion by one coordinated oxygen to abstract a proton from H2O. (Same scheme
+as Fig. 1). [Color figure can be viewed in the online issue, which is available at
+wileyonlinelibrary.com.]
+Figure 11. Top view of the surface evolution during the first cycle. Snapshots show: (A) The substrate which includes two layers of oxygen (O and OH
+groups). (B) The end of the metal pulse with a surface that is depleted of protons due to the desorption of HX. (C) The end of the purge with a minor
+amount of further desorption. (D) The end of the oxygen pulse in which the arrival of H 2O molecules causes oxygen and protons to be introduced to the
+surface. Fragments for discussion (a–f ) are highlighted by circles. The dashed box shows an area where adsorption of the next metal precursor is block ed
+because of the steric effect.
+FULL PAPER WWW.C-CHEM.ORG
+254 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+is too high to be significant for low temperature ALD. Hence,
+in the present study, oxygen and OH diffusion are ignored.
+Following adsorption of a H 2O molecule, densification or
+decomposition into OH groups may occur. However, no evi-
+dence was observed by DFT of two hydroxyl groups recombin-
+ing again to produce a H 2O molecule. Therefore, this
+recombination reaction is not considered in our KMC model.
+The final type of reactions to be neglected were CVD-like
+reactions. These are known to be a significant component of
+HfO2 growth from alkylamide precursors. We expect that the
+inclusion of CVD-like reactions would increase the growth rate.
+However, in the current calculations, the growth achieved by
+pure ALD reactions only is reported.
+Results and Discussion
+The dimensions of the simulation cell are 5.8 3 5.8 3 6.8 nm.
+The cell can contain 20 (111) layers of bulk monoclinic HfO 2 in
+the z-direction. Every (111) layer of HfO 2 includes 256 sites for
+Hf (cation sites) and 512 sites for O (anion sites) which will
+become occupied during the simulation.
+Figure 11 shows the top view of the evolution of the surface
+during the first ALD cycle. Growth begins from an ideal situation in
+which the substrate is saturated with a regular array of OH groups
+(Fig. 11A). The initial surface cell is constructed so as to consist of
+256 O (c.n. 52 or 3) atoms and 256 OH groups (c.n. 51, for O
+e x c l u d i n gH ) .I tw a sa s s u m e dt h a tthese highly coordinated oxy-
+gen (c.n. 52 or 3) are attached to hafnium atoms of a sublayer
+beyond the cell. Figures 11B–11D are snapshots taken at the end
+of the first metal precursor pu l s et i m e ,a tt h ee n do ft h ep u r g e
+time, and at the end of the first oxygen pulse time, respectively.
+The pulse and purge times are both set at 0.1 ms.
+During the metal pulse, protons are observed to “bounce”
+frequently between the surface oxygen and the nitrogen of the
+HfX4 or HfX 3 or HfX 2. These diffusion events continue in time
+until all the remaining nitrogen of a precursor fragment has
+become protonated (multiple proton diffusion). In this situation,
+desorption of HX is facilitated [6] and different species (the
+remaining fragments) can be seen at the surface, see Figure 11.
+We have carried out alternative KMC simulations where multiple
+proton diffusion is switched off and single-proton diffusion is
+followed by HX desorption with slow kinetics. No evidence of
+growth is observed in these simulations at 500 K.
+In H2O pulses, the remaining ligands are desorbed from the sur-
+face and replaced with OH groups. The net effect is deposition of
+bulk-like HfO2 leaving an OH2 terminated surface for the following
+cycle. An average of 0.6 60.02 A˚/cycle of HfO 2 is deposited in
+each cycle. Growth is observed simultaneously in multiple layers
+rather than a single smooth layer in each cycle. An average of 8.6
+3 107 events is executed in each cycle. In total, over 200 reaction
+types are considered in reaction list. Simulation of 40 cycles takes
+approximately 34 h on one central processing unit (CPU).
+Our simulations show that the population of surface species
+changes with temperature. The presence of different species
+changes the reaction pathways and their associated activation
+energies, impacting the growth rate. In this situation, owing to
+the change of activation energies, a longer pulse time should
+be considered at low temperature and surface saturation is
+achieved more rapidly at high temperature. In this study, satu-
+ration is obtained with the pulse and purge time both set at
+0.1 ms. No further adsorption of HfX4 is observed by choosing
+to use a longer pulse time (i.e., 0.2 ms) at T 5500 K. Hence,
+exposure of both precursors to the surface is set to 27 L. The
+exposure of precursor and comparison with experiment will be
+the subjects of our future article.
+The metal precursor pulse
+Figure 11B shows the fragments remaining after one metal
+precursor pulse. Due to the ALD reactions, desorption of
+ligands as HX has occurred. The surface has become depleted
+of protons. The remaining HfX3, HfX 2, and HfX fragments at
+the surface prevent further adsorption of HfX 4, that is, the sur-
+face is saturated. For instance, between species 2a and 2e,
+there are low coordinated substrate oxygen atoms, but insuffi-
+cient space for adsorption of the metal precursor to occur. The
+Figure 12. (A) Proton population in film and number of events for 20
+cycles. Pulse and purge time have been both fixed at 0.1 ms and tempera-
+ture is 500 K. Proton population and number of events increase constantly
+due to the accumulation of protons in the subsurface layers. (B) (a) Start of
+metal pulse (cycle), (b) start of purge, (c) start of oxygen pulse, (d) start of
+purge, and (e) end of cycle. [Color figure can be viewed in the online issue,
+which is available at wileyonlinelibrary.com.]
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 255
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+proton population in the film as a function of time is shown
+for 20 cycles in Figure 12. Desorption of HX is visible as a
+sharp decrease in the proton population at the start of each
+metal pulse. Correlated with this, there is a sharp decrease in
+the number of events at the beginning of each metal pulse.
+The proton concentration remains low up to the start of the
+oxygen pulse (Fig. 11C). Dissociation of the H 2O molecule sup-
+plies a source of protons for renewed HX desorption. Hence,
+many of the remaining ligands are eliminated (Fig. 11D). At
+the beginning of the oxygen pulse, an increase in the number
+of events is observed (Fig. 12). This corresponds to an increase
+in the proton population, introducing many proton diffusion
+events between oxygen atoms.
+The number of protons in the film increases constantly dur-
+ing subsequent ALD cycles (Fig. 12). Those protons remain in
+the layers below the surface. This is unclear whether this is an
+artifact of our KMC scheme or whether it matches experiment.
+The protons can undergo proton diffusion reactions within the
+sublayers but, without access to X, there is no effect on
+growth. These events are, therefore, wasteful of CPU time. For
+instance, the CPU time per cycle increases by a factor of 1.5
+between the 5th cycle and 40th cycles, almost entirely due to
+unproductive diffusion of protons in sublayers. Those protons
+can be observed as OH groups in the dashed box of Figure
+13, which shows the end of the metal pulse after 18 cycles.
+Those OH groups are highly coordinated or blocked. Despite
+the free space around them, adsorption of the next metal pre-
+cursor does not take place.
+During the metal pulse, ALD reactions (particularly desorp-
+tion of HX) are decreased, owing to the depletion of the H 1
+coreagent. The number of events, which depends on H and X,
+is decreased. Interactions between the remaining precursors
+prevent further adsorptions. However, the self limiting nature
+of ALD is not solely a consequence of depletion of coreagent.
+As highlighted in Figure 13 (dashed box), depletion of active
+sites also prevents further adsorptions. In addition, inert HfX
+and HfHX fragments (square) resist desorption of the final
+ligand, regardless of H1 concentration.
+All energetically accessible remnants of the Hf precursor (HfX 4,
+HfX3,H f X2, and HfX) can be observed at the end of metal pulse,
+which we now discuss. One HfX4 can be seen in Figure 11B-b and
+this species is desorbed intact during the purge (Fig. 11C) as there
+are not enough protons in its neighborhood to protonate its
+ligands. The HfX4 population changed from 0.14 nm22 at the end
+of the first cycle to zero at the end of 18th cycle.
+HfX3 is the other species that is often seen during the initial
+c y c l e s .T h i ss p e c i e si sh i g h l i g h t e di na ,e ,c ,a n dd( F i g .1 1 B ) .I ft h e r e
+are insufficient protons in the neighborhood of the adsorbed HfX4,
+then the product is HfX 3 rather
+than HfX 2.T h i si sb e c a u s e
+desorption of HX from HfX 3 is
+m o r ed i f f i c u l tt h a nf r o mH f X4.[6]
+This species has been observed
+less in later cycles than in first
+cycles. For instance, the HfX 3
+population changed from 0.62
+nm22 at the end of the first
+metal pulse to only 0.02 nm 22
+HfX3 at the end of the 18th
+metal pulse (circle in Fig. 13).
+HfX2 is not visible in the
+snapshots of the first cycle
+shown (Fig. 11) although it is
+an important intermediate
+during KMC. This is because its
+lifetime is too short here.
+However, in the next cycles,
+HfX2 does appear at the
+Figure 13. Top view of the surface at the end of the 18th metal pulse.
+HfX3, HfX 2, and HfX are highlighted by circle, hexagon, and square, respec-
+tively. The dashed box shows free space where adsorption of HfX 4 does
+not occur. The O and OH groups in the dashed box are highly coordinated
+or blocked by the remaining ligands. [Color figure can be viewed in the
+online issue, which is available at wileyonlinelibrary.com.]
+Figure 14. Side view of ALD growth for HfO 2 after 20 cycles. (A) Direct adsorption of H 2O molecules through HfX is
+considered (cooperative effect is neglected). As a result, the growth rate is overestimated by a factor of 2 that
+obtained when including the cooperative effect only. (B) Cooperation between the HfX is considered to adsorb H 2O
+molecule. [Color figure can be viewed in the online issue, which is available at wileyonlinelibrary.com.]
+FULL PAPER WWW.C-CHEM.ORG
+256 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+surface and lasts longer. For instance, the HfX 2 population is
+0.59 nm 22 at the end of the 18th metal pulse (Fig. 13 hexa-
+gon), which is much higher than that in the first cycle. The Hf
+in these HfX 2 are always three or four coordinated.
+We now discuss the reasons for the persistence of HfX 2 in
+later cycles. If through the densification process Hf becomes
+highly coordinated (c.n. /C215), ALD reactions will continue rapidly
+until the remaining fragment is HfX. In Figures 13 and 11B-a,
+the dominant configuration is HfX. However, if Hf remains
+under coordinated (c.n.<5), despite the densification process,
+the migration event occurs. In this case, the HfX 2 population is
+constant while this species diffuses slowly across the surface
+(referred to as “crawling”). Crawling will continue until the pre-
+cursor remnant densifies into a cation site with a higher c.n.
+ALD reactions will then occur rapidly on the remaining frag-
+ment of HfX2, until it terminates at HfX again, ultimately result-
+ing in a smooth and dense film (Figs. 16B and 14B).
+The growth rate for the 16th–20th cycles of ALD is reported
+in Figure 15. When all the ALD reactions are considered, the
+growth rate varies between 0.49 and 0.75 A˚/cycle. This simula-
+tion includes both cooperative effect and structural relaxation
+(densification and migration). These KMC growth rates are in
+excellent agreement with experimental results considering that
+no parameters were fitted to experiment. [31–33] For example, a
+growth rate of 0.78 A˚/cycle is reported by Cho et al. [31] at 300/C14 C.
+In order to examine the effect of HfX 2 migration on the
+growth rate in KMC, the migration process was turned off.
+Turning this migration off resulted in a growth rate that varies
+between 0.12 and 0.20 A˚/cycle for the 16th–20th cycles (Fig.
+15). In other words, excluding the migration causes a low
+growth rate and poor quality of growth (Fig. 16A).
+In spite of migration being allowed, Hf in the remaining
+HfX2 fragment sometimes does not obtain a high enough c.n.
+and remains three or four coordinated. In those situations, dis-
+sociation of HX does not happen, even though there are suita-
+ble protons at the surface (Fig. 13, dotted box). The system
+becomes trapped in a set of adjacent local minima (superba-
+sin), where migration happens repeatedly, with no net effect,
+other than wasting CPU time.
+HfX species are the dominant species at the growing surface
+at the end of metal pulse [Figs. 11B and 13 (square)]. For
+instance, the HfX population changes from 1.51/nm 22 at the
+end of first cycle to 1.42/nm 22 and 1.90 nm 22 at the end of
+the 18th and 20th cycles, respectively. Such variation may be
+correlated with the cycle-to-cycle variation in growth rate.
+The purge time
+When ALD reactions self-terminate, the remaining ligands block
+the surface and this persists into the purge step. We have exam-
+ined our KMC simulations to see if further surface reactions are
+taking place during the purge. For instance in Figure 11B-c, we
+see that some HfX 3 remains at the surface because there are not
+enough protons in its neighboring sites. After a period of time
+during the purge, due to
+longer-range proton diffusion
+across oxygen atoms, all nitro-
+gen atoms of these HfX3 frag-
+ments become protonated and
+some of them desorb as HX.
+Then, the remnant densifies to
+the neighboring HfX (Fig. 11C-
+c). This illustrates that slow pro-
+ton diffusion and associated
+reactions such as desorption of
+HX continue during the purge
+time. Indeed, Figure 12 shows
+that reaction events (mainly
+proton diffusion) continue at
+roughly the same frequency
+during both purges, with just a
+small decrease over time. This
+decrement corresponds to the
+minor desorption during the
+Figure 15. Growth rate of HfO 2 in different circumstances versus time for
+the 16th–20th cycles. The thickness of a monolayer of HfO 2 is 2.8 A˚. Cross
+shows growth rate considering all observed ALD reactions. Circle shows
+growth rate when direct ligand exchange during oxygen pulse is consid-
+ered rather than cooperative effect. Triangle shows growth rate when
+migration process is switched off. [Color figure can be viewed in the online
+issue, which is available at wileyonlinelibrary.com.]
+Figure 16. Top view of ALD film growth for HfO 2 after 20 cycles. (A) Migration is removed from the reaction
+list; a low growth rate and poor quality of film is obtained. (B) Structural relaxation events are considered; a
+realistic growth rate and dense film are achieved. [Color figure can be viewed in the online issue, which is avail-
+able at wileyonlinelibrary.com.]
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 257
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+purge time. Of course, a longer pulse duration would allow this
+desorption to occur during the pulse instead of during the purge.
+The KMC simulations thus illustrate that fast reactions saturate
+quickly, whereas slow reactions take orders of magnitude longer.
+This disparity may explain experimental saturation curves and
+the difficulty in choosing the optimum pulse/purge time.
+The water precursor pulse
+Chemisorption of the H 2O molecule onto a Lewis acidic sur-
+face of Hf is a necessary first step for dissociation of the H 2O
+molecule. Individual Hf have low acidity when bound to a
+ligand X like N(CH3)2. However, we have found that the H 2O
+molecule can adsorb through cooperation between a cluster
+of HfX fragments. [6] Such a cluster can be seen in Figure 11C-
+c, where five HfX are in close proximity. In Figure 11D-c, all of
+these X ligands have been replaced with OH groups. The clus-
+ter in Figure 11C-d undergoes a similar reaction to Figure 11D-
+d. The lifetime of molecular H 2O is too short for it to be
+observed frequently during the simulation.
+By contrast, isolated HfX that is not part of a cluster cannot
+undergo ligand exchange during the oxygen pulse (Fig. 11D-
+f ). We have attempted running the KMC model with direct
+ligand exchange at isolated HfX rather than in a cluster and
+we observe that the growth rate increases to 1.41–1.59 A ˚/
+cycle, over twice that obtained when only the cooperative
+effect is included (Fig. 15). A side view of the simulation box
+for this direct exchange simulation is shown in Figure 14A.
+As indicated in Figure 11C-c, creation of a cluster of HfX
+during the metal pulse is statistically probable. The necessity
+of the cooperative effect for adsorption of a H 2O molecule,
+discussed energetically before, [6] is shown quantitatively in
+KMC. Dissociation of the H 2O molecule creates active sites (OH
+groups) for the next cycle, as seen in Figure 11D-c.
+Incoming protons from dissociation of H 2O molecules in the
+clusters (e.g., Fig. 11D-c) cause nitrogen atoms in the remain-
+ing ligands to become protonated (Fig. 11C-d). Hence, two
+HfX3 lose their remaining ligands to become HfX and densify
+into the surface. Then, those HfX create a cluster such as Fig-
+ure 11C-c, during the oxygen pulse. The lifetime of this inter-
+mediate is short and, therefore, it is not visible in this
+snapshot. Ligand exchange immediately happens through the
+reaction pathway presented for Figure 11D-c, causing the final
+HX desorb, leaving an OH2 terminated surface (Fig. 11D-d).
+As well as delivering protons, dissociation of H 2O molecules
+will also deliver oxygen to the surface. The new oxygen atoms
+become highly coordinated as the number of remnant ligands
+decreases, and so these oxygen atoms are densified into the
+surface and subsurface layers resulting in a dense film. As a
+result, further desorption of the remaining ligands is facilitated.
+However, if the incoming oxygen atoms are poorly coordi-
+nated, then they become the active sites for the next Hf pulse.
+The incoming protons from the dissociation of H 2O also cause
+desorption of the remaining ligands. The HfX 3 fragment in Fig-
+ure 11C-a at the end of the purge loses HX until it terminates as
+HfX in Figure 11D-a at the end of the oxygen pulse. As there is
+no HfX at the neighboring sites, in the case of Figure 11D-a as
+well as 4f, the metal precursor terminates in HfX at the end of
+the cycle. This is significantly different from the simple/common
+assumption that all ligands are eliminated in every ALD cycle.
+The case illustrated in Figure 11C-e is slightly different. Desorp-
+tion of HX results in densification of the metal precursor to a
+pre-existing HfX neighbor. One of the Hf atoms obtains suffi-
+cient c.n. from the densified oxygen by dissociation of the H 2O
+molecule at this site. Further desorption of HX occurs from this
+cluster and fully coordinated Hf does not cooperate to adsorb a
+further H2O molecule. Hence, another HfX present in the cluster
+remains under-coordinated in Figure 11D-e.
+In each cycle, the “freshly deposited” fragments of Hf pre-
+cursor are usually widely spaced, rather than in clusters, due
+to the steric bulk of the precursor. Therefore, creation of a
+cluster of HfX may not happen during a single cycle. However,
+metal precursors arriving during the next metal pulse may
+combine with pre-existing HfX to create clusters. These clus-
+ters are active sites for adsorption of H2O molecules such as
+those shown in Figure 11C-c. In this way, almost all ligands are
+eventually eliminated over many cycles. Moreover, the ALD
+growth continues simultaneously in different layers and, there-
+fore, a cluster may be created that spans multiple layers.
+Conclusions
+In this study, we develop a 3D on-lattice KMC model to describe
+the ALD reactions for growth of HfO2 from Hf(N(CH3)2)4 and H2O.
+We implement all reactions that had been observed in first prin-
+ciples calculations[6] as discrete events in the on-lattice KMC sim-
+ulation. The fundamental chemistry of ALD and its dependence
+on the local environment at the surface are implemented using
+c.n. and neighbor list. This includes all steps, from the early stage
+of adsorption of each ALD precursor, kinetics of the surface pro-
+tons, interaction between the remaining precursors (steric effect),
+influence of remaining fragments on adsorption sites (blocking),
+densification of each ALD precursor, migration of each ALD pre-
+cursor, and cooperation between the remaining precursors to
+adsorb H 2O (cooperative effect). Without any fitted parameters,
+the resulting simulations show the growth of smooth and con-
+formal thin film at growth rates in agreement with experiment.
+We propose the migration of the low coordinated precursor
+fragments (here HfX 2) over areas with a low population of sur-
+face oxygen. This process introduces a slow motion (crawling)
+in the mesoscale. The validity of this and other proposed reac-
+tion pathways (e.g., multiple proton diffusion) is statistically
+established in the mesoscale.
+The formation of one monolayer of precursor fragments—cru-
+cial for ALD—and the statistical di stribution of the remaining frag-
+ments is shown at the end of the metal pulse. Adsorption and
+dissociation of H2O in clusters of adsorbed HfX are described, lead-
+ing to the delivery of oxygen and protons to the surface during
+the oxygen pulse. Through these processes, the remaining ligands
+desorb from the surface, leaving the surface with bulk-like HfO2
+terminated by OH for the next cycle. However, creation of a cluster
+of HfX may not happen during a single cycle. Therefore, we specu-
+late that some isolated HfX does not desorb from the surface at
+the end of oxygen pulse and persists for multiple cycles instead.
+The number of reaction events correlates strongly with the
+number of protons in the film. The kinetics of the surface
+FULL PAPER WWW.C-CHEM.ORG
+258 Journal of Computational Chemistry2014, 35, 244–259 WWW.CHEMISTRYVIEWS.COM
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+protons are effective in leading to ligand desorption. Proton
+transfer is the dominant reaction in the event list. Depletion of
+protons during the metal pulse and delivery of protons during
+the oxygen pulse cause alternately a decrease and then an
+increase in the number of events. Some of the introduced pro-
+tons persist in the bulk and do not participate in the ALD
+reaction leading to waste of CPU time.
+ALD growth is observed to occur simultaneously in different
+layers. In this way, the inherent roughness of the growth pro-
+cess can be quantified, which is another key property of ALD.
+Acknowledgments
+The authors acknowledge the SFI/HEA Irish Centre for High-End Com-
+puting (ICHEC) for the provision of computational facilities and sup-
+port. The authors thank Dr. Kevin Berwick for critically reading the
+manuscript and his constructivecomments. They also thank Dr. A.
+Esteve, Dr. M. Djafari Rouhani, and Dr. C. Mastail for their instructive
+discussion.
+Keywords: density functional theory /C1 kinetic Monte-Carlo /C1
+atomic layer deposition /C1 chemical vapor deposition
+How to cite this article: M. Shirazi, S. D. Elliott. J. Comput.
+Chem. 2014, 35, 244–259. DOI: 10.1002/jcc.23491
+[1] A. O’Mahony, S. Monaghan, R. Chiodo, I. Povey, K. Cherkaoui, R. Nagle, E.
+O’Connor, R. Long, V. Djara, D. O’Connell, F . Crupi, P . K. Hurley, and M.
+Pemble,ECS Trans.2010, 33, 69, Available at http://ecst.ecsdl.org/content/
+33/2/69.full.pdf1html, http://ecst.ecsdl.org/content/33/2/69.abstract.
+[2] P . K. Hurley, E. O’Connor, S. Monaghan, R. Long, A. O’Mahony, I. M.
+Povey, K. Cherkaoui, J. MacHale, A. Quinn, G. Brammertz, M. Heyns, S.
+Newcomb, and V. V. Afanas’ev,ECS Trans. 2009, 25, 113, Available at
+http://ecst.ecsdl.org/content/25/6/113.full.pdf1html, http://ecst.ecs-
+dl.org/content/25/6/113.abstract.
+[3] T. Hirvikorpi, M. Vh-Nissi, A. Harlin, M. Karppinen, Thin Solid Films
+2010, 518, 5463, ISSN 0040-6090, Available at http://www.sciencedirect.
+com/science/article/pii/S00406090100 05407.
+[4] V. Miikkulainen, M. Leskela, M. Ritala, R. L. Puurunen, J. Appl. Phys.2013,
+113, 021301, Available at http://link.aip.org/link/?JAP/113/021301/1.
+[5] R. A. Adomaitis, Chem. Vap. Depos. 2011, 17, 353, ISSN 1521-3862,
+Available at http://dx.doi.org/10.1002/cvde.201106922.
+[6] M. Shirazi, S. D. Elliott, Chem. Mater. 2013, 25, 878, Available at http://
+pubs.acs.org/doi/pdf/10.1021/cm303630e, http://pubs.acs.org/doi/abs/
+10.1021/cm303630e.
+[7] R. Puurunen, Chem. Vap. Depos. 2003, 9, 249, ISSN 1521-3862, Avail-
+able at http://dx.doi.org/10.1002/cvde.200306265.
+[8] M. A. Alam, M. L. Green, J. Appl. Phys. 2003, 94, 3403, Available at
+http://link.aip.org/link/?JAP/94/3403/1.
+[9] S. D. Elliott, Langmuir 2010, 26, 9179, Available athttp://pubs.acs.org/doi/
+pdf/10.1021/la101207y, http://pubs.acs.org/doi/abs/10.1021/la101207y.
+[10] Z. Hu, J. Shi, C. H. Turner, Mol. Simul. 2009, 35, 270, Available at http://
+www.ingentaconnect.com/content/tandf/gmos/2009/00000035/000000
+04/art00002.
+[11] M. D. Groner, F. H. Fabreguette, J. W. Elam, S. M. George, Chem. Mater.
+2004, 16, 639, Available at http://pubs.acs.org/doi/pdf/10.1021/
+cm0304546, http://pubs.acs.org/doi/abs/10.1021/cm0304546.
+[12] A. Voter, In Radiation Effects in Solids, Vol. 235, NATO Science Series;,
+K. Sickafus, E. Kotomin, B. Uberuaga, Eds.; Springer: Netherlands, 2007;
+pp. 1–23, ISBN 978-1-4020-5293-4.
+[13] J. Amar, Comput. Sci. Eng.2006, 8, 9, ISSN 1521-9615.
+[14] C. Battaile, D. J. Srolovitz, Annu. Rev. Mater. Res. 2002, 32, 297,
+Available at http://www.annualreviews.org/doi/pdf/10.1146/annurev.
+matsci.32.01210 2.110247, http://www.annualreviews.org/doi/abs/
+10.1146/annurev.matsci.3 2.012102.110247.
+[15] K. Reuter, First-Principles Kinetic Monte Carlo Simulations for Heterogene-
+ous Catalysis: Concepts, Status, and Frontiers; Wiley-VCH Verlag GmbH
+and Co. KGaA: Weinheim, 2011; pp. 71–111, ISBN 9783527639878, Avail-
+able at http://dx.doi.org/10.1002/9783527639878.ch3.
+[16] I. Neizvestny, N. Shwartz, Z. S. Yanovitskaja, A. Zverev, Comput. Mater.
+Sci. 2006, 36, 36, ISSN 0927-0256, Proceedings of the Second Confer-
+ence of the Asian Consortium for Computational Materials Science—
+ACCMS-2, Second Conference of the Asian Consortium for Computa-
+tional Materials Science, Available at http://www.sciencedirect.com/
+science/article/pii/S0927025605001989.
+[17] A. Dkhissi, A. Esteve, C.Mastail, S. Olivier, G. Mazaleyrat, L. Jeloaica, M.
+D. Rouhani, J. Chem. Theory Comput.2008, 4, 1915, Available at http://
+pubs.acs.org/doi/pdf/10.1021/ct8001249, http://pubs.acs.org/doi/abs/
+10.1021/ct8001249.
+[18] R. J. Bartlett, M. Musiał, Rev. Mod. Phys. 2007, 79, 291, Available at
+http://link.aps.org/doi/10.1103/RevModPhys.79.291.
+[19] J. Greer, J. Comput. Phys. 1998, 146, 181, ISSN 0021-9991, Available at
+http://www.sciencedirect.com/science/article/pii/S0021999198959538.
+[20] F. El-Mellouhi, N. Mousseau, L. J. Lewis, Phys. Rev. B 2008, 78, 153202,
+Available at http://link.aps.org/doi/10.1103/PhysRevB.78.153202.
+[21] K. Reuter, D. Frenkel, M. Scheffler, Phys. Rev. Lett.2004, 93, 116105.
+[22] D. T. Gillespie, J. Phys. Chem. 1977, 81, 2340, Available at http://
+pubs.acs.org/doi/pdf/10.1021/j100540a008, http://pubs.acs.org/doi/abs/
+10.1021/j100540a008.
+[23] G. Mazaleyrat, A. Estve, L. Jeloaica, M. Djafari-Rouhani, Comput. Mater.
+Sci. 2005, 33, 74, ISSN 0927-0256, Proceedings of the E-MRS 2004
+Spring Meeting; Symposium H: Atomic Materials Design: Modelling and
+Characterization, E-MRS 2004 Spring Meeting, Symposium, Available at
+http://www.sciencedirect.com/science/article/pii/S0927025604003416.
+[24] A. Bortz, M. Kalos, J. Lebowitz, J. Comput. Phys. 1975, 17, 10, ISSN
+0021-9991, Available at http://www.sciencedirect.com/science/article/
+pii/0021999175900601.
+[25] A. Chatterjee, A. F. Voter, J. Chem. Phys. 2010, 132, 194101, Available
+at http://link.aip.org/link/?JCP/132/194101/1.
+[26] S. Plimpton, C. Battaile, M. Chandross, L. Holm, A. Thompson, V. Tikare,
+G. Wagner, E. Webb, X. Zhou, C. G. Cardona, A. Slepoy, Crossing the
+Mesoscale No-Man’s Land via Parallel Kinetic Monte Carlo; Sandia
+Report, 2009, sandia national laboratories albuquerque, USA.
+[27] A. Slepoy, A. P . Thompson, S. J. Plimpton, J. Chem. Phys. 2008, 128,
+205101, Available at http://link.aip.org/link/?JCP/128/205101/1.
+[28] X. Zhao, D. Vanderbilt, Phys. Rev. B 2002, 65, 233106, Available at
+http://link.aps.org/doi/10.1103/PhysRevB.65.233106.
+[29] G. Henkelman, B. P . Uberuaga, H. Jonsson, J. Chem. Phys. 2000, 113,
+9901, Available at http://link.aip.org/link/?JCP/113/9901/1.
+[30] S. D. Elliott, G. Scarel, C. Wiemer, M. Fanciulli, G. Pavia, Chem. Mater.
+2006, 18, 3764, Available at http://pubs.acs.org/doi/pdf/10.1021/
+cm0608903, http://pubs.acs.org/doi/abs/10.1021/cm0608903.
+[31] M. Cho, H. B. Park, J. Park, S. W. Lee, C. S. Hwang, G. H. Jang, J. Jeong,
+Appl. Phys. Lett. 2003, 83, 5503, Available at http://link.aip.org/link/
+?APL/83/5503/1.
+[32] L. Nyns, A. Delabie, J. Swerts, S. Van Elshocht, S. De Gendt, J. Electrochem.
+Soc. 2010, 157, G225, Available at http://jes.ecsdl.org/content/157/11/
+G225.full.pdf1html, http://jes.ecsdl.org/content/157/11/G225.abstract.
+[33] D. M. Hausmann, R. G. Gordon, J. Cryst. Growth 2003, 249, 251, ISSN
+0022-0248, Available at http://www.sciencedirect.com/science/article/
+pii/S0022024802021334.
+Received: 24 July 2013
+Revised: 24 October 2013
+Accepted: 30 October 2013
+Published online on 19 November 2013
+FULL PAPERWWW.C-CHEM.ORG
+Journal of Computational Chemistry2014, 35, 244–259 259
+ 1096987x, 2014, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/jcc.23491 by Technische Informationsbibliothek Hannover, Wiley Online Library on [06/12/2024]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License

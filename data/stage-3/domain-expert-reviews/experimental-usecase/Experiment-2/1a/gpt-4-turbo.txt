@@ -1,0 +1,32 @@
+Property Grouping:
+1. ElectricalProperties box containing: dielectric constant, effective permittivity
+2. StructuralProperties box containing: thicknessStep coverage, filmUniformity, impurityContent, crystallinity, porosity
+3. OpticalProperties box containing: refractiveIndex
+4. Place deliveryMethod parameter in the processParameters
+
+Missing Properties:
+1. Reactor name and manufacturer
+2. Dosing times for precursor and co-reactant
+3. Growth per cycle
+4. ALDMethod
+5. MaterialDeposited
+6. Film Thickness
+7. Film conformality
+
+Adequacy of Descriptions:
+1. Schema Description: remove the "…including the deposition of materials like Tin Oxide and Titanium Dioxide."
+2. Remove the "vaporizationTemperatureRange" parameter
+3. Change the description of the deliveryMethod to "Method of delivering the reactants to the reaction chamber."
+4. Remove from the description of the processParameters the following: "…including detailed temperature profiles and exposure times."
+5. Remove the material of the reactor property
+6. Remove the temperatureprofile
+7. Rename pressureConditions to Pressure
+8. PurgingConditions: include values for both precursor and co-reactant
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> ReactantSelecton(Precursor,CoReactant, DeliveryMethod)
+-> ProcessParameters(Reactor(Name,Manufacturer,Design),ReactantDeliveryMethod, DepositionTemperature,DepositionPressure, DosingTimes, PurgingTimes, GPC)
+-> FilmProperties(StructuralProperies, ElectricalProperties, OpticalProperties)

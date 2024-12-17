@@ -1,0 +1,38 @@
+Property Grouping:
+1. Place precursorPulse length in the thickness control property box and rename it to : PrecursorDosing Time
+2. Group: PrecursorName, ChemicalFormula, VaporPressure and DecompositionTemperature under the property name: Precursor inside the reactantsSelection box.
+3. Group: coReactantName, ChemicalFormula,VaporPressure(ifapplicable), DecompositionTemperature(ifapplicable),PlasmaProperties(if applicable) under the property name: co-Reactant inside the reactantsSelection box.
+4. Place uniformity and conformality in the Material Properties box.
+5. Group: dosing
+
+Missing Properties:
+1. Nucleation Behavior: nucleation period and self-limiting growth. Include them in the growth behavior box.
+2. Deposition Temperature, Chamber Pressure
+3. Reactor (name, manufacturer, design, characteristics)
+4. Density, Crystallinity, Roughness of the deposited film
+
+Adequacy of Descriptions
+1. Rename the description of the schema: "Schema for the ALD process, including process parameters and film properties"
+2. Rename coReactor property to coReactant
+3. Remove the melting point property.
+4. Remove the TDMAT Reactor property box: the schema should be universal, therefore the names of the properties should have a generic character.
+5. Remove the stoichiometry property.
+6. Rename the thicknessControl to GrowthBehavior
+7. Rename cycle time to Dosing Time. It should have two entries: one for the precursor and one for the co-reactant. Same for PurgingTime: two enties.
+8. Remove the saturation property box
+9. Remove the temperature dependence property box.
+10. Remove the uniformity value property from the uniformity box. It could be more of a comment or conclusion based on the discussions on the findings on uniformity from the text, rather than a value.
+11. Remove the conformality value property from the conformality box. It could be more of a comment or conclusion based on the discussions on the findings on conformality from the text, rather than a value.
+12. Remove the nucleation behavior property box.
+13. Remove the precursor consumption rate property
+
+Domain expert edited schema of the initial generated version:
+
+-> ALD Method used
+-> Material Deposited
+-> ReactantsSelection(Precursor[Name, ChemicalFormula, VaporPressure, DecompositionTemperature], coReactant[Name, ChemicalFormula,VaporPressure(ifapplicable), DecompositionTemperature(ifapplicable),PlasmaProperties(if applicable), CarrierGas])
+-> Reactor(name, manufacturer, design, characteristics)
+-> DepositionConditions(Temperature(indicate if the paper provides an ALD window too!), ChamberPressure, DosingTimes(precursor,coReactant), PurgingTimes(precursor, coReactant))
+-> GrowthBehavior(GPC, number of cycles, nucleation period, self-limiting growth)
+-> FilmProperties(thickness,uniformity, conformality, density, crystallinity, roughness, electrical properties [dielectric constant, resistivity, carrier density, mobility], optical properties[absorption coefficient, refractive index])
+-> OtherAspects(Safety, Film Stability, Reproducibility, LiteratureComparison, DevicePerformance)

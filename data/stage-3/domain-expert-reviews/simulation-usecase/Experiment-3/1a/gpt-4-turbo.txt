@@ -1,0 +1,186 @@
+Property Merging:
+None needed
+
+Property Grouping:
+1. Grouping is strange, there are too many things listed under precursors
+2. The most general groups make sense, but the subgroupings are where it starts to go wrong, mainly in simulation parameters.
+
+Missing Properties:
+1. Methodology is completely missing
+2. Source of data (experiment vs simulation)
+
+Adequacy of Descriptions:
+Not sure what the dynamic properties is referring to, I think these will be covered in previous categories.
+
+Domain expert edited schema of the initial generated version:
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition Process",
+    "type": "object",
+    "properties": {
+        "simulationParameters": {
+            "type": "object",
+            "properties": {
+                "precursors": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "selectivity": {
+                                "type": "string",
+                                "description": "Describes the selective behavior of the precursor on specific facets"
+                            },
+                            "decompositionMechanism": {
+                                "type": "object",
+                                "properties": {
+                                    "byProducts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "interactionWithHydroxyls": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "stericHindrance": {
+                                "type": "object",
+                                "properties": {
+                                    "ligandGeometry": {
+                                        "type": "string"
+                                    },
+                                    "effectOnGPC": {
+                                        "type": "string"
+                                    }
+                                },
+                                "description": "Effects of ligand geometry on growth per cycle due to steric hindrance"
+                            }
+                        }
+                    }
+                },
+                "reactionMechanism": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string"
+                        },
+                        "byProducts": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "activationBarriers": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "reactionPathways": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "quantumTunnelingEffect": {
+                            "type": "string",
+                            "description": "Effect of quantum tunneling on reaction rates"
+                        },
+                        "hinderedRotationsEffect": {
+                            "type": "string",
+                            "description": "Effect of hindered rotations on reaction rates"
+                        }
+                    }
+                },
+                "reactionConditions": {
+                    "type": "object",
+                    "properties": {
+                        "temperature": {
+                            "type": "string"
+                        },
+                        "pressure": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "growthPerCycle": {
+                    "type": "number",
+                    "description": "Thickness of film deposited per cycle, influenced by chemisorbed precursor amount"
+                }
+            }
+        },
+        "observableProperties": {
+            "type": "object",
+            "properties": {
+                "filmProperties": {
+                    "type": "object",
+                    "properties": {
+                        "uniformity": {
+                            "type": "string"
+                        },
+                        "roughness": {
+                            "type": "string"
+                        },
+                        "density": {
+                            "type": "string"
+                        },
+                        "temperatureProfile": {
+                            "type": "string"
+                        },
+                        "chemicalComposition": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "reactorDesign": {
+            "type": "object",
+            "properties": {
+                "surfaceType": {
+                    "type": "string",
+                    "description": "Describes the type of surface functionalities involved in reactions"
+                },
+                "gapDistance": {
+                    "type": "number"
+                },
+                "gasFlowRates": {
+                    "type": "object",
+                    "properties": {
+                        "purgeRate": {
+                            "type": "number"
+                        },
+                        "precursorRate": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "substrateVelocity": {
+                    "type": "number"
+                },
+                "vacuumPressure": {
+                    "type": "number"
+                }
+            }
+        },
+        "dynamicProperties": {
+            "type": "object",
+            "properties": {
+                "timeEvolutionOfSpecies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

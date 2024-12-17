@@ -1,0 +1,1352 @@
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Contents lists available at ScienceDirect
+Chemical Engineering Research and Design
+j ourna  l h omepage:  www.elsevier.com/locate/cherd
+Computational Fluid Dynamics simulation of the
+ALD of alumina from TMA and H2O in a
+commercial reactor
+G.P . Gakis a,b, H. Vergnesb, E. Scheidc, C. Vahlasd, B. Caussat b,∗,
+A.G. Boudouvis a
+a National Technical University of Athens, School of Chemical Engineering, Athens, Greece
+b Laboratoire de Génie Chimique, Université de Toulouse, CNRS, INPT , UPS, Toulouse, France
+c LAAS, Université de Toulouse, CNRS, Toulouse, France
+d CIRIMAT , Université de Toulouse, CNRS, INPT , UPS, Toulouse, France
+a r t i c l e i n f o
+Article history:
+Received 6 November 2017
+Received in revised form 14
+February 2018
+Accepted 20 February 2018
+Available online 2 March 2018
+Keywords:
+ALD
+CFD
+Alumina
+TMA
+Water
+Film uniformity
+a b s t r a c t
+A three-dimensional
+ Computational Fluid Dynamics model is built for a commercial Atomic
+Layer Deposition (ALD) reactor, designed to treat large area 20 cm substrates. The model aims
+to
+ investigate the effect of the reactor geometry and process parameters on the gas ﬂow and
+temperature
+ ﬁelds, and on the species distribution on the heated substrate surface, for the
+deposition
+ of Al2O3 ﬁlms from trimethyl aluminum and H2O. The investigation is performed
+in
+ transient conditions, without considering any surface reaction. A second CFD model is
+developed
+ for the feeding system of the reactor, in order to calculate the unknown reactant
+inlet
+ ﬂow rates. The two models are coupled via a computational strategy dictated by the
+available
+ experimental measurements. Results show that a purging ﬂow entering the reactor
+through
+ its loading door affects the ﬂow ﬁeld above the substrate surface and causes non-
+uniformity
+ in the temperature and reactants concentration on the substrate surface. During
+the
+ TMA pulse, a recirculation sets in above the substrate surface, leading to a non-uniform
+distribution
+ of
+ species on the surface.
+© 2018 Institution of Chemical Engineers. Published by Elsevier B.V . All rights reserved.
+1. Introduction
+Atomic Layer Deposition (ALD) is a deposition technique, derived from
+Chemical Vapor Deposition (Johnson et al., 2014), able to deposit highly
+conformal and uniform material ﬁlms onto a substrate. ALD is based
+on the sequential exposure of a surface to two reactants, with which
+the surface reacts through self-terminating reactions (Johnson et al.,
+2014; Puurunen, 2005; George, 2010), inside a reactor chamber. The
+self-limiting nature of the surface reactions in the Atomic Layer Depo-
+sition (ALD) process ensures a high control over the deposited material
+ﬁlm thickness down to the monolayer level (George, 2010). High unifor-
+mity and conformity of the deposited ﬁlm can thus be achieved under
+optimized conditions (George, 2010). These characteristics make ALD a
+favorable tool to produce ultra-thin ﬁlms for a variety of applications
+∗ Corresponding author.
+E-mail
+ address: brigitte.caussat@ensiacet.fr (B. Caussat).
+in microelectronics, optoelectronics, catalysis, renewable energy and
+more (Johnson et al., 2014). However, ALD is a complex technique since
+it depends on the nature of the reactants and on the process condi-
+tions, and for this reason, research regarding the surface reactions and
+growth mechanisms is still ongoing.
+One of the most studied ALD processes is the deposition of
+Al2O3 ﬁlms from tri-methyl aluminum (Al(CH3)3, TMA) and H2O vapor
+(Puurunen, 2005; Higashi and Fleming, 1989; Wind and George, 2010;
+Groner et al., 2004; Dillon et al., 1995; Ferguson et al., 2000; Ott et al.,
+1997; Elam et al., 2002; Salami et al., 2017; Henn-Lecordier et al., 2011a,b;
+Mousa et al., 2012; Li et al., 2007; Elliott and Greer, 2004; Widjaja and
+Musgrave, 2002; Weckman and Laasonen, 2015; Delabie et al., 2012;
+Travis and Adomaitis, 2014, 2013; Gobbert et al., 2002; Mazaleyrat et al.,
+2005; Pan et al., 2015a,b, 2016; Xie et al., 2015, 2016; Deng et al., 2016;
+https://doi.org/10.1016/j.cherd.2018.02.031
+0263-8762/© 2018 Institution of Chemical Engineers. Published by Elsevier B.V . All rights reserved.
+
+796 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Shaeri et al., 2015, 2004). Both reactants satisfy the chemical and ther-
+modynamic criteria for an ALD precursor, as they are volatile and
+thermally
+ stable for a range of temperatures (Puurunen, 2005) and can
+involve self-limiting surface reactions (Higashi and Fleming, 1989). A
+great number of experimental works has been published on this chem-
+ical system (Higashi and Fleming, 1989; Wind and George, 2010; Groner
+et al., 2004; Dillon et al., 1995; Ferguson et al., 2000; Ott et al., 1997; Elam
+et
+ al., 2002; Salami et al., 2017; Henn-Lecordier et al., 2011a; Mousa et al.,
+2012; Li et al., 2007; Henn-Lecordier et al., 2011b), in numerous reactor
+conﬁgurations and a wide range of process conditions and substrates.
+The robustness of the process and the wealth of literature reports
+demonstrate that ALD of Al2O3 offers a convenient model system to
+get insight to the fundamentals of the ALD processes in general.
+ALD is an inherently multi-scale process. From the interaction of
+molecules at the atomic scale and the ﬁlm growth evolution at the
+nano-scale, to the deposition inside surface features at the micro-scale
+or the thickness control on the substrate at the dm scale, and vice versa,
+the physical and chemical phenomena taking place are coupled. The
+difference in the time scales of the involved mechanisms, such as dif-
+fusion and adsorption of gaseous reactants and surface reactions, is
+another factor contributing to the complexity of the process. As exper-
+imental
+ investigations are tedious at such different time and length
+scales, physical based modelling has emerged as a way to study the
+fundamentals of those mechanisms. A wide number of density func-
+tional theory (DFT) calculations (Elliott and Greer, 2004; Widjaja and
+Musgrave, 2002; Weckman and Laasonen, 2015; Delabie et al., 2012) has
+been published to study the surface reaction energetics during the reac-
+tant exposure steps of the ALD process of alumina from TMA and H2O.
+These investigations consider the nature of the surface phenomena,
+and the different reaction states that the reactant molecules undergo
+during the process. Using the above energetics, Travis and Adomaitis
+(2014,
+ 2013) investigated the surface reaction kinetics, and the process
+dynamics during the ALD cycle. Gobbert et al. (2002) studied the step
+coverage
+ inside surface trenches using a feature scale model, while
+Mazaleyrat et al. (2005) used kinetic Monte Carlo simulations to study
+the growth evolution of alumina on silicon substrates.
+However, as the process takes place into an ALD reactor, the process
+parameters affect the transport phenomena inside the reactor chamber
+(Higashi and Fleming, 1989; Wind and George, 2010; Groner et al., 2004;
+Dillon et al., 1995; Ferguson et al., 2000; Ott et al., 1997; Elam et al., 2002;
+Salami et al., 2017), and hence the pressure and temperature ﬁelds, as
+well as the reactant concentrations, on which the surface reactions are
+dependent. As these phenomena are difﬁcult to study experimentally,
+numerical simulations in the reactor have emerged as a powerful tool
+for the process analysis of ALD reactors, complementary to the surface
+reactions analysis by DFT (Pan et al., 2015a,b, 2016; Xie et al., 2015, 2016;
+Deng et al., 2016; Shaeri et al., 2015, 2004). Indeed, reactor scale mod-
+elling
+ via Computational Fluid Dynamics (CFD) (Xenidou et al., 2010;
+Zahi et al., 2010) can provide useful insight regarding transport phe-
+nomena inside an ALD reactor, such as the temperature ﬁeld along the
+chamber, the local gas velocity, and the reactant distribution on the
+substrate during the reactant exposure steps. This can help determin-
+ing the optimal conditions for the process, in terms of minimization of
+pulse and purging times, leading to less reactant consumption and pro-
+cess time required. CFD simulations can also be used to study the effect
+of a given geometry on the process, especially in the case of reactors
+treating large area substrates (>10 cm). Uniform temperatures and reac-
+tant concentrations on the whole surface of the substrate are required
+to obtain uniform ALD ﬁlms. This means that the study of transport
+phenomena inside the reactor is crucial for the quality of the deposited
+ﬁlm, in terms of uniformity and conformity. CFD simulations have been
+performed to investigate the effect of numerous process parameters on
+the ﬁlm deposition (Pan et al., 2015a; Xie et al., 2015), and to determine
+the optimal dose and purge times for certain process conditions (Deng
+et al., 2016). Xie et al. (2016) studied the reactant dosing efﬁciency dur-
+ing the ALD process, in order to optimize reactant usage. Pan et al.
+(2015b)
+ analyzed the process in order to ﬁnd the optimal arrangement
+for a multi-wafer reactor setup. Shaeri et al. (2015, 2004) studied dif-
+ferent reactor designs to optimize the deposition large area substrates.
+A spatial ALD reactor, separating the reactants via the substrate posi-
+tion instead of time, was also studied via CFD simulations by Pan et al.
+(2016).
+In this work, a three-dimensional CFD model is built for a com-
+mercial ALD reactor with a complex geometry, depositing Al2O3 ﬁlms
+via the TMA/H2O process, on large area 20 cm substrates. The aim of
+this work is to investigate the transport phenomena occurring inside
+the reaction chamber during the ALD process in transient conditions
+during
+ the exposure and purge steps. This is the ﬁrst step towards an
+integrated
+ investigation of the ALD process, including, at a later stage,
+surface reactions. The CFD model of the ALD reactor itself is coupled
+with a second CFD model of the feeding system to account for the reac-
+tants inlet ﬂow rates, due to the absence of corresponding experimental
+data during the ALD exposure steps. The impact of the complex reactor
+geometry on the temperature, gas ﬂow ﬁelds and reactant distribution
+on the substrate is studied.
+2. Process description
+2.1. ALD setup
+The model is developed for the geometry of a commercial
+Ultratech
+®
+Fiji F200 ALD set-up. It consists of the ALD reactor
+and the reactant feeding system as detailed in Fig. 1.
+The reactor has three gas inlets, hereafter called top inlet,
+side inlet,
+ 
+and
+ loading door inlet, as shown in Fig. 1a. A steady
+ﬂow of argon (Ar) is permanently fed to the reactor via its
+top inlet, from which the majority of purging gas is enter-
+ing the reactor chamber. Another Ar ﬂow is permanently fed
+through the load lock inlet in order to purge the loading door,
+and reduce the amount of alumina deposited on the load-
+ing door walls. The side inlet is connected to the reactant
+feeding system (Fig.
+ 1b). Through the side inlet, a third Ar
+ﬂow
+ is permanently fed, which serves as a carrier gas for
+the reactants during the ALD exposure steps, and as a purge
+gas for the ALD purging period. The Ar ﬂow is regulated by
+mass ﬂow controllers (MFC), while the reactant pulses are con-
+trolled by the opening time of ALD valves. The reactor outlet is
+connected to a turbo-molecular vacuum pump. The pumping
+speed and base pressure are regulated with an automatic pres-
+sure controller (APC) unit. The APC unit consists of a heated
+throttling and sealing butterﬂy valve, installed upstream of the
+turbo pump. The base pressure is regulated in advance using
+a capacitance manometer at the reactor outlet, while during
+deposition, the outlet pressure is monitored by a Pirani gauge.
+Indeed, the capacitance manometer isolation valve is auto-
+matically closed during an ALD recipe, to prevent deposition
+on the measuring device. Hence, the only data provided during
+deposition is the pressure variation at the reactor outlet mea-
+sured by the Pirani gauge. The reactor walls and the precursor
+feeding system are heated via a jacket, while the substrate is
+heated via a chuck. The loading door walls are not heated.
+The feeding system consists of two stainless steel bottles,
+in which the TMA and H2O are stored, and a heated tube cir-
+cuit. The Ar ﬂow enters the feeding system at 20 ◦C through
+its inlet shown in Fig. 1b. The feeding system outlet is con-
+nected to the reactor side inlet. The tube circuit is heated to
+150 ◦C, while the reactant bottles are heated through conduc-
+tion to a measured temperature of 28 ◦C. The ALD valves are
+closed during the ALD purging times to ensure that no reac-
+tant is injected into the reactor chamber. During the exposure
+times, the valve of the respective reactant bottle opens for a
+given time, releasing the vapor pressure of the reactant gas
+above the surface of the liquid, which is injected into the reac-
+tor simply by pressure difference between the bottle and the
+reactor.
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 797
+Fig. 1 – Schematics of the ALD system (Ultratech
+®
+Fiji F200): a) the ALD reactor chamber, b) the reactant feeding system.
+2.2. Process conditions
+The TMA/H2O chemical system is considered in the model as
+ideal, i.e.
+ the reactions occurring between the reactants and
+the
+ surface fulﬁll the self-limiting criterion. Methane (CH4),
+the reaction by-product, is assumed inert (Johnson et al., 2014)
+and thermodynamically ideal; it is volatile and thermally sta-
+ble at the prevailing temperature (Puurunen, 2005).
+Although
+ not considered in the present modeling, the over-
+all reactions taking place on a previously hydroxylated surface
+during the reactant exposures are shown hereafter (Pan et al.,
+2016), for the understanding of the process and the analysis
+of the results:
+TMA pulse:
+2Al(CH3)3(g) + 3OH(s) → (O2)AlCH3(s) + O-Al(CH3)2(s) + 3CH4(g)
+(1)
+H2O pulse:
+2H2O(g) + ∗ Al(CH3)2(s) → Al(OH)2(s) + 2CH4(g) (2)
+H2O(g) + ∗ Al(CH3)(s) → AlOH(s) + CH4(g) (3)
+The overall reaction for the whole ALD cycle is (Johnson
+et al., 2014):
+2Al(CH3)3(g) + 3H2O(g) → Al2O3 + 6CH4 (4)
+The study
+ of the transport phenomena inside the reactor
+was performed with a preset deposition process recipe: the Ar
+purging gas was set to an uninterrupted total ﬂow of 180 sccm
+total (MFC standard conditions are 24 ◦C and 1 bar), consist-
+ing of 100 sccm fed through the reactor top inlet as the main
+reactor purge, 50 sccm fed through the load lock inlet as the
+loading door purge, and 30 sccm fed through the side inlet of
+the reactor,
+ to serve as carrier gas for the reactants.
+The
+ side inlet tube and feeding system were heated to
+150 ◦C. The substrate was heated to 300 ◦C, while the side walls
+of
+ the reactor were heated to 270 ◦C. This temperature is lower
+than the substrate temperature, since the TMA molecule starts
+to slowly decompose at temperature above 300 ◦C in the gas
+phase. The temperature of the loading door wall connected to
+the loading chamber
+ system was measured at 36 ◦C. The top
+and
+ load lock Ar purging gas enters the reactor at 20 ◦C.
+The opening times of the TMA and H2O vessels valves were
+set to 25 ms and 60 ms, respectively, for the pulsing steps of
+the process. The two pulsing times were separated by a 5 s Ar
+purge
+ time period. The base pressure of the process was set
+to 50 mT orr, as measured by the Pirani gauge at the reactor
+outlet. The base pressure measurement via the Pirani gauge
+will be discussed in detail in Section 4.1 and Appendix B. The
+operating conditions are summarized in Table 1.
+3. Computational model formulation
+3.1. Governing equations and model assumptions
+The governing equations are the conservation of mass,
+momentum, energy and chemical species, without any chem-
+ical reaction. The equations of conservation of chemical
+species include the Soret effect. They are all shown in
+Appendix A. The gas is assumed ideal and the thermal con-
+ductivity, dynamic viscosity, and diffusion coefﬁcients for
+the chemical species are computed using the kinetic gas
+theory. The Lennard-Jones parameters for the species are
+obtained from the CHEMKIN-PRO database (CHEMKIN-PRO,
+2013). The equations were discretized and solved using Com-
+sol Multiphysics
+®
+, which uses the ﬁnite element method. A
+quadratic basis function set was selected for the velocity and
+the species mass fractions, while a linear basis function set
+was used for temperature and pressure. Comsol Multiphysics
+®
+
+798 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. 2 – Computational mesh generated for: a) the ALD reactor model, b) the reactant feeding system.
+Table 1 – Process conditions used for the ALD reactor.
+Flow conditions
+Carrier gas
+ Ar ﬂow (through the feeding system and
+side
+ inlet
+ of the reactor) (sccm)
+30
+To p
+ inlet Ar ﬂow (sccm) 100
+Load
+ lock inlet Ar ﬂow (sccm) 50
+Base pressure (as measured by Pirani gauge at the
+outlet)
+ (mT orr)
+50
+Thermal
+ conditions
+To p inlet temperature (◦C) 20
+Side inlet tube—feeding system tubes temperature (◦C) 150
+Load
+ lock inlet temperature (◦C) 20
+Reactor side walls temperature (◦C) 270
+Substrate temperature (◦C) 300
+Temperature
+ measured at the loading door and loading
+chamber connection (◦C)
+36
+Reactant
+ bottles measured temperature(◦C) 28
+ALD
+ cycle conditions
+TMA valve opening time (s) 0.025
+TMA purge time (s) 5
+H2O valve opening time (s) 0.060
+H2O purge time (s) 5
+was also used to generate the computational mesh for both
+domains (reactor and feeding system). The mesh used for
+the feeding system model consists of 35,246 tetrahedral ele-
+ments and the mesh used for the ALD reactor model consists
+of 149,226 tetrahedral elements. The computational mesh for
+the two models is presented below, in Fig. 2.
+3.2. Computational strategy and boundary conditions
+A major difﬁculty in modelling the process under study is the
+absence of data regarding the reactant pulses that are injected
+into the ALD reactor during the exposure steps of the cycle, as
+no measuring device is installed. As a consequence, the reac-
+tant ﬂows were calculated using the feeding system model
+and
+ a strategy was developed to connect the models which
+describe the feeding and the deposition parts of the ALD sys-
+tem. This strategy is summarized in Fig. 3. At the ﬁrst step,
+the steady ﬂow of Ar is simulated in the reactor. This is done
+by using the ﬂow rates and temperatures of Table 1 as inlet
+boundary conditions. The heating chuck on which the sub-
+strate is placed, is accounted for via a heating ﬂux on the
+substrate
+ surface.
+ This
+ heating ﬂux is adjusted, so that the
+center
+ of the substrate (where the temperature controller is
+situated) is set to the desired temperature i.e. 300 ◦C. An outlet
+pressure boundary condition is set at the reactor outlet. This
+pressure is taken equal to the base pressure of the ALD pro-
+cess, measured by the capacitance manometer at the outlet,
+controlled by the APC unit. The resulting pressure distribution
+is used to simulate the feeding system.
+The feeding system was ﬁrst simulated with the two valves
+of the reactants vessels closed. This was done by using the
+30 sccm of Ar (Table 1), serving as a carrier gas, as an inlet
+boundary condition. An impermeable interface is used to
+account for the closed ALD valves. The feeding system outlet,
+connected to the side inlet of the reactor, was set to the pres-
+sure computed for the side inlet in the previous step (constant
+ﬂow of Ar inside the reactor). The gas volume in each vessel
+above the liquid reactants is assumed to be half that of the bot-
+tle, at a pressure equal to the vapor pressure of the respective
+reactant at 28 ◦C; i.e. 1940 Pa (14.55 T orr) for TMA and 3820 Pa
+(28.65 T orr) for H2O (NIST Chemistry WebBook, 2005).
+The solution for the steady Ar ﬂow in the feeding system
+is then used as an initial condition to simulate the reactant
+exposure steps. This is done by removing the impermeable
+interface
+ corresponding to each reactant exposure and sim-
+ulating the process for the valve opening time indicated in
+Table 1. After the valve opening, the interface is set again and
+the process is simulated until no more reactant is present in
+the feeding system. This leads to the calculation of the reac-
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 799
+Fig.
+ 3 – Schematic representation of the implemented computational strategy.
+tant pulses during the ALD exposure steps. The computed
+pulses are then implemented as a transient inlet condition to
+the side inlet of the reactor model. The turbo-molecular vac-
+uum pump sets the reactor outlet pressure. Since the pump
+works under a constant volumetric ﬂow rate for a wide range
+of
+ pressures,
+ the volumetric rate of the pumped reactants
+remains constant during deposition. Consequently, a steady
+volumetric ﬂow rate is set at the reactor outlet and coincides
+with that of the steady Ar ﬂow in the reactor. Using the com-
+puted pulses as inlet conditions and the computed constant
+outlet ﬂow
+ rate
+ as an outlet condition, the ALD exposure steps
+inside
+ the reactor chamber are simulated.
+4. Results and discussion
+4.1. Model predictions: steady ﬂow of Ar
+4.1.1. V acuum pump and Pirani gauge simulation
+As presented in the previous section, the starting point for
+the computations is the base pressure of the ALD process. As
+detailed in Section 2.1, it is measured by the Pirani gauge, a gas
+dependent
+ gauge that measures the pressure of a gas through
+its thermal conductivity. In this case, the Pirani gauge used
+is calibrated for nitrogen. T ypically, the pressure reading by
+a Pirani gauge is multiplied by a correction factor, different
+for each gas, in order to calibrate the measurements to the
+real pressure value. In our case, these correction factors are
+unknown. So, in order to compare the predicted values, Pcalc,
+with the Pirani measurements, Pexp, we convert the former fol-
+lowing Eq. (5), which accounts for the dependence, assumed
+linear, of the pressure reading on the ratio of the thermal con-
+ductivities of the gas mixture and nitrogen. This conversion
+is then based on the principles of the Pirani gauge (indirect
+measurement
+ of pressure via the gas thermal conductivity),
+with
+ the assumption that the pressure measurement is lin-
+early dependent on the thermal conductivity of the gas. The
+converted value, denoted by Pconv is used for the compari-
+son with the experimental measurements (Pexp). Although the
+particular assumption is not validated for H2O or TMA, exper-
+iments showed (see Appendix B) that it can be used for the
+pure Ar ﬂow.
+Pconv = Pcalc · kmixture
+kNitrogen
+(5)
+where
+ kmixture is the thermal conductivity of the gas mixture,
+kNitrogen is the thermal conductivity of nitrogen, Pcalc is the
+calculated pressure. Using the kinetic gas theory, the thermal
+conductivity of pure nitrogen at the outlet temperature, i.e
+270 ◦C, is estimated 0.041106 W/mK.
+Eq. (5) is also used to transform the experimental pressure
+measurements of the Pirani gauge to the real pressure value,
+to be used as a model input for the base pressure of the ALD
+process.
+During the purging step of the reactor, the base pressure is
+measured by the Pirani gauge at P = 50 mT orr; outlet pressure
+measurements are shown in Appendix B. This value corre-
+sponds
+ to Pcalc = 72 mT orr (from Eq. (5)), imposed as outlet
+boundary condition. The computed outlet volumetric ﬂow rate
+is Qout = 57, 1255 L/s at the outlet temperature and pressure.
+This value is set as outlet boundary condition when the tur-
+bomolecular vacuum pump operates with a constant butterﬂy
+valve opening. Using the previous solution as an initial esti-
+mate for the next one, the total Ar ﬂow through the reactor
+inlet is varied. Experiments were performed for the same con-
+ditions, and the outlet pressure was measured by the Pirani
+gauge. The comparison between the experimental measure-
+ments and the model predictions, i.e. the converted values
+(Pconv) obtained using Eq. (5), is shown in Fig. 4.
+The
+ good agreement between measurements and model
+predictions
+ with the conversion of Eq. (5) validates the treat-
+ment of the vacuum pump operation by the model. The
+
+800 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig.
+ 4 – Outlet
+ pressure vs inlet Ar ﬂow rate: model predictions (line) and experimental measurements (dots).
+resulting linear relation between the inlet Ar ﬂow and the
+outlet pressure is as expected, considering that the volumet-
+ric ﬂow
+ rate
+ of
+ the pump remains constant within a pressure
+range.
+ From the results of Fig. 4, the gauge pressure conversion
+by Eq. (5) is also validated for the case of pure Ar ﬂow.
+4.1.2. Flow ﬁeld results
+For the operating conditions of Table 1, the ﬂow ﬁeld inside the
+reactor is shown in Fig. 5a. For comparison, in Fig. 5b is shown
+the
+ ﬂow
+ ﬁeld at 30 sccm top inlet ﬂow. The velocity vectors are
+plotted in a xy plane of the reactor, in z = 0, where symmetry
+exists in our geometry in the z+ and z− coordinate.
+A plug ﬂow develops inside the reactor chamber and close
+to the substrate. An interesting result is the effect of the Ar
+ﬂow entering from the loading door inlet. As Fig. 5a shows,
+the loading door ﬂow is suppressed by the top inlet Ar ﬂow,
+near the right edge of the substrate surface. If the top inlet
+ﬂow rate of Ar is not high enough, the loading door Ar ﬂow
+will affect the ﬂow and hence the species distribution on the
+substrate surface, that could lead to non-uniform deposition.
+This is shown in Fig. 5b, where the loading door inlet ﬂow
+affects
+ the ﬂow above the substrate surface, due to the lower
+top inlet ﬂow rate. The side of the substrate exposed to the
+loading door ﬂow will be purged more efﬁciently than the rest
+of the substrate surface, leading to non-uniform species dis-
+tribution on the substrate surface. The top and side inlet ﬂow
+must be adjusted so that the loading door ﬂow does not affect
+the ﬂow above the substrate surface.
+4.2. Model predictions: substrate temperature
+The predicted temperature ﬁeld in the reactor chamber and
+the temperature proﬁle on the substrate are shown in Fig. 6,
+using the conditions in Table 1.
+Fig. 6a shows that the gas is quite isothermal into the reac-
+tor with a temperature close to that of the walls (270 ◦C), except
+near the inlet zones where it is colder and near the substrate
+where it is hotter (300 ◦C). The substrate is not isothermal
+(Fig. 6b), due to the cooling provided by the gas coming from
+the vicinity of the reactor walls. The calculated temperature
+on
+ the substrate perimeter is equal to 289 ◦C. Results also show
+the
+ effect of the loading door purge. The Ar ﬂow entering the
+reactor chamber at 20 ◦C lowers the temperature in the area
+close the loading door (Fig. 6a) and at the nearby substrate side
+(at
+ 279 ◦C). The temperature difference between the substrate
+center and the loading door side reads 21 ◦C.
+This
+ temperature difference can impact the deposition pro-
+cess in various ways. For example, it may affect the adsorption
+of the species
+ on the substrate. Lower temperature favors
+adsorption of reactants on the loading door side of the sub-
+strate. Reaction will also be slower on the colder side of the
+substrate. Moreover, the minimum purging times required
+to effectively purge the reactor depend on the temperature.
+Lowering the temperature reduces the H2O adsorption rate
+from the surfaces of the reactor and thus purging should last
+longer (Groner et al., 2004). If the purging time is not long
+enough, the subsequent TMA pulse will lead to non-ideal,
+CVD-like reactions on the loading door side of the substrate,
+as TMA will react with adsorbed H2O molecules on the sub-
+strate surface. An experimental study (Henn-Lecordier et al.,
+2011b) has shown
+ the effect of an excess H2O pulse on the
+thickness
+ uniformity in a cross-ﬂow reactor, with increased
+purging times needed to desorb the remaining adsorbed H2O.
+This situation is enhanced at low process temperature, where
+the surface reactions are slower and highly dependent on
+the surface temperature. The surface temperature gradient
+can also affect the number of hydroxyl active sites present
+on the substrate (Puurunen, 2005). Ultimately, it may lead
+non-uniform ﬁlm thickness. In addition, the deposition tem-
+perature affects the composition and density of the ﬁlm
+(Groner et al., 2004).
+4.3. Model predictions: feeding system
+As described in Section 3.2 the pure Ar ﬂow simulation in the
+ALD reactor, is followed by the simulation of the feeding sys-
+tem. It uses the pressure computed at the reactor side inlet as
+an outlet pressure condition. This pressure, computed to be
+142
+ mT orr, is set as the outlet pressure, and the Ar ﬂow is sim-
+ulated inside the feeding system, with both of the ALD valves
+closed. In Fig. 7, we present the pressure and the TMA mole
+fraction distribution inside the feeding system, with the valves
+closed.
+Once
+ the result has been obtained for the ﬂow inside the
+feeding system with the valves closed, it is used as an initial
+condition for the pulsing steps simulations. The impermeable
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 801
+Fig. 5 – a) Flow ﬁeld predictions for the process parameters of Table 1, b) ﬂow ﬁeld predictions at 30 sccm top inlet ﬂow.
+Fig. 6 – a) Temperature ﬁeld inside the reactor chamber, b) temperature proﬁle on the substrate surface for the substrate
+center at 300 ◦C.
+Fig.
+ 7 – Feeding system simulation results for the pure Ar ﬂow, with the ALD valves closed: a) pressure distribution, b) TMA
+mole fraction distribution.
+
+802 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. 8 – Feeding system model results for the TMA and H2O reactant pulses: a) ﬂow rate, b) molar fraction averaged at the
+feeding system outlet.
+Fig. 9 – Outlet pressure variation vs time: model predictions vs Pirani gauge measurements.
+interface that approximates the ALD valve for each reactant
+is removed for each pulsing step respectively. When the valve
+closes, the impermeable interface is re-set, until all remaining
+reactant species are removed from the feeding system. The
+total ﬂow rate and the average mole fraction are obtained at
+the feeding system outlet. As the outlet of the feeding sys-
+tem is connected to the side inlet of the ALD reactor, these
+values will serve as time-dependent inlet conditions for the
+reactor side inlet, thus simulating the ALD reactant exposure
+steps. The ﬂow rates calculated by the feeding system will be
+used as an inlet condition for the Navier–Stokes and continu-
+ity equations in the reactor model, whereas the mole fractions
+will be used as an input to the chemical species conservation
+equation.
+Fig.
+ 8 presents the calculated TMA and H2O pulses as a
+function of time, in terms of ﬂow rate (Fig. 8a) and averaged
+molar fraction (Fig. 8b) at the feeding system outlet.
+Results of Fig. 8a show a higher ﬂow rate for H2O than for
+TMA for the whole duration of the pulse, leading to an overall
+higher quantity of the delivered H2O. This is attributed to the
+higher vapor pressure of H2O inside the reactant bottles and to
+the longer opening time of the ALD valve above the H2O bottle
+(60 ms and 25 ms for H2O and TMA, respectively). It is noted
+that the initial and ﬁnal values of the outlet ﬂow rate of the
+feeding system after the reactant pulses are 30 sccm, equal to
+the Ar carrier gas ﬂow.
+As shown in Fig. 8b, the reactant molar fraction is substan-
+tial during both pulses, whereas Ar represents only roughly
+10 wt% of the gas mixture. Notably, it is predicted that
+although the H2O valve opening time is longer and the quan-
+tity of H2O entering the feeding system is higher, the TMA
+molecules evacuate the feeding system slower, i.e the feed-
+ing system takes more time to purge. This is attributed to the
+slower diffusion rate in N2 of TMA compared to H2O, since the
+molecules of the former are bigger and heavier than the latter.
+However, the feeding system is purged from both reactants in
+0.3 s. The total calculated amounts entering the reactor are
+0.63 mg for TMA and 0.408 mg for H2O.
+4.4. Model predictions: ALD exposure steps
+4.4.1. Outlet pressure variation
+The predicted outlet pressure with the Pirani conversion
+(Pconv) variation during three ALD cycles is shown in Fig. 9 and
+is compared with the experimental measurements.
+As
+ shown in Fig. 9, the model predictions for the pressure
+variation at the reactor outlet are in good agreement with mea-
+surements. In particular, the outlet peak heights are captured
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 803
+Fig. 10 – Snapshots of the ﬂow ﬁeld developed during the TMA exposure, inside the reactor chamber: a) 10 ms, b) 20 ms, c)
+30
+ ms, d) 60 ms, after the start of the TMA exposure.
+and thus the dynamic response to the reactant pulses. This
+validates the coupling of the two CFD models.
+Regarding the peak widths, it is noticed that the predic-
+tions slightly underestimate the time needed to restore the
+system to its base pressure for the H2O pulse. As the pressure
+reading given by the Pirani gauge is gas dependent, it will vary
+with the gas composition. The pressure reading is performed
+via the measurement of the gas thermal conductivity, which is
+inversely proportional to the molecular mass of the gas. As the
+gauge is calibrated for nitrogen, a gas with a higher molecular
+mass than N2 (28 g/mol) will lead to a lower pressure read-
+ing, while a gas with a lower molecular mass will have the
+opposite effect. During the H2O exposure, the surface kinetics
+plays a role on the pressure reading. H2O molecules, despite
+chemisorbing on the substrate surface, can also adsorb on the
+reactor walls. Due to their polar nature, they stick strongly
+on the reactor walls, and take time to desorb. Therefore, the
+time needed for their desorption is signiﬁcant and the corre-
+sponding purging time will be higher than for TMA. This is
+evident from the measured pressure peaks for the H2O expo-
+sure. The pressure at the outlet takes more time to restore
+to its initial value. Thus, the larger width of the H2O mea-
+sured pressure peak at the reactor outlet is attributed to the
+adsorption/desorption of H2O molecules on the reactor walls.
+4.4.2. TMA exposure
+As shown in Fig. 8, the TMA pulse entering the reactor reaches
+a peak above 400 sccm. Due to the high molecular mass of
+TMA, a high momentum pulse will enter the reactor chamber
+through the side inlet, leading to a disturbance of the ﬂow
+ﬁeld. As the ﬂow rate entering the reactor is time dependent,
+the resulting ﬂow ﬁeld inside the reactor main volume will be
+affected
+ during the exposure steps of the process. Snapshots
+of the ﬂow ﬁeld at different time instants, during the TMA
+exposure are shown in Fig. 10.
+
+804 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. 11 – Snapshots of TMA concentration proﬁles on the substrate surface, scales in mol/m3: a) 20 ms, b) 30 ms, c) 60 ms, d)
+80
+ ms, e) 100 ms, f) 200 ms, after the start of the TMA pulse.
+Results show a recirculation inside the reactor, during the
+ﬁrst ms of the TMA exposure step. Notably, one recirculation
+area is located in the gas phase above the substrate, while a
+second one near the reactor top inlet. After 60 ms, the TMA
+pulse stops (Fig. 10d), and the recirculation disappears. The
+predicted ﬂow ﬁeld and, in particular, the recirculation above
+the substrate, can have a signiﬁcant effect on the gaseous
+species distribution inside the reactor chamber and then on
+their distribution on the substrate.
+In Fig. 11, snapshots of the TMA concentration proﬁles on
+the substrate surface are plotted. The scale for each snapshot
+is
+ different for the sake of clarity.
+A non-uniform TMA concentration proﬁle appears on the
+substrate, during the TMA exposure. The TMA concentra-
+tion proﬁle on the substrate evolves along with the gas ﬂow
+ﬁeld inside the reactor chamber. While a recirculation exists
+in the gas phase (0–40 ms, snapshots a–c, Fig. 10), the TMA
+concentration reaches a maximum between the substrate cen-
+ter and the loading door side of the substrate, as shown in
+Fig. 11a and b. Notably, 20 ms after the start of the TMA
+pulse, the maximum concentration computed on the sub-
+strate exceeds 7 × 10−4 mol/m3,while the minimum value is
+seven
+ times smaller, i.e 1 × 10−4 mol/m3 (Fig. 9a), leading to
+a concentration difference of 93%. The maximum and min-
+imum values are 9 × 10−4 and 3 × 10−4 mol/m3 respectively,
+after 30 ms. As the side inlet ﬂow rate establishes to its initial
+value of 30 sccm, the maximum moves to the center of the sub-
+strate, as shown in Fig. 11c. At that point the concentrations
+are lower by two orders of magnitude, compared to the previ-
+ous time snapshots. The maximum value is 5.8 × 10−6 mol/m3
+and the minimum is below 5 × 10−6 mol/m3—a difference of
+16.3%. It is noted that while the side inlet ﬂow rate is higher,
+the loading door purging ﬂow is suppressed to an area beneath
+the substrate surface. However, once the ﬂow rate establishes
+to
+ its initial value, the loading door purge starts gaining inﬂu-
+ence on the species distribution on the substrate surface, as
+seen in Fig. 11c.
+For the time period between 60 ms to 200 ms after the start
+of the TMA pulse, snapshots 9d to 9f show that while the
+ﬂow ﬁeld is established, the gas mixture entering the reac-
+tor through the side inlet still contains TMA, which will ﬂow
+inside the reactor chamber. During this period, the loading
+door purge affects the concentration of TMA above the sub-
+strate surface. As shown in Fig. 11d and e, the loading door Ar
+ﬂow purges the side of the substrate exposed to it. The loading
+door
+ side of the substrate is exposed to a lower TMA con-
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 805
+Fig. 12 – Integral over time of the TMA ﬂux on the substrate surface, scale in mol/m2, during the whole TMA exposure.
+centration during the whole TMA exposure step after 60 ms
+from
+ the start of the TMA pulse. The concentrations remain
+in
+ the same order of magnitude as in Fig. 11c. The maximum
+concentration difference is 15.3% for Fig. 11d and 15.6% for
+Fig. 11e.
+After 200 ms, the side inlet ﬂow consists of Ar only. During
+the remaining purging time, the reactor chamber is purged
+from the remaining TMA molecules. The ﬂow ﬁeld is estab-
+lished and the resulting concentration proﬁle on the substrate
+is
+ shown in Fig. 11f. This species distribution proﬁle remains
+constant during the remaining purging time of the process.
+As Fig. 11 shows, the TMA concentrations on the substrate
+during the ﬁrst ms of the TMA exposure (Fig. 11a, b) are sig-
+niﬁcantly
+ higher than the
+ concentrations at the next time
+snapshots
+ (Fig. 11c–f). In order to analyze the exposure of the
+substrate to TMA molecules, we have calculated the species
+ﬂux on the substrate surface, using the Hertz-Knudsen equa-
+tion, in terms of mol/m2s:
+Fluxi = pi√
+2/EMMRT
+(6)
+The above species ﬂux is integrated over the whole TMA
+exposure and purging time of the ALD cycle. The resulting
+exposure of the substrate to TMA molecules is plotted in
+Fig. 12.
+The TMA ﬂux integral over time is not uniform; it has a
+maximum between the substrate center and the loading door
+side. This corresponds to the concentration proﬁles on the
+substrate during the TMA pulse, when the recirculation in
+the gas phase exists, as shown in Fig. 11a and b. This means
+that the majority of the substrate exposure to TMA occurs
+during the ﬁrst ms of the TMA pulse. The computed maxi-
+mum exposure difference on the substrate surface during the
+TMA exposure is 10.7%. The predicted exposure difference
+across the substrate surface can lead to deposited ﬁlm non-
+uniformity, especially if the rate limiting step of the process is
+mass transfer toward the substrate, i.e at high temperatures.
+However, if the species ﬂux is higher than the ﬂux required to
+cover all available reactive sites, the substrate surface will be
+saturated and the deposited ﬁlm will be uniform.
+4.4.3. H2O exposure
+Snapshots of the gas ﬂow ﬁeld inside the reactor during the
+H2O exposure are shown in Fig. 13.
+During the H2O pulse, as a high ﬂow rate enters the reac-
+tor chamber, a recirculation is again predicted near the reactor
+inlet. Another recirculation is located below the side inlet tube
+connection to the main volume of the reactor (Fig. 13a, b). The
+recirculation is less signiﬁcant for H2O than for TMA, and no
+recirculation appears above the substrate, contrary to the TMA
+pulse,
+ despite
+ the fact that the ﬂow rate entering the reac-
+tor
+ is higher than during the TMA pulse (Fig. 8a). After 60 ms
+(Fig. 13c), the recirculation disappears, while a high ﬂow rate
+is still entering the reactor. The side inlet ﬂow rate returns to
+its initial value (Fig. 8a) after 120 ms, and the ﬂow ﬁeld inside
+the chamber establishes to its initial condition.
+The effect of the ﬂow on the species distribution on the
+substrate is shown in Fig. 14, where snapshots of the H2O con-
+centration proﬁle are presented. The scale for each snapshot
+is different, as before.
+During the ﬁrst ms of the H2O pulse, the high ﬂow rate com-
+ing
+ from the side inlet of the reactor suppresses the loading
+door purging ﬂow, thus leading to a concentration proﬁle with
+a maximum at the substrate center (Fig. 14a). At this snap-
+shot, the maximum concentration is 4.7 × 10−4 mol/m3 and
+the minimum 3.03 × 10−4 mol/m3, leading to a maximum con-
+centration difference of 35.5%, As the ﬂow rate from the side
+inlet decreases, the loading door purge inﬂuences the species
+distribution, thus leading to a constantly lower H2O concentra-
+tion on the loading door side of the substrate, which is exposed
+to the purging gas. This gradual effect is shown in Fig. 14b–e.
+Fig. 14b and c corresponds to results obtained for a high side
+inlet ﬂow rate due to the H2O pulse. However, the momentum
+of this ﬂow is not high enough to suppress the loading door Ar
+ﬂow effect. The maximum concentration differences at these
+snapshots are 26.6% and 17.65% for Fig. 14b and c, respec-
+tively. Fig. 14d and e correspond to results obtained while the
+side inlet ﬂow rate has established to its initial value, how-
+ever the gas entering the side inlet still has an amount of
+water. The maximum concentration difference is 8.7% and
+4.5%, respectively; the concentration minimum is located at
+the loading door side of the substrate. The H2O concentration
+
+806 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. 13 – Snapshots of the ﬂow ﬁeld inside the reactor chamber: a) 10 ms, b) 20 ms, c) 60 ms, d) 200 ms after the start of the
+H2O pulse.
+proﬁle on the substrate during the purging step of the reactor
+is shown in Fig. 14f; the remaining water is removed from the
+chamber.
+From
+ the predictions in Fig. 14 is concluded that during the
+ﬁrst ms of the H2O pulse, the values of the H2O concentrations
+on the substrate surface are of the same order of magnitude,
+unlike the TMA pulse, where it took 30 ms for an almost full
+substrate surface exposure to TMA. It is also noted that the
+overall H2O concentrations are higher than in the TMA case.
+As done before, Eq. (6) is integrated over the whole duration
+of the H2O exposure and purge, to yield the total exposure
+presented in Fig. 15.
+The computed time integral of the species ﬂux shows a
+non-uniform exposure of the substrate surface to H2O. A lower
+exposure
+ is observed on the loading door side of the sub-
+strate,
+ while a maximum is calculated on the opposite side.
+The maximum total exposure difference is 6.7%. This value
+is lower than the corresponding value for the TMA exposure.
+The above result shows a signiﬁcant effect of the loading door
+purge on the gaseous H2O species distribution near the sub-
+strate. The loading door side of the substrate is exposed to
+6.7% less H2O molecules than the opposite side. Under ALD
+conditions, if the H2O exposure is not high enough to saturate
+the surface, a non-uniform ﬁlm will be deposited, with a lower
+ﬁlm thickness being deposited on the loading door side. With
+the mechanism presented in Section 2.2, two TMA molecules
+would need three H2O molecules to fully remove the methyl
+ligands. This means that the ratio between the H2O and TMA
+exposure should be at least 1.5. The ratio between the H2O and
+TMA exposures exceeds this value. However, this is only a ﬁrst
+approach,
+ since the kinetics of the reactants chemisorption
+are
+ not considered.
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 807
+Fig. 14 – Snapshots of the H2O concentration proﬁle on the substrate surface, scales in mol/m3: a) 20 ms, b) 30 ms, c) 60 ms,
+d) 100 ms, e) 120 ms, f) 200 ms after the start of the H2O pulse.
+4.5. Model predictions: purging time
+The whole ALD exposures and purging steps were simulated
+for one complete cycle. As Ar ﬂows constantly into the cham-
+ber,
+ the substrate is exposed to reactant molecules even during
+the purging steps. In order to study the purging efﬁciency of
+the reactor, the maximum reactant mole fraction inside the
+whole chamber was traced during the ALD pulses and purging
+steps of the ALD cycle, as detailed in Fig. 16, for both reactants.
+As expected, the maximum mole fraction inside the cham-
+ber during the ﬁrst stages of the exposure time is close to
+1, as the computed reactant pulses have a high reactant
+composition (Fig. 8b). After the reactant pulses, the maxi-
+mum mole fraction quickly drops, as the reactor purging step
+begins.
+In order to calculate a minimum purging time, we assumed
+that when the maximum reactant mole fraction inside the
+ALD reactor drops below a threshold, here taken 10−6, the
+reactor is purged. The obtained results are 2.7 s for TMA and
+3.1 s for H2O. Let us recall that these results are obtained by
+simulating only the transport of chemical species inside the
+reactor. In order to get a more reliable value for the purging
+time, chemical reaction kinetics and adsorption/desorption of
+species on the reactor walls must be taken into account. The
+reactions
+ must be given enough time to saturate the surface,
+while the by-products must desorb and diffuse away from the
+substrate surface, and be removed from the ALD chamber via
+convection and diffusion. The species also adsorb on the reac-
+tor walls and the time needed for their desorption contributes
+to the total purging time. Especially for the H2O molecules,
+the
+ 
+slow
+ desorption from the reactor walls can signiﬁcantly
+
+808 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. 15 – Integral over time of the H2O ﬂux on the substrate surface, during the whole H2O exposure and purge, scale in
+mol/m2.
+Fig. 16 – Time evolution of the maximum reactant mole fraction inside the reactor chamber.
+affect the purging time, especially under low temperature con-
+ditions.
+ Hence, the present model results can provide valuable
+information regarding the purging efﬁciency of the reactor
+in terms of gas species transport inside the chamber. How-
+ever, an efﬁcient minimum purge time will only be predicted
+when the above described physicochemical phenomena will
+be incorporated in the model.
+5. Conclusion
+A three-dimensional Computational Fluid Dynamics model
+for a commercial ALD reactor, depositing aluminum oxide
+(Al2O3) from TMA and H2O on 20 cm substrates was con-
+structed. As a ﬁrst step towards the understanding of the ALD
+process,
+ a model aiming to investigate the transport phenom-
+ena inside
+ the reactor chamber was developed in transient
+conditions without considering any surface reaction.
+As the reactant pulses entering the reactor are unknown,
+a second CFD model was developed for the reactant feeding
+system. The two models were coupled via a computational
+scheme tailored to the limited availability of experimental
+measurements, and the ALD process was simulated by imple-
+menting
+ the experimental conditions as boundary and initial
+conditions to the respective partial differential equations. The
+coupling between the two CFD models was validated by com-
+parison with the experimentally measured outlet pressure.
+The present work shows that the design of an ALD reactor
+should integrate the detailed study of the transport phenom-
+ena, including the effect of the reactor geometry, in order to
+optimize the design of its various parts. In our case, the reac-
+tor geometry strongly affects the temperature distribution via
+the existence of the loading door. A low temperature zone is
+present
+ at the loading door that modiﬁes the temperature on
+the substrate surface. This zone also affects the species distri-
+bution on the surface, as it was revealed for the case of H2O.
+The side inlet of the reactor, due to its smaller diameter, leads
+to high velocity ﬂows during the TMA pulse causing a recircu-
+lation
+ in the gas phase above the substrate, which seriously
+affects the TMA species distribution on the surface. These
+non-ideal behaviors are all associated with the reactor geom-
+etry.
+ The need for CFD analysis to optimize the geometrical
+setup of the reactor is therefore crucial.
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 809
+The process conditions can also be optimized. It was shown
+that a higher top inlet Ar ﬂow reduces the effect of the load-
+ing door Ar ﬂow. The 100 sccm top inlet ﬂow indicated by the
+recipe was not strong enough to suppress the loading door
+effect. Furthermore, heating of the loading door walls to a
+temperature equal to the reactor walls would lead to a more
+uniform temperature proﬁle on the substrate and in the reac-
+tor chamber, even this would enhance the deposition on the
+loading door walls. Regarding
+ the reactant distribution on the
+substrate,
+ the pulse times for each reactant should be long
+enough to saturate the whole surface, to ensure that no more
+reactants can be chemisorbed, given the self-terminating
+nature of the reactions. This would lead to highly uniform
+ﬁlms, not dependent on the gas phase reactant species dis-
+tribution.
+ However, as this optimal reactant dose depends on
+reaction kinetics, and hence on temperature, the temperature
+distribution on the substrate will affect again the uniformity
+of deposition.
+More precise conclusions and quantitative results about
+the effect of process parameters on the quality and uniformity
+of the ﬁlm can be drawn by including the surface chemistry,
+which
+ is the
+ subject of an ongoing research work.
+Acknowledgements
+This work was partly funded by a T oulouse Tech Inter Lab 2016
+grant. GPG acknowledges the ﬁnancial support provided by the
+NTUA Research Committee.
+Appendix A.
+a) Continuity equation:
+∂/SUB
+∂t + ∇ · (/SUBu) = 0 (A1)
+where /H9267 is the mass density of the gas mixture, and u the
+velocity.
+b) Momentum
+ equation:
+∂(/SUBu)
+∂t + ∇ · (/SUBuu) = −∇P + ∇ · [/SYN(∇u + ∇uT) − /SYN2
+3 (∇ · u)I] + /SUBg
+(A2)
+where P is the pressure, /H9262 the viscosity, I the unit tensor and
+g the gravity acceleration.
+c) Energy equation:
+Cp
+∂(/SUBT)
+∂t + Cp∇ · (/SUBuT) = ∇ · (k∇T) −
+n∑
+i=1
+ji · ∇Hi
+Mi
+(A3)
+where Cp is the speciﬁc heat of the gas mixture, T the temper-
+ature and k the thermal conductivity, n the number of species,
+ji is the diffusion ﬂux, Hi is the enthalpy of formation, and M
+is
+ the molecular weight of species i.
+d) Species transport equation
+∂(/SUBϖi)
+∂t + ∇ · (/SUBuϖ i) = −∇ · ji (A4)
+where ϖ i is the mass fraction of the i species in the gas phase.
+The diffusion ﬂux is calculated:
+ji = −/SUBϖi
+n−1∑
+k=1
+Dik
+[
+∇xk + (xk − ϖ k) ∇p
+p
+]
+− DT,i
+∇T
+T (A5)
+where Dik is the Maxwell Stefan Diffusion coefﬁcient. Eq. (A5)
+is an expression of Fick’s law, including the Soret effect, for
+constant mixture composition. The thermal diffusion coefﬁ-
+cients are calculated using the following equation:
+DT,i = −2.59
+ · 10−7T0.659
+⎡
+⎢⎢⎢⎢⎣
+M0.511
+i xi
+n∑
+i=1
+M0.511
+i xi
+− ϖ i
+⎤
+⎥⎥⎥⎥⎦
+·
+⎡
+⎢⎢⎢⎢⎣
+n∑
+i=1
+M0.511
+i xi
+n∑
+i=1
+M0.489
+i xi
+⎤
+⎥⎥⎥⎥⎦
+(A6)
+The set of equations is then completed with the ideal gas
+law,
+pi = ciRT (A7)
+where ci is the species concentration, and R the ideal gas con-
+stant.
+Appendix B.
+The experimental reactor outlet pressure was monitored via
+the
+ Pirani gauge during various ALD cycles, as deposition took
+place. The resulting pressure peaks are depicted in Fig. B1.
+It shows that the base pressure of the process i.e the sys-
+tem pressure during the purge step of the ALD cycle, is set
+at 50 mT orr, measured via the Pirani gauge.
+As presented in Section 3.2, the starting point for the calcu-
+lations is the base pressure of the ALD process, measured via
+the Pirani gauge, which is a gas dependent gauge that mea-
+sures the pressure of a gas through its thermal conductivity.
+The
+ thermal conductivity is in turn an inverse function of the
+molecular mass of the gas species. In our system, the Pirani
+gauge is calibrated for nitrogen (N2), while the inert gas used
+for the ALD process is Ar. T ypically, the pressure reading by
+a Pirani gauge is multiplied by a correction factor, different
+for each gas, in order to calibrate the measurements to the
+real
+ pressure value. In our case, these correction factors are
+unknown. In order to have a value for the correction factor
+of Ar, the reactor outlet pressure was measured, for a vary-
+ing Ar inlet, using a constant butterﬂy valve opening at the
+outlet. Both the Pirani gauge and the capacitance manome-
+ter were active during these measurements, and the relation
+between their readings is linear as shown in Fig. B2. The
+capacitance manometer shows the true pressure inside the
+chamber, while the Pirani gauge reading needs to be mul-
+tiplied by a correction factor, equal to the slope of the line
+that connects the measured points. The slope of the line is
+equal
+ to 1.4203, a value very close to the ratio of the ther-
+mal conductivities of nitrogen and Ar (1.4401), as computed
+using the kinetic gas theory at the outlet temperature, i.e.
+270 ◦C.
+As during deposition the reactants can deposit on all the
+surfaces inside the reactor chamber, the isolation valve for
+the capacitance manometer is kept closed during the ALD
+cycles, and the pressure is monitored via the Pirani gauge.
+
+810 Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811
+Fig. B1 – Experimental outlet pressure monitoring during various ALD cycles, as measured by the Pirani gauge.
+Fig. B2 – Comparison between pressure readings by capacitance manometer and Pirani gauge.
+As the outlet pressure is the only available measurement to
+compare with the CFD model predictions, the latter must be
+corrected
+ so that the results can be compared to the Pirani
+gauge measurements. We assume that as the gauge is cali-
+brated for nitrogen, the pressure indicated by the Pirani gauge
+will depend on the ratio of the thermal conductivities of the
+gas mixture and nitrogen. Hence, the calculated pressure Pcalc
+is converted by Eq. (5), presented in Section 4.1. Eq. (5) is used
+to transform the model predictions for the pressure to a value
+(Pconv) to be compared with the Pirani gauge measurements.
+Although the above assumption is not validated for H2O or
+TMA, experimental measurements of Fig. B2 show that it can
+be used for the Ar ﬂow. However, we use the same assumption
+for the reactants, as it is the only way to compare the outlet
+measurements with the model predictions.
+References
+CHEMKIN-PRO 15131, Reaction Design: San Diego, 2013.
+Delabie,
+ A., Sioncke, S., Rip, J., Van Elshocht, S., Pourtois, G.,
+Mueller,
+ M., Beckhoff, B., Pierloot, K., 2012. Reaction
+mechanisms
+ for atomic layer deposition of aluminum oxide
+on
+ semiconductor substrates. J. Vac. Sci. Technol. A: Vac. Surf.
+Films
+ 30 (1), 01A127.
+Deng, Z., He, W. , Duan, C., Shan, B., Chen, R., 2016. Atomic layer
+deposition
+ process optimization by computational ﬂuid
+dynamics.
+ Vacuum 123, 103–110.
+Dillon, A.C., Ott, A.W ., Way, J.D., George, S.M., 1995. Surface
+chemistry
+ of Al2O3 deposition using Al(CH3)3 and H2O in a
+binary
+ reaction sequence. Sur. Sci. 322 (1–3), 230–242.
+Elam, J.W., Groner, M.D., George, S.M., 2002. Viscous ﬂow reactor
+with
+ quartz crystal microbalance for thin ﬁlm growth by
+atomic
+ layer deposition. Rev. Sci. Instrum. 73 (8), 2981.
+
+Chemical Engineering Research and Design 1 3 2 ( 2 0 1 8 ) 795–811 811
+Elliott, S., Greer, J., 2004. Simulating the atomic layer deposition
+of
+ alumina from ﬁrst principles. J. Mater. Chem. 14 (21),
+3246–3250.
+Ferguson, J.D., Weimer, A.W ., George, S.M., 2000. Atomic layer
+deposition
+ of ultrathin and conformal Al2O3 ﬁlms on BN
+particles.
+ Thin Solid Films 371 (1), 95–104.
+George, S.M., 2010. Atomic layer deposition: an overview. Chem.
+Rev.
+ 110 (1), 111–131.
+Gobbert, M.K., Prasad, V. , Cale, T. S. , 2002. Predictive modeling of
+atomic layer deposition on the feature scale. Thin Solid Films
+410
+ (1–2),
+ 129–141.
+Groner, M.D., Fabreguette, F .H., Elam, J.W., George, S.M., 2004.
+Low-temperature Al2O3 atomic layer deposition. Chem. Mater.
+16
+ (4), 639–645.
+Henn-Lecordier, L., Anderle, M., Robertson, E., Rubloff, G.W .,
+2011a.
+ Impact of parasitic reactions on wafer-scale uniformity
+in
+ water-based and ozone-based atomic layer deposition. J.
+Vac.
+ Sci. Technol. A: Vac. Surf. Films 29 (5), 051509.
+Henn-Lecordier, L., Anderle, M., Robertson, E., Rubloff, G.W .,
+2011b.
+ Impact of parasitic reactions on wafer-scale uniformity
+in
+ water-based and ozone-based atomic layer deposition. J.
+Vac.
+ Sci. Technol. A: Vac. Surf. Films 29 (5), 051509.
+Higashi, G.S., Fleming, C.G., 1989. Sequential surface chemical
+reaction
+ limited growth of high quality Al2O3 dielectrics. Appl.
+Phys.
+ Lett. 55 (19), 1963–1965.
+Johnson, R.W ., Hultqvist, A., Bent, S.F ., 2014. A brief review of
+atomic
+ layer deposition: from fundamentals to applications.
+Mater.
+ T oday
+ 17 (5), 236–246.
+Li, M.Y ., Chang, Y. Y. , Wu, H.C., Huang, C.S., Chen, J.C., Lue, J.L.,
+Chang,
+ S.M., 2007. Effect of process pressure on atomic layer
+deposition
+ of Al2O3. J. Electrochem. Soc. 154 (11), H967–H972.
+Mazaleyrat, G., Estève, A., Jeloaica, L., Djafari-Rouhani, M., 2005. A
+methodology
+ for the kinetic Monte Carlo simulation of
+alumina
+ atomic layer deposition onto silicon. Comput. Mater.
+Sci.
+ 33 (1–3), 74–82.
+Mousa, M.B.M., Oldham, C.J., Jur, J.S., Parsons, G.N., 2012. Effect of
+temperature
+ and gas velocity on growth per cycle during
+Al2O3 and ZnO atomic layer deposition at atmospheric
+pressure.
+ J. Vac. Sci. Technol. A: Vac. Surf. Films 30 (1), 01A155.
+NIST Chemistry WebBook, 2005. NIST Standard Reference
+Database
+ Number 69. National Institute of Standards and
+Technology,
+ Gaithersburg, MD, USA, Available online:
+http://webbook.nist.gov.
+Ott,
+ A.W ., Klaus, J.W., Johnson, J.M., George, S.M., 1997. Al3O3 thin
+ﬁlm
+ growth on Si(100) using binary reaction sequence
+chemistry.
+ Thin Solid Films 292 (1–2), 135–144.
+Pan, D., Ma, L., Xie, Y. , Jen, T .C., Yuan, C., 2015a. On the physical
+and
+ chemical details of alumina atomic layer deposition: a
+combined experimental and numerical approach. J. Vac. Sci.
+Technol.
+ A: Vac. Surf. Films 33 (2), 021511.
+Pan, D., Ma, L., Xie, Y. , Wang, F. , Jen, T .-C., Yuan, C., 2015b.
+Experimental and numerical investigations into the transient
+multi-wafer
+ batch atomic layer deposition process with
+vertical and horizontal wafer arrangements. Int. J. Heat Mass
+Transf.
+ 91, 416–427.
+Pan, D., Jen, T .-C., Yuan, C., 2016. Effects of gap size, temperature
+and
+ pumping pressure on the ﬂuid dynamics and chemical
+kinetics
+ of in-line spatial atomic layer deposition of Al2O3. Int.
+J.
+ Heat Mass Transf. 96, 189–198.
+Puurunen, R.L., 2005. Surface chemistry of atomic layer
+deposition:
+ a case study for the trimethylaluminum/water
+process.
+ J. Appl. Phys. 97 (12), 121301.
+Salami, H., Poissant, A., Adomaitis, R.A., 2017. Anomalously high
+alumina atomic layer deposition growth per cycle during
+trimethylaluminum
+ under-dosing conditions. J. Vac. Sci.
+Technol.
+ A: Vac. Surf. Films 35 (1), 01B101.
+Shaeri, M.R., Jen, T .-C., Yuan, C.Y ., 2004. Improving atomic layer
+deposition
+ process through reactor scale simulation. Int. J.
+Heat
+ Mass Transf. 78, 1243–1253.
+Shaeri, M.R., Jen, T .-C., Yuan, C.Y ., Behnia, M., 2015. Investigating
+atomic
+ layer deposition characteristics in multi-outlet viscous
+ﬂow
+ reactors through reactor scale simulations. Int. J. Heat
+Mass
+ Transf. 89, 480–481.
+Travis, C.D., Adomaitis, R.A., 2013. Modeling ALD surface reaction
+and
+ process dynamics using absolute reaction rate theory.
+Chem.
+ Vap. Depos. 19 (1–3), 4–14.
+Travis, C.D., Adomaitis, R.A., 2014. Modeling alumina atomic layer
+deposition reaction kinetics during the trimethylaluminum
+exposure.
+ Theor. Chem. Acc. 133 (1), 3–11.
+Weckman,
+ T. ,
+ Laasonen,
+ K., 2015. First principles study of the
+atomic layer
+ deposition of alumina by TMA-H2O-process.
+Phys. Chem. Chem. Phys. 17 (26), 17322–17334.
+Widjaja, Y. , Musgrave, C.B., 2002. Quantum chemical study of the
+mechanism
+ of aluminum oxide atomic layer deposition. Appl.
+Phys.
+ Lett. 80 (18), 3304–3306.
+Wind, R.A., George, S.M., 2010. Quartz crystal microbalance
+studies
+ of Al2O3 atomic layer deposition using
+trimethylaluminum
+ and water at 125 ◦C. J. Phys. Chem. A 114
+(3),
+ 1281–1289.
+Xenidou, T .C., Prud’Homme, N., Vahlas, C., Markatos, N.C.,
+Boudouvis,
+ A.G., 2010. Reaction and transport interplay in Al
+MOCVD
+ investigated through experiments and computational
+ﬂuid
+ dynamic analysis. J. Electrochem. Soc. 157 (12),
+D633–D641.
+Xie, Y. , Ma, L., Pan, D., Yuan, C., 2015. Mechanistic modeling of
+atomic
+ layer deposition of alumina process with detailed
+surface
+ chemical kinetics. Chem. Eng. J. 259, 213–220.
+Xie, Y. , Pan, D., Ma, L., Yuan, C., 2016. Optimizing the process
+efﬁciency
+ of atomic layer deposition of alumina for its
+sustainability
+ improvement: a combined experimental and
+modeling
+ study. J. Clean. Prod. 133, 338–347.
+Zahi, I., Mur, P. , Blaise, P. , Estève, A., Rouhani, M.D., Vergnes, H.,
+Caussat,
+ B., 2010. Multi-scale modelling of silicon nanocrystal
+synthesis
+ by low pressure chemical vapor deposition. Thin
+Solid
+ Films 519 (22), 7650–7658.

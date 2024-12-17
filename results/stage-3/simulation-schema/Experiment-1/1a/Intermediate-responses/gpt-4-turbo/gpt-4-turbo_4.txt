@@ -1,0 +1,97 @@
+Based on the provided research paper and the current JSON schema, here are the refinements made to the schema:
+
+1. **Adding New Properties for Simulation Methodologies**:
+   - The research paper emphasizes the importance of simulation methodologies like Density Functional Theory (DFT) and Molecular Dynamics (MD) in understanding and predicting the ALD process. These methodologies are crucial for computational modeling of the ALD process, predicting surface interactions, and material properties at the atomic level.
+
+2. **Refining Existing Properties**:
+   - The schema previously did not explicitly include properties related to computational modeling and simulation, which are essential for modern ALD processes as highlighted in the research paper.
+
+3. **Applying Expert Recommendations**:
+   - The expert feedback suggested incorporating more detailed computational and simulation aspects into the schema. This aligns with the insights from the research paper, which detailed the use of DFT and MD in ALD processes.
+
+Here is the refined JSON schema incorporating these changes:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Operating temperature of the ALD process in degrees Celsius."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Operating pressure of the ALD process in Torr."
+        },
+        "method": {
+          "type": "string",
+          "description": "Method of deposition, e.g., conventional ALD, SALD."
+        },
+        "atmosphericPressure": {
+          "type": "boolean",
+          "description": "True if the process operates under atmospheric pressure."
+        }
+      },
+      "description": "Basic operating conditions for the ALD process."
+    },
+    "precursors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "chemicalName": {
+            "type": "string"
+          },
+          "reactivity": {
+            "type": "string"
+          },
+          "exposureTime": {
+            "type": "number",
+            "description": "Time during which the precursor is exposed to the substrate surface."
+          },
+          "concentration": {
+            "type": "number",
+            "description": "Concentration of the precursor in the carrier gas."
+          }
+        }
+      },
+      "description": "Details of precursors used including their interactions with different surfaces."
+    },
+    "spatialALDSettings": {
+      "type": "object",
+      "properties": {
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate in cm/s, relevant for SALD processes."
+        },
+        "injectionHeadGap": {
+          "type": "number",
+          "description": "Gap between the substrate and the injection head in micrometers."
+        }
+      },
+      "description": "Settings specific to Spatial ALD processes."
+    },
+    "simulationDetails": {
+      "type": "object",
+      "properties": {
+        "DFT": {
+          "type": "boolean",
+          "description": "Indicates if Density Functional Theory is used for simulation."
+        },
+        "MD": {
+          "type": "boolean",
+          "description": "Indicates if Molecular Dynamics is used for simulation."
+        }
+      },
+      "description": "Details about the simulation methodologies used in the ALD process."
+    }
+  }
+}
+```
+
+This schema now includes a new section `simulationDetails` that captures whether DFT and MD are used, aligning with the insights from the research paper and expert feedback. This addition helps in understanding the computational aspect of the ALD process, which is crucial for predicting and optimizing the deposition outcomes.

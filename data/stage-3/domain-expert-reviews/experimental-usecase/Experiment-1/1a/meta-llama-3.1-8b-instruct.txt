@@ -1,0 +1,34 @@
+Property Grouping:
+1. decompositionTemperature -> should belong in a subcategory about the Precursor not the process
+2. Remove the saturation property box. These (purging and dosing times) are already mentioned in the processparameters box.
+3. Place the chemicalcomposition property in the materialproperties box
+4. Remove the nucleationbehavior property in the materialproperties box. It is already mentioned in the thicknesscontrol box.
+5. The precursorstability can be included in a precursor subcategory.
+
+Missing Properties:
+1. Doesn't mention the precursor and co-reactant used.
+
+Adequacy of Descriptions:
+1. ProcessParameters description: should be more of "Process Parameters applied to deposit the desired material"
+2. CoReactantExposureTime -> rename it to coReactantDosingTime : it should follow the same naming format as the precursor
+3. Remove: TDMATExposureTime,  NHExposureTime, waterPulseLength, TiCl4PulseTime, H2OPulseTime -> all these correspond to specific reactants dosing and purging times. The main idea of the schema is that it is applied to all the ALD papers, therefore the parameters should have a more universal character. The PrecursorDosingTime, Co-reactantDosingTime, PrecursorPurgingTime, Co-reactantPurgingTime should work better as terms to refer to the purging and dosing times of the precursor and co-reactant.
+4. Remove: firstPurgeTime, secondPurgeTime -> this name doesn’t describe well the times.
+5. Material deposited enum: remove the terms mentioned, the materials deposited are even more than that. These refer to a specific research work. Again this schema should be universal and applied to a wide range of ALD systems and materials.
+6. ALDMethod enum: Include all the types of ALD methods: PEALD, Thermal ALD, Spatial ALD, Area Selective ALD etc.
+7. Same for the reactor enum: there are more types of reactors available for ALD depositions. More options should be included.
+8. Remove the min and max from the GPC,film thickness. Should be applied universally.
+9. Remove the enum for nucleation behavior. The description should be more of is there is nucleation behavior. That refers more of to the delay in achieving the linear growth per cycle (GPC) that leads to a nucleation delay. 
+10. Remove enum from the chemical composition elements property.
+11. Remove the stoichiometry property. The description is not correct. 
+12. Remove the enum from all the properties in the materialproperties box. Again it should be very generic and applied to all the materials studied within ALD.
+13. Uniformity: the description should not be "uniformity parameters". It should be more of how uniform the film is across the substrate.
+14. Remove the conformality value property, keep the aspect ratio.
+15. Remove the precursor consumption property from the otheraspects box.
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDSystem(materialdeposited,ALDmethod)
+-> ProcessParameters(reactor, precursor, co-reactant, temperature, pressure, precursordosingtime, coreactantdosingtime,precursorpurgingtime, coreactantpurgingtime)
+-> Thicknesscontrol (GPC,filmthickness,nucleationbehavior)
+-> MaterialProperties(chemicalcomposition, opticalproperties, electricalproperties, crystallinity, filmdensity, uniformity, conformality)
+-> OtherAspects(Safety,FilmStability, Reproducibility, LiteratureComparison, DevicePerformance)

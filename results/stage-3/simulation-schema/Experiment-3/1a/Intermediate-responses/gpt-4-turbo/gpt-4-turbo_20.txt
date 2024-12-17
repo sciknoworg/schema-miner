@@ -1,0 +1,185 @@
+Based on the research paper and the current JSON schema, the following updates and refinements are proposed to enhance the schema's accuracy and comprehensiveness in representing the PEALD process:
+
+1. **Addition of New Properties Related to Monte Carlo Simulation:**
+   - The research paper introduces a detailed Monte Carlo (MC) simulation protocol for the PEALD process. This includes the enumeration of surface –OH groups and the selection of free surface –OH groups for precursor deposition. These details are crucial for understanding the simulation dynamics and should be included in the schema.
+
+2. **Incorporation of Occupation Probabilities:**
+   - The paper discusses the use of predefined occupation probabilities for precursor reaction products during the MC deposition step. This is a critical parameter influencing the structure and quality of the deposited films. Adding this to the schema will provide a more comprehensive representation of the simulation process.
+
+3. **Enhancement of Reaction Mechanism Details:**
+   - The paper provides a detailed description of the reaction mechanisms, including the energy calculations and the effects of plasma pulses on the reactions. These details are essential for a deeper understanding of the PEALD process and should be reflected in the schema.
+
+4. **Refinement of Substrate and Precursor Details:**
+   - The paper mentions specific substrates (e.g., hydroxylated SiO2) and precursors (e.g., bis-diethylaminosilane) used in the simulations. Including these specifics can enhance the schema's utility for users looking to replicate or understand specific conditions of the PEALD process.
+
+5. **Documentation and Organization:**
+   - Ensure that each new or modified property is well-documented with descriptions, data types, and any relevant units or constraints. This will aid in the schema's clarity and usability.
+
+Here is the refined JSON schema incorporating the above suggestions:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "methodology": {
+          "type": "string",
+          "description": "Describes the overall methodology used in the ALD process, including experimental or simulation approaches."
+        },
+        "source": {
+          "type": "string",
+          "description": "Indicates whether the data comes from experimental results or simulations."
+        },
+        "simulationMethodology": {
+          "type": "string",
+          "description": "Type of simulation used, e.g., DFT (Density Functional Theory), MD (Molecular Dynamics), KMC (Kinetic Monte Carlo)."
+        },
+        "simulationDetails": {
+          "type": "string",
+          "description": "Details about the simulation parameters and configurations used in the ALD process modeling."
+        },
+        "reactorGeometry": {
+          "type": "object",
+          "properties": {
+            "geometryType": {
+              "type": "string",
+              "description": "Geometry of the reactor used in simulations or experiments, e.g., cylindrical, cross-flow."
+            },
+            "inletGeometry": {
+              "type": "string",
+              "description": "Describes the geometry of inlets in the reactor."
+            },
+            "outletGeometry": {
+              "type": "string",
+              "description": "Describes the geometry of outlets in the reactor."
+            },
+            "separatorType": {
+              "type": "string",
+              "description": "Type of separator used to isolate reaction zones, e.g., inert gas curtain, vacuum zones."
+            },
+            "specificReactor": {
+              "type": "string",
+              "description": "Specific reactor used, e.g., Oxford Instruments Opal ALD reactor."
+            }
+          }
+        },
+        "monteCarloSimulation": {
+          "type": "object",
+          "properties": {
+            "enumerationOfSurfaceGroups": {
+              "type": "string",
+              "description": "Process of enumerating surface –OH groups before each MC step."
+            },
+            "occupationProbabilities": {
+              "type": "object",
+              "properties": {
+                "pP1": {
+                  "type": "number",
+                  "description": "Probability of creating precursor bonded to one surface O atom."
+                },
+                "pP2": {
+                  "type": "number",
+                  "description": "Probability of creating precursor bonded to two surface O atoms."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "substrateDetails": {
+      "type": "object",
+      "properties": {
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Materials used as substrates, e.g., a-Si:H, a-SiNx:H."
+          }
+        },
+        "preparationMethod": {
+          "type": "string",
+          "description": "Method used for substrate preparation, including details of any surface treatments or cleaning procedures."
+        }
+      }
+    },
+    "reactionMechanism": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "General description of the reaction mechanisms in the ALD process."
+        },
+        "byProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "activationBarriers": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "description": "List of activation energy barriers for various reactions, measured in electron volts (eV)."
+          }
+        },
+        "reactionPathways": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Detailed description of reaction pathways including adsorption, surface reactions, and desorption."
+          }
+        },
+        "computationalModelsUsed": {
+          "type": "string",
+          "description": "Describes the computational models used for understanding the reaction mechanisms."
+        },
+        "modelOutcomes": {
+          "type": "string",
+          "description": "Outcomes and predictions from the computational models used."
+        },
+        "precursorDecomposition": {
+          "type": "string",
+          "description": "Details the decomposition process of the precursor during the ALD cycle."
+        },
+        "waterInteraction": {
+          "type": "string",
+          "description": "Describes the interaction between water molecules and the surface during the hydrolysis phase."
+        },
+        "surfaceCoordination": {
+          "type": "object",
+          "properties": {
+            "coordinationNumbers": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "description": "List of coordination numbers relevant to surface sites during reactions."
+              }
+            },
+            "neighborList": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "List of neighboring atoms or groups affecting the surface reactions."
+              }
+            }
+          }
+        },
+        "precursors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "List of precursors used in the ALD process, e.g., Indium cyclopentadienyl (InCp)."
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This refined schema now includes detailed properties related to the Monte Carlo simulation method, occupation probabilities, and enhanced descriptions of the reaction mechanisms, providing a more accurate and comprehensive representation of the PEALD process.

@@ -1,0 +1,1239 @@
+Multiscale Modeling of the Atomic Layer Deposition of
+HfO2 Thin Film Grown on Silicon: How to Deal with a
+Kinetic Monte Carlo Procedure
+A. Dkhissi,* A. Este`ve, C. Mastail, S. Olivier, G. Mazaleyrat, L. Jeloaica, and
+M. Djafari Rouhani
+Laboratoire d’Analyse et d’Architecture des Syste`mes-CNRS, Uni Versity of Toulouse,
+7a Venue du Colonel Roche, 31077 Toulouse, France
+Received April 09, 2008
+Abstract: An original integrated approach developed within a multiscale strategy, which
+combines ﬁrst-principles quantum simulations and kinetic Monte Carlo (KMC), is presented to
+investigate the atomic layer deposition (ALD) of HfO2 on Si(100) surface. Density functional
+theory within the hybrid functional is used to determine the detailed physicochemical mechanisms
+and associated energetics of the two half cycles taking place during the initial stage of ﬁlm
+growth. A kinetic Monte Carlo model is then proposed that deals with the stochastic nature of
+the calculated DFT mechanisms and barriers. Beyond the chemical information emanating from
+DFT calculations, the lattice-based KMC approach requires preliminary physical considerations
+issued from the crystal structures that the system is intended to adopt. This is especially critical
+in the case of heterogeneous systems like oxides deposited on silicon. We also describe (i)
+how atomistic conﬁguration changes are performed as a result of local events consisting in
+elementary reaction mechanisms occurring on speciﬁc lattice sites, (ii) the temporal dynamics,
+governed by transition probabilities, calculated for every event from DFT activation barriers,
+and (iii) the relation of KMC with the ALD experimental procedure. Some preliminary validation
+results of the whole multiscale strategy are given for illustration and pertinence with regard of
+the technological main issues.
+1. Introduction
+In the electronic ﬁeld, SiO2 has been the gate dielectric of
+choice for MOS devices for several decades because of its
+ability to grow on silicon, its thermal stability, and its low
+level of defect density at the interface, resulting in excellent
+electrical properties of the devices. Unfortunately, the
+reduction of the SiO2 gate oxide thickness in agreement with
+Moore’s law has led to unacceptable tunnelling and leakage
+current levels.1 So, the conventional SiO2 gate reaches its
+physical and electrical limitations. An intense effort to ﬁnd
+a replacement for SiO2 as the gate dielectric for future MOS
+electronics has been under way for several years. For this
+purpose, the importance of high-k gate dielectrics has been
+well demonstrated.2 Indeed, in addition to showing a high
+dielectric constant, a potential high- k replacement must
+satisfy many stringent requirements, such as the high quality
+of the interface, a desired band alignment with silicon, and
+a large electronic gap. At present, the leading materials are
+Al2O3, HfO2, and ZrO2 oxides, considered as the ﬁrst high-k
+generation candidates to meet these criteria and replace SiO2.
+For MOS applications, HfO2 is attractive because it exhibits
+a bulk permittivity of almost 25, a wide band gap (5.68 eV),
+and a good thermodynamic stability in contact with silicon.3
+However, the growth of a SiO2 interfacial layer between
+HfO2 and the silicon substrate leads to an increase of the
+experimental EOT (equivalent oxide thickness) of the gate
+stack.
+Among various methods for growing high-k dielectric
+ﬁlms, atomic layer deposition (ALD) show a unique ability
+to deposit ultra thin ﬁlms with excellent conformity and
+uniformity over large areas.4 ALD, which is a vapor
+* To whom correspondence should be addressed. E-mail:
+adkissi@laas.fr.
+J. Chem. Theory Comput. 2008, 4, 1915–1927 1915
+10.1021/ct8001249 CCC: $40.75  2008 American Chemical Society
+Published on Web 10/15/2008
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 13:06:23 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+deposition technique, is based on the cycling of self-
+terminating surface reactions. Indeed, each precursor is
+pulsed into the reaction chamber alternately, and the reaction
+between the incoming precursors and surface species is self-
+terminating. Thus atomic-level control of ﬁlm growth is
+supposed to be achieved. Experimentally, ALD has been
+actively investigated for deposition of HfO2
+5-21 for which
+HfCl4 and H2O are often used as precursors.22-24 In practice,
+the quantity of metal atoms deposited per cycle depends on
+the temperature, on the chemical nature of the precursors
+used, and related reactive sites on the surface. For instance,
+Ritala et al. found that only a submonolayer of the HfO2
+ﬁlm is deposited during each cycle.22 Therefore, a detailed
+understanding of the basic mechanisms that take place during
+each cycle is required if one wants to optimize the deposition
+and to reach full monolayer coverage at each cycle. This is
+especially true for the few ﬁrst deposited layers whose
+quality, in terms of interface defects, is of major importance
+for subsequent electrical properties. In recent studies, some
+groups have investigated speciﬁc problems of ALD of hafnia
+ﬁlms, their structural, optical, and electrical characteristics.25-28
+They show that diffusion and solid-state reactions at the
+substrate-ﬁlm interface may inﬂuence the ﬁlm material and
+create or modify an interface layer between the ﬁlm and
+substrate.29 On silicon substrates, these reactions could result
+in undesirable formation of defects, silicate or silicide layers,
+which may further signiﬁcantly deteriorate the properties of
+the dielectric layer.29-32 Others issues, such as contamination
+effects resulting from the uncontrolled precursor decomposi-
+tion, are observed. In particular, chlorine contamination has
+been asserted and well documented on ﬁlms grown with
+HfCl4 precursors.20,33-35 It is of great importance for optimal
+future experimental setups that a precise atomic level
+description of the basic reaction mechanisms responsible for
+the overall process of high-k ﬁlm growth and also that their
+relation with the thermodynamic parameters be established.
+In this respect, the decomposition of HfCl4 on the substrate
+and further hydrolysis of the resulting surface complex, that
+is, SiO2-O-HfCl3 should be thoroughly investigated. Mean-
+while, today’s state-of-the-art theoretical methods can play
+a decisive role in reduction of the expensive experimental
+efforts needed for screening large numbers of candidate
+materials and associated process parameters. Theoretical
+approaches can speed up the selection of suitable gate
+dielectrics and growth methods by limiting the experimental
+input needed. For these reasons, a detailed understanding of
+the basic mechanisms that take place during each cycle of
+ALD has been the subject of intensive research effort by
+several theoretical groups using ﬁrst principles, especially
+via density functional theory.35-51 In our group, we have
+considered the ab initio study of the initial stage of the ALD
+as being essential for the complete understanding and the
+control of the growth of the high-k (Al2O3, ZrO2, and HfO2)
+ﬁlms for gate dielectrics applications.49-51 Our ﬁnal aim is
+to achieve the ambitious task of elaborating a new generation
+of tools dedicated to atomic scale simulation of technological
+process, for an optimization of experimental setups. Here,
+our strategy is to combine the ab initio level of calculations
+with kinetic Monte-Carlo techniques into a multiscale
+approach, which will incorporate enough reaction mecha-
+nisms to be ready for being tested against experimental
+setups. Rigorously, molecular dynamics should be a suitable
+tool to address atomic scale process simulation. However,
+microelectronic processes deal with mesoscopic structures,
+several millions of atoms, and cover timescales beyond
+seconds or minutes. Molecular dynamics is then limited for
+two major reasons: (i) interatomic potentials have to be
+generated, which is a particularly difﬁcult task in the frame
+of heterostructures and interfaces, and (ii) timescales are
+limited to nanoseconds of experimental duration. Thus kinetic
+Monte Carlo (KMC) is an alternative procedure that is of
+great help in the modeling of microelectronic processes: a
+lattice-based model makes it possible to avoid the detailed
+description of continuous atomic trajectories, and the kinetics
+of the sequence of events is explicitly treated and can meet
+typical process durations. While traditional thermodynamic
+and kinetic models deal with average physical quantities,
+kinetic Monte Carlo is able to consider a wide range of
+possible conﬁgurations at the atomic scale and to choose only
+one random path out of all possible ones. This corresponds
+to an actual (ALD) experiment. The path is determined
+according to random numbers sampled according to transition
+probabilities between conﬁgurations. Obviously, the transi-
+tion probabilities depend also on the local conﬁguration,
+activation barriers and on the ﬁlm deposition conditions, such
+as pressure and temperature. Moreover the role of each
+mechanistic step on an ensemble of interacting species makes
+it feasible to uncover process-dependent types of growth,
+kinetics, and their associated atomic arrangements. The
+present paper is dedicated to the description of the prelimi-
+nary version of our KMC tool enabling the treatment of HfO2
+ALD from HfCl4 and H2O precursors at the atomic scale. In
+the following, we will focus our attention on the basic
+ingredients needed to develop what we call a lattice-based
+KMC model. We will deﬁne a lattice framework able to
+represent the transition from the silicon diamond structure
+to the HfO2 crystalline structure. Then we introduce the
+concept of basic atomistic mechanisms and show how they
+can be derived from ab initio calculations. We will ﬁnally
+present the temporal dynamics rules of our model before
+showing validation and applications.
+2. Theoretical Approaches
+2.1. Ab Initio DFT. The calculations are performed
+within the framework of Kohn-Sham density functional
+theory. Speciﬁcally, we used the hybrid functional B3-LYP,
+which combines Becke’s three-parameter exchange func-
+tional (B3)52 with Lee-Yang-Parr gradient corrected cor-
+relation functional (LYP).53 All the atoms are described by
+a triple-/dzetavalence plus polarization (TZVP) functions. For
+Hf atoms, we used the ecp-60-mwb energy-consistent
+pseudopotentials given by the Stuttgart-Dresden-Bonn
+(SDB) group.54-56
+The surface is built according to the following procedure.
+It is modeled by a cluster that includes a dimer unit of the
+2× 1 reconstructed Si(100) surface having each of its Si
+dangling bonds passivated by an H atom. Only the ﬁrst Si
+1916 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+layer atoms are left free during the relaxation. The second-,
+third-, and fourth-layer atoms, including the H terminations,
+are held ﬁxed in their bulk tetrahedral positions. This type
+of constraint will avoid unrealistic relaxations of the surface
+model during the optimization procedure. The unconstrained
+part of the cluster was then oxidized by ﬁve oxygen atoms
+placed in the Si-Si bonds closest to the surface. Therefore,
+subsequent relaxations were performed after each newly
+arrived O atom was embedded. The result is 1-dimer
+peroxide-like57,58 model for Si(100)/SiO2
+-2 × 1 surface. Of
+the two remaining dangling bonds on the dimer, one is
+hydroxylated and the other hydrogenated. One then obtains
+a 28-atom optimized structure with a ﬁnal stoichiometry of
+Si9O6H13. The calculations are performed with Turbo -
+mole5.559 and Gaussian03.60
+2.2. Kinetic Monte Carlo (KMC).KMC is a stochastic-
+based model aimed at simulation of ﬁlm growth at the atomic
+scale, the ﬁnal objective being to furnish alternative/new tools
+for replacement of the macroscopic conventional TCAD tools
+used for years by engineers in microelectronics. Indeed, from
+the engineering point of view, the main interest is in the
+microstructure that is produced under speciﬁc processing
+conditions. Such a model performs virtually the explicit
+experimental processing procedure event after event, at the
+atomic scale. This is operated through probabilistic rules that
+make the overall simulation comparable with an actual
+experiment.61,62 It involves millions of atoms with a time
+duration longer than the second. Unfortunately, the most
+predictive models, that is, the quantum-based models are not
+tractable at this scale. Two options can be further considered:
+molecular dynamics (MD) and kinetic Monte Carlo (KMC).
+MD solves the Newton equation of motion for each atom in
+the system. Trajectories are continuous and necessitate very
+short integration time steps that make the simulation cumber-
+some for durations beyond the nanosecond. Another draw-
+back of the MD method is the general lack of adequate
+interatomic potential for highly disordered and heterogeneous
+systems. This is particularly true for microelectronics
+semiconductor/oxide interfaces such as silicon/high-k gate
+oxides. KMC appears to be a simpliﬁcation compared with
+MD: MD continuous trajectories are replaced with discrete
+atomic jumps. A prior knowledge of these hoppings is needed
+and must be listed from any other source: quantum-based
+models or experimental characterization. Thus, provided the
+characteristics of reaction pathways are known, KMC
+methods allow the simulation of more ambitious systems in
+terms of size and duration of the simulated experiment,
+meeting the requirements of the next generation of processes
+in microelectronics. Also, the lattice-based KMC, because
+of its induced structural simpliﬁcation, makes it easier to
+process the data concerning the atomic arrangement as a
+function of the implemented basic mechanisms. This con-
+trasts with the difﬁculty in dealing with structural aspects in
+MD, where complex statistical methods have to be employed.
+Basic ingredients needed to develop what we call a lattice-
+based KMC model are detailed as follows: (i) we ﬁrst deﬁne
+a lattice framework able to operate the desired transition
+between the silicon crystal and the oxide structure; (ii) we
+then characterize each conﬁguration with the aim of as-
+sociating each lattice site to the chemical nature of the species
+occupying the site; (iii) we introduce the concept of events
+that must describe correctly the chemistry of the basic
+mechanisms; (iv) we ﬁnally indicate how to deal with the
+time evolution in the KMC, namely, the temporal dynamics
+of the KMC.
+2.2.1. One Crystal Lattice Model. 2.2.1.1. Lattice
+Description. In contrast to molecular dynamics, where atoms
+are moving continuously in space, the lattice-based procedure
+developed in this KMC software allows a very efﬁcient
+treatment of atomic displacements: the atoms discretely move
+from predeﬁned sites to other sites according to transition
+probabilities. Obviously, this schematic picture is motivated
+by physicochemical considerations through the knowledge
+of the basic mechanisms and the investigation of lattice
+structure. This last point becomes crucial in the case of
+heterogeneous systems, where at least two different crystal-
+lographic structures are being considered. This is the case
+in our study, where metallic oxides are grown on an ultrathin
+silicon oxide, itself grown or deposited on a silicon substrate.
+First, a reliable and systematic way of representing the atom
+locations is needed. Then, the implementation of conﬁgura-
+tions makes the connection between a location and its
+chemical nature: for instance, a site may be unoccupied or
+occupied by Si, Hf, etc.We point out that this lattice picture
+gives the possibility of making schematic and comprehensive
+graphical views of the system and therefore of performing a
+simple analysis of the results that does not require complex
+post-processing of the data. In this description, where an atom
+is represented in its network site, its real location is implicitly
+somewhere around this particular site.
+2.1.1.2. Modeling of the Atomic Conﬁguration. We now
+describe the construction of a model in charge of representing
+the atomic conﬁguration of a Si/SiO2/HfO2 system of sites.
+Beyond the crystalline aspects, we will introduce tools able
+to take into account the molecular states: precursors, sub-
+stituents, contaminants, etc. The management of the neigh-
+bors will also be investigated. Attention will ﬁnally be given
+to the modeling of the substrate and its connection with the
+introduced crystalline model. Overall crystallinity is deﬁned
+when Hf and oxygen atoms are located in the predeﬁne lattice
+sites. In this case, Hf may be fully or under-coordinated
+depending on the occupancy of the oxygen lattice sites
+around. When densiﬁcation occurs, rearrangement of oxygen
+atoms should induce an increase of the coordination number.
+a. Crystallographic Considerations. A preliminary crys-
+tallographic study is essential in close connection with the
+construction of the atomic conﬁguration. In our case, the
+system is heterogeneous: “high-k” oxide on silicon with an
+ultrathin silica interface. Moreover, the basic species are
+molecular precursors whose mechanisms of decomposition
+prove to be complex and poorly understood. It is thus
+necessary to develop a system of location able to represent
+simultaneously various crystalline structures containing vari-
+ous elements. Moreover, further reﬁnements will be neces-
+sary to take account of several subtleties, such as molecular
+states, substituents, and contaminants, in opposition to
+crystalline states. First of all, it is advisable to know the
+crystallography of the HfO2 oxide. Hafnia exists under
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1917
+
+
+different crystallographic structures. At low temperature,
+HfO2 has a monoclinic phase. When the temperature is
+increased, it transforms into the tetragonal phase and then
+into the cubic phase. Experimental evidence of crystalline
+grains for thick oxide or post-annealed ﬁlms has been
+established. However, the structure close to interface, that
+is, the oxide structure near the silicon/silicon dioxide, is not
+known. Therefore, to correctly model this interface, one has
+to make a coincidence lattice site study. For us, it then
+appears judicious to consider the (100) face of the cubic
+phase of hafnia: it matches efﬁciently the (100) silicon
+surface structure, is geometrically easier to describe, and does
+not contradict or hinder the experimental results. Thus, the
+overall idea consists of building the model of location via a
+single cubic structure, keeping in mind that the real positions
+of atoms are “somewhere around” these arbitrary crystalline
+positions. The substrate will be a Si(100) surface function-
+alized by hydroxyl groups, which are known to be the active
+surface sites with regard to the precursor gas phase.63
+b. Two-Dimensional Basic Cell. To characterize the sites
+in our KMC, we have to deﬁne a two-dimensional cell where
+there should not be any ambiguity between atom species and
+locations. For that, we superimpose the conventional cubic
+cell of oxide and silicon-based SiO2 (100) surface and try to
+ﬁnd an agreement between their crystallographic parameters.
+The silicon surface structure is taken as the crystal reference,
+an ultrathin silicon dioxide being able, in this view, to
+accommodate perfectly with this structure. We obtain the
+hypothetical conﬁguration represented in Figure 1. This
+resulting picture leads to the best agreement between the
+different cells. The silicon substrate is represented by two
+atomic layers to know the orientation of the bonds in the
+higher layers. In Figure 1, siloxane bridges and hydroxyl
+functions are represented just as an indication. This surface
+representation is very schematic: in particular, we do not
+show the dimer formation inducing Si-O-Si species,
+although they are taken into account in the calculations.
+Silicon atoms are schematically located at the nodes of the
+diamond lattice, without taking account of displacements
+usually observed. According to the crystallographic tables,64
+the distance separating two Si surface atoms is 3.84 Å. If
+one then considers that the cubic cell parameter of hafnia
+oxide is 5.04 Å, the distance separating two neighboring Hf
+atom is 3.57 Å. It thus appears possible to accommodate
+the two structures, thanks to the coincidence between Si(100)
+and Hf(100), with a tension of the cubic hafnia that can be
+assimilated to an intrinsic strain at the interface level of the.
+In more detail, how do Hf positions compare to those of Si?
+The answer that we formulated is illustrated in Figure 1.
+Let us imagine now that we deposit several HfO2 cubes
+in tension, as seen previously, on the substrate, with an ideal
+agreement of the cells. We see that a tilt of the cell is required
+to obtain a complete matching of the atoms. It is then possible
+to completely cover the surface without defect. It is, to some
+extent, what we would like to obtain in real experiments,
+the defects resulting from the kinetic process and the
+stochastic nature of the growth. Figure 2 is a top view of
+this ideal conﬁguration where the various species are
+represented by symbols for a better legibility. We thus have
+a (100) surface of silicon atoms, covered by single-crystal
+HfO2 in its cubic phase. The square base of a conventional
+cubic cell is represented in dotted line. Five hafnium atoms
+are located in the second layer (k ) 2): the four corners of
+the square and the central atom (gray round symbols). On
+the monolayer above (k ) 3), we ﬁnd four hafnium atoms
+corresponding to the centers of the four side faces (gray
+square symbols). The ﬁrst four oxygen atoms (gray round
+symbols on dotted line) are situated between these two layers
+(k ) 2 + 1/2). By addition of two new layers, one of oxygen
+atoms (gray round symbols on the dotted line atk ) 3 +
+1/2) and one of hafnium atoms (gray round symbols atk )
+4), one obtains the totality of the conventional cube. This
+cube is obviously not the primitive cell, minimal for the
+construction of a crystal. The primitive cell, which we
+consider to be the unit cell, is represented in thick dotted
+lines and is found by observation of Figure 2 globally.
+According to altitude, or more exactly to the layer indexk,
+one meets various species, placed at various positions of this
+cell. For thek ) 1 layer, we have a silicon placed on a
+Figure 1. Cubic cell of hafnia deposited on the Si/SiO 2
+substrate functionalized with hydroxyl groups.
+Figure 2.Top view of ideal conﬁguration. Several HfO2 cubes
+are deposited on the substrate with an ideal agreement of
+cell. A two-dimensional cell is identiﬁed where there should
+not be any ambiguity between atom species and locations.
+1918 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+triangle. For the even layers, a hafnium will be placed on a
+gray round symbol, and for the odd layers (exceptk ) 1),
+hafnium will be located on a dark gray square. Between two
+layers of hafnium, we ﬁnd two oxygen atoms placed on the
+gray round dotted lines (for clarity, they are represented only
+in the conventional cell). This primitive cell thus makes it
+possible to represent in an exhaustive way an HfO2 crystal,
+in its cubic phase, on a (100) silicon surface. It contains preset
+sites that are able to accommodate the various atoms that
+compose the system, while placing them at the adequate
+position.
+c. Atomic Conﬁgurations. Through the lattice description,
+we built a grid to help us to locate the atoms. Now we must
+formalize the possible chemical nature of species occupying
+these sites. Thus, the conﬁguration, that is, the site occupation
+nature, should characterize the local atomic arrangement
+within the site. We introduce a data-processing structure that
+will take account not only the crystalline conﬁguration but
+also the chemical functions, the various contaminants, and
+the molecular groupings with their substituent. Each element
+of grid will thus contain several ﬁelds of occupation. For
+the metal element, it is provided in molecular form in the
+precursor, is then incorporated as an adsorbed molecule, and
+ﬁnally, is stabilized in the crystalline state. Therefore, the
+ﬁeld of metal occupation can be empty (value 0), be occupied
+by a molecular hafnium (value 1), or occupied by a
+crystalline hafnium (value 2). A crystalline state corresponds
+to the case where a hafnium is located somewhere around a
+preset site, while being based on the cubic cell of dense
+oxide. On the other hand, in its molecular state, the Hf atom
+is attached to the substrate by only one connection, that is,
+a treelike structure, after physisorption or chemisorption of
+the precursor molecule. It is advisable to distinguish these
+two states because their reactivities will be, without any
+doubt, different because one Hf-OH or Hf-Cl dangling
+bond transforms into Hf -O-Si-substrate (Sub) tightly
+bound to the substrate. As an example, Figure 3 presents
+one such molecule, a chemically absorbed grouping, having
+three Cl substituents attached. The substituents have their
+own ﬁelds of occupation: one for Cl and one for OH. The
+values of these two ﬁelds can reach 4; their sum has to remain
+lower than 4 to respect the coordination number of hafnium
+atoms in their covalent environment. For the crystalline
+oxygen atoms considered in the construction of the elemen-
+tary cell, two ﬁelds of Oa and Ob sites are identiﬁed. They
+can be empty or occupied. Let us recall that these oxygen
+atoms are of crystalline type and do not have to be confused
+with those of hydroxyls or the groupings, O-Hf, which are
+considered as molecular.
+These oxygen crystalline sites can be occupied after what
+we will call “densiﬁcation” mechanisms, described later in
+Section 3.1.3.The reaction mechanisms presented in the
+following section predict a possible contamination by HCl,
+a byproduct issued from precursor chemisorption. This led
+us to introduce a ﬁeld of occupation HCl to account for its
+presence near a hafnium center, crystalline or not. By
+convention, for the hydrolysis phase, adsorbed water will
+be represented by the value 3 in the metal ﬁeld of occupation.
+Each element of our table of atomic conﬁguration will thus
+be a structure containing several ﬁelds of occupation (metal,
+Cl, OH, Oa,O b, HCl) and being able to take various values.
+This occupancy table will play a major role during the
+execution of the software: in permanent evolution, it will be
+questioned and in turn modiﬁed very frequently until the ﬁnal
+conﬁguration is obtained. The use of grid indices, preset sites
+within a basic cell and ﬁelds of occupation will allow a
+faithful representation of the system, while guaranteeing a
+light and fast data-processing, authorizing an exploration on
+a mesoscopic scale.
+d. Neighborhood. To determine, in an efﬁcient way, if a
+chemical reaction is possible or not within the crystal, it is
+necessary to know the state of occupation of neighboring
+cells in the grid. Therefore, it is very important to know
+precisely the neighbors of a given site. We deﬁne 12
+neighbors per lattice site, taking periodic boundary conditions
+into account.
+e. Substrate Modeling. Figure 4 shows connection be-
+tween the atomic model of network based conﬁguration and
+a hydroxylated Si/SiO2 (100) substrate, by the superposition
+of the chart of the system and the symbols of the network
+based model (Si-H are not represented). It is seen here that
+the silicon atoms take the places that are reserved for them
+(triangles) with internal displacements, in particular, on the
+level of dimers, being neglected. Siloxanes and hydroxyls
+are distributed according to options described previously. One
+notes that preset sites are empty, “on standby” for the arrival
+Figure 3. Noncrystalline -O-HfCl3 groups chemisorbed on
+the hydroxylated Si/SiO2. This is the KMC model structure
+ Figure 4. Connection between the atomic model of conﬁg-
+uration and the substrate.
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1919
+
+
+of a hafnium or an oxygen. These crystalline positions will
+be occupied through molecular transient states, as considered
+in the ﬁelds of occupation of the table of conﬁgurations.
+2.2.1.3. Mechanisms and E Vents. To avoid confusion, we
+need to deﬁne what we mean by “reaction step” and by KMC
+“event”. A reaction step is an elementary or single chemical
+reaction. An event is related to the Monte Carlo procedure;
+it stands for a mechanism that occurs at a particular time on
+a well-determined site within the grid.
+a. Mechanism Deﬁnition. The elementary reaction steps
+that constitutes the basis of any KMC approach can emanate
+from literature data, ab initio calculations, or a KMC
+investigation itself (in particular cases where the code is ready
+for validation procedures). As an example, Figure 5 illustrates
+precursor chemisorption, followed by HCl desorption. The
+calculated activation energies, using ab initio DFT, can serve
+as preliminary input values for the kinetic Monte Carlo
+mechanisms. The results of ab initio calculations are sum-
+marized in Section 3.1. Further, ALD growth is complicated
+by other reaction steps, not just the precursor molecule’s
+adsorption and hydrolysis. An example is the densiﬁcation
+(Table 1). Indeed, a key technological question that arises
+during the ﬁlm growth is the necessary phase transition of
+the interesting materials from their molecular structure in
+the gas-phase precursors to their solid-state structure in the
+deposited ﬁlm. This is particularly true for metallic com-
+pounds, such as oxides (HfO2), where the metal has a
+covalent bonding structure in the precursor, with a small
+coordination number, while the metal oxides have mainly
+ionic structures with large coordination numbers. However,
+the complexity of the densiﬁcation process is such that our
+present KMC implementation includes no changes in Hf or
+O coordination number. Further, because of the intrinsic
+difﬁculty in consideration of reaction steps related to these
+phenomena, the set up of a DFT modeling strategy becomes
+tricky. Later on in the paper, densiﬁcation will be clariﬁed,
+and we will show how this problem can be overcome in the
+KMC.
+b. E Vents Filtering and Modiﬁed Probability Sites. Let
+us begin with an example, the precursor arrival mechanism.
+Obviously, there are lots of precursor arrival events, onto
+every surface site. But, at a given time, not all these events
+are possible. They must be ﬁltered, or in other words,
+authorized or forbidden. The authorized events list is updated
+at each system conﬁguration change. Moreover, if one given
+event is forbidden and becomes authorized, its “speciﬁc time”
+is also updated (see Section 2.2.1.2b for details about this
+point). In contrast, if the event is authorized and remains
+authorized, its “speciﬁc time” is kept as is. In any other case,
+the forbidden event’s “speciﬁc time” is set to a value greater
+than the overall experiment duration. If not reauthorized
+again, this event will never occur. To save computing time,
+the ﬁltering procedure is only called when necessary by a
+“smart call” routine, Figure 6. Another way to save comput-
+ing time is to consider modiﬁed probability sites (MPS). In
+this procedure, after the occurrence of a given event, one
+considers only a local reactualization of the sites/events/time
+of occurrence. Rigorously, all the sites/events could be
+reactualized, which would require a huge amount of comput-
+ing time. This procedure is thus used on the basis of the
+Figure 5. Initial reaction path way and associated barriers
+in the case of HfCl4 based precursor ALD on SiO2/Si.
+Table 1. List of Mechanisms Considered in the KMC
+Simulations, with Their Main Characteristics, As Described
+in the Text
+DFT investigation KMC investigation a
+01 HfCl4 adsorption 09 Dens. Inter_CI_1N_cOH-iOH (all k)
+02 H2O adsorption 10 Dens. Inter_CI_1N_cOH-iCl (all k)
+03 HfCl4 Desorption 11 Dens. Inter_CI_1N_cCl-iOH (all k)
+04 HCl incorporation 12 Dens. Inter_CI_2N_cOH-iOH (all k except 2)
+05 H2O Desorption 13 Dens. Inter_CI_2N_cOH-iCl (all k except 2)
+06 H2O incorporation 14 Dens. Inter_CI_2N_cCl-iOH (allk except 2)
+07 back reaction 15 Dens. Intra_CI_1N_cOH-iOH ( k ) 2)
+08 HCl Desorption 16 Dens. Intra_CI_1N_cOH-iCl ( k ) 2)
+17 Dens. Intra_CI_1N_cCl-iOH (k ) 2)
+18 Dens. Intra_CC_1N_cOH-cOH (k ) 2)
+19 Dens. Intra_CC_1N_cOH-cCl (k ) 2)
+20 Dens. Intra_CC_2N_cOH-cOH (k ) 2)
+21 Dens. Intra_CC_2N_cOH-cCl (k ) 2)
+22 Dens. Bridge_TI_2N_tOH-iOH (k ) 2)
+23 Dens. Bridge_TI_2N_tOH-iCl (k ) 2)
+24 Dens. Bridge_TI_2N_tCl-iOH (k ) 2)
+25 Dens. Bridge_TI_3N_tOH-iOH (k ) 2)
+26 Dens. Bridge_TI_3N_tOH-iCl (k ) 2)
+27 Dens. Bridge_TI_3N_tCl-iOH (k ) 2)
+28 Dens. Bridge_TC_3N_tOH-cOH (k ) 2)
+29 Dens. Bridge_TC_3N_tOH-cCl (k ) 2)
+30 Dens. Bridge_TC_3N_tCl-cOH (k ) 2)
+31 Dens. Bridge_TC_4N_tOH-cOH
+32 Dens. Bridge_TC_4N_tOH-cCl
+33 Dens. Bridge_TC_4N_tCl-cOH
+34 Dens. Bridge_TT_3N_tOH-tOH (k ) 2)
+35 Dens. Bridge_TT_3N_tOH-tCl (k ) 2)
+36 Dens. Bridge_TT_4N_tOH-tOH
+37 Dens. Bridge_TT_4N_tOH-tCl
+38 Dens. Bridge_TT_5N_tOH-tOH
+39 Dens. Bridge_TT_5N_tOH-tCl
+a Densiﬁcations may result from reactions between Cl or OH
+terminals in ionic (i), cluster (c), or tree (t) conﬁgurations.
+Figure 6. Kinetic Monte Carlo cycle.
+1920 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+concept that an event has a limited impact in space and that
+domains far from the occurring event do not see it.
+3. Results and Discussion
+3.1. Ab Initio Results. To date, almost all ab initio
+investigations have focused on the chemistry of possible
+reactions, during both precursor and water exposures of the
+ALD of HfO2. These predictive methods, cluster or periodic
+based-DFT, are particularly suitable for chemical mecha-
+nisms that are difﬁcult to reach by experiment or other
+modeling strategies.
+Here, the reactions between the gaseous precursors HfCl4
+or H2O with the hydroxylated SiO2 surface are predicted to
+proceed via an exchange mechanism65,66 and can be sepa-
+rated into two half reactions. The ﬁrst half-cycle reaction
+(1) takes place during the initial step of atomic layer
+deposition of HfO2, that is, the decomposition of HfCl4
+precursor molecules, followed by a purge
+|SiO2-OH + HfCl4 f| SiO2-O-HfCl3 + HCl (1)
+The second half cycle (2) is exposure to water molecules
+and is also followed, in practice, by a purge period.
+|SiO2-O-Hf(OH)3-x-Clx + H2O f
+SiO2-O-Hf(OH)4-x-Clx-l + HCl (2)
+where x has values of 1-3.
+First, we give the results of the ﬁrst half-cycle reaction at
+the initial deposition step. The second task is dedicated to
+the second half reaction. We present results and compare
+them with those related to ZrO2. Data from the literature
+are also discussed. However, the basic mechanisms that are
+given in the following are crucial to understand the results
+all along the multiscale procedure up to the KMC/experiment
+relation. All basic mechanisms have been introduced in the
+KMC and are activated all along the ALD process duration,
+except chemisorptions of water and precursor from gas-phase
+exposure that are limited to speciﬁc semicycles. Their
+desorptions, reactions, and backreactions are possible through
+all cycles. Their occurrence will depend on the computed
+activation energies.
+3.1.1. Precursor/Surface Reaction: O VerView of
+Existing Results. Geometrical structures and energetic
+diagram of the total system along the decomposition
+reaction pathways of HfCl4 on the SiO 2 substrate are
+presented in Figure 5. A chemisorbed state is found where
+Hf/O interaction is occurring without substantial modiﬁca-
+tion of the precursor integrity (0.48 eV adsorption energy).
+This adsorption energy is weaker than those obtained by
+Musgrave and co-workers.66 This difference is the result
+of the differences in cluster geometry and basis set. Both
+parameters are more extended in our study. A dissociation
+path is then calculated, and we obtain an activation barrier
+of 0.88 eV. This barrier is higher than the 0.7 eV barrier
+obtained by Widjaja et al..68 The difference is caused by
+the methodology used in the search of transition state and
+the surface models that are different. Beyond the saddle
+point, HCl molecule formation is observed during mini-
+mization with subsequent adsorption of this molecule on
+top of the dimer inserted oxygen atom. Globally, it is
+expected from these results that the deposition with the
+desired coverage of a complete monolayer of precursors
+is a difﬁcult task. The sticking of the precursor is low.
+The high activation barrier for decomposition is compared
+to the precursor non dissociative chemisorption. Moreover,
+the dissociative incorporation is reversible. The dissociated
+precursor molecule is itself thermodynamically unstable
+with respect to the chemisorbed state. This authorizes the
+precursor to recombine and to be rejected from the surface.
+Fortunately, the HCl byproduct desorption is fast, because
+of its low activation energy of only 0.12 eV, and inhibits
+further reverse reaction. These qualitative aspects will be
+conﬁrmed at the KMC modeling level.
+3.1.2. Hydrolysis Reaction. The second half cycle, which
+introduces H2O into the reaction chamber, is intended to
+regenerate the surface-OH group by reaction 2. The reaction
+path and predicted energetic for the reaction of H2Oo n
+|SiO2-O-HfCl3 sites are presented in Figure 7 . For
+comparison, we also report, in this ﬁgure, the results of the
+reaction of H2Oo n|SiO2-O-HfCl3. The energy levels are
+displayed relative to initial state energy. Further, Table 2
+summarizes the energetic data for the two reactions and
+compares them with corresponding results obtained by
+Musgrave and co-workers.67-69
+The quantitative energetic of the reaction 2, shown in
+Figure 8, shows some similarities between HfO2 and ZrO2.
+Indeed, water molecule adsorbs onto the HfCl3 (or ZrCl3)
+covalently bonded to the surface by donating a lone pair from
+the oxygen atom to the empty d shell of the Hf. In the case
+of HF (or Zr), the complex chemisorbed state is 0.68 eV (or
+0.62 eV) more stable than the initial state. After the
+adsorption of H2O, the reaction proceeds via the transition
+state shown in Figure 8. In the transition state, O in H2Oi s
+bonded to Hf with a bond length of 1.9 Å. The Hf -Cl
+distance is increased to 3.8 Å, which indicates that the bond
+is broken in the transition state. We also note that the
+interaction between the O lone pair and the HCl antibonding
+orbital leads to the delocalization of the lone pair electrons,
+which indicates the partial breaking of the O-H bond and
+the partial formation of HCl bond. The reaction is exothermic
+by 0.19 eV with an activation barrier of 0.97 eV. As shown
+in Table 2 and Figure 8, the second half reaction for Zr has
+the same behavior as for Hf. Indeed, the saddle point energies
+for the two systems are also close leading to an activation
+Figure 7. Reaction path and predicted energetics for the
+reactions of H 2O and SiO 2-O-HfCl3 and H 2O and
+SiO2-O-ZrCl3.
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1921
+
+
+barrier of 0.97 and 0.90 eV for Hf and Zr, respectively. In
+comparison with the data obtained by Musgrave et al., the
+choice of cluster geometry and basis set led to systematic
+differences in relative energies, except that a similar barrier
+is obtained by Musgrave (0.88 eV) and us (0.90 eV).
+Further, on the basis of the results obtained by Musgrave
+and us, the use of clusters models should be sufﬁcient to
+determine the reaction mechanisms. To determine the cred-
+ibility of DFT in predicting these mechanisms, Heyman et
+al.35 reported the calculations (especially transition states)
+on different precursors using DFT, MP2, and QCISD(T) and
+concluded that both ab initio approaches resulted in the same
+transition states that were found using DFT (B3LYP).
+3.1.3. Densiﬁcation Mechanisms. Beyond reaction mech-
+anisms appears a key issue for a better understanding of
+high-k ﬁlm growth, we will call the phenomenon “densiﬁ-
+cation”. In the gas phase, metallic precursors exhibit a
+covalent molecular structure characterized by a small coor-
+dination number, whereas the resulting deposited metallic
+oxide has an ionic type of structure characterized by a large
+coordination number. This necessary phase transition has
+been poorly investigated to date in literature.50 In our recent
+work, we show that this chemical process is mediated by
+the presence of oxygen atoms: sharing them locally allows
+a local redistribution of oxygen atoms and metallic centers
+to operate the desired transition. This implies an increase of
+the coordination of both Hf and oxygen atoms and a “more
+dense” local reallocation of the atoms through the collapse
+of dendritic tree like structures into densely packed oxide
+ﬁlms. The dendritic structures result from an accumulation
+of adsorbed molecules, preventing a dense structure by steric
+hindrance. However, the complexity of the densiﬁcation
+process is such that our KMC model still poorly describe
+this phenomenon leading to no increase of the coordination
+number.
+In addition, we expect new insight from DFT calculations
+in this area in the future (currently under investigation in
+our team) because no such reaction pathway has been
+calculated in the frame of the ALD process speciﬁcally.
+3.2. Preliminary KMC Results.3.2.1. Mechanisms in
+Kinetic Monte Carlo Code. The kinetic Monte Carlo code
+contains all the above generic mechanisms, declined in
+various cases and conﬁgurations. These are detailed in Table
+1, where we distinguish between two types of mechanisms,
+respectively listed in the two columns of Table 1. The ﬁrst
+column contains eight mechanisms whose thermodynamic
+and kinetic parameters are calculated using DFT. It contains
+precursor adsorption, desorption, incorporation and back
+reaction, H2O adsorption, desorption and incorporation
+(hydrolysis), and HCl byproduct desorption.
+The second column contains 31 (09-39) mechanisms of
+densiﬁcation type whose rates are empirically adjusted by
+comparison of simulation results with experimental data.
+These densiﬁcation mechanisms can occur between precur-
+sors situated on the same layer (intra) or different layers
+(inter). They can also occur in situations where the creation
+of a bridge, with overhangs left in the growing ﬁlm, is
+necessary. On the other hand, densiﬁcations can occur
+between neighboring sites, up to the ﬁfth neighbors. Den-
+siﬁcations may also result from reactions between Cl or OH
+terminals in ionic (i), cluster (c), or tree (t) conﬁgurations.
+These denominations refer respectively to terminals directly
+adsorbed on the ﬁlm surface (i), which are therefore in ionic
+positions, to terminals on precursor molecule deposited on
+the ﬁlm surface as a cluster (c), and to terminals on treelike
+precursor molecules (t). These latter are molecules bonded
+to an already adsorbed molecule. They allow the adsorption
+of several layers of precursor molecules on the surface.
+All the above information, together with the layer number
+k, where the corresponding events can occur, is reported in
+Table 1. In addition, in Figure 8, we give an example of
+densiﬁcation mechanism.
+The energetic of reactions 09-39 are set to one arbitrary
+value and later ﬁtted to experiment. This will help to bring
+out the importance of further modeling of these reactions.
+3.2.2. Optimization of Substrate Hydroxylation. Hydroxy-
+lated surfaces can be prepared using various processes70,71
+that allow preparation of surfaces with different densities of
+reaction sites. We thus simulate a ﬁrst ALD phase, at 300
+°C, with a duration of 100 ms verusus the 50 ms duration
+generally used in experiments. We have performed simula-
+tions ((10× 10) atoms substrates) on ﬁve different initial
+substrates containing various OH concentrations. The ﬁrst
+four cases concern 25%, 50%, 75%, and 100% hydroxyl
+concentrations, with siloxane bridges distributed randomly;
+100% coverage corresponds to one OH per surface silicon
+atom. The ﬁfth case concerns the simulation of the hydroxy-
+Table 2. Comparisons of Energetic (In eV) for the Si-O-M(Cl)3+ H2O( M ) Hf, Zr) and Those Obtained from Literaturea
+M-Cl3-H2O complex TSb M-OHCl2-HCl complex HCl desorption
+M ) HF 0.68 0.97 0.63 0.20
+M ) Zr 0.62 0.90 0.69 0.09
+M ) Zr (results of Musgrave, ref 68) 0.78 0.88 0.75 0.05
+a The energies of M-Cl3-H2O are relative to the entrance channel. The energies of TS, M-OHCl2-HCl complex are relative to the
+M-Cl3-H2O complex. The energies of HCl desorption are relative to the M-OHCl2-HCl complex. b Transition state.
+Figure 8. Example of densiﬁcation mechanism: multilayer
+noncrystalline/tree.
+1922 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+lation process with the option “no more than one OH on
+each dimer”. This process leads to 47% hydroxyl coverage.
+The coverage rates (HfO2 coverage) obtained, after one
+ALD cycle, are represented on the graph of Figure 9, where
+we have also distinguished between the crystalline and
+molecular states of Hf. Again, 100% coverage corresponds
+to one Hf per surface silicon atom. The triangles in Figure
+9 show the crystallinity ratio. An increase in the total
+coverage is observed when one increases the number of
+reactive sites on the substrate. Moreover, crystallinity follows
+the same tendency: this is the result of the possibility for a
+chemically absorbed precursor to bridge itself if an OH is
+available in its vicinity. In the case with 100% hydroxyl
+coverage of the surface, it is noted that the total coverage
+amounts to approximately 55%, indicating that a majority
+of hafnium atoms are thus bridged. In this case, each Hf
+reacts with two OH: one for the sticking and one for the
+bridging process. The bridging process can be considered
+as one type of densiﬁcation mechanism because it allows
+the elimination of one branch within the molecular tree
+structure.
+We cannot judge yet if this is realistic because the barriers
+of these ﬁrst densiﬁcations are unknown, and arbitrary values
+are introduced at this stage. At the end of the ﬁrst ALD cycle
+performed at 300° C on a chemical silicon oxide, a total
+coverage of 35% has been experimentally measured.69 This
+value is in good agreement with our simulations with 50%
+OH and 47% OH. These concentrations are indeed the most
+probable ones when referring to the model of Zhuravlev,
+dealing with the hydroxylation of SiO2 surfaces.72 In addition,
+in the last case, by limiting the local OH concentrations, we
+hinder the densiﬁcation mechanisms: crystallinity is 22% in
+the ﬁfth case, while 38% in the second case with 50% OH.
+3.2.3. Calibration of Energies of First Densiﬁcations. In
+practice, densiﬁcation mechanisms in the kinetic Monte Carlo
+account for all transitions from molecular state to ionic or
+crystalline states, that is, the nodes of the lattice. These
+include reactions between grafted molecular ligands and the
+surface, such as the bridging process (eq 3) or reactions
+between two grafted ligands close to each other. The
+activation energies of all the mechanisms of densiﬁcation
+are unknown and not well understood to date.73 We have
+arbitrarily ﬁxed them at 0.5 eV for preliminary simulations.
+Their values have no incidences on the coverage at low
+hydroxyl concentrations and at the usual growth tempera-
+tures. But, if underestimated, the coverage can decrease at
+high hydroxyl concentrations. In this case, the most probable
+reaction is between two ﬁrst neighbors OH, to bridge a single
+Hf, as expressed in eq (3)
+Si-O-HfCl3 + Si-OH fSi-O-HfCl2-O-Si + HCl
+(3)
+Actually, in the KMC scheme, the global bridging mecha-
+nism is broken in two steps, chemisorption and densiﬁcation,
+each one consuming a single OH. If the energy barriers for
+the ﬁrst densiﬁcation are increased, the densiﬁcation rates
+decrease, and the most probable conﬁgurations will be two
+separate chemisorptions on two OH groups, without any
+densiﬁcation, as in eq 4
+2Si-OH + 2HfCl4 f2Si-O-HfCl3 + 2HCl (4)
+The competition between eqs 3 and 4 can be quantiﬁed
+by comparing KMC results with the experimental values of
+the coverage.70 From these experiments, we can estimate very
+roughly that with a surface covered with 90% hydroxyl, one
+should obtain, after one ALD cycle on a (10× 10) atom
+substrates, a HfO2 coverage of approximately 80%. This is
+in total disagreement with preceding simulations. We thus
+launched several simulations of the ﬁrst precursor injection
+phase of ALD, performed at 300° C during 200 ms, while
+varying the energy barrier for densiﬁcations between 0.3 and
+1.8 eV. We should mention that in a given simulation, the
+same value is applied to all the densiﬁcations. Figure 10
+shows the HfO2 coverage and crystallinities obtained for
+these various densiﬁcation barriers. For weak densiﬁcation
+barriers, we observe a strong crystallinity, proof that a
+majority of Hf atoms are bridged thanks to the great number
+of hydroxyls. For higher values of densiﬁcation barriers,
+chemisorption takes place, leading then to less crystallinity
+but more extensive coverage. The simulation that approaches
+80% of experimental measured coverage is that with a
+densiﬁcation barrier of 1.5 eV. This calibration should be,
+at ﬁrst sight, very approximate. The experimental criterion
+translated into atomic terms is not inevitably reliable, and
+all the densiﬁcations may not be equivalent. Despite these
+naive considerations, the transition seen by variation of the
+densiﬁcation energy appears to be abrupt, a few tenths of
+Figure 9. Evolution of coverage rates (HfO2 coverage) and
+crystallinity with different initial substrates.
+Figure 10. Calibration of energies of the ﬁrst densiﬁcations.
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1923
+
+
+an electronvolt. This suggests that the calibration of a
+mechanism, or a class of mechanisms, is accessible through
+KMC by confrontation to experiment.
+Waiting for subsequent quantum contributions or experi-
+ment investigations, we adopt this single value of 1.5 eV as
+a ﬁrst approximation for all the densiﬁcation mechanisms.
+We hope that it may help and shall be used as a basis for
+DFT investigations, which can now allow us to distinguish
+between different types of densiﬁcation mechanisms (listed
+in Table 1), associated with different activation barriers, and
+to determine the most efﬁcient ones. This proves that the
+simulator can lend itself to a calibration on experimental data,
+even in a very approximate way but still necessary to get
+insights toward complex physicochemical issues.
+3.2.4. Kinetics of Growth. Until now, we have validated
+the basics of the method and the ﬁrst mechanisms introduced
+in the KMC scheme, without exceeding the ﬁrst phase of
+the ﬁrst ALD cycle. We now will try to go beyond this stage
+by carrying out simulations on several ALD cycles under
+standard conditions: at 300° C and 1.33 mbar pressure for
+the two precursors. The phases of injection will last 50 ms,
+as in experiments, and are followed bya4so f purge.
+In experiments, several modes of growth are successively
+observed.70,71 After the ﬁrst cycle, consuming a great number
+of metal precursors, a slow transient state is established to
+complete the coverage of the substrate. Then, a steady
+operation starts, faster, where HfO2 is deposited on HfO2
+substrate. By using atomic scale KMC, we try to reproduce
+all these aspects of the kinetics of growth on (10× 10) and
+(20 × 20) atoms substrates during tens of ALD cycles.
+We ﬁrst launched a simulation of 10 ALD cycles, whereas
+the mechanism of opening of a siloxane bridge was not yet
+implemented in the software package. Indeed, it was
+experimentally observed that that the opening of siloxane
+bridges only took place at higher temperatures.
+Figure 11 shows the evolution of the cumulated coverage
+(HfO2 coverage) and the total crystallinity. We note a great
+number of incorporations during the ﬁrst cycle leading to
+44% coverage. This value is slightly larger than experimental
+observations (35%), undoubtedly because of an overevalu-
+ation of the hydroxyl concentrations given by the Zhuravlev
+model72 Then, from cycle 2 to 5, the coverage saturates
+gradually until a maximum of 73% is reached. Beyond cycle
+5, the growth is stopped. This is caused by the inability of
+the densiﬁcation mechanisms to be fully efﬁcient. An
+examination of the ﬁnal structure indicates speciﬁc sites
+where further densiﬁcation mechanisms should occur but
+cannot be performed by the mechanisms already imple-
+mented in our software package. We are currently consider-
+ing rewriting the algorithm used to treat densiﬁcation
+mechanisms to overcome this problem. The rate of crystal-
+linity follows the same tendency and is stabilized around
+62%, meaning that the densiﬁcation had taken place, but not
+fully, because of, at least, an unsatisfactory description of
+densiﬁcation. However, one cannot be satisﬁed with this
+situation because the experiments show that the growth
+continues, certainly slowly, after the strong coverage ob-
+served after the ﬁrst cycle.70,71 An opening of the siloxane
+bridges by a water molecule has been suggested that could
+allow the total coverage to be reached. The opening of the
+siloxane bridges is postponed during the hydrolysis phases
+and could bring additional reactive sites on the initial surface.
+However, no consensus exists to explain how the HfO2
+coverage is reached exactly. Currently, effort is undertaken
+on this subject through the improvement of the densiﬁcation
+mechanisms suggested recently by DFT investigations.73
+4. Conclusions
+This work presents an original kinetic Monte Carlo algorithm,
+developed within a multiscale strategy: from molecule-surface
+interactions treated mostly at the DFT level of modeling, to
+atomic scale ﬁlm growth performed via a KMC technique.
+We have given details on how ab initio calculations can help
+in the identiﬁcation of the relevant elementary reaction
+mechanisms, before their deﬁnite implementation into the
+Monte Carlo simulator that can handle millions of atoms
+during seconds of simulation runs. We then show how to
+develop a KMC method aimed at dealing with a promising
+experimental deposition procedure: the ALD. This technique
+is expected to result in a unique change in microelectronics
+history by replacing traditional Si/SiO2 interface by a
+deposited high-k material onto silicon. The basics of a
+speciﬁc KMC have been reported, and preliminary examples
+for the validation of the overall multiscale strategy are
+detailed. We have shown how KMC provides a unique and
+fundamental understanding of the growth mechanism and
+growth kinetics of the dielectric (HfO2) onto silicon. The
+relation of KMC with experiment is lighted. We have also
+shown that KMC, allowing a global view of mesoscopic
+structures, may shed light on shortcomings in the model. New
+mechanisms can then be considered for ab initio DFT
+investigations. The relevant example here has been the case
+of densiﬁcation mechanisms. We hope that this work will
+bring new advances for better control of the HfO2/SiO2/Si
+systems and for further optimization of the processing
+parameters with the aim of integrating hafnium oxide in the
+heart of future generations of MOS device. Beyond this
+targeted application, we believe that the development of the
+Figure 11. Evolution of coverage rates (HfO2 coverage) and
+crystallinity with respect to ALD cycles number. The coverage
+is cumulative. The legend is the same as in Figure 10.
+1924 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+KMC, detailed here, is generic and may serve other new
+concepts in nano- and bionanotechnologies.
+Acknowledgment. C.M. acknowledges the “Conseil
+regional de la Martinique” for the funding.
+Appendix
+A. Temporal Dynamics.Kinetic Monte Carlo approaches
+differ from static Monte Carlo techniques by the introduction
+of time. Most of the Monte Carlo procedures used in
+condensed matter physics are static (the Metropolis algorithm
+for instance), and their interest concerns the equilibrium
+structure properties. KMC is totally different in philosophy.
+Here, the Monte Carlo technique is introduced for the
+stochastic aspects, in connection with the time incremental
+procedure, that is, it is not always the most probable event
+that occurs. Different algorithms do exist for KMC. We
+suggest in the following a procedure that becomes efﬁcient,
+with regard of the more conventional BKL algorithm, when
+dealing with many different events related to the same
+mechanism, but having different probabilities. This means
+that the probability depends also on the site of occurrence.
+This is the case of systems where local deformation energy
+is taken into account (each event has therefore a different
+probability of occurrence) and where the system exhibits a
+complex chemistry.
+A1. Atomic Layer Deposition (ALD).The KMC soft-
+ware discussed here is built to simulate the ALD experi-
+mental process. ALD consists of four phases: precursor pulse,
+precursor purge, hydrolysis, and water purge. Each one has
+its own thermodynamic parameters and duration.. Some
+mechanisms are always possible, whereas others can only
+occur in a typical phase. For instance, “precursor arrival”
+will obviously exist during the ﬁrst phase only. Furthermore,
+the complete ALD process consists of several cycles of these
+four phases.
+A2. Time Management.When the software is launched,
+after preliminary initializations (parameters, mechanisms,
+neighborhood, conﬁguration), it makes a global scan to
+determine which events are authorized and which are
+forbidden. Authorized ones get a “speciﬁc occurrence time”:
+this is the time that the considered event typically takes to
+occur as soon as it becomes authorized. Forbidden ones get
+the maximum time so that they can never occur.
+The “speciﬁc occurrence time” of the eventm on site (i,
+j, k) is given by
+Ti,j,k,m ) -log(Z)
+λm
+where Z is a random number uniformly distributed between
+0 and 1 andλm is the probability, per unit time, of occurrence
+of the mechanism. It is expressed as
+λm ) ν exp(
+∆Em
+kBT )
+where ν is on the order of the typical lattice vibration
+frequency, ∆Emis the activation energy of the mechanism,
+kB the Boltzmann constant, andT the temperature. The two
+arrival mechanisms (1 precursor arrival and 2 water arrival)
+obey Maxwell-Boltzmann statistics of the gas phase and
+have different probability expressions
+λ1,2 ) CstPS
+√ M1,2T
+where Cst is a constant,P the pressure, S the elementary
+2D-cell area,M1,2 the molar mass of the considered species,
+and T the temperature. In this scheme, we have a huge list
+of “speciﬁc times”, a kind of “calendar”, just as if all events
+that will occur were already foreseen. Not exactly in fact,
+because this calendar will often be updated as the conﬁgu-
+ration evolves. As soon as the calendar is updated, the
+software ﬁnds the minimum “speciﬁc occurrence time” and
+the corresponding event occurs. After this minimum time
+has passed, it is withdrawn from the other times contained
+in the “calendar”. Then, the conﬁguration is edited and the
+pertinent events (that are likely to become authorized) are
+ﬁltered. We then go back to the ﬁrst KMC stage where the
+minimum time is searched.
+References
+(1) Packan, P. A.Science. 1999, 285, 2079.
+(2) Wilk, G. D.; Wallace, R. M.; Anthony, J. M.J. Appl. Phys.
+2001, 89, 5243.
+(3) Wilk, G. D.; Muller, D. A.Appl. Phys. Lett 2003, 83, 3984.
+(4) (a) George, S. M.; OTT, A. W.; Klaus, J. W.J. Phys. Chem.
+1996, 100, 13121. (b) Xu, Z.; Houssa, M.; Gendt, S. D.;
+Heyns, M. Appl. Phys. Lett. 2002, 80, 1975.
+(5) Ferrari, S.; Scarel, G.; Wiemer, C.; Fanciulli, M.J. Appl. Phys.
+2002, 92, 7675.
+(6) Park, H. B.; Cho, M. J.; Park, J.; Lee, S. W.; Hwang, C. S.;
+Kim, J. P.; Lee, J. H.; Lee, N. I.; Kang, H. K.; Lee, J. C.; Oh,
+S. J.J. Appl. Phys. 2003, 94, 3641.
+(7) Kawahara, T.; Torii, K.IEICE Trans. Elect. 2004, E87C (1),
+2–8.
+(8) Ganem, J. J.; Trimaille, I.; Vickridge, I. C.; Blin, D.; Martin,
+F. Nucl. Instrum. Methods Phys. Res., Sect. B 2004, 219,
+856.
+(9) Green, M. L.; Ho, M. Y.; Busch, B.; Wilk, G. D.; Sorsch, T.;
+Conard, T.; Brijs, B.; Vandervorst, W.; Raisanen, P. I.; Muller,
+D.; Bude, M.; Grazul, J.J. Appl. Phys. 2002, 92, 7168.
+(10) Triyoso, D. H.; Hegde, R. I.; Grant, J.; Fejes, P.; Liu, R.;
+Roan, D.; Ramon, M.; Werho, D.; Rai, R.; La, L. B.; Baker,
+J.; Garza, C.; Guenther, T.; White, B. E.; Tobin, P. J.J Vac.
+Sci. Technol. B. 2003, 22, 2121.
+(11) Rittersma, Z. M.; Roozeboom, F.; Verheijen, M. A.; van
+Berkum, J. G. M.; Dao, T.; Snijders, J. H. M.; Vainonen-
+Ahlgren, E.; Tois, E.; Tuominen, M.; Haukka, S.J. Electro-
+chem. Soc. 2004, 151, 716.
+(12) Chang, H. S.; Hwang, H.; Cho, M. H.; Moon, D. W.Appl.
+Phys. Let. 2005, 86, 031906.
+(13) Triyoso, D. H.; Ramon, M.; Hegde, R. I.; Roan, D.; Garcia,
+R.; Baker, J.; Wang, X. D.; Fejes, P.; White, B. E.; Tobin,
+P. J.J. Electrochem. Soc. 2005, 152, 203.
+(14) Cho, M.; Park, H. B.; Park, J.; Lee, S. W.; Hwang, C. S.;
+Jeong, J.; Kang, H. S.; Kim, Y. W.J. Electrochem. Soc.2005,
+152, F49.
+(15) Kukli, K.; Aaltonen, T.; Aarik, J.; Lu, J.; Ritala, M.; Ferrari,
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1925
+
+
+S.; Harsta, A.; Leskela, M.J. Electrochem. Soc. 2005, 152,
+F75.
+(16) Triyoso, D. H.; Hegde, R. I.; White, B. E.; Tobin, P. J.J. Appl.
+Phys. 2005, 97, 124107.
+(17) Hellin, D.; Delabie, A.; Puurunen, R. L.; Beaven, P.; Conard,
+T.; Brijs, B.; De Gendt, S.; Vinckier, C.Anal. Sci. 2005, 21,
+845.
+(18) Kirsch, P. D.; Quevedo-Lopez; MA; Li, H. J.; Senzaki, Y.;
+Peterson, J. J.; Song, S. C.; Krishnan, S. A.; Moumen, N.;
+Barnett, J.; Bersuker, G.; Hung, P. Y.; Lee, B. H.; Lafford,
+T.; Wang, Q.; Gay, D.; Ekerdt, J. G.J. Appl. Phys. 2006,
+99, 023508.
+(19) Park, I. S.; Lee, T.; Choi, D. K.; Ahn, J.J. Korean Phys.
+Soc. 2006, 49, S544.
+(20) Cho, M. J.; Degraeve, R.; Pourtois, G.; Delabie, A.; Ragnars-
+son, L. A.; Kauerauf, T.; Groeseneken, G.; De Gendt, S.;
+Heyns, M.; Hwang, C. S.IEEE Trans. Electron De Vices
+2007, 54, 752.
+(21) Nyns, L.; Hall, L.; Conard, T.; Delabie, A.; Deweerd, W.;
+Heyns, M.; Van Elshocht, S.; Van Hoornick, N.; Vinckier,
+C.; De Gendt, S.J. Electrochem. Soc. 2006, 153, F205.
+(22) Ritala, M.; Leskela, M.; Niinisto, L.; Prohaska, T.; Friedbacher,
+G.; Grasserbauer, M.Thin Solid Films 1994, 250, 72.
+(23) Aarik, J.; Aidla, A.; Kiisler, A. A.; Uustare, T.; Sammelselg,
+V. Thin. Solid Films 1999, 340, 110.
+(24) Kukli, K.; Ihanus, J.; Ritala, M.; Leskela, M.Appl. Phys. Lett.
+1996, 68, 3737.
+(25) Aarik, J.; Aidla, A.; Kiisler, A. A.; et al.Thin Solid Films
+1999, 340, 110.
+(26) Aarik, J.; Aidla, A.; Mandar, H.J. Cryst. Growth 2000, 220,
+105.
+(27) Aarik, J.; Aidla, A.; Kikas, A.Appl. Surf. Sci. 2004, 230,
+292.
+(28) Kukli, K.; Aarik, J.; Uustare, T.Thin Solid Films 2005, 479,
+1.
+(29) de Almeida, R. M. C.; Baumvol, I. J. R.Surf. Sci. Rep. 2003,
+49,1 .
+(30) Wallace, R. M.; Wilk, G. D.Crit. ReV. Solid State Mater.
+Sci. 2003, 28, 231.
+(31) Wang, D.; Wang, Q.; Javey, A.Appl. Phys. Lett. 2003, 83,
+2432.
+(32) Wong, H.; Iwai, H.Microelectron. Eng. 2006, 83, 1867.
+(33) Aarik, J.; Aidla, A.; Sammelselg, V.; Siimon, H.; Uustare, T.
+J. Cryst. Growth 1996, 169, 496.
+(34) Puurunen, R. L.Chem. Vap. Deposition. 2005, 11, 79.
+(35) Heyman, A.; Musgrave, C. B.J. Phys. Chem. B. 2004, 108,
+5718.
+(36) Samantaray, C. B.; Sim, H.; Hwang, H.Appl. Surf. Sci.2005,
+242, 121.
+(37) Elliott, S. D.; Pinto, H. P.J. Electroceram. 2004, 13, 117.
+(38) Samantaray, C. B.; Sim, H.; Hwang, H.Appl. Surf. Sci.2004,
+239, 101.
+(39) Mukhopadhyay, A. B.; Musgrave, C. B. App. Phys. Lett.
+2007, 90, 173120.
+(40) Forst, C. J.; Blochl, P. E.; Schwarz, K.Comput. Mater. Sci.
+2003, 27, 70.
+(41) Kawamoto, A.; Cho, K. J.; Dutton, R. J. Comput.-Aided
+Mater. Des. 2001, 8, 39.
+(42) Musgrave, C. B.; Han, J. H.; Gordon, R. G.Abstr. Pap. Am.
+Chem. Soc. 2003, 226, U386.
+(43) Mukhopadhyay, A. B.; Sanz, J. F.; Musgrave, C. B.; Han,
+J. H.; Gordon, R. G.J. Phys. Chem. C. 2007, 26, 9203.
+(44) Ganem, J. J.; Trimaille, I.; Vickridge, I. C.; Blin, D.; Martin,
+F. Nucl. Instrum. Methods Phys. Res., Sect. B 2004, 219,
+856.
+(45) Mui, C.; Musgrave, C. B.J. Phys Chem. B.2004, 108, 15150.
+(46) Xu, Y.; Musgrave, C. B.Appl. Phys. Lett. 2005, 86, 192110.
+(47) Mukhopadhyay, A. B.; Musgrave, C. B.Chem. Phys. Lett.
+2006, 421, 215.
+(48) Ren, J.; Zhang, Y. T.; Zhang, D. W.THEOCHEM 2007, 803,
+23.
+(49) Jeloaica, L.; Esteve, A.; Djafari Rouhani, M.; Esteve, D.Appl.
+Phys. Lett. 2003, 83, 542.
+(50) Esteve, A.; Jeloiaca, L.; Mazaleyrat, G.; Dkhissi, A.; Djafari
+Rouhani, M.; Ali Messaoud, S.; Fazouan, N.MRS Bull. 2003,
+786, 35.
+(51) Jeloaica, L.; Esteve, A.; Dkhissi, A.; Djafari Rouhani, M.
+Comput. Mater. Sci. 2005, 33, 2005.
+(52) Becke, A. D.J. Chem. Phys. 1993, 98, 5648.
+(53) Lee, C.; Yang, W.; Parr, R. G.Phys. ReV.B 1988, 37, 785.
+(54) Bergner, A.; Dolg, M.; Kuechle, W.; Stoll, H.; Preuss, H.Mol.
+Phys. 1993, 80, 1431.
+(55) Schaefer, A.; Horn, H.; Ahlrichs, R.J. Chem. Phys. 1992,
+97, 2571.
+(56) Schaefer, A.; Huber, C. F.; Ahlrichs, R.J. Chem. Phys. 1994,
+100, 5829.
+(57) Weldon, M.; Stefanov, B. B.; Raghavachari, K.; Chabal, Y. I.
+Phys. ReV. Lett. 1997, 79, 2851.
+(58) Helgaker, T. Chem. Phys. Lett. 1991, 182, 503.
+(59) (a) Ahlrichs, R.; Ba¨r, M.; Ha¨ser, M.; Horn, H.; Ko¨lmel, C.
+Chem. Phys. Lett. 1989, 162, 165. (b) Scha¨fer, A.; Horn,
+H.; Ahlrichs, R.J. Chem. Phys. 1992, 97, 2571. (c) Scha¨fer,
+A.; Huber, C.; Ahlrichs, R.J. Chem. Phys. 1994, 100, 5829.
+(60) Frisch, M. J.; Trucks, G. W.; Schlegel, H. B.; Scuseria, G. E.;
+Robb, M. A.; Cheeseman, J. R.; Zakrzewski, V. G.; Mont-
+gomery, J. A.; Stratmann, R. E.; Burant, J.; Dapprich, S.;
+Millam, J. M.; Daniels, A. D.; Kudin, K. N.; Strain, M. C.;
+Farkas, O.; Tomasi, J.; Barone, V.; Cossi, M.; Cammi, R.;
+Mennucci, B.; Pomelli, C.; Adamo, C.; Clifford, S.; Ochterski,
+J.; Petersson, G. A.; Ayala, P. Y.; Cui, Q.; Morokuma, K.;
+Salvador, P.; Dannenberg, J. J.; Malick, D. K.; Rabuck, A. D.;
+Raghavachari, K.; Foresman, J. B.; Cioslowski, J.; Ortiz,
+J. V. B., A. G.; Stefanov, B. B.; Liu, G.; Liashenko, A.;
+Piskorz, P.; Komaromi, I.; Gomperts, R.; Martin, R. L.; Fox,
+D. J.; Keith, T.; Al-Laham, M. A.; Peng, C. Y.; Nanayakkara,
+A.; Challacombe, M.; Gill, P. M. W.; Johnson, B. G.; Chen,
+W.; Wong, M. W.; Andres, J. L.; Gonzalez, C.; Head-Gordon,
+M.; Replogle, E. S.; Pople, J. A.;Gaussian 03, revision D.02;
+Gaussian,Inc.: Wallingford CT, 2004.
+(61) Kotrla, M. Comput. Phys. Commun. 1996, 97, 82.
+(62) Smilauer, P.; Vvedensky, D. D. Phys. Re V.B . 1995, 52,
+14263.
+(63) Schoﬁeld, W. C. E.; McGettrick, J. D.; Badyal, J. P. S.J.
+Phys. Chem.B. 2006, 110, 17161.
+1926 J. Chem. Theory Comput., Vol. 4, No. 11, 2008 Dkhissi et al.
+
+
+(64) Wyckoff, R., Ed.Crystal Structure; John Wiley & Sons: New
+York, 1965; Vol. 1, p 231.
+(65) Ritala, M.; Leskela, N. inHandbook of Thin Film Materials ;
+Nalwa, H. S., Ed.; Academic Press: New York, 2001; Vol. 1, p 57.
+(66) Rahtu, A.; Ritala, M.J. Mater. Chem. 2002, 12, 1484.
+(67) Widjaja, Y.; Musgrave, C. B.J. Chem. Phys.2002, 117, 1931.
+(68) Widjaja, Y.; Musgrave, C. B.Appl. Phys. Lett. 2002, 81, 304.
+(69) Han, J. H.; Gao, G.; Widjaja, Y.; Garfunkel, E.; Musgrave,
+C. B. Surf. Sci. 2004, 550, 199.
+(70) Blin, D. PhD thesis, University of Montpellier, 2003.
+(71) Renault, O.; Samour, D.; Rouchon, D.; Holliger, Ph.; Papon,
+A. M.; Blin, D.; Marthon, S.Thin Solid Films 2003, 428,
+190.
+(72) Zuravlov, L. T.Colloids Surf. A 2000, 173,1 .
+(73) Olivier, S.; Ducere, J. M.; Mastail, C.; Esteve, A.; Landa, G.;
+Djafari Rouhani, M.Chem. Mater. 2008, 20, 1555.
+CT8001249
+Atomic Layer Deposition of HfO2 Thin Film J. Chem. Theory Comput., Vol. 4, No. 11, 2008 1927

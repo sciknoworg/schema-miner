@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process Schema",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "reactantSelection": {
+          "type": "object",
+          "properties": {
+            "precursor": { "type": "string" },
+            "coReactant": { "type": "string" }
+          },
+          "required": [ "precursor", "coReactant" ]
+        },
+        "temperatureRange": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/temperatureRangeItem" }
+          ],
+          "minItems": 1
+        },
+        "pressureRange": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/pressureRangeItem" }
+          ],
+          "minItems": 1
+        }
+      },
+      "required": [ "reactantSelection", "temperatureRange", "pressureRange" ]
+    },
+    "cycleDetails": {
+      "type": "object",
+      "properties": {
+        "halfCycles": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/halfCycle" }
+          ],
+          "minItems": 2
+        }
+      },
+      "required": [ "halfCycles" ]
+    },
+    "characterization": {
+      "type": "object",
+      "properties": {
+        "compositionCheck": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/compositionCheckItem" }
+          ],
+          "minItems": 1
+        },
+        "thicknessControl": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/thicknessControlItem" }
+          ],
+          "minItems": 1
+        },
+        "saturationVerification": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/saturationVerificationItem" }
+          ],
+          "minItems": 1
+        },
+        "materialProperties": {
+          "type": "object",
+          "properties": {
+            "opticalProperties": { "type": "string" },
+            "electricalProperties": { "type": "string" },
+            "morphology": { "type": "string" }
+          }
+        },
+        "uniformityCheck": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/uniformityControlItem" }
+          ],
+          "minItems": 1
+        },
+        "conformalityCheck": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/conformalityControlItem" }
+          ],
+          "minItems": 1
+        },
+        "nucleationBehavior": {
+          "type": "object",
+          "properties": {
+            "initialGrowthPatterns": { "type": "array", "items": [ { "type": "string" } ] },
+            "growthMode": { "type": "string" }
+          }
+        }
+      },
+      "required": [
+        "compositionCheck",
+        "thicknessControl",
+        "saturationVerification",
+        "materialProperties",
+        "uniformityCheck",
+        "conformalityCheck",
+        "nucleationBehavior"
+      ]
+    },
+    "otherAspects": {
+      "type": "object",
+      "properties": {
+        "safetyConsiderations": { "type": "string" },
+        "filmStability": { "type": "string" },
+        "reproducibilityCheck": { "type": "boolean" },
+        "precursorConsumption": { "type": "number" },
+        "precursorStability": { "type": "boolean" }
+      },
+      "required": [
+        "safetyConsiderations",
+        "filmStability",
+        "reproducibilityCheck",
+        "precursorConsumption",
+        "precursorStability"
+      ]
+    }
+  },
+  "required": [ "processDetails", "cycleDetails", "characterization", "otherAspects" ],
+  "definitions": {
+    "temperatureRangeItem": {
+      "type": "object",
+      "properties": {
+        "minTemp": { "type": "number", "description": "Minimum temperature in °C" },
+        "maxTemp": { "type": "number", "description": "Maximum temperature in °C" }
+      },
+      "required": [ "minTemp", "maxTemp" ]
+    },
+    "pressureRangeItem": {
+      "type": "object",
+      "properties": {
+        "minPressure": { "type": "number", "description": "Minimum pressure in Pa" },
+        "maxPressure": { "type": "number", "description": "Maximum pressure in Pa" }
+      },
+      "required": [ "minPressure", "maxPressure" ]
+    },
+    "halfCycle": {
+      "type": "object",
+      "properties": {
+        "dosingStep": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/dosingStepItem" }
+          ],
+          "minItems": 1
+        },
+        "purgeStep": {
+          "type": "array",
+          "items": [
+            { "$ref": "#/definitions/purgeStepItem" }
+          ],
+          "minItems": 1
+        }
+      },
+      "required": [ "dosingStep", "purgeStep" ]
+    },
+    "dosingStepItem": {
+      "type": "object",
+      "properties": {
+        "reactant": { "type": "string", "description": "The reactant being dosed (precursor or co-reactant)" },
+        "timeInSeconds": { "type": "number", "description": "Time in seconds for the dosing step" }
+      },
+      "required": [ "reactant", "timeInSeconds" ]
+    },
+    "purgeStepItem": {
+      "type": "object",
+      "properties": {
+        "gasFlowRateInLpm": { "type": "number", "description": "Gas flow rate in liters per minute (L/min)" }
+      },
+      "required": [ "gasFlowRateInLpm" ]
+    },
+    "compositionCheckItem": {
+      "type": "object",
+      "properties": {
+        "method": { "type": "string", "description": "Method used for composition check (e.g., XPS, RBS)" }
+      },
+      "required": [ "method" ]
+    },
+    "thicknessControlItem": {
+      "type": "object",
+      "properties": {
+        "growthPerCycle": { "type": "number", "description": "Growth per cycle in nm/cycle or atoms/unit area/cycle" }
+      },
+      "required": [ "growthPerCycle" ]
+    },
+    "saturationVerificationItem": {
+      "type": "object",
+      "properties": {
+        "dosingTimeSaturation": { "type": "boolean", "description": "Whether the dosing time is saturated" },
+        "purgeTimeSaturation": { "type": "boolean", "description": "Whether the purge time is saturated" }
+      },
+      "required": [ "dosingTimeSaturation", "purgeTimeSaturation" ]
+    },
+    "uniformityControlItem": {
+      "type": "object",
+      "properties": {
+        "thicknessVariation": { "type": "number", "description": "Thickness variation in nm" }
+      },
+      "required": [ "thicknessVariation" ]
+    },
+    "conformalityControlItem": {
+      "type": "object",
+      "properties": {
+        "aspectRatio": { "type": "number", "description": "Aspect ratio of the structure (height/width)" }
+      },
+      "required": [ "aspectRatio" ]
+    }
+  }
+}

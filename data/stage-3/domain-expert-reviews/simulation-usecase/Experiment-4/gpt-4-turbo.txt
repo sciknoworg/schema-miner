@@ -1,0 +1,146 @@
+Property Merging:
+Properties where a specific compound is listed should be merged into a more general category so it is applicable across various papers
+
+Property Grouping:
+1. Grouping is quite odd, not sure why precursors has been used as one of the main groups and then it is split into specific compounds (presumably from one specific paper)
+2. Not a very logical or useable structure
+
+Missing Properties:
+1. Lots of properties missing
+2. Methods section
+3. Materials that have been used, (some have been listed as properties but no category for them to be listed in)
+4. Film properties such as density, roughness
+5. Any mention of rates (growth, diffusion or others)
+
+Adequacy of Descriptions:
+The descriptions that are there are mostly accurate but they are describing properties which probably shouldn't be included
+
+Domain expert edited schema of the initial generated version:
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition Process",
+    "type": "object",
+    "properties": {
+        "precursors": {
+            "type": "object",
+            "properties": {
+                "TiI4": {
+                    "type": "object",
+                    "properties": {
+                        "adsorptionDetails": {
+                            "type": "object",
+                            "properties": {
+                                "adsorptionSites": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Preferred adsorption sites on the surface for TiI4."
+                                },
+                                "adsorptionEnergies": {
+                                    "type": "object",
+                                    "properties": {
+                                        "SiO2": {
+                                            "type": "number",
+                                            "description": "Adsorption energies on SiO2 surfaces for TiI4."
+                                        }
+                                    }
+                                },
+                                "reactionPathways": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Possible reaction pathways for TiI4 on SiO2."
+                                }
+                            }
+                        }
+                    }
+                },
+                "H2O": {
+                    "type": "object",
+                    "properties": {
+                        "reactivity": {
+                            "type": "string"
+                        },
+                        "reactionMechanism": {
+                            "type": "string",
+                            "description": "Mechanism of H2O interaction with precursors."
+                        },
+                        "products": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "surfaceSites": {
+            "type": "object",
+            "properties": {
+                "isolatedOH": {
+                    "type": "object",
+                    "properties": {
+                        "reactivity": {
+                            "type": "string",
+                            "description": "Reactivity of isolated -OH groups on SiO2 surface."
+                        }
+                    }
+                },
+                "adjacentHydrogenBondedOH": {
+                    "type": "object",
+                    "properties": {
+                        "reactivity": {
+                            "type": "string",
+                            "description": "Reactivity of adjacent hydrogen-bonded -OH groups on SiO2 surface."
+                        }
+                    }
+                },
+                "siloxaneBridges": {
+                    "type": "object",
+                    "properties": {
+                        "reactivity": {
+                            "type": "string",
+                            "description": "Reactivity of siloxane bridges on SiO2 surface."
+                        }
+                    }
+                }
+            }
+        },
+        "processConditions": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "description": "Optimal temperature range for the ALD process."
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Optimal pressure for the ALD process."
+                }
+            }
+        },
+        "observableProperties": {
+            "type": "object",
+            "properties": {
+                "filmProperties": {
+                    "type": "object",
+                    "properties": {
+                        "electricalProperties": {
+                            "type": "string"
+                        },
+                        "barrierEffectiveness": {
+                            "type": "string"
+                        },
+                        "crystallineStructure": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

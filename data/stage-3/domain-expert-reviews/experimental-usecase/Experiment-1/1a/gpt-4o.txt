@@ -1,0 +1,36 @@
+Property Merging:
+1. Remove the reactor property in the additional details and include this in the reactor design property in the process conditions unit under the reactor name.
+2. Bubblertemperatures: merge it with the precursor temperature property under the BubblerTemperature name in the precursor unit.
+3. Substrate type and substrate units should be merged under the Substrate name
+
+Property Grouping:
+1. Place the bandgap in the electrical properties group and in the description name it: Electrical bandgap of the film in electron volts (eV)
+2. Place dielectric constant in the electrical properties group.
+3. Step coverage can be placed close to conformality
+4. ALDMethod: should go at the top of the schema along with material deposited
+5. The substrate can be grouped in the material deposited unit
+
+Adequacy of Descriptions:
+1. Remove non-halogenated property -> not important to mention
+2. VaporPressure of coReactant -> valid if the process is thermal ALD and not plasma ALD
+3. Description for process TemperatureRange: the sentence: "including low-temperature growth specifics" is not very clear. What would be better is maybe also provide the ALD window which describes all the details for the temperature dependency of the process.
+4. Description for growthpercycle: "…influenced by temperature and precursor characteristics.", there are also other parameters that affect GPC, like the substrate surface purge and pulse times, reactor design etc.
+5. Description for ReactorDesign: "…including any special features for uniformity and efficiency", in the special features can also be included any components the reactor might have, like in-situ characterization methods, Plasma Source etc. or the reactor’s dimensions
+6. The type of the reactor can include the commercial name and the manufacturer of the reactor
+7. Description for density: "…Compare to bulk values for quality assessment and porosity evaluation." Remove this. It's better to compare the density of the films of the same process or films from other studies based on this ALD method to compare quality of the film with the others.
+8. Film porosity: is important if the films are used for catalysis applications. Note that it is not a property measured by all research works.
+9. Description for resistivity: "Note its correlation with porosity and oxidation." Remove this.
+
+Domain expert edited schema of the initial generated version:
+
+-> ALD Method
+-> Material Deposited (material, substrate)
+-> Reactants (precursor, coReactant)
+-> ProcessConditions (temperaturerange, Bubbler Temperatures, Pressure, Reactor, CycleDetails, NucleationPeriod,Self-limiting growth, PulseLength, PurgeTime)
+-> FilmProperties 
+   ->Structural(thickness,composition, conformality, step coverage, roughness density, crystallinity, orientation, impurities, stoichiometry)
+   ->Optical (refractiveindex,absorptioncoeff)
+   ->Electrical (resistivity, bandgap, carrierdensity, mobility, dielectric constant)
+   ->AnnealingConditions
+-> SafetyAndStability(chemicalsafety, filmstability,reproducibility)
+-> GrowthMechanism (surfaceintermediates, precursorpulseeffect,temperatureeffect)

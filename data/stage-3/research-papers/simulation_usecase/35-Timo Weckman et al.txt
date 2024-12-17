@@ -1,0 +1,1599 @@
+Kinetic Monte Carlo Study of the Atomic Layer Deposition of Zinc
+Oxide
+Timo Weckman,† Mahdi Shirazi,‡ Simon D. Elliott,§ and Kari Laasonen*,†
+†School of Chemical Technology, Aalto University, Espoo 02150, Finland
+‡Eindhoven University of Technology, Eindhoven 5612 AZ, Netherlands
+§Schrödinger Inc., 120 West 45th Street, New York, NY 10036-4041, USA
+*S Supporting Information
+ABSTRACT: Atomic layer deposition (ALD) has emerged as an
+important technique for thin- ﬁlm deposition in the last two
+decades. Zinc oxide thinﬁlms, usually grown via diethylzinc (DEZ)
+and water process, have seen much interest both in application and
+in theoretical research. The surface processes related to the growth
+of the thinﬁlm are not entirely understood, and the conceptual
+picture of the ALD process has been contradicted by recent
+experiments where ligands from the zinc pulse persist on the
+surface even after extended water pulse exposures. In this work, we
+investigate the overall growth of the zinc oxide thinﬁlms grown via
+DEZ/H2O process by modeling the surface chemistry usingﬁrst-
+principles kinetic Monte Carlo for theﬁrst time. The kinetic Monte Carlo allows us to implement density functional theory
+calculations conducted on the zinc oxide (100) surface into a kinetic model and extract data directly comparable to
+experimental measurements. The temperature-dependent growth proﬁle obtained from our model is in good qualitative
+agreement with the experimental data. The onset of thin-ﬁlm growth is oﬀset from the experimental data because of the
+underestimation of the reaction barriers within density functional theory. The growth per cycle of the depositedﬁlm is
+overestimated by 18% in the kinetic model. Mass gain during an ALD cycle is in qualitative agreement with the experimental
+quartz-crystal microbalance data. The main mass gain within an ALD cycle is obtained during the DEZ pulse and mass change
+during the water pulse is negligible. The cause of lowﬁlm growth at low temperatures is due to the high reaction barriers for
+ethyl-elimination during the water pulse. This kinetic barrier results in lowﬁlm growth as no new DEZ can adsorb to the ethyl-
+saturated surface. At elevated temperatures, ethyl-elimination becomes accessible, resulting in the ideal layer-by-layer growth of
+theﬁlm. However, a large fraction of ethyl-ligands persist on the surface after each ALD cycle even at high temperatures. This
+results in ethyl-ligands being encapsulated into theﬁlm lattice. This is likely due to an incomplete set of reaction pathways, and
+it is likely that some yet unidentiﬁed process is responsible for the elimination of the ethyl-ligands from the surface as the
+deposition process progresses.
+■ INTRODUCTION
+Atomic layer deposition (ALD) has become an important
+nanoscale fabrication technique for depositing thinﬁlms in the
+recent decades. ALD is based on sequential, self-terminating
+gas−solid reactions resulting in uniform, pin-hole free thin
+ﬁlms. The reactant gases, precursors, are introduced into the
+reactor chamber separately, thus avoiding any intermolecular
+gas-phase reactions. After the surface is saturated with the
+precursor, the remaining precursors and reaction by-products
+are purged from the reactor with an inert gas. Because of the
+self-terminating nature of the surface reactions, theﬁlm
+thickness can be controlled with extreme precision.1
+Zinc oxide is a semiconductor with various useful properties,
+for example, high transparency, tunable electrical conductivity,
+and piezoelectric properties. Zinc oxide has therefore seen
+application in transistors, solar cells, and sensors in the recent
+decades, and as the dimensions of microscopic devices have
+decreased, the interest in depositing zinc oxide thinﬁlms via
+ALD has increased.2−4
+First-principles kinetic Monte Carlo (kMC) simulations on
+the ALD growth of zinc oxide have not previously been
+studied, although kMC has been used to study the ALD of
+HfO2, ZrO2, and Al2O3 thin ﬁlms.5−8 In their study on the
+deposition of HfO2 and ZrO2 ﬁlms, Deminsky et al.5 were able
+to reproduce the correct temperature dependence of the
+growth rate of theﬁlm and also to describe the accumulation of
+chloride atoms in the growing thinﬁlm. Dkhissi et al.7,8 also
+studied deposition of HfO2. Heterodeposition of Al2O3 on Si
+has been studied by Mazaleyrat et al.6 However, all of these
+studies have used activation energies extracted from cluster
+Received: July 18, 2018
+Revised: October 29, 2018
+Published: October 30, 2018
+Article
+pubs.acs.org/JPCCCite This: J. Phys. Chem. C2018, 122, 27044−27058
+© 2018 American Chemical Society 27044 DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 12:57:53 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+model density functional theory (DFT) calculations, neglect-
+ing the complicated surface environment.
+Shirazi and Elliott9 constructed their kMC model of the
+Hf(N(CH 3)2)4/H2Op r o c e s sf o rH f O2 ALD on DFT
+calculations conducted using a periodic slab model. The
+model accounted for the steric demand of the ligands and
+included the cooperative eﬀects of the neighboring adsorbates
+on the reaction barriers. The growth rates obtained from the
+model were within 20% of experimental data.
+In this work, we present theﬁrst kMC study on the ALD
+growth of zinc oxide thinﬁlms. The kMC application for ALD
+was previously developed by Shirazi and Elliott.9 The kinetic
+model is based on DFT calculations of the ALD reactions of
+diethyl zinc (DEZ)10 and water11 on the zinc oxide (100)
+surface. DEZ/H2O is the most common process used to
+deposit ZnO thinﬁlms.
+The assumed reaction steps for the DEZ/H2O process are
+OH Zn(CH CH )
+O Zn(CH CH ) CH CH
+23 2
+23 3 3
+∥− +
+→∥− − + (1)
+O Zn(CH CH ) H O
+OZ n O HC H C H
+23 2
+3 3
+∥− − +
+→∥− − + (2)
+The dominant end product from the adsorption of DEZ is
+considered to be monoethylzinc (MEZ). Ideally, the
+subsequent water pulse should remove the ethyl-ligands from
+the surface before the next DEZ pulse. This holds for
+deposition temperatures of 200°C and beyond but, as
+shown by Mackus et al.,12 at low temperatures, a substantial
+proportion of the ethyl-ligands remain on the surface after the
+water pulse. From their in situ Fourier transform infrared
+(FTIR) spectroscopy measurements, the authors conclude that
+at 150°C, after a typical water exposure, 50% of the surface
+ethyl-ligands remain on the surface. Even after extended
+periods of water exposure, approximately 16% of surface ethyl-
+ligands persist on the surface.
+The presence of persistent ligands has also been observed by
+Vandalon and Kessels13,14 during the deposition of Al2O3 via
+trimethylaluminium and water process. They propose two
+possible models accounting for the persistent ligands: either
+there are ligands that react diﬀerently with water or the water
+pulse kinetics that are coverage-dependent. The authorsﬁnd
+support for the coverage-dependent elimination of the ligands
+on DFT calculations by Shirazi and Elliott.15
+In a DFT study10 on the mechanism of adsorption and
+surface reactions of DEZ on hydroxylated zinc oxide surface,
+the activation energy for the ligand elimination reaction1
+between adsorbed DEZ and a surface hydroxyl group/
+molecular water is reported to be low, ranging from 0.23 to
+0.47 eV on the planar surface. The activation energy for
+removing the ligand from a MEZ surface fragment is
+signiﬁcantly higher. In DFT calculations on surface reactions
+during the subsequent water pulse,11 the ligands were found to
+be nonreactive toward ligand elimination with water molecules.
+Only a weak ligand-coverage dependency on the reaction
+barriers was observed. A pyrolysis of DEZ/MEZ has also been
+proposed in the literature,16 but based on DFT calculations,
+the pyrolysis of ethyl-ligands has a large barrier of 2 eV or
+above.
+In this work, the ALD of zinc oxide via DEZ/H2O process is
+modeled using a ﬁrst-principles kMC model. The extensive
+DFT calculations on the surface reactions are implemented
+into an on-lattice kMC code previously developed by Shirazi
+and Elliott.9 Alongside the DFT activation energies, some
+processes with ad hoc parameters are introduced. The
+sensitivity of the model to the choice of parameters and
+DFT calculations is discussed.
+The kMC model is used to simulate homodeposition of a
+zinc oxide thinﬁlm. The self-terminating growth, characteristic
+of ALD, is observed. The impact of deposition temperature on
+the growth per cycle (GPC) of theﬁlm is found to be in
+qualitative, and to a lesser extent quantitative, agreement with
+experimental data. Because of the inertness of surface ethyl-
+ligands, a large fraction of surface ethyl-ligands are found to
+persist on the surface after each ALD cycle and these ligands
+are found to produce impurities into the lattice structure of the
+ﬁlm.
+■ COMPUTATIONAL METHODS
+The chemical reactions of ZnO ALD via DEZ/H 2O are
+implemented into the stochastic parallel PARticle kinetic
+simulator (SPPARKS).17,18 The ALD application in SPPARKS
+has been developed by Shirazi and Elliott9 and was used to
+study the ALD growth of HfO2. In the ALD application, the
+state-to-state evolution of the system is propagated by the
+Bortz−Kalos−Lebowitz (BKL) algorithm.19 Activation ener-
+gies used to compute the rate constants were adopted from
+DFT calculations presented in refs10 and 11
+The BKL algorithm is a computationally eﬃcient algorithm
+for simulating the time evolution of a reaction network
+consisting of discrete reaction steps by stochastically sampling
+the network. In the beginning of each step, the total sum of the
+rate constants for all of the possible events available in the
+initial conﬁguration is computed
+kk
+i
+N
+itot
+1
+∑=
+= (3)
+Two random numbers,ρ1 and ρ2, are then generated. Theﬁrst
+random number, ρ1 is used to select an eventj satisfying
+kk k
+i
+j
+i
+i
+j
+i
+1
+1
+1 tot
+1
+∑∑ ρ≤≤
+=
+−
+= (4)
+The selected event is executed, and the event list is updated.
+Usually, the executed event aﬀects a limited number of other
+events in the network, and only few events are added or
+removed from the event list. After the execution, the
+simulation time is advanced by
+t t k
+ln( )2
+tot
+ρ=−
+(5)
+If the simulation time has not advanced over a predetermined
+threshold, the procedure starts from the beginning. The step
+size is independent of the executed event, but it does depend
+on the total sumktot of the rate coeﬃcients. This means that
+when fast events (i.e., events with large rate coe ﬃcients)
+dominate the event list, the system clock advances slowly. A
+case in point is the diﬀusion of protons on the surface from
+one oxygen to another. These kinds of events slow down the
+overall simulation, and measures may need to be taken (such
+as artiﬁcially increasing the activation energy) to decrease the
+rates of these events.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27045
+
+
+Because of the use of an approximate density functional in
+the DFT studies, the calculated activation energies obtained
+are underestimated. This is because of the well-known over-
+delocalization of the electron density by approximate density
+functionals. This underestimation produces an error in the
+absolute values of the reaction barriers. However, assuming
+that the trends between diﬀerent processes are correct, the
+executed sequence of diﬀerent processes will give reasonable
+description of the surface reactions. The lower reaction barriers
+lead to faster surface dynamics, and the surface saturation can
+be expected to occur in shorter simulation time and at lower
+temperatures. Subsequent approximations to the reaction rates,
+such as the adsorption rate, will be conducted in the same
+direction, that is, to overestimate the rates.
+The model implemented here follows the setup of Shirazi
+and Elliott,9 and the mechanisms considered can be divided
+into the following subsets: adsorption and desorption of the
+gaseous precursors, ligand elimination reactions between DEZ
+and surface oxygen sites, ligand elimination reactions between
+MEZ and surface oxygen sites, proton di ﬀusion between
+oxygen sites, and densiﬁcation of adsorbed Zn/O-containing
+fragments to the corresponding sublattices. In the current
+implementation, the densiﬁcation of the surface species is
+modiﬁed to be ligand concentration-dependent.
+The adsorption rates are obtained from the kinetic gas
+theory, whereas the surface reactions and desorption
+mechanisms are based on conventional transition-state theory
+in the harmonic approximation.20 Although the activation
+energies for the ALD reactions are obtained from DFT, the
+rates for the proton diﬀusion and densiﬁcation reactions in our
+model are not directly calculated using DFT. We assume,
+based on ab initio molecular dynamic simulations of the
+system, that these processes are fast and assign ad hoc
+activation energies for these processes. However, the bulk of
+the simulation time is consumed in the proton diﬀusion
+between oxygens and in order to reduce the overall simulation
+time, the ad hoc barriers for proton diﬀusion are increased
+artiﬁcially.21 The eﬀects of this approximation are small and are
+discussed in theSupporting Information.
+The kMC model is an on-lattice model where a wurtzite zinc
+oxide lattice is given as an input for the algorithm, and hence,
+in the course of the simulation, a ZnO lattice is reproduced.
+Each lattice site in the framework represents an atom or a
+molecule. A ZnO(100) surface facet covered with water
+molecules is used as the initial state of the simulation. Because
+the lattice structure is preset in our simulation, we cannot
+determine whether an amorphousﬁlm grows or which crystal
+phase is obtained.
+Each lattice site is de ﬁned by its site number, type,
+coordination number (cn), and a neighbor list . The lattice
+model is illustrated in Figure 1.D iﬀerent site types are
+enumerated, that is, each type is assigned an integer value to
+distinguish it from the other types. The diﬀerent site types are
+tabulated in Table 1. The ethyl-ligands in DEZ and MEZ are
+abbreviated as X.
+In the wurtzite lattice, each cation and anion site has a cn of
+4. The cation−anion sites alternate in the lattice, dividing the
+total lattice into metal and oxygen sublattices. Because of the
+alternation, the ﬁrst nearest neighbor j of each metal site i
+belongs to the oxygen sublattice and the second nearest
+neighbor belongs to the metal sublattice. We will use the
+sublattice framework throughout the text.
+The cn corresponds to the number of covalent bonds the
+zinc/oxygen site has formed. The cn is the sum of the occupied
+ﬁrst nearest neighbor sites, and, in the case of a zinc lattice site,
+the cn also contains the number of ligands. Protons are not
+included in the cn. As an example, a MEZ site, ZnX, that has
+twoﬁrst neighbor oxygen sites occupied has a cn of 3 (2 for
+oxygens, 1 from ligand). A water molecule, OH2, that has one
+of itsﬁrst neighbor zinc sites occupied has a cn of 1 (1 from
+zinc, none from the protons).
+Figure 1. Two-dimensional approximation of the lattice network of
+kMC used here to illustrate the reaction network on the lattice
+framework. The actual lattice is 3D, and theﬁrst neighbors of a given
+site i share only one neighbor in common instead of two as is depicted
+here. The lattice is subject to periodic boundary conditions. The
+metal and oxygen sites alternate in the lattice (metal sites are colored
+by light gray, oxygen sites with red). Each zinc and oxygen site is four-
+coordinated in a tetrahedral conﬁguration. Each site is deﬁned by its
+location in the lattice, type, cn, and neighbor list. The cn is shown
+below each lattice box. The bottom row in theﬁgure is the bulk-phase
+(Zn with cn 4). The bulk is inert, i.e., no process is deﬁned for sites
+with cn 4. Initially, the surface is covered with low-coordinated
+hydroxyl groups. Above the surface is the gas phase that is initially
+ﬁlled with vacant (VAC) lattice sites. As the deposition process
+continues, the simulation produces a crystalline ZnO lattice with
+some lattice defects.
+Table 1. Diﬀerent Site Types Used in the Model with
+Descriptionsa
+enumeration type description
+0 VACANCY an empty site of no type
+1 O an oxygen atom
+2 OH a hydroxyl group
+3 OH2 a surface water molecule
+4 ZnX2O oxygen atom with an adsorbed DEZ molecule
+5 ZnX2OH hydroxyl group with an adsorbed DEZ
+molecule
+6 ZnX2OH2 water molecule with an adsorbed DEZ
+molecule
+7 ZnXO MEZ on an oxygen atom
+8 ZnXOH MEZ on a hydroxyl group
+9 ZnO a zinc atom on an oxygen atom
+10 ZnOH a zinc atom on a hydroxyl group
+11 Zn a zinc atom
+12 ZnX a MEZ group
+13 OH2Zn water molecule adsorbed to a zinc atom
+14 OH2ZnX water molecule adsorbed to a MEZ group
+15 OHZn hydroxyl group on a zinc atom
+16 OHZnX hydroxyl group on a MEZ group
+17 OZn oxygen atom on a zinc atom
+aEach site type is assigned an integer and a corresponding string,
+where the X stands for the C2H5 group. Vacant sites are present in
+both zinc and oxygen sublattices. Sites 1−10 exists exclusively in the
+oxygen sublattice and sites 11 −17 exist exclusively in the zinc
+sublattice.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27046
+
+
+The neighbor list contains the indices of theﬁrst neighbors
+of a given site. This list is used to navigate through the lattice
+network. No reference to the real space location is used in the
+model. The neighbor list does not contain information on the
+relative positions of the neighboring sites (e.g., which neighbor
+is above or below the site in question), and the sites only react
+with respect to their nearest or second nearest neighbors in the
+lattice. The type, cn, and the neighbors of a given site are used
+to deﬁne what events are possible for that site.
+The distinguishing feature of an ALD process is the
+separation of the reactants into two gas pulses divided by a
+purging of the reactor chamber. This alternation of the
+precursor pulses is implemented in our model by a time-
+dependent variable that switches the adsorption of DEZ and
+H2O on and oﬀ. Only the adsorption processes are time-
+dependent. The length of each pulse/purge can be deﬁned
+separately.
+The default simulation box consists of 5120 lattice sites with
+xyz-dimensions of 26.8 × 41.7 × 58.0 in Å. The number of
+events executed in the simulations depends exponentially on
+the simulation temperature and range from 105 events (300 K)
+to 108 events (450 K) requiring simulation time from few
+hundred seconds at the very low temperatures to dozens of
+hours at elevated temperatures. Several product runs with
+diﬀerent random seeds are conducted for each simulation. The
+data presented in the result are the average over a set of
+simulations. A larger simulation box of 10 240 sites with
+dimensions of 53.6× 83.3 × 29.0 (in Å) was used to check
+that the results were size-consistent.
+Mechanisms Included in the Model.Chemical reactions
+in the kMC model are deﬁned as discrete events, and three
+diﬀerent event types are incorporated in the model. Each event
+includes a given sitei and possibly itsﬁrst or second nearest
+neighbor, sitesj or k, respectively. The type of events is sorted
+as below:
+ Event I: in this event, the type of a given site i
+transforms to another type, for example, in the
+adsorption of DEZ onto surface water
+ii
+event IOH2
+site
+ZnX2OH2
+site⎯→⎯⎯⎯⎯⎯⎯⎯⎯ (6)
+Often the cn of the site is also updated. In this instance,
+the cn of the oxygen site is increased by 1 as a new Zn−
+O bond is formed.
+ Event II: an event between the sitei and asecond nearest
+neighbor site k, for example, a ligand elimination reaction
+between an adsorbed DEZ and a surface hydroxyl group
+i k i k
+event IIOH
+site
+ZnX2OH2
+site
+O
+site
+ZnXOH2
+site
++⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(7)
+The proton of the hydroxyl group and the ethyl-ligands
+from DEZ combine to form an ethane molecule that
+readily desorbs from the surface. The cn of either site is
+not aﬀected by the reaction. The protons do not
+contribute to the cn of the OH site, and the bonding of
+oxygenon the ZnX2OH2/ZnXOH2 site that resides on
+the oxygen sublatticeis not changed. In general, the types
+on both sitesi and k need not change.
+ Event III: the event is described as a process between
+the sitei and thefirst nearest neighborsite j, for example,
+a densiﬁcation process (see sectionSteric Hindrance and
+Densiﬁcation) where a ZnX group moves from the
+oxygen site to a vacant site on the metal sublattice
+event IIIVAC ZnXOH2 ZnX OH2
+ij i jsite site site site
++⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(8)
+cn’s of each site participating in the event as well as
+those of all of the neighbors are updated accordingly.
+Again, in a general case, the types of both sitesi and j
+need not change in the event.
+Next, we will describe the diﬀerent mechanisms used in the
+model based on DFT calculations,10,11 along with illustrations
+of the lattice structure during the progression of the simulation.
+Adsorption and Surface Reaction of DEZ.The metal
+pulse starts with the adsorption of DEZ onto the surface. The
+DEZ adsorption is anevent I process
+ii
+event IOH
+site
+ZnX2OH
+site⎯→⎯⎯⎯⎯⎯⎯⎯⎯ (9)
+The lattice model for this process is illustrated inFigure 2.
+DEZ can adsorb to water and hydroxyl groups on the
+surface. On the basis of the DFT calculations on DEZ pulse10
+on planar and stepped surfaces, DEZ can adsorb to 1-
+coordinated (planar surface) and 2-coordinated oxygens
+(stepped surface). DEZ can be adsorbed onto O, OH, and
+OH2 sites with cn’s 1 or 2 and to bare oxygen with cn 3 (see
+the Supporting Information for the additional DFT calcu-
+lations conducted for the model). As there will be large proton
+mobility in our model, we do not make distinctions between
+water and hydroxyl groups. For all of the 1- and 2-coordinated
+O, OH, and OH2 sites, an adsorption energy of−0.74 eV will
+be used. For DEZ adsorption to 3-coordinated bare oxygen,
+the adsorption energy is somewhat larger,−1.11 eV.
+The rate of adsorption can be obtained from the molecular
+ﬂux of the kinetic gas theory
+k PT
+mk T
+A(,)
+2
+ads
+B
+σθ
+π
+=
+(10)
+where P is the partial pressure of DEZ, σ is the sticking
+coeﬃcient, kB is the Boltzmann constant,T is the temperature,
+Figure 2.Lattice model illustration for the adsorption of DEZ onto a hydroxyl group ineq 9. DEZ adsorption invokes the mask function, which
+decreases the cn of the neighboring zinc and oxygen sites by−10. The mask function allows tracking how many DEZ/MEZ groups are within the
+vicinity of a given site, and an oxygen site may be rendered inaccessible to DEZ adsorption if surrounded by too many ligands. See sectionSteric
+Hindrance and Densiﬁcation for further details.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27047
+
+
+and A is the area through which theﬂux passes. The sticking
+coeﬃcient σ depends on the temperature and surface coverage
+θ and is close to unity for an empty surface whenθ = 0. The
+area A is approximated here by the density of the reactive sites
+in the DFT calculations conducted on the planar zinc oxide
+surface. For DEZ, the approximate adsorption site area is 0.18
+nm2 per oxygen site on the surface, and for water, the
+adsorption site area is 0.14 nm2 per zinc site at the surface.
+This type of adsorption rate implicitly assumes that the
+adsorbed molecule retains two-dimensional translational
+degree of freedom as well as all of the rotational and
+vibrational states.20 This leads to an overestimation of the
+overall adsorption rate as the molecule is likely to lose at least
+some of its translational entropy. However, the extent to which
+the adsorbed molecule loses its entropy is not entirely clear as
+recent experimental data 22 on the entropy of adsorbed
+molecules shows. In any case, the overestimation of the
+adsorption rate is an approximation in favor of the thin-ﬁlm
+growth. In a similar fashion, the sticking coeﬃcient σ in eq 10
+is set to unity regardless of the temperature for sites where the
+ethyl-coverage is low and the adsorption of DEZ is allowed.
+The sticking coeﬃcient is zero for sites blocked by ethyl-
+ligands.
+On the basis of DFT calculations, the DEZ adsorption is not
+greatly hindered by a single DEZ or MEZ close to the
+adsorption site; therefore, adsorption is permitted barrierlessly
+if a single MEZ is situated close to an oxygen group susceptible
+for adsorption. The steric eﬀects between DEZ and several
+MEZ groups are managed by themask function discussed in
+section Steric Hindrance and Densiﬁcation below.
+After the DEZ has adsorbed, it can either desorb or react
+with other surface species. We assume that during deposition,
+the adsorption will reach an equilibrium, so the desorption
+process can be considered as a chemical reaction where the
+adsorbed molecule escapes into the gas phase. Then, the
+desorption rate is obtained as
+k kT
+h e Ek T
+des
+B /ads B= −| |
+(11)
+In desorption of a molecule, the adsorption energy serves as a
+reaction barrier for barrierless adsorption.
+A separate coordO-function is de ﬁned to prevent the
+adsorption of DEZ onto the subsurface of a grownﬁlm. The
+coordO-function is executed in the case of DEZ desorption
+and oxygen densiﬁcation. The function calculates the relative
+occupation of the neighboring sites on the oxygen sublattice
+around a given oxygen site. If the oxygen site is surrounded by
+occupied sites, DEZ adsorption to this site is deemed
+inaccessible. The function operates as follows: it calculates
+the number of occupied (i.e., not vacant) second nearest
+neighbor sites of the given oxygen site and if over 80% of these
+sites are occupied, the oxygen site is deemed inaccessible to
+adsorption. The function then artiﬁcially decreases the cn of
+the oxygen site in question by−20 rendering it inactive for
+adsorption process. However, the oxygen site can still
+participate in proton diﬀusion because these events are deﬁned
+for low cn oxygens as well.
+The adsorbed DEZ can react with protons on surface oxygen
+sites to release ethane. On the basis of our DFT calculations,
+the reaction pathway for the ligand elimination reaction occurs
+between an adsorbed DEZ and a neighboring hydroxyl site. As
+with the adsorption process, we treat the hydroxyl and water
+sites as equally reactive.
+The DEZ is adsorbed onto an oxygen site and needs to
+accept a proton from an oxygen site. The reaction happens
+between the DEZ site and a second nearest neighbor oxygen
+and is therefore anevent II process, described as
+event IIOH ZnX2OH O ZnXO H
+ik i ksite site site site
++⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯ + (12)
+The mechanism on the lattice structure is illustrated inFigure
+3. The reaction barrier for the removal of the ethyl from DEZ
+adsorbed to 1- or 2-coordinated oxygen is 0.47 eV. The
+desorption of reaction by-products (ethane) is assumed to be
+irreversible and barrierless, so it is not explicitly included as a
+separate process and a reverse reaction is omitted. For a DEZ
+adsorbed onto a 3-coordinated oxygen, the reaction barrier is
+larger, 0.89 eV.
+In addition to ligand elimination reaction, the DEZ can also
+dissociate on the surface. In our calculations on a DEZ bonded
+to a 3-coordinated oxygen (see theSupporting Information),
+the DEZ was able to donate a ligand to a bare zinc atom with a
+low barrier. The dissociation of DEZ in the model is deﬁned
+for a DEZ bonded to a 3-coordinated bare oxygen located
+close to a bare zinc atom. The dissociation is deﬁned for low
+ethyl-coverage and has a very low barrier of 0.10 eV.
+After the DEZ has lost itsﬁrst ligand, the resulting MEZ
+needs to jump from the oxygen sublattice onto the zinc
+sublattice of the target ZnO material. This process is discussed
+in the next section.
+Steric Hindrance and Densi ﬁcation. The steric
+hindrance between surface ligands is an important phenom-
+enon that needs to be incorporated into the model. Steric
+hindrance sets a limit to how many DEZ and MEZ groups can
+be present on the surface at any given time, which is crucial if
+the adsorption of the precursors is to be self-limiting. Assuming
+that the adsorbed DEZ molecule may freely rotate on the
+surface, the steric repulsion between adsorbants is the same in
+all directions and the steric eﬀect can be taken into account by
+a repulsion sphere the adsorbed molecule projects around
+itself. The same is true for MEZ fragments.
+This steric repulsion is incorporated into the model by the
+mask function. The mask function artiﬁcially reduces the cn of
+the neighboring sites by 10. This way it is possible to keep
+track of how many ligands are within a vicinity of a given site
+from the cn of a site and make adsorption and densiﬁcation
+processes ethyl-density-dependent.
+Figure 3. Illustration of the ligand elimination reaction between an adsorbed DEZ and a neighboring hydroxyl group.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27048
+
+
+An example of the eﬀect of the mask function is illustrated in
+Figure 2 . The mask function decreases the cn of the
+surrounding zinc and oxygen sites. If the cn of an oxygen
+site is low enough, the site is rendered inactive for adsorption.
+DFT calculations10 show that two neighboring DEZ molecules
+have a small e ﬀect on the relative adsorption energies.
+Adsorption is therefore allowed onto sites with cn−9, −8,
+and −7 (one MEZ group in close proximity) in addition to
+sites with cn’s of 1, 2, and 3. However, the adsorption bond is
+weakened by 0.09 eV as per our calculations. Adsorption to
+sites cn lower than−9 is not allowed as the steric interaction
+inhibits adsorption. With the help of the mask function, the
+maximum surface ethyl-conc entration can be controlled
+because the mask function limits both adsorption of DEZ
+onto the surface and densiﬁcation of MEZ onto the metal
+sublattice.
+Densification is an event in which an adsorbed metal
+(oxygen) group jumps from the oxygen (metal) sublattice onto
+a vacancy in the metal (oxygen) sublattice. The process is
+illustrated in Figure 4. After the adsorbed DEZ reacts with an
+oxygen site, the MEZ fragment resides on to the oxygen
+sublattice as a ZnXOH site. In this example, there are two
+vacant (VAC) sites on the zinc sublattice next to the ZnXOH
+group. Densi ﬁcation can occur to both sites with equal
+probability. The densi ﬁcation mechanism is an event III
+process described by the equation
+i j i j
+event IIIVAC
+site
+ZnXOH
+site
+ZnX
+site
+OH
+site+⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(13)
+and is dependent on the cn of the vacant site. In the
+densiﬁcation event, the MEZ fragment is removed from the
+oxygen sublattice and placed onto a vacancy on the zinc
+sublattice, resulting in an alternating cation−anion structure.
+The densiﬁcation process is made ethyl-coverage dependent
+by using the cn of the vacant site as an indicator of how many
+ethyl-ligands are located close to the vacant site. An ad hoc
+barrier is then used for the densiﬁcation process so as to
+include ethyl−ethyl repulsion and make the ethyl groups avoid
+one another. The barrier is higher for processes where the cn
+of the vacant site is negative, that is, when the vacant site is
+surrounded by ligands. This means that, given the choice, the
+densiﬁcation of a MEZ group will occur to a vacant site that
+has fewer ethyl-ligands in its vicinity. In this way, the zinc
+fragments prefer to densify to regions with fewer ethyl-ligands
+present, minimizing steric interaction. Densiﬁcation is allowed
+Figure 4.Densiﬁcation of ZnX group from the oxygen sublattice to the zinc sublattice. The ZnX group has a choice between the two vacant sites
+denoted by VAC.
+Figure 5.Example case of the process leading to ethyl-saturation during the DEZ pulse and the use of the mask function. (a) DEZ adsorbs to an
+oxygen site close to the MEZ. (b) DEZ reacts with a surface oxygen site. One of the ethyl-ligands is removed, resulting in another MEZ species on
+the surface. (c) New MEZ needs to densify to the zinc sublattice. However, because of the presence of another ZnX group, the new MEZ has a
+choice of two possible vacant sites. The barrier to the vacant site with cn−10 is lower than that for the vacant site with cn−20, and hence, the
+MEZ prefers the site with cn−10 and prefers to distance itself from the other MEZ group.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27049
+
+
+to vacant sites with cn as low as−30, that is, to sites with at
+most three MEZ sites in their vicinity. If there are no vacant
+sites with allowed cn nearby, then no densiﬁcation occurs and
+the MEZ fragment remains on the oxygen sublattice until some
+ethyl-ligands are eliminated.
+As an illustration for the densiﬁcation process at higher
+ethyl-coverage, consider the adsorption of an additional DEZ
+onto the surface in ourﬁrst example. This process is illustrated
+in Figure 5. A second DEZ adsorbs to surface oxygen close to a
+previously densiﬁed ZnX (Figure 5a). The DEZ undergoes a
+ligand elimination reaction resulting in a ZnXO group (Figure
+5b). Now, this new MEZ has two possible sites onto which
+densify: a vacant site with cn−10 and a second, more hindered
+vacant site with cn−20 (Figure 5c). The latter site has a lower
+cn because of the fact that both ZnX and a ZnXO groups are in
+its vicinity.
+The barrier for densiﬁcation to a vacant site with cn−10 is
+0.30 eV, and to a site with cn−20, it is 0.40 eV. For a vacant
+site with cn−30, the barrier increases to 0.50 eV. All of these
+processes are fast within the process conditions; however, the
+increasing trend in the densiﬁcation barriers ensures that MEZ
+groups tend to avoid one another if given the choice. In our
+example above, the ZnXO prefers to jump to the site with cn
+−10 because of the lower barrier.
+The ethyl-concentration on the surface can be controlled by
+the lowest cn allowed for the densiﬁcation process. We have
+used the ethyl-concentration limit of 7.1 ethyl nm−2 from our
+DFT calculations10 to calibrate the densiﬁcation process. This
+limit is generally achieved in the kMC simulations when the
+lowest vacant site cn for densiﬁcation is −30. Further details
+on the densiﬁcation limit are presented in the Supporting
+Information.
+After densiﬁcation, the cn of the newly occupied site and its
+ﬁrst neighbors are updated accordingly. In the densiﬁcation of
+ZnX species, the ligand is taken into account in the cn, that is,
+a ZnX site with cn 3 is coordinated to two neighbor oxygens
+and one ligand. After the ligand has been eliminated, the cn is
+reduced by one.
+In a case where the densiﬁed ZnX/Zn group is coordinated
+only to a single oxygen site, a reverse densiﬁcation can occur.
+In reverse densiﬁcation, a Zn or ZnX group returns to the
+oxygen sublattice. After the reverse densiﬁcation, the group
+may densify again and possibly end up on a site with a higher
+cn. The ad hoc barrier for the reverse densiﬁcation is 0.60 eV.
+Densiﬁcation is also deﬁned for oxygen species after water
+adsorption on a zinc site (see sectionAdsorption of Water).
+The adsorbed water can exchange protons with the
+neighboring oxygen sites, so the densiﬁcation is deﬁned for
+OH2, OH, and O species. The oxygen densiﬁcation is also an
+event III process
+i j i j
+event IIIOH2ZnX
+site
+VAC
+site
+ZnX
+site
+OH2
+site+⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(14)
+The densiﬁcation of water has an ad hoc barrier of 0.40 eV in
+all cases.
+Surface Reactions of MEZ. The ethyl-ligand of MEZ
+groups can be eliminated from the zinc sublattice with protons
+from hydroxyl groups or adsorbed water molecules. The
+elimination of the ethyl-ligand produces bare zinc atoms on the
+surface. In our recent DFT study on the surface kinetics of
+DEZ/H2O ALD process,11 most of the reaction barriers found
+for removing surface ethyl-ligands by water/hydroxyl groups
+were above 1 eV. Barriers below this threshold were still larger
+than those for the DEZ, and it is evident from our sample that
+the elimination of the MEZ is the limiting factor of the process.
+We have used the lowest barriers calculated in our DFT study
+for each conﬁguration in the model because the lowest barriers
+have largest impact on the dynamics of the process.
+Two possible approaches could be taken to implement the
+DFT calculations10,11 for the surface reactions by either using
+the cn of the oxygen or the zinc site as the primary variable to
+dictate the activation energy for this reaction. There is no clear
+trend in the DFT activation energies11 as the cn of either
+oxygen or MEZ is varied to suggest a clear distinction. We have
+chosen to use the cn of the oxygen site as the deﬁning variable
+in our implementation to better diﬀerentiate between diﬀerent
+reaction mechanisms.
+Using the state of the oxygen site as the main variable, we
+can deﬁne ligand elimination reactions between OH and OH2
+groups separately with diﬀerent cn’s. The ligand removal is
+then treated as anevent III process
+i j i j
+event IIIOH2
+site
+ZnX
+site
+OH
+site
+Zn
+site+⎯→ ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(15)
+Again, the removal of ethane is assumed to be barrierless and
+irreversible. Mechanisms considered for the model are
+tabulated inTable 2.
+Adsorption of Water. After the DEZ pulse reaches
+saturation, a short purge period is used to remove all remaining
+gaseous DEZ molecules as well as reaction by-products from
+the surface. Because of the high reactivity of DEZ, there are
+virtually no DEZ left on the surface after the purge in our
+simulations, so no reactions involving DEZ and gaseous water
+are considered in our model.
+In the DFT calculations,11 water was found to adsorb mainly
+to 2- or 3-coordinated zinc atoms and to MEZ groups
+coordinated with two oxygens. Thus, water adsorption is
+deﬁned in kMC to occur for zinc sites with cn’s 2 and 3 and
+ZnX sites with cn 3 (cn = 2 for oxygens and 1 for ligand). In all
+the water adsorption processes considered with DFT, the
+water adsorbed exothermically to a surface MEZ group or bare
+zinc atom.
+In a similar fashion to the DEZ adsorption, the adsorption of
+water is a type I event
+i i
+i i
+event I
+event I
+Zn
+site
+OH2Zn
+site
+ZnX
+site
+OH2ZnX
+site
+⎯→⎯⎯⎯⎯⎯⎯⎯⎯
+⎯→⎯⎯⎯⎯⎯⎯⎯⎯
+(16)
+where sitei can have cn 2 or 3 for Zn and 3 for ZnX. The rate
+of adsorption is calculated usingeq 10, similarly to the DEZ
+Table 2. Mechanisms Used in the Model for the Removal of
+Ethyl-Ligand of MEZa
+site i site ji cn Ea/eV
+OH2 ZnX 1 0.72
+OH ZnX 1 1.15
+OH ZnX 2 0.93
+OH ZnX 3 1.22
+aActivation energies used here are adopted from Weckman and
+Laasonen (ref 11).
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27050
+
+
+adsorption. A reverse reaction is deﬁned for water desorption
+but water can also desorb directly from the oxygen sublattice
+ii
+event IOH2
+site
+VAC
+site⎯→⎯⎯⎯⎯⎯⎯⎯⎯ (17)
+Water desorption is treated similarly to DEZ desorption,
+where the rate is given byeq 11. The adsorption energy of
+water serves as a desorption barrier for water. Water has a wide
+range of DFT adsorption energies11 that strongly correlate
+with the cn of the adsorbed water molecule. We have chosen
+the strongest adsorption bonds for any given cn. These
+conﬁgurations are summarized inTable 3.
+As the water adsorbs to a surface Zn or ZnX site, the
+adsorbed water is 1-coordinated as only one Zn−O bond has
+been formed. The adsorption energy to the Zn site with cn 2 or
+3i s−1.03 eV and to ZnX site with cn 3, the adsorption energy
+is −1.21 eV. If the ZnX becomes coordinated to three oxygens,
+the adsorption bond is considerably weakened to−0.41 eV, as
+there is no room for water to form a bond with the zinc atom.
+For 4-coordinated Zn or 5-coordinated ZnX, the adsorption
+energy is reduced to an artiﬁcial value of−0.10 eV, eﬀectively
+instantaneously removing the water molecule from the Zn or
+ZnX site. The water needs to be removed as all of the
+neighboring oxygen sites are already occupied and it is not
+possible for the water to densify onto the oxygen sublattice.
+Because there is no room for water to form a strong bond
+between a ZnX coordinated to three oxygens, we have added
+an additional desorption process for water in the case when
+OH2 is situated next to a highly coordinated ZnX. This
+process is associated with the adsorption energy of−0.41 eV.
+The process is described as
+i j i j
+event IIIZnX
+site
+OH2
+site
+ZnX
+site
+VAC
+site+⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(18)
+when the cn of sitei is 5.
+After the water molecule has densiﬁed onto the oxygen
+sublattice, the adsorption energy of water is highly dependent
+on the cn of the water molecule, ranging from−1.21 eV for 1-
+coordinated OH2 to−2.32 eV for 3-coordinated OH2.
+No mask-type function is deﬁned for the water pulse, so
+there is no explicit steric repulsion between the water
+molecules. However, we know from DFT calculations11 on
+high ethyl-density surface that the adsorption energy of water
+decreases when additional water molecules are introduced
+onto the surface. The adsorption energy of theﬁrst water
+molecule is strong, but the addition of more water molecules
+decreases the average adsorption energy per water molecule
+signiﬁcantly.
+We have calculated the adsorption energies of several water
+molecules on the ethyl-saturated surface (labeled case 1 surface
+in refs10 and 11). The overall adsorption energy as well as the
+average adsorption energy per water molecule as a function of
+water molecules on the surface is illustrated inFigure 6. The
+overall adsorption energy is deﬁned as the change in total
+energy with respect to the ethyl saturated surface
+EE N E E ()Nsurface H O H O surface22
+Δ =− + + (19)
+The average adsorption energy per water molecule is the
+overall adsorption energy divided by the number of water
+molecules on the surface.
+Initially, the change in energy is negative (exothermic
+reaction) as new water molecules are introduced into the
+system. However, steric repulsion between the new water
+molecules and surface ethyl-ligands decreases the average
+adsorption energy. After three water molecules, addition of
+new water molecules does not lead to a decrease in energy in
+the system. The averaged adsorption energy for three water
+molecules is−0.74 eV. To include the steric repulsion between
+the surface species, we have chosen this adsorption energy as
+the water adsorption energy on OH2ZnX and OH2Zn sites of
+high ethyl-coverage. The adsorption energy of 1-coordinated
+OH2 is also set to−0.74 eV, whereas the adsorption energies
+of 2- and 3-coordinated water are decreased by 1.21− 0.74 =
+0.47 eV at high ethyl-coverage.
+After adsorption, the water molecule or a hydroxyl group
+undergoes densiﬁcation process, whereby the OH2/OH group
+jumps to the oxygen sublattice. This event is described as an
+event IIIprocess (see alsoeq 14)
+i j i j
+event IIIOH2ZnX
+site
+VAC
+site
+ZnX
+site
+OH2
+site+⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(20)
+Table 3. Desorption from Diﬀerent Conﬁgurationsa
+site type cn Eads/eV
+OH2Zn 3, 4 −1.03
+OH2Zn 5 −0.10
+OH2ZnX 4 −1.21
+OH2ZnX 5 −0.41
+OH2ZnX 6 −0.10
+OH2 1 −1.21
+OH2 2 −1.76
+OH2 3 −2.32
+aThe adsorption energies given for water serve as an desorption
+barrier as written in eq 11. The site is the initial state for the
+desorption event, and the cn is the coordination number of the site in
+the event.
+ Figure 6.Change in energy as a function of water molecules as well as
+the averaged adsorption energy per adsorbed water molecule. At the
+ethyl-coverage of 7.1 ethyl nm−2, the adsorption bond of a single
+water molecule is strong. However, inclusion of more water molecules
+weakens the average adsorption bond because of steric hindrance.
+After three water molecules, no further water can adsorb to the
+surface.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27051
+
+
+with an arbitrary barrier of 0.40 eV. This event is described for
+cn’s i = 3, 4, and 5 and can occur when the sitei is masked.
+In the DFT calculations on the water pulse at the ethyl-
+saturated surface, 11 no adsorption barrier for water was
+observed at 0 K. However, at high ethyl-coverages, there
+exists a dynamical barrier as the water molecule adsorbs to the
+surface at high ethyl coverage because of the thermal
+movement of the ethyl ligands. This means that the adsorption
+is preferred to sites with lower ethyl-coverage. We therefore
+use a low ad hoc barrier of 0.20 eV for the adsorption onto zinc
+sites with high ethyl-concentration.
+Proton Diﬀusion on the Surface.On the basis of the
+DFT molecular dynamics trajectories,11 the dissociation of
+water and proton diﬀusion between two oxygen atoms can
+evidently occur with a relatively low barrier. For the proton
+diﬀusion to occur in a short ab initio molecular dynamics
+simulation, the barrier needs to be on the order of 0.1−0.2 eV.
+However, considerably higher barriers of 0.5−0.6 and 0.75 eV
+for proton diﬀusion have been reported in DFT studies using
+NEB on Al2O3
+23 and HfO2
+24 surfaces, respectively.
+The time evolution of the simulation depends on the overall
+reaction rates which in turn depend exponentially on the
+reaction barriers. A large fraction of the kMC simulation is
+used for proton diﬀusion, and so the overall simulation time is
+exponentially dependent on the proton diﬀusion barrier. For
+the simulation time to be reasonable, it does not matter
+whether the barrier for proton diﬀusion is 0.1 or 0.5 eV as the
+barrier needs to be artiﬁcially increased.21 Therefore, a barrier
+of 0.6 eV is set for most of the proton transfer reactions in the
+temperature range 27−127 °C. Also, a small energetic“nudge”
+is added so as to induce protons to prefer 1- and 2-coordinated
+oxygens, and highly coordinated water prefers to dissociate.
+For temperatures at 152 and 177°C, the proton diﬀusion
+barriers were further increased by 0.08 and 0.11 eV,
+respectively, in order to decrease the simulation time.
+Several diﬀerent proton diﬀusion mechanisms are incorpo-
+rated into the model. First, two hydroxyl groups can react to
+form water and bare oxygen.
+i k i k
+event IIOH
+site
+OH
+site
+OH2
+site
+O
+site
++⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(21)
+This process is deﬁned for all possible cn’s and has an ad hoc
+barrier of 0.75 eV. Second, a bare oxygen can accept a proton
+from a neighboring hydroxyl group or a water molecule.
+i k i k
+event IIO
+site
+OH2/OH
+site
+OH
+site
+OH/O
+site
++⎯ → ⎯⎯⎯⎯⎯⎯⎯⎯⎯ +
+(22)
+Diﬀusion of a proton to 1- or 2-coordinated oxygens has the ad
+hoc barrier 0.6 eV. For 3-coordinated oxygen, this is increased
+to 0.7 eV. The proton transfer to and from an oxygen group is
+also deﬁned between oxygen sites containing zinc (such as
+ZnX2OH and ZnXOH) and zinc sites containing oxygen (such
+as OH2ZnX and OH2Zn) to allow for maximum mobility for
+the protons.
+■ RESULTS ON ZNO ALD
+The kMC model is constructed on the basis of DFT
+calculations. The proton diﬀusion and densiﬁcation processes
+in the model are assigned ad hoc barriers. The kMC model is a
+representation of a complex system, and if the relevant
+processes have been captured in the DFT calculations, the
+model should show adequate qualitative and quantitative
+agreement with experiments. It can then be used to obtain new
+insights.
+In all of the simulations conducted, the initial conﬁguration
+for the kMC is a planar ZnO(100) surface fully covered with
+water depicted in Figure 7 a. Temperatures used in the
+simulations range from 27 to 177 °C (300−450 K). The
+default precursor gas pressure used is 20 Pa (150 mTorr).
+Because of the low reaction barrier for DEZ on the surface,
+the GPC is insensitive to the DEZ pulse length. DEZ
+saturation is achieved already at 0.05 s pulse length, and the
+GPC is not aﬀected by an increase in the pulse length.
+However, because of the slow kinetics of the surface reactions,
+the water pulse requires long exposure times. Further details
+on the saturation with respect to pulse length are presented in
+theSupporting Information. The pulse times used in the
+simulations, unless expressed otherwise, are 0.70 s for the DEZ
+pulse and 0.70 s for the H2O pulse. For the purges between the
+reactant pulses, a 0.1 s purge time is used. The overall
+simulation time is then 16 s, resulting in 10 full ALD cycles. In
+the analysis of the data, theﬁrst two ALD cycles are discarded
+so that the initial conﬁguration does not aﬀect the results.
+Self-Limiting Growth.The initial state of our simulation is
+a planar ZnO(100) surface hydroxylated with water molecules.
+As an example of a prototypical simulation, top and side views
+Figure 7.Illustration of the ZnO surface from above during the initial
+ALD cycle at elevated temperature. The size of simulation box in this
+ﬁgure is one-quarter of the simulation box used in the production
+simulations. (a) Initial conﬁguration, water covered zinc oxide surface
+and (b) surface after DEZ saturation. Surface is covered with MEZ.
+The eﬀect of the mask function can be seen here, as the ethyl-ligands
+tend to avoid one another when densifying to the zinc sublattice.
+Some of the MEZ remain nondensiﬁed. (c) Surface shortly after the
+beginning of the water pulse. Several ethyl-ligands have already been
+eliminated. (d) Surface after the water pulse. Some MEZ remain on
+the surface even after the water pulse, and these ligand fragments are
+called persistent ligands.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27052
+
+
+of the surface before and after DEZ and H 2O pulses are
+illustrated in Figures 7 and 8, respectively.
+The ALD reactions in the simulation result in a self-limiting
+growth. The DEZ adsorption is strong, and the removal of the
+ﬁrst ligand has a low barrier; therefore, the initial planar surface
+is rapidly saturated with DEZ. The adsorption of DEZ is self-
+limiting because the MEZ fragments on the surface block the
+neighboring oxygen sites as the surface ethyl-density increases.
+During the water pulse, water adsorbs to surface bare zinc
+and MEZ sites. The adsorption of water ceases after each
+accessible oxygen site closes to MEZ and bare zinc sites has
+been occupied. Some of the water react with MEZ and
+eliminate ethyl from the surface, some donate protons to
+surface oxygens and dissociate.
+Mass Increment.The kMC model can be used to extract
+macroscopic quantities related to the thin-ﬁlm growth. These
+growth characteristics can then be compared directly to
+experimental data on the ALD of ZnO.
+During the simulation, the mass change in the system can be
+calculated directly from the molecular mass of each site on the
+lattice as a function of time. This gives us data of the mass
+change of the thinﬁlm with respect to time, comparable to a
+quartz-crystal microbalance (QCM) measurement of theﬁlm
+deposition. In Figure 9, the mass gain of the system as a
+function of time at various temperatures is presented. The
+diﬀerent ALD cycles can be identiﬁed as steps on the mass−
+time graph.
+The initial DEZ saturation is almost identical at all
+temperatures for theﬁrst ALD cycle because the initial surface
+is clean of ethyl-ligands and reactions for DEZ have a low
+barrier. After theﬁrst cycle, however, there is a clear divergence
+in the simulated QCM graphs depending on the deposition
+temperature. At low temperatures, where the thin-ﬁlm
+deposition is low, the graph ﬂattens out after the ﬁrst few
+ALD cycles. At elevated temperatures, the mass gain is
+identical from each ALD cycle to the next.
+In Figure 10, the simulated mass change during a single ALD
+cycle is presented alongside an experimental QCM data
+adopted from ref25. The data are obtained by averaging over
+the last 8 ALD cycles. Both the simulations and the experiment
+were conducted at 177 °C. The graphs are in qualitative
+agreement with each another. The main mass gain during the
+ALD cycle comes from the DEZ pulse, and the mass−time
+graph reaches a saturation. The simulated graph is stable
+during the purge phases for both DEZ and H2O, but in the
+experimental graph, there is a signi ﬁcant decrease in the
+deposited mass for both reactants. This is likely due to weakly
+bound precursors and by-products desorbing from the surface.
+No such eﬀect is observed in the simulation because no weakly
+bound species are present during the DEZ pulse and ethane
+desorption is assumed to be instantaneous. Therefore, the
+purge phases in the simulated cycle are short in comparison to
+the experimental cycle as hardly anything of interest occurs in
+the simulation during the purge phases.
+At the beginning of the water pulse, the mass increases
+slightly. This mass gain slowly decreases, reaching a steady
+level. In the experiment, the mass decrease occurs during the
+purge. In our simulation, although some water molecules form
+only weak adsorption bonds, there is only slight decrease in the
+mass during the purge. The net change in mass from the end of
+the DEZ pulse to the end of the water pulse is very small in
+both simulation and experiment.
+Thickness Increment. The thickness increment per cycle
+can be calculated from the mass−time curve in Figure 9 or
+from the thickness of the simulated thinﬁlm. The average mass
+deposited onto the surface area of theﬁlm per cycle is obtained
+from the slope of the curve or equivalently from the net gain
+per cycle inFigure 10. Dividing this average mass per area with
+the density of the bulk ZnO (5.62 g cm−3), the GPC can be
+calculated in the same fashion as done in an experimental
+QCM measurement.26
+The average GPC can also be obtained from the thickness
+from the simulated thin ﬁlm by dividing the change in the
+thickness with the number of ALD cycles. However, the height
+of the simulatedﬁlm is not well deﬁned because theﬁlm does
+not grow entirely uniformly, at least at low temperatures (see
+sectionDefects in the Thin Film). We have measured the
+change in the thickness of the thinﬁlm by deﬁning the“top” of
+the thin ﬁlm as the layer in which 50% or more of the lattice
+sites have been occupied. The GPC calculated this way was
+found to be robust, and the same results were produced with
+higher cutoﬀs of 60 and 80%. Theﬁrst two ALD cycles have
+been removed from the data. The GPC with respect to
+temperature from our simulations is presented inFigure 11
+alongside experimental data by Yousﬁ et al.26
+The two approaches taken for calculating the average GPC
+of the simulated thinﬁlm are in agreement with each other.
+Figure 8.Side view of the ZnO surface during the initial ALD cycle.
+The labels (a−d) correspond to the same stages of the initial ALD
+cycle as inFigure 7. The formation of the new atomic layer can be
+clearly seen. After the water pulse, some ethyl-ligands remain on the
+surface and are not eliminated within the ALD cycle.
+ Figure 9. Simulated QCM data from the kMC model. Initially, the
+growth rate is the same for all temperatures when the surface becomes
+saturated with DEZ. However, after ethyl-saturation, the diﬀerent
+temperature graphs diverge as the elimination of ethyl-ligands is low
+at low temperatures.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27053
+
+
+The ﬁlm growth is low at temperatures below 25 °C. At
+temperatures above 25 °C, the ﬁlm growth of the simulated
+ﬁlm increases and reaches a plateau at 100°C and remains
+stable with respect to the temperature. This temperature range
+is called the“ALD window ”. At maximum growth, the
+simulated GPC deviates 18% from the experimental data.
+The GPC reported by Yousﬁ et al.26 is somewhat larger than
+that in other experimental publications where the thickness of
+theﬁlm is calculated in some diﬀerent fashion. However, a
+QCM measurement best relates to our simulation.
+The onset of the thin- ﬁlm growth is o ﬀset from the
+experimental data by roughly 45°C. This oﬀset is likely due to
+the underestimation of the reaction barriers by DFT. The GPC
+is very sensitive to the barriers for the second ligand
+elimination reaction as can be seen fromFigure 12, where all
+of the barriers for the second ligand elimination reaction have
+been increased by 0.10 eV. The overall trend and slope of the
+curve remain the same; however, the temperatures for the
+onset and saturation of the growth shift by 40°C.
+Persistent Ligands. At low temperatures, only little
+growth of ZnO is observed. It is evident from our kMC
+simulations that the limiting factor for the growth is the
+elimination of the ethyl-ligands from the surface during the
+water pulse. At low temperatures, water is unable to remove
+many of the surface ethyl-ligands. The surface remains
+crowded with MEZ that blocks the possible adsorption sites,
+and further adsorption of DEZ is inhibited. At elevated
+temperatures, the elimination of ethyl becomes accessible,
+resulting in adsorption of DEZ onto the surface and the
+familiar layer-by-layer growth.
+The incomplete elimination of the ethyl-ligands leads to
+persisting ligands on the surface. These ligands cannot be
+eliminated from the system because of the large activation
+energy. The fraction of the newly deposited ligands that persist
+on the surface after each cycle can be calculated from the
+simulation data. The fraction of persisting ligands,fethyl,i s
+calculated as
+f
+N
+Nethyl
+ethyl,DEZ H O
+ethyl,DEZ
+2
+=
+Δ
+Δ
++
+(23)
+Figure 10. Simulated mass change as a function of time from the kMC model (left) and the corresponding experimental QCM measurement
+adopted from ref25 (right). The diﬀerent phases (DEZ pulse/purge/H2O pulse/purge) within the ALD cycle are indicated by the vertical dashed
+lines. The ZnO thinﬁlms are deposited at temperature 177°C in both the simulation and the experiment.
+Figure 11.Simulated GPC data, estimated from both the thickness of
+the simulated thinﬁlm and from the deposited mass, compared to the
+growth rate reported in ref26. The GPC estimated from the average
+mass includes the error bars, obtained as a standard deviation from
+series of simulations.
+Figure 12. GPC as a function of temperature in the case where the
+barriers for the second ligand elimination reaction (LE2) have been
+increased by 0.10 eV. The elimination of the MEZ from the surface is
+clearly the crucial step in the deposition process. Increasing the barrier
+shifts the observed behavior to higher temperature as the ligand-
+elimination reaction can occur only at elevated temperatures.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27054
+
+
+where ΔNethyl,DEZ is the change in the number of ethyl ligands
+during the DEZ pulse andΔNethyl,DEZ+H2O is the change in the
+number of ethyl ligands over the whole cycle, DEZ and water
+pulses. If the DEZ and water pulses last for 0.7 s and the
+purging takes 0.1 s after each pulse, we can calculate the
+change in the number of ethyl-ligands as
+NN N
+NN N
+tt
+tt
+ethyl,DEZ ethyl, 0.8s ethyl, 0
+ethyl,DEZ H O ethyl, 1.6s ethyl, 02
+Δ= −
+Δ= −
+==
++= = (24)
+The fraction ineq 23 then corresponds to the fraction of the
+newly deposited ligands that remain on the surface at the end
+of the cycle.
+fethyl as a function of temperature is plotted inFigure 13
+along side with available experimental data. The fraction of
+persisting ligands is averaged over the last 8 ALD cycles. The
+experimental data on the fraction of persisting ligands have
+been made by measuring the diﬀerence FTIR spectra12 after a
+DEZ/H2O cycle. The ZnO surface was prepared in the
+experiments by cleaning it with H2O at 300 °C before the
+measurement.
+The simulation is in qualitative agreement with the limited
+experimental data available. The removal of the MEZ is clearly
+very sensitive to temperature. The incomplete elimination of
+the ethyl-ligands is clearly the main reason for the poor GPC at
+low temperatures as no further zinc can deposit onto the ethyl-
+saturated surface. In our kMC model, the fraction of persisting
+ligands reaches a limit of 40% ligands persisting after each ALD
+cycle, whereas experimentally, it is observed that the fraction
+decreases close to zero at elevated temperatures.
+Defects in the Thin Film.In the kMC simulation, a large
+fraction of ethyl-ligands persist on the surface even at elevated
+temperatures. Because not all ligands are removed, theﬁlm
+may grow around these ligands leaving them encapsulated into
+the lattice. Two simulated thinﬁlms at the end of the
+simulation are depicted inFigure 14. Most noticeably, theﬁlm
+deposited at high temperature contains ethyl-ligands encapsu-
+lated within the lattice.
+The ethyl-ligands mask some of the neighboring sites, and
+some of these blocked sites are left vacant. These lattice defects
+correspond to impurities, vacancies, and lattice defects in the
+actual thinﬁlm. The fraction of vacant lattice sites in theﬁlm at
+the end of the simulation (10 ALD cycles) for various
+temperatures is depicted inFigure 15 . The fraction of
+vacancies is summed along thexy-plane of the thinﬁlm and
+plotted as a function of theﬁlm thickness along thez-axis. The
+extent to which the lattice was occupied along thez-axis was
+used to calculate the growth rate from the ﬁlm thickness
+previously.
+The initial layer of hydroxylated surface atz = 0 is fully
+occupied with zero vacant sites present. The vacuum above the
+deposited surface is reached when the fraction of vacant sites
+reaches unity. At low temperatures a large fraction of the lattice
+sites remain vacant because of the poor growth. The fraction of
+vacant sites inﬁlms deposited at 27 and 52 °C increases
+drastically as a function of theﬁlm thickness. This indicates
+that theﬁlms are nonuniform. In contrast, theﬁlms deposited
+at 127 and 177°C show lower portions of vacancies. However,
+Figure 13.Fraction of persisting ligands as a function of temperature
+in the simulation. Experimental data, obtained from ref 12, are
+measured for low and high water exposures. Low and high water
+exposures correspond to 104 and 107 L, respectively.
+Figure 14. Side proﬁle from the thinﬁlm deposited at temperatures
+27 and 152°C. From the simulated trajectories, the amount of ethyl-
+ligands persisting in theﬁlm is large even at high temperatures. This
+creates defects into the ﬁlm as the ethyl-ligands mask some of the
+neighboring sites and lead to impurities within the grownﬁlm. In
+reality, the ethyl-ligands are not likely to stay as ethyl-ligands within
+the substructure of the ﬁlm but convert to other by-products or
+impurities.
+Figure 15.Fraction of lattice site vacant at the end of the simulation
+after 2 s of deposition (10 cycles). It is evident that theﬁlm growth is
+slow at low temperature (blue) because the lattice sites are occupied
+only up to a 9 Å thickness. At slightly higher temperatures, theﬁlm
+grows faster but the depositedﬁlm contains many defects and has a
+lower density of atoms than a bulk ZnO. The fraction of defects
+decreases with increasing temperature.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27055
+
+
+the fraction of vacant sites remains at about 20% and is
+constant throughout theﬁlm.
+The ligand incorporation as a function of theﬁlm depth is
+depicted in Figure 16. The ﬁgure shows the fraction of the
+lattice sites that contain an ethyl-ligand as a function of theﬁlm
+thickness. Throughout the ﬁlm, 20−25% of the lattice sites
+contain a ligand. The proportion of ligands peaks at the
+beginning of the deposition. This peak is especially strong at
+low temperatures. After the initial peak, the concentration of
+ligands is stable throughout theﬁlm.
+■ DISCUSSION
+The simulated mass increment during an ALD cycle is in
+qualitative agreement with the experimental data. The bulk of
+the deposited mass is produced during the DEZ pulse. The
+average mass deposited at 177°C is around 150 ng cm−2. The
+mass change during the water pulse is negligible (−2.14 ng
+cm−2) in our kMC model. The quantitative mass is
+overestimated by our model by approximately 25%.
+Elam and George25 deﬁne ν̃̃as the average number of
+hydroxyl groups that reacted with each adsorbed DEZ
+molecule within an ALD cycle. This is determined from the
+ratio of mass changes occurring during the half-reactions as
+measured by QCM. The ratio is calculated from the QCM data
+by
+M
+M
+MM
+MM
+(2 )B
+A
+HO CH
+DEZ C H
+22 6
+26
+ν
+ν=
+−− ∼
+− ∼ (25)
+where MA is the mass gain from the DEZ pulse andMB is the
+mass gain from the water pulse andMi is the molecular mass of
+molecule i. From our simulation at 177°C, the average mass
+gain after the DEZ pulse (MA) is 155.81 ng cm−2 and after the
+complete cycle 153.67 ng cm−2. Thus, in our simulation, there
+is small negative mass change of−2.14 ng cm−2 after the water
+pulse (MB). Using the above equation, we can determine the
+average number of hydroxyl groups reacting per DEZ to beν̃=
+1.36, in close agreement with the experimental value ofν̃̃=
+1.37 reported by Elam and George.
+The thickness increment of the thinﬁlm can be calculated
+either from the height of the simulated thinﬁlm or from the
+average mass gain during the deposition. The GPC is in
+qualitative agreement with experimental data. Because of the
+underestimation of the reaction barriers by DFT, the GPCs
+temperature dependency is oﬀset from the experimental data
+by roughly 40°C. It is evident from our simulations that the
+low growth at the low temperatures (<50°C) is due to the
+poor elimination of the ethyl ligands. Because of this, there is
+no room for further DEZ to adsorb onto the surface. At
+elevated temperatures, the ligand removal becomes feasible
+and theﬁlm begins to grow, reaching a peak of approximately
+2.6 Å at about 100°C and above. The quantitative deviation
+from the experimental data at maximum growth is about 18%.
+On contrary to the experimental data, we have not observed
+any downturn in the GPC at elevated temperatures.
+A simple sensitivity test shows that the removal of the MEZ
+during the water pulse is the limiting step in the process.
+Increasing this reaction barrier by 0.1 eV shifts the onset of the
+thin-ﬁlm growth by roughly 40 °Ca n di m p r o v e st h e
+correspondence between the simulated graph and the
+experimental data. The large fraction of ethyl-ligands persisting
+in theﬁlm increases the mass gain during the simulation. If the
+ligands decompose and are removed from the system, the
+maximum growth rate reduces from 2.6 to 2.3 Å per cycle.
+Because of the high barrier for elimination of the ethyl-
+ligand from the surface, a large portion of the ethyl ligands
+persist after an ALD cycle. The extent of the persistent ligands
+in theﬁlm is also in agreement with experimental data
+available. Mackus et al.12 conducted an FTIR measurement of
+the ALD of ZnO and compared the changes in the absorbance
+to a background spectrum of the surface cleaned with long
+water pulse at high temperature. At the usual deposition
+exposures (on the order of 104 L), 57% of the ethyl-ligands
+persisted on the surface at 150°C at the end of the H2O pulse.
+This reduced to 16% at extended H2O exposure (6× 107 L).
+We have calculated the fraction of ligands persisting after each
+pulse as a function of temperature. The water exposure in our
+simulation is approximately 150 mTorr× 0.70 s = 1× 105 L.
+This fraction does not include the ethyl-ligands already present
+in the surface/lattice but corresponds to the fraction of the
+newly deposited ligands that remain on the surface at the end
+of the cycle. The fraction declines as a function of temperature,
+in rough agreement with the experimental data available.
+Unlike the experimental data, the simulated curve plateaus to a
+fraction of roughly 40% at 177°C, whereas the experimental
+data go down to zero. This is because of the large barriers for
+the elimination of the ligands in our model and because of the
+restricted set of events available. Incorporation of the
+cooperative water e ﬀects would be likely to improve this
+comparison, as the stabilizing water−water interactions would
+add mechanisms for ligand elimination.
+Water molecules that are unable to react with the ethyl-
+ligands remain adsorbed in some cases and are therefore
+available for DEZ adsorption in the next cycle and slowly the
+ﬁlm starts to grow around the unreactive MEZ sites. In reality,
+it is unlikely that the ethyl-ligands would remain within the
+sublayers of the growingﬁlm, but instead, the ligands are likely
+to decompose or be removed through some as yet unknown
+mechanism. This is supported by the low carbon content in the
+deposited ZnOﬁlms.27 The elimination of the ligands may
+occur, for example, by a transfer ofβ-hydride and desorption of
+C2H4, leading to the incorporation of H into the ﬁlm.
+However, DFT calculations 10,11 conducted on the planar
+ZnO(100) surface on the pyrolysis or β-elimination of the
+Figure 16. Fraction of lattice sites in theﬁlm that contain an ethyl-
+ligand. The fraction of sites containing an ethyl-ligand peaks at the
+beginning of the deposition. The peak then levels down to about 20 to
+25% of sites containing an ethyl-ligand.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27056
+
+
+ethyl-ligands have predicted very large activation energies for
+these mechanisms. The removal of ethyl from the surface is
+likely to require a more complex surface environment than the
+planar structures we have used in our investigations so far.
+We suggest that the ethyl-ligands produce impurities and
+lattice vacancies in the structure of the growing ﬁlm.
+Temperature has an important role in reducing these defects
+by increasing the extent to which the ligands are eliminated.
+The defects can be quantiﬁed by calculating the fraction of
+vacant sites within the lattice. This fraction greatly decreases as
+a function of temperature but only down to 20%.
+■ CONCLUSIONS
+The ALD of zinc oxide via DEZ/H 2O process has been
+simulated using a three-dimensional (3D) on-lattice kMC
+model. The deposition of the thinﬁlm is described as a
+sequence of discrete reaction events. The activation energies
+for the chemical reactions were obtained from DFT
+calculations. The temperature dependence of the thin-ﬁlm
+growth is in qualitative and quantitative agreement with the
+experimental data.
+At low temperatures, the growth of the thinﬁlm is hampered
+by the persistence of ethyl-ligands. The elimination of the
+surface ligands has a relatively high activation energy. As the
+deposition temperature increases, the removal of the surface
+ligands becomes feasible, leading to the deposition of theﬁlm.
+The onset of theﬁlm growth predicted by the model is oﬀset
+from the experimental data by 40 °Cb e c a u s eo ft h e
+underestimation of the reaction barriers in DFT.
+The persisting ethyl-ligands are likely to contribute to lattice
+defects in theﬁlm. During the deposition of the zinc oxide thin
+ﬁlm, a substantial amount of ethyl-ligands are incorporated
+into the lattice structure of zinc oxide. The persistance of
+ligands is likely to cause some defects and impurities to form in
+theﬁlm. The carbon content of the deposited thinﬁlms is
+known to be low, and thus, it is likely that the ligands
+encapsulated into the depositedﬁlm are removed by a yet
+unknown mechanism.
+This work thus demonstrates the value of kMC simulations
+for studying the mechanism of materials processing, uniquely
+bridging the gap between individual reaction data from DFT,
+and average growth characteristics from experiment. kMC is a
+suitable tool for modeling the growth of theﬁlm as the
+complex interplay of di ﬀerent mechanisms can be imple-
+mented into the reaction network.
+■ ASSOCIATED CONTENT
+*S Supporting Information
+The Supporting Information is available free of charge on the
+ACS Publications websiteat DOI: 10.1021/acs.jpcc.8b06909.
+Description of the additional DFT calculations done for
+the kinetic model as well as details on the convergence
+of the model with respect to the proton diﬀusion barrier,
+densiﬁcation, and the reactant pulse lengths (PDF)
+Example input for the kMC system (PDF)
+■ AUTHOR INFORMATION
+Corresponding Author
+*E-mail: timo.weckman@gmail.com.
+ORCID
+Timo Weckman: 0000-0001-8721-560X
+Mahdi Shirazi: 0000-0002-2497-3013
+Simon D. Elliott:0000-0001-5573-5694
+Kari Laasonen: 0000-0002-4419-7824
+Notes
+The authors declare no competingﬁnancial interest.
+■ ACKNOWLEDGMENTS
+The authors thank the Center for Scientiﬁc Computing for the
+use of their computational resources. Funding by the Academy
+of Finland (projects nos. 13140115 and 13258547), the
+Academy of Finland Centre of Excellence in Computational
+Nanoscience (project no. 9158041), and COST Action
+MP1402HERALD is acknowledged.
+■ REFERENCES
+(1) Pinna, N.; Knez, M.Atomic Layer Deposition of Nanostructured
+Materials; Wiley-VCH, 2012.
+(2) Karpina, V. A.; Lazorenko, V. I.; Lashkarev, C. V.; Dobrowolski,
+V. D.; Kopylova, L. I.; Baturin, V. A.; Pustovoytov, S. A.; Karpenko, A.
+J.; Eremin, S. A.; Lytvyn, P. M.; et al. Zinc oxideanalogue of GaN
+with new perspective possibilities.Cryst. Res. Technol.2004, 39, 980−
+992.
+(3) Morkoc, H.; Özgür, Ü. Zinc Oxide: Fundamentals, Materials and
+Device Technology; John Wiley & Sons, 2008.
+(4) Moezzi, A.; McDonagh, A. M.; Cortie, M. B. Zinc Oxide
+particles: Synthesis, Properties and Applications.Chem. Eng. J.2012,
+185,1 −22.
+(5) Deminsky, M.; Knizhnik, A.; Belov, I.; Umanskii, S.; Rykova, E.;
+Bagatur’yants, A.; Potapkin, B.; Stoker, M.; Korkin, A. Mechanism and
+Kinetics of Thin Zirconium and Hafnium Oxide Film Growth in an
+ALD Reactor. Surf. Sci. 2004, 549,6 7−86.
+(6) Mazaleyrat, G.; Estève, A.; Jeloaica, L.; Djafari-Rouhani, M. A
+Methodology for the Kinetic Monte Carlo Simulation of Alumina
+Atomic Layer Deposition onto Silicon.Comput. Mater. Sci.2005, 33,
+74−82.
+(7) Dkhissi, A.; Estève, A.; Mastail, C.; Olivier, S.; Mazaleyrat, G.;
+Jeloaica, L.; Djafari Rouhani, M. Multiscale Modeling of the Atomic
+Layer Deposition of HfO2Thin Film Grown on Silicon: How to Deal
+with a Kinetic Monte Carlo Procedure.J. Chem. Theory Comput.2008,
+4, 1915−1927.
+(8) Dkhissi, A.; Mazaleyrat, G.; Este ̀ve, A.; Rouhani, M. D.
+Nucleation and Growth of Atomic Layer Deposition of HfO2Gate
+Dielectric Layers on Silicon Oxide: A Multiscale Modelling
+Investigation.Phys. Chem. Chem. Phys.2009, 11, 3701−3709.
+(9) Shirazi, M.; Elliott, S. D. Atomistic Kinetic Monte Carlo Study of
+Atomic Layer Deposition Derived from Density Functional Theory.J.
+Comput. Chem. 2014, 35, 244−259.
+(10) Weckman, T.; Laasonen, K. Atomic Layer Deposition of Zinc
+Oxide: Diethyl Zinc Reactions and Surface Saturation from First-
+Principles. J. Phys. Chem. C2016, 120, 21460−21471.
+(11) Weckman, T.; Laasonen, K. Atomic Layer Deposition of Zinc
+Oxide: Study on the Water Pulse Reactions from First-Principles.J.
+Phys. Chem. C2018, 122, 7685−7694.
+(12) Mackus, A. J. M.; MacIsaac, C.; Kim, W.-H.; Bent, S. F.
+Incomplete Elimination of Precursor Ligands During Atomic Layer
+Deposition of Zinc-Oxide, Tin-Oxide, and Zinc-Tin-Oxide.J. Chem.
+Phys. 2017, 146, 052802.
+(13) Vandalon, V.; Kessels, W. M. M. What is Limiting Low-
+temperature Atomic Layer Deposition of Al2O3? A Vibrational Sum-
+frequency Generation Study.Appl. Phys. Lett.2016, 108, 011607.
+(14) Vandalon, V.; Kessels, W. M. M. Revisiting the Growth
+Mechanism of Atomic Layer Deposition of Al2O3: A Vibrational Sum-
+frequency Generation Study.J. Vac. Sci. Technol., A2017, 35, 05C313.
+(15) Shirazi, M.; Elliott, S. D. Cooperation Between Adsorbates
+Accounts for the Activation of Atomic Layer Deposition Reactions.
+Nanoscale 2015, 7, 6311−6318.
+(16) Ferguson, J. D.; Weimer, A. W.; George, S. M. Surface
+Chemistry and Infrared Absorbance Changes During ZnO Atomic
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27057
+
+
+Layer Deposition on ZrO2 and BaTiO3 Particles.J. Vac. Sci. Technol.,
+A 2005, 23, 118−125.
+(17) Sandia National Laboratories. Stochastic Parallel PARticle
+Kinetic Simulator (SPPARKS) Kinetic Monte Carlo Simulator.
+http://spparks.sandia.gov/, 2018; online (accessed April 24, 2018).
+(18) Plimpton, S.; Battaile, C.; Chandross, M.; Holm, L.;
+Thompson, A.; Tikare, V.; Wagner, G.; Webb, E.; Zhou, X.;
+Cardona, C. G.; et al. Crossing the Mesoscale No-mans Land via
+Parallel Kinetic Monte Carlo.Sandia Report SAND2009-6226, 2009.
+(19) Bortz, A. B.; Kalos, M. H.; Lebowitz, J. L. A New Algorithm for
+Monte Carlo Simulation of Ising Spin Systems.J. Comput. Phys.1975,
+17,1 0−18.
+(20) Laidler, K. J.Chemical Kinetics; Harper & Row, 1987.
+(21) Voter, A. F.Radiation Eﬀects in Solids; Springer, 2007; pp 1−23.
+(22) Campbell, C. T.; Sellers, J. R. V. The Entropies of Adsorbed
+Molecules. J. Am. Chem. Soc.2012, 134, 18109−18115.
+(23) Weckman, T.; Laasonen, K. First Principles Study of the
+Atomic Layer Deposition of Alumina by TMA−H2O-process. Phys.
+Chem. Chem. Phys.2015, 17, 17322−17334.
+(24) Shirazi, M.; Elliott, S. D. Multiple Proton Diffusion and Film
+Densification in Atomic Layer Deposition Modeled by Density
+Functional Theory. Chem. Mater. 2013, 25, 878−889.
+(25) Elam, J. W.; George, S. M. Growth of ZnO/Al2O3 Alloy Films
+Using Atomic Layer Deposition Techniques.Chem. Mater. 2003, 15,
+1020−1028.
+(26) Yousfi, E. B.; Fouache, J.; Lincot, D. Study of Atomic Layer
+Epitaxy of Zinc Oxide by in-situ Quartz Crystal Microgravimetry.
+Appl. Surf. Sci.2000, 153, 223−234.
+(27) Jeon, S.; Bang, S.; Lee, S.; Kwon, S.; Jeong, W.; Jeon, H.;
+Chang, H. J.; Park, H.-H. Structural and Electrical Properties of ZnO
+Thin Films Deposited by Atomic Layer Deposition at Low
+Temperatures. J. Electrochem. Soc.2008, 155, H738−H743.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b06909
+J. Phys. Chem. C2018, 122, 27044−27058
+27058

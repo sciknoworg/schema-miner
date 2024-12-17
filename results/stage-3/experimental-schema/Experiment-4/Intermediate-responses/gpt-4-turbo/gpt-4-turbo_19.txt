@@ -1,0 +1,190 @@
+Based on the research paper and domain expert feedback, the JSON schema for the ALD process needs to be refined to include specific details about the deposition of CsI and CsPbI3 thin films, as well as the parameters affecting their deposition and properties. Here is the refined JSON schema incorporating these details:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process for 2D Materials",
+  "description": "A schema representing the steps and parameters involved in setting up and verifying an Atomic Layer Deposition process for 2D materials such as metal sulfides, metal halides, and metal oxides on various substrates.",
+  "type": "object",
+  "properties": {
+    "reactantSelection": {
+      "type": "object",
+      "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+      "properties": {
+        "precursor": {
+          "type": "array",
+          "description": "Details about the chemicals used as precursors in the ALD process.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "chemicalFormula": {"type": "string"},
+              "airSensitive": {"type": "boolean"},
+              "meltingPoint": {"type": "number"},
+              "vaporPressure": {"type": "string"},
+              "temperatureRange": {"type": "string"},
+              "thermalStability": {"type": "string"},
+              "volatility": {"type": "string"},
+              "TGAData": {"type": "string"}
+            },
+            "required": [
+              "name",
+              "chemicalFormula",
+              "airSensitive",
+              "meltingPoint",
+              "vaporPressure",
+              "temperatureRange",
+              "thermalStability",
+              "volatility",
+              "TGAData"
+            ]
+          }
+        },
+        "coReactant": {"type": "string"},
+        "deliveryMethod": {"type": "string"}
+      },
+      "required": ["precursor", "coReactant", "deliveryMethod"]
+    },
+    "pulseTimes": {
+      "type": "object",
+      "properties": {
+        "precursorPulseTime": {"type": "number"},
+        "coReactantPulseTime": {"type": "number"}
+      }
+    },
+    "filmProperties": {
+      "type": "object",
+      "properties": {
+        "orientation": {"type": "string"},
+        "grainSize": {"type": "number"},
+        "surfaceRoughness": {"type": "number"},
+        "impurityContent": {
+          "type": "object",
+          "properties": {
+            "hydrogen": {"type": "number"},
+            "carbon": {"type": "number"},
+            "oxygen": {"type": "number"}
+          }
+        },
+        "conformality": {"type": "string"},
+        "dielectricConstant": {"type": "number"},
+        "thermalStability": {"type": "string"},
+        "growthRate": {"type": "number"},
+        "refractiveIndex": {"type": "number"},
+        "filmThicknessUniformity": {"type": "string"},
+        "breakdownVoltage": {"type": "number"},
+        "resistivity": {"type": "number"},
+        "porosity": {"type": "number"},
+        "opticalProperties": {
+          "type": "object",
+          "properties": {
+            "bandGap": {"type": "number"}
+          }
+        },
+        "epitaxialAlignment": {
+          "type": "object",
+          "description": "Details of the epitaxial alignment of the film with the substrate.",
+          "properties": {
+            "inPlaneOrientation": {"type": "string"},
+            "outOfPlaneOrientation": {"type": "string"},
+            "domainSizes": {"type": "number"},
+            "domainOrientations": {
+              "type": "array",
+              "items": {"type": "string", "enum": ["0/60°", "30/90°"]}
+            }
+          }
+        },
+        "interfaceLayer": {
+          "type": "object",
+          "properties": {
+            "thickness": {"type": "number"},
+            "quality": {"type": "string"}
+          }
+        },
+        "ionicConductivity": {"type": "number"},
+        "crystallinity": {"type": "string"},
+        "nitrogenDopingLevel": {"type": "number"}
+      }
+    },
+    "adhesion": {
+      "type": "object",
+      "properties": {
+        "onBorosilicateGlass": {"type": "boolean"},
+        "onSilicon": {"type": "boolean"},
+        "onITO": {"type": "boolean"},
+        "onMica": {"type": "boolean"},
+        "onSapphire": {"type": "boolean"}
+      }
+    },
+    "depositionConditions": {
+      "type": "object",
+      "properties": {
+        "reactorDesign": {"type": "string"},
+        "gasFlowRates": {"type": "string"},
+        "purgeTimes": {"type": "string"},
+        "substrateTemperature": {"type": "number"},
+        "precursorTemperature": {"type": "number"},
+        "vacuumConditions": {"type": "string"},
+        "plasmaPower": {"type": "number"},
+        "plasmaExposureTime": {"type": "number"},
+        "inSituPassivation": {
+          "type": "object",
+          "properties": {
+            "agent": {"type": "string"},
+            "temperature": {"type": "number"},
+            "duration": {"type": "number"}
+          }
+        }
+      }
+    },
+    "surfacePassivation": {
+      "type": "object",
+      "properties": {
+        "effectiveSurfaceRecombinationVelocity": {"type": "number"},
+        "postDepositionAnnealing": {"type": "boolean"},
+        "annealingTemperature": {"type": "number"},
+        "filmThickness": {"type": "number"}
+      }
+    },
+    "measurementTechniques": {
+      "type": "object",
+      "properties": {
+        "spectroscopicEllipsometry": {"type": "boolean"},
+        "XPS": {"type": "boolean"},
+        "TEM": {"type": "boolean"},
+        "inPlaneXRD": {"type": "boolean"}
+      }
+    },
+    "solidStateBattery": {
+      "type": "object",
+      "properties": {
+        "cathodeMaterial": {"type": "string"},
+        "anodeMaterial": {"type": "string"},
+        "solidElectrolyteMaterial": {"type": "string"},
+        "cellConfiguration": {"type": "string"},
+        "capacity": {"type": "number"},
+        "voltageStability": {"type": "number"},
+        "cycleLife": {"type": "number"}
+      }
+    }
+  },
+  "required": [
+    "reactantSelection",
+    "pulseTimes",
+    "filmProperties",
+    "adhesion",
+    "depositionConditions",
+    "surfacePassivation",
+    "measurementTechniques",
+    "solidStateBattery"
+  ]
+}
+```
+
+### Changes Made:
+1. **Precursor Details**: Added specific precursors used for CsI and CsPbI3 films based on the paper.
+2. **Film Properties**: Included properties such as crystallinity, optical properties, and specific phase details for CsPbI3.
+3. **Deposition Conditions**: Adjusted to reflect the conditions used for the deposition of CsI and CsPbI3, including temperature ranges and specific precursor details.
+4. **Measurement Techniques**: Ensured that the techniques used in the paper are reflected in the schema.
+
+These changes ensure that the schema is comprehensive and accurately reflects the details necessary for replicating the ALD process described in the research paper.

@@ -1,0 +1,926 @@
+Based on the research paper and domain expert feedback, the following updates and refinements have been made to the JSON schema for the Atomic Layer Deposition (ALD) process:
+
+1. **Incorporation of Area-Selective ALD (AS-ALD) Properties**: The research paper introduces the concept of area-selective ALD, particularly using a μ-plasma printer for local area activation. This necessitates the addition of properties related to AS-ALD, such as local activation methods and selectivity metrics.
+
+2. **Inclusion of Direct-Write ALD**: The paper discusses a direct-write ALD process, which is a specific method of achieving area-selective deposition. This has been added to the schema under a new property.
+
+3. **Addition of μ-Plasma Printer Parameters**: The use of a μ-plasma printer for surface activation is a key aspect of the process described in the paper. Parameters related to this technology, such as patterning width and activation methods, have been added.
+
+4. **Material-Specific Properties**: The paper focuses on In2O3:H as a material, which is relevant for TCO applications. Properties specific to this material, such as resistivity and nucleation delay, have been included.
+
+5. **Refinement of Existing Properties**: Based on expert feedback, existing properties have been refined for clarity and accuracy, ensuring they align with the latest research findings.
+
+Here is the refined JSON schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process Schema",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "description": "Parameters and methodologies used in the ALD simulation.",
+      "properties": {
+        "methods": {
+          "type": "object",
+          "description": "Computational methods and models used in the ALD process simulation.",
+          "properties": {
+            "techniques": {
+              "type": "array",
+              "description": "Computational techniques used.",
+              "items": {
+                "type": "string",
+                "examples": ["DFT", "HF", "post-HF", "ML", "kMC", "MD", "Hybrid ONIOM", "CCSD(T)", "MP2", "Continuum Fluid Dynamics (CFD)", "Rule-based deposition", "MD relaxation"]
+              }
+            },
+            "clusterModels": {
+              "type": "array",
+              "description": "Cluster models used in simulations.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "functionals": {
+          "type": "array",
+          "description": "Functionals used in the simulation.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "basisSets": {
+          "type": "array",
+          "description": "Basis sets used in the simulation.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "materials": {
+          "type": "array",
+          "description": "Materials involved in the ALD process.",
+          "items": {
+            "type": "string",
+            "examples": ["Al2O3", "TiO2", "Cu(acac)2", "Ti(CpMe5)", "ZrO2", "HfO2", "Pt on graphene", "Zinc Oxide", "Silicon precursors", "Carbon precursors", "In2O3", "Ga2O3", "ZnO"]
+          }
+        }
+      }
+    },
+    "growthRate": {
+      "type": "object",
+      "description": "Information related to the growth rate of the film.",
+      "properties": {
+        "rate": {
+          "type": "number",
+          "description": "Growth rate of the film per cycle.",
+          "unit": "angstroms/cycle"
+        },
+        "temperatureDependence": {
+          "type": "number",
+          "description": "Temperature dependence of the growth rate.",
+          "unit": "Celsius"
+        },
+        "chemisorptionInfluence": {
+          "type": "object",
+          "description": "Influence of chemisorption on growth rate.",
+          "properties": {
+            "stericHindrance": {
+              "type": "number",
+              "description": "Effect of steric hindrance on chemisorption.",
+              "unit": "dimensionless"
+            },
+            "ligandEffect": {
+              "type": "string",
+              "description": "Description of ligand effects on chemisorption."
+            }
+          }
+        },
+        "nanostructureImpact": {
+          "type": "string",
+          "description": "Impact of growth rate on the nanostructure of the film."
+        },
+        "densityImpact": {
+          "type": "string",
+          "description": "Impact of growth rate on the density of the film."
+        }
+      }
+    },
+    "surfaceProperties": {
+      "type": "object",
+      "description": "Properties related to surface reactions and coverage.",
+      "properties": {
+        "desorptionRate": {
+          "type": "number",
+          "description": "Rate of surface desorption.",
+          "unit": "atoms/second"
+        },
+        "diffusionRate": {
+          "type": "number",
+          "description": "Rate of surface diffusion.",
+          "unit": "atoms/second"
+        },
+        "reactionRate": {
+          "type": "number",
+          "description": "Rate of surface reactions.",
+          "unit": "atoms/second"
+        },
+        "stickingCoefficient": {
+          "type": "number",
+          "description": "Probability of an adsorbate sticking to the surface."
+        },
+        "bindingAffinity": {
+          "type": "number",
+          "description": "Binding affinity of the adsorbate to the surface.",
+          "unit": "kJ/mol"
+        },
+        "surfaceCoverage": {
+          "type": "object",
+          "description": "Coverage of the surface by the adsorbate.",
+          "properties": {
+            "coverage": {
+              "type": "number",
+              "description": "Percentage of surface coverage.",
+              "unit": "%"
+            },
+            "timeDependent": {
+              "type": "boolean",
+              "description": "Indicates if surface coverage is time-dependent."
+            }
+          }
+        },
+        "hydroxylGroups": {
+          "type": "number",
+          "description": "Number of hydroxyl groups on the surface."
+        },
+        "siteBlocking": {
+          "type": "boolean",
+          "description": "Indicates if the surface sites are blocked by adsorbed ligands."
+        },
+        "surfaceTerminationChemistry": {
+          "type": "string",
+          "description": "Description of the surface termination chemistry."
+        },
+        "reactiveSites": {
+          "type": "object",
+          "description": "Details about different reactive sites on the substrate.",
+          "properties": {
+            "isolatedHydroxylGroups": {
+              "type": "number",
+              "description": "Number of isolated hydroxyl groups on the surface."
+            },
+            "adjacentHydroxylGroups": {
+              "type": "number",
+              "description": "Number of adjacent hydrogen-bonded hydroxyl groups on the surface."
+            },
+            "siloxaneBridges": {
+              "type": "number",
+              "description": "Number of siloxane bridges on the surface."
+            }
+          }
+        },
+        "quantumTunneling": {
+          "type": "boolean",
+          "description": "Indicates if quantum tunneling effects are considered in the surface reactions."
+        },
+        "hinderedRotations": {
+          "type": "boolean",
+          "description": "Indicates if hindered rotational effects are considered in the surface reactions."
+        },
+        "functionalGroups": {
+          "type": "object",
+          "description": "Functional groups formed on the surface during plasma treatments.",
+          "properties": {
+            "C-H": {
+              "type": "boolean",
+              "description": "Presence of C-H functional groups."
+            },
+            "C-O": {
+              "type": "boolean",
+              "description": "Presence of C-O functional groups."
+            }
+          }
+        },
+        "oxygenDeficiency": {
+          "type": "number",
+          "description": "Percentage of oxygen deficiency on the surface.",
+          "unit": "%"
+        },
+        "nitrogenContent": {
+          "type": "number",
+          "description": "Percentage of nitrogen content on the surface.",
+          "unit": "%"
+        }
+      }
+    },
+    "filmProperties": {
+      "type": "object",
+      "description": "Properties of the deposited film.",
+      "properties": {
+        "uniformity": {
+          "type": "number",
+          "description": "Uniformity of the film.",
+          "unit": "%"
+        },
+        "roughness": {
+          "type": "number",
+          "description": "Surface roughness of the film.",
+          "unit": "nm"
+        },
+        "density": {
+          "type": "number",
+          "description": "Density of the film.",
+          "unit": "g/cm^3"
+        },
+        "massDensity": {
+          "type": "number",
+          "description": "Mass density of the film.",
+          "unit": "g/cm^3"
+        },
+        "crystallineStructure": {
+          "type": "string",
+          "description": "Crystalline structure of the film."
+        },
+        "temperatureProfile": {
+          "type": "array",
+          "description": "Temperature profile across the film.",
+          "items": {
+            "type": "number"
+          },
+          "unit": "Celsius"
+        },
+        "chemicalComposition": {
+          "type": "array",
+          "description": "Elemental composition of the film.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "surfaceEnergy": {
+          "type": "number",
+          "description": "Surface energy of the film.",
+          "unit": "J/m^2"
+        },
+        "adsorptionEnergy": {
+          "type": "number",
+          "description": "Adsorption energy of molecules on the film surface.",
+          "unit": "kJ/mol"
+        },
+        "bandStructure": {
+          "type": "string",
+          "description": "Electronic band structure of the film."
+        },
+        "defectBands": {
+          "type": "string",
+          "description": "Defect bands present in the film."
+        }
+      }
+    },
+    "reactorConditions": {
+      "type": "object",
+      "description": "Conditions inside the reactor during ALD.",
+      "properties": {
+        "pressure": {
+          "type": "number",
+          "description": "Pressure inside the reactor.",
+          "unit": "Pascal"
+        },
+        "carrierGasFlow": {
+          "type": "number",
+          "description": "Flow rate of the carrier gas.",
+          "unit": "sccm"
+        },
+        "precursorFlow": {
+          "type": "number",
+          "description": "Flow rate of the precursor gas.",
+          "unit": "sccm"
+        },
+        "gapDistance": {
+          "type": "number",
+          "description": "Gap distance in the reactor.",
+          "unit": "mm"
+        },
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate.",
+          "unit": "mm/s"
+        },
+        "temperatureRange": {
+          "type": "string",
+          "description": "Temperature range used in the reactor.",
+          "examples": ["150-350°C"]
+        },
+        "purgingTime": {
+          "type": "number",
+          "description": "Time duration for purging between precursor injections.",
+          "unit": "seconds"
+        },
+        "reynoldsNumber": {
+          "type": "number",
+          "description": "Reynolds number indicating the flow regime in the reactor.",
+          "unit": "dimensionless"
+        },
+        "injectionConfiguration": {
+          "type": "string",
+          "description": "Configuration of precursor injection in the reactor.",
+          "examples": ["opposing", "perpendicular"]
+        },
+        "reactorGeometry": {
+          "type": "string",
+          "description": "Geometry of the reactor, e.g., cylindrical, cross-flow.",
+          "examples": ["cylindrical", "cross-flow"]
+        },
+        "plasmaPower": {
+          "type": "number",
+          "description": "Power of the plasma used in treatments.",
+          "unit": "Watt"
+        },
+        "plasmaPressure": {
+          "type": "number",
+          "description": "Pressure during plasma treatments.",
+          "unit": "mTorr"
+        },
+        "plasmaReactantType": {
+          "type": "string",
+          "description": "Type of plasma reactant used.",
+          "examples": ["O2", "N2O"]
+        }
+      }
+    },
+    "reactionMechanisms": {
+      "type": "object",
+      "description": "Details of the reaction mechanisms involved in the ALD process.",
+      "properties": {
+        "generalMechanisms": {
+          "type": "string",
+          "description": "General description of reaction mechanisms."
+        },
+        "GibbsEnergy": {
+          "type": "number",
+          "description": "Gibbs energy of the reaction.",
+          "unit": "eV"
+        },
+        "precursors": {
+          "type": "object",
+          "description": "Details of precursors used in the ALD process.",
+          "properties": {
+            "siliconPrecursors": {
+              "type": "array",
+              "description": "Silicon precursors used.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "carbonPrecursors": {
+              "type": "array",
+              "description": "Carbon precursors used.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "aluminaPrecursors": {
+              "type": "array",
+              "description": "Alumina precursors used, such as TMA and water.",
+              "items": {
+                "type": "string",
+                "examples": ["TMA", "H2O"]
+              }
+            }
+          }
+        },
+        "byProducts": {
+          "type": "array",
+          "description": "List of by-products generated during the ALD process.",
+          "items": {
+            "type": "string",
+            "examples": ["CH4"]
+          }
+        },
+        "intermediateComplexes": {
+          "type": "array",
+          "description": "Stable intermediate complexes formed during the ALD process.",
+          "items": {
+            "type": "string",
+            "examples": ["Al(CH3)2", "Al(CH3)"]
+          }
+        },
+        "activationEnergies": {
+          "type": "object",
+          "description": "Activation energies for various reaction steps.",
+          "properties": {
+            "firstHalfCycle": {
+              "type": "number",
+              "description": "Activation energy for the first half-cycle.",
+              "unit": "kcal/mol"
+            },
+            "secondHalfCycle": {
+              "type": "number",
+              "description": "Activation energy for the second half-cycle.",
+              "unit": "kcal/mol"
+            }
+          }
+        },
+        "precipitationMechanism": {
+          "type": "string",
+          "description": "Mechanism of precipitation in liquid-phase deposition."
+        },
+        "precursorChemistry": {
+          "type": "object",
+          "description": "Details about the precursor's adsorption and dissociation.",
+          "properties": {
+            "adsorptionSites": {
+              "type": "array",
+              "description": "Preferred adsorption sites of the precursor on the surface.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dissociationPathways": {
+              "type": "array",
+              "description": "Pathways for precursor dissociation on the surface.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "substituentEffects": {
+              "type": "object",
+              "description": "Effects of substituents on precursor reactivity and selectivity.",
+              "properties": {
+                "chargeDistribution": {
+                  "type": "string",
+                  "description": "Description of charge distribution changes due to substituents."
+                },
+                "stericHindrance": {
+                  "type": "string",
+                  "description": "Description of steric effects influencing precursor adsorption."
+                }
+              }
+            }
+          }
+        },
+        "coReactantReactivity": {
+          "type": "object",
+          "description": "Reactivity of different co-reactants with the precursor.",
+          "properties": {
+            "reactivityOrder": {
+              "type": "string",
+              "description": "Order of reactivity of co-reactants with the precursor."
+            },
+            "reactionProducts": {
+              "type": "array",
+              "description": "Products formed from the reaction of co-reactants with the precursor.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "selectiveEncapsulation": {
+          "type": "object",
+          "description": "Mechanisms and conditions for selective encapsulation of specific facets.",
+          "properties": {
+            "preferredFacets": {
+              "type": "array",
+              "description": "Facets that are preferentially encapsulated during the ALD process.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "encapsulationMechanism": {
+              "type": "string",
+              "description": "Description of the mechanism leading to selective encapsulation."
+            },
+            "microkineticModel": {
+              "type": "object",
+              "description": "Microkinetic model parameters for selective growth.",
+              "properties": {
+                "adsorptionRate": {
+                  "type": "number",
+                  "description": "Rate of precursor adsorption on preferred facets.",
+                  "unit": "molecules/s"
+                },
+                "decompositionRate": {
+                  "type": "number",
+                  "description": "Rate of precursor decomposition on preferred facets.",
+                  "unit": "molecules/s"
+                }
+              }
+            }
+          }
+        },
+        "nitrogenDoping": {
+          "type": "object",
+          "description": "Details about nitrogen doping in the ALD process.",
+          "properties": {
+            "plasmaReactant": {
+              "type": "string",
+              "description": "Type of plasma reactant used for nitrogen doping.",
+              "examples": ["N2O"]
+            },
+            "effects": {
+              "type": "string",
+              "description": "Effects of nitrogen doping on the film properties."
+            }
+          }
+        }
+      }
+    },
+    "saldParameters": {
+      "type": "object",
+      "description": "Parameters specific to Spatial ALD (SALD) processes.",
+      "properties": {
+        "precursorExposure": {
+          "type": "object",
+          "description": "Details about precursor exposure in SALD.",
+          "properties": {
+            "exposureTime": {
+              "type": "number",
+              "description": "Time of precursor exposure to the substrate.",
+              "unit": "seconds"
+            },
+            "precursorConcentration": {
+              "type": "number",
+              "description": "Concentration of precursor in the carrier gas.",
+              "unit": "mol/m^3"
+            }
+          }
+        },
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate in SALD.",
+          "unit": "cm/s"
+        },
+        "depositionGap": {
+          "type": "number",
+          "description": "Gap between the substrate and the injection head in SALD.",
+          "unit": "µm"
+        }
+      }
+    },
+    "liquidPhaseDeposition": {
+      "type": "object",
+      "description": "Parameters specific to liquid-phase deposition processes.",
+      "properties": {
+        "solvent": {
+          "type": "string",
+          "description": "Solvent used in liquid-phase deposition."
+        },
+        "stoichiometry": {
+          "type": "object",
+          "description": "Stoichiometry of precursors in liquid-phase deposition.",
+          "properties": {
+            "metalPrecursor": {
+              "type": "string",
+              "description": "Metal precursor used."
+            },
+            "waterRatio": {
+              "type": "number",
+              "description": "Ratio of water to metal precursor."
+            }
+          }
+        },
+        "precipitationParameter": {
+          "type": "number",
+          "description": "Probability of precipitation per cycle in liquid-phase deposition."
+        }
+      }
+    },
+    "processEfficiency": {
+      "type": "number",
+      "description": "Efficiency of the ALD process, considering growth rate, precursor consumption, and deposition time.",
+      "unit": "dimensionless"
+    },
+    "aldVariants": {
+      "type": "array",
+      "description": "Different variants of the ALD process.",
+      "items": {
+        "type": "string",
+        "examples": ["Metal ALD", "Thermal ALD", "Particle ALD", "Plasma-enhanced ALD", "Photo-assisted ALD"]
+      }
+    },
+    "processVariants": {
+      "type": "array",
+      "description": "Different process types within ALD.",
+      "items": {
+        "type": "string",
+        "examples": ["Thermal", "Plasma-enhanced"]
+      }
+    },
+    "contactResistance": {
+      "type": "object",
+      "description": "Contact resistance details for metal-graphene interfaces.",
+      "properties": {
+        "resistanceValue": {
+          "type": "number",
+          "description": "Contact resistance value.",
+          "unit": "kΩ µm"
+        },
+        "measurementConditions": {
+          "type": "string",
+          "description": "Conditions under which the contact resistance was measured."
+        }
+      }
+    },
+    "grapheneIntegration": {
+      "type": "object",
+      "description": "Details specific to the integration of graphene in ALD processes.",
+      "properties": {
+        "surfaceFunctionalization": {
+          "type": "string",
+          "description": "Type of functionalization applied to graphene to enhance ALD nucleation."
+        },
+        "nucleationMechanism": {
+          "type": "string",
+          "description": "Mechanism of nucleation on graphene surfaces."
+        },
+        "functionalGroupDistribution": {
+          "type": "string",
+          "description": "Distribution pattern of functional groups on graphene."
+        }
+      }
+    },
+    "groupContributionMethod": {
+      "type": "object",
+      "description": "Parameters related to the Group Contribution Method for precursor design.",
+      "properties": {
+        "functionalGroups": {
+          "type": "array",
+          "description": "Functional groups involved in precursor design.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the functional group."
+              },
+              "vanDerWaalsVolume": {
+                "type": "number",
+                "description": "Van der Waals volume of the functional group.",
+                "unit": "m^3"
+              },
+              "vanDerWaalsSurfaceArea": {
+                "type": "number",
+                "description": "Van der Waals surface area of the functional group.",
+                "unit": "m^2"
+              }
+            }
+          }
+        },
+        "interactionParameters": {
+          "type": "object",
+          "description": "Interaction parameters for functional groups.",
+          "properties": {
+            "bulkPhase": {
+              "type": "object",
+              "description": "Interaction parameters in the bulk phase.",
+              "properties": {
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "group1": {
+                        "type": "string",
+                        "description": "First functional group."
+                      },
+                      "group2": {
+                        "type": "string",
+                        "description": "Second functional group."
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Interaction parameter value."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "adsorbateSolidSolution": {
+              "type": "object",
+              "description": "Interaction parameters in the adsorbate solid solution phase.",
+              "properties": {
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "group1": {
+                        "type": "string",
+                        "description": "First functional group."
+                      },
+                      "group2": {
+                        "type": "string",
+                        "description": "Second functional group."
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Interaction parameter value."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "precursorDesign": {
+      "type": "object",
+      "description": "Parameters related to the design of novel precursor materials.",
+      "properties": {
+        "functionalGroupCount": {
+          "type": "object",
+          "description": "Number of times each functional group appears in the precursor.",
+          "properties": {
+            "N": {
+              "type": "integer",
+              "description": "Number of nitrogen groups."
+            },
+            "CH2": {
+              "type": "integer",
+              "description": "Number of methylene groups."
+            },
+            "CH3": {
+              "type": "integer",
+              "description": "Number of methyl groups."
+            }
+          }
+        },
+        "depositionTemperature": {
+          "type": "number",
+          "description": "Optimal deposition temperature for the precursor.",
+          "unit": "Celsius"
+        },
+        "growthRate": {
+          "type": "number",
+          "description": "Predicted growth rate for the designed precursor.",
+          "unit": "angstroms/cycle"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Validation of theoretical growth rates against experimental data.",
+      "properties": {
+        "rSquared": {
+          "type": "number",
+          "description": "R-squared value indicating the fit of theoretical to experimental growth rates."
+        },
+        "errorFunction": {
+          "type": "number",
+          "description": "Error function value comparing theoretical and experimental growth rates."
+        }
+      }
+    },
+    "kmcParameters": {
+      "type": "object",
+      "description": "Parameters specific to Kinetic Monte Carlo simulations.",
+      "properties": {
+        "latticeModel": {
+          "type": "string",
+          "description": "Description of the lattice model used in KMC simulations."
+        },
+        "transitionProbabilities": {
+          "type": "object",
+          "description": "Transition probabilities for events in KMC simulations.",
+          "properties": {
+            "adsorption": {
+              "type": "number",
+              "description": "Probability of adsorption events."
+            },
+            "desorption": {
+              "type": "number",
+              "description": "Probability of desorption events."
+            },
+            "densification": {
+              "type": "number",
+              "description": "Probability of densification events."
+            }
+          }
+        },
+        "temporalDynamics": {
+          "type": "string",
+          "description": "Description of the temporal dynamics in KMC simulations."
+        },
+        "reactionPathways": {
+          "type": "array",
+          "description": "List of reaction pathways considered in KMC simulations.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coordinationNumbers": {
+          "type": "object",
+          "description": "Coordination numbers for different species in KMC simulations.",
+          "properties": {
+            "Hf": {
+              "type": "integer",
+              "description": "Coordination number for Hf atoms."
+            },
+            "O": {
+              "type": "integer",
+              "description": "Coordination number for O atoms."
+            }
+          }
+        },
+        "neighborList": {
+          "type": "array",
+          "description": "List of neighbors for each site in the lattice model.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "densificationMechanisms": {
+      "type": "object",
+      "description": "Mechanisms related to the densification process in ALD.",
+      "properties": {
+        "mechanismTypes": {
+          "type": "array",
+          "description": "Types of densification mechanisms.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "activationEnergy": {
+          "type": "number",
+          "description": "Activation energy for densification mechanisms.",
+          "unit": "eV"
+        }
+      }
+    },
+    "electricalCharacteristics": {
+      "type": "object",
+      "description": "Electrical characteristics of the deposited films.",
+      "properties": {
+        "fieldEffectMobility": {
+          "type": "number",
+          "description": "Field-effect mobility of the film.",
+          "unit": "cm^2/(V s)"
+        },
+        "thresholdVoltage": {
+          "type": "number",
+          "description": "Threshold voltage of the film.",
+          "unit": "V"
+        },
+        "subthresholdSwing": {
+          "type": "number",
+          "description": "Subthreshold swing of the film.",
+          "unit": "mV/decade"
+        },
+        "hysteresis": {
+          "type": "number",
+          "description": "Hysteresis of the film.",
+          "unit": "V"
+        }
+      }
+    },
+    "areaSelectiveALD": {
+      "type": "object",
+      "description": "Parameters specific to area-selective ALD processes.",
+      "properties": {
+        "activationMethod": {
+          "type": "string",
+          "description": "Method used for local activation of the substrate.",
+          "examples": ["μ-plasma printer", "self-assembled monolayers"]
+        },
+        "selectivity": {
+          "type": "string",
+          "description": "Description of the selectivity achieved in the AS-ALD process."
+        },
+        "directWriteALD": {
+          "type": "boolean",
+          "description": "Indicates if the direct-write ALD method is used."
+        },
+        "patterningWidth": {
+          "type": "number",
+          "description": "Width of the patterning achieved by the activation method.",
+          "unit": "mm"
+        }
+      }
+    }
+  },
+  "required": [
+    "simulationParameters",
+    "growthRate",
+    "surfaceProperties",
+    "filmProperties",
+    "reactorConditions",
+    "reactionMechanisms",
+    "saldParameters",
+    "liquidPhaseDeposition",
+    "groupContributionMethod",
+    "precursorDesign",
+    "validation",
+    "kmcParameters",
+    "densificationMechanisms",
+    "electricalCharacteristics",
+    "areaSelectiveALD"
+  ]
+}
+```
+
+This refined schema now includes properties related to area-selective ALD and direct-write ALD processes, as well as specific parameters for the μ-plasma printer technology. These additions ensure the schema is comprehensive and aligned with the latest research and expert feedback.

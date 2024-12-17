@@ -1,0 +1,134 @@
+Property Merging:
+I can't see anywhere where merging would help
+
+Property Grouping:
+Grouping is strange, one massive group "simulation parameters" with lots of sub sections most of which are not simulation parameters, It could be structured as inputs and outputs (as it has tried to do) but the input would need to be split in to methods, materials and properties such as temperature, and then the outputs (results) group would have the rates, the mechanisms, the interactions etc.
+
+Missing Properties:
+The methodology section has been removed completely
+
+Adequacy of Descriptions:
+Under Chemisorption there is a boolean property "TiOBondFormation" which is just one example of a bond which could be formed so I don't know why this has been singled out
+
+Domain expert edited schema of the initial generated version:
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition Process",
+    "type": "object",
+    "properties": {
+        "simulationParameters": {
+            "type": "object",
+            "properties": {
+                "inputParameters": {
+                    "type": "object",
+                    "properties": {
+                        "precursors": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "chemicalName": {
+                                        "type": "string"
+                                    },
+                                    "reactivity": {
+                                        "type": "string"
+                                    },
+                                    "surfaceInteractions": {
+                                        "type": "object",
+                                        "properties": {
+                                            "isolatedOH": {
+                                                "type": "number"
+                                            },
+                                            "adjacentHydrogenBondedOH": {
+                                                "type": "number"
+                                            },
+                                            "siloxaneBridges": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "chemisorption": {
+                                        "type": "object",
+                                        "properties": {
+                                            "reactionEnergy": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                },
+                                "description": "Details of precursors used including their interactions with different surfaces."
+                            }
+                        },
+                        "coReactants": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of co-reactants used in the ALD process, e.g., H2, H2O, O3."
+                        },
+                        "surfactants": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of surfactants used to modify surface chemistry and enhance precursor chemisorption."
+                        }
+                    }
+                }
+            }
+        },
+        "reactionMechanisms": {
+            "type": "object",
+            "properties": {
+                "pathways": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "pathway": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "activationBarriers": {
+                                "type": "number"
+                            },
+                            "reactionEnergies": {
+                                "type": "number"
+                            },
+                            "byProducts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "description": "Detailed pathways of reactions including by-products and microkinetic models."
+                }
+            }
+        },
+        "quantumEffects": {
+            "type": "object",
+            "properties": {
+                "tunneling": {
+                    "type": "boolean",
+                    "description": "Indicates if quantum tunneling effects are considered in the reaction rates."
+                },
+                "hinderedRotations": {
+                    "type": "object",
+                    "properties": {
+                        "rotationBarrier": {
+                            "type": "number",
+                            "description": "Energy barrier for hindered rotations of adsorbates, relevant at certain temperatures."
+                        }
+                    },
+                    "description": "Details on the hindered rotations of adsorbates and their impact on reaction rates."
+                }
+            },
+            "description": "Quantum mechanical effects that influence the reaction rates and mechanisms."
+        }
+    }
+}

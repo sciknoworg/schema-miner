@@ -1,0 +1,138 @@
+Based on the provided research paper and expert feedback, the JSON schema for the ALD process needs to be refined to include additional details and properties related to the use of TiI4 as a precursor, its comparison with TiCl4, and the reaction mechanisms on different surface sites. Here is the refined JSON schema incorporating these updates:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "precursors": {
+      "type": "object",
+      "properties": {
+        "TiI4": {
+          "type": "object",
+          "properties": {
+            "adsorptionDetails": {
+              "type": "object",
+              "properties": {
+                "adsorptionSites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Preferred adsorption sites on the surface for TiI4."
+                },
+                "adsorptionEnergies": {
+                  "type": "object",
+                  "properties": {
+                    "SiO2": {
+                      "type": "number",
+                      "description": "Adsorption energies on SiO2 surfaces for TiI4."
+                    }
+                  }
+                },
+                "reactionPathways": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Possible reaction pathways for TiI4 on SiO2."
+                }
+              }
+            }
+          }
+        },
+        "H2O": {
+          "type": "object",
+          "properties": {
+            "reactivity": {
+              "type": "string"
+            },
+            "reactionMechanism": {
+              "type": "string",
+              "description": "Mechanism of H2O interaction with precursors."
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "surfaceSites": {
+      "type": "object",
+      "properties": {
+        "isolatedOH": {
+          "type": "object",
+          "properties": {
+            "reactivity": {
+              "type": "string",
+              "description": "Reactivity of isolated -OH groups on SiO2 surface."
+            }
+          }
+        },
+        "adjacentHydrogenBondedOH": {
+          "type": "object",
+          "properties": {
+            "reactivity": {
+              "type": "string",
+              "description": "Reactivity of adjacent hydrogen-bonded -OH groups on SiO2 surface."
+            }
+          }
+        },
+        "siloxaneBridges": {
+          "type": "object",
+          "properties": {
+            "reactivity": {
+              "type": "string",
+              "description": "Reactivity of siloxane bridges on SiO2 surface."
+            }
+          }
+        }
+      }
+    },
+    "processConditions": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Optimal temperature range for the ALD process."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Optimal pressure for the ALD process."
+        }
+      }
+    },
+    "observableProperties": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "electricalProperties": {
+              "type": "string"
+            },
+            "barrierEffectiveness": {
+              "type": "string"
+            },
+            "crystallineStructure": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### Changes Made:
+1. **Added TiI4 Properties**: Included adsorption details specific to TiI4, such as adsorption sites, energies, and reaction pathways.
+2. **Updated Descriptions**: Enhanced descriptions to clarify the interaction mechanisms and the differences between TiI4 and other precursors like TiCl4.
+3. **Refined Surface Sites**: Detailed the reactivity of different surface sites (isolated OH, adjacent hydrogen-bonded OH, and siloxane bridges) to align with the research findings on their specific interactions with TiI4.
+
+This schema now more accurately reflects the complexities and specifics of the ALD process using TiI4 as detailed in the research paper.

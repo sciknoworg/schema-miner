@@ -1,0 +1,606 @@
+Based on the provided research paper and domain expert feedback, the refined JSON schema for the ALD process is as follows:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "ALD process",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Methods used (e.g., DFT, HF, post-HF, ML + kMC, MD)"
+          },
+          "description": "List of methods used for simulations/calculations"
+        },
+        "materials": {
+          "type": "array",
+          "description": "Materials involved in the ALD process.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            "Al2O3",
+            "TiO2",
+            "Cu(acac)2",
+            "Ti(CpMe5)",
+            "ZrO2",
+            "HfO2",
+            "Pt on graphene",
+            "Zinc Oxide",
+            "Silicon precursors",
+            "Carbon precursors"
+          ]
+        },
+        "decompositionAndBinding": {
+          "type": "object",
+          "properties": {
+            "mechanisms": {
+              "type": "string",
+              "description": "Decomposition and binding mechanisms/mode (kinetics and thermodynamics)"
+            },
+            "pathways": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Pathways for decomposition and binding (e.g., R1a, R1b, R2a, R2b, R3a, R3b)"
+              },
+              "description": "List of pathways for decomposition and binding"
+            }
+          },
+          "description": "Decomposition and binding properties"
+        },
+        "growthRate": {
+          "type": "object",
+          "properties": {
+            "rate": {
+              "type": "number",
+              "unit": "nm/min",
+              "description": "Growth rate"
+            },
+            "temperatureDependency": {
+              "type": "object",
+              "properties": {
+                "kinetics": {
+                  "type": "string",
+                  "description": "Temperature dependence of growth rate (kinetics)"
+                }
+              },
+              "description": "Temperature dependence of growth rate"
+            }
+          },
+          "description": "Growth rate properties"
+        },
+        "surfaceDesorptionDiffusionReactionRates": {
+          "type": "object",
+          "properties": {
+            "rates": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Surface desorption, diffusion, and reaction rates"
+              },
+              "description": "List of surface desorption, diffusion, and reaction rates"
+            }
+          },
+          "description": "Surface desorption, diffusion, and reaction rates"
+        }
+      },
+      "description": "Simulation parameters"
+    },
+    "observables": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {
+              "type": "number",
+              "unit": "nm",
+              "description": "Film uniformity"
+            },
+            "roughness": {
+              "type": "number",
+              "unit": "nm",
+              "description": "Film roughness"
+            },
+            "density": {
+              "type": "number",
+              "unit": "g/cm^3",
+              "description": "Film density"
+            },
+            "temperatureProfile": {
+              "type": "string",
+              "description": "Temperature profile (thermal conduction)"
+            },
+            "chemicalComposition": {
+              "type": "object",
+              "properties": {
+                "elementAnalysis": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Element analysis (e.g., atomic percentage)"
+                  },
+                  "description": "Element analysis"
+                }
+              },
+              "description": "Chemical composition"
+            }
+          },
+          "description": "Film properties"
+        },
+        "bindingAffinityStickingCoefficients": {
+          "type": "object",
+          "properties": {
+            "adsorbate": {
+              "type": "string",
+              "description": "Adsorbate (precursor/etchant/inhibitor)"
+            },
+            "bindingAffinity": {
+              "type": "number",
+              "unit": "eV",
+              "description": "Binding affinity"
+            },
+            "stickingCoefficients": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "unit": "nm",
+                "description": "Sticking coefficients"
+              },
+              "description": "List of sticking coefficients"
+            }
+          },
+          "description": "Binding affinity and sticking coefficients"
+        }
+      },
+      "description": "Observables"
+    },
+    "designAndOperationVariables": {
+      "type": "object",
+      "properties": {
+        "gapDistance": {
+          "type": "number",
+          "unit": "mm",
+          "description": "Gap distance"
+        },
+        "purgeGasFlowRates": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "unit": "sccm",
+            "description": "Purge gas flow rates"
+          },
+          "description": "List of purge gas flow rates"
+        },
+        "precursorGasFlowRates": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "unit": "sccm",
+            "description": "Precursor gas flow rates"
+          },
+          "description": "List of precursor gas flow rates"
+        },
+        "substrateVelocity": {
+          "type": "number",
+          "unit": "m/s",
+          "description": "Substrate velocity"
+        },
+        "vacuumPressure": {
+          "type": "number",
+          "unit": "mbar",
+          "description": "Vacuum pressure"
+        }
+      },
+      "description": "Design and operation variables"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Reference (e.g., paper, book, website)"
+      },
+      "description": "List of references"
+    },
+    "aldProcessParameters": {
+      "type": "object",
+      "properties": {
+        "zirconiumPrecursor": {
+          "type": "string",
+          "description": "Zirconium precursor (e.g., ZrCl4)"
+        },
+        "waterPrecursor": {
+          "type": "string",
+          "description": "Water precursor (e.g., H2O)"
+        },
+        "surfaceHydroxylGroups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Surface hydroxyl groups (e.g., Si–OH/C3)"
+          },
+          "description": "List of surface hydroxyl groups"
+        },
+        "adsorptionEnergy": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Adsorption energy"
+        },
+        "activationBarrier": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Activation barrier"
+        },
+        "desorptionEnergy": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Desorption energy"
+        }
+      },
+      "description": "ALD process parameters"
+    },
+    "surfaceChemistry": {
+      "type": "object",
+      "properties": {
+        "adsorption": {
+          "type": "object",
+          "properties": {
+            "sites": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Adsorption sites (e.g., top, hollow, bridge1, bridge2)"
+              },
+              "description": "List of adsorption sites"
+            },
+            "energies": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "unit": "eV",
+                "description": "Adsorption energies"
+              },
+              "description": "List of adsorption energies"
+            }
+          },
+          "description": "Adsorption properties"
+        },
+        "dissociation": {
+          "type": "object",
+          "properties": {
+            "pathways": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Dissociation pathways (e.g., R1a, R1b, R2a, R2b, R3a, R3b)"
+              },
+              "description": "List of dissociation pathways"
+            },
+            "energies": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "unit": "eV",
+                "description": "Dissociation energies"
+              },
+              "description": "List of dissociation energies"
+            }
+          },
+          "description": "Dissociation properties"
+        }
+      },
+      "description": "Surface chemistry"
+    },
+    "precursorProperties": {
+      "type": "object",
+      "properties": {
+        "siliconPrecursors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Silicon precursors (e.g., SiH4, Si2H6, SiH3Cl)"
+          },
+          "description": "List of silicon precursors"
+        },
+        "carbonPrecursors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Carbon precursors (e.g., C2H2, CCl4, CHCl3)"
+          },
+          "description": "List of carbon precursors"
+        },
+        "singleSourcePrecursors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Single-source precursors (e.g., MTS, DIPAS, silacyclobutane)"
+          },
+          "description": "List of single-source precursors"
+        }
+      },
+      "description": "Precursor properties"
+    },
+    "aluminaDeposition": {
+      "type": "object",
+      "properties": {
+        "methylCoverage": {
+          "type": "number",
+          "unit": "lmol m/C02",
+          "description": "Methyl coverage"
+        },
+        "hydroxylCoverage": {
+          "type": "number",
+          "unit": "lmol m/C02",
+          "description": "Hydroxyl coverage"
+        },
+        "growthRate": {
+          "type": "number",
+          "unit": "A˚ /cycle",
+          "description": "Growth rate"
+        },
+        "temperatureDependency": {
+          "type": "object",
+          "properties": {
+            "kinetics": {
+              "type": "string",
+              "description": "Temperature dependence of growth rate (kinetics)"
+            }
+          },
+          "description": "Temperature dependence of growth rate"
+        }
+      },
+      "description": "Alumina deposition properties"
+    },
+    "precursorExposure": {
+      "type": "object",
+      "properties": {
+        "substrateVelocity": {
+          "type": "number",
+          "unit": "cm/s",
+          "description": "Substrate velocity"
+        },
+        "precursorConcentration": {
+          "type": "number",
+          "unit": "sccm",
+          "description": "Precursor concentration"
+        },
+        "effectiveExposure": {
+          "type": "number",
+          "unit": "s",
+          "description": "Effective exposure"
+        }
+      },
+      "description": "Precursor exposure"
+    },
+    "fluidDynamics": {
+      "type": "object",
+      "properties": {
+        "ReynoldsNumber": {
+          "type": "number",
+          "description": "Reynolds number"
+        },
+        "flowRate": {
+          "type": "number",
+          "unit": "sccm",
+          "description": "Flow rate"
+        },
+        "pressure": {
+          "type": "number",
+          "unit": "mbar",
+          "description": "Pressure"
+        },
+        "temperature": {
+          "type": "number",
+          "unit": "/C14 C",
+          "description": "Temperature"
+        }
+      },
+      "description": "Fluid dynamics"
+    },
+    "surfaceCoverage": {
+      "type": "number",
+      "unit": "lmol m/C02",
+      "description": "Surface coverage of the precursor"
+    },
+    "growthRateFactor": {
+      "type": "number",
+      "description": "Growth rate factor of the ALD process"
+    },
+    "selfLimitedProcesses": {
+      "type": "object",
+      "properties": {
+        "idealSelfLimited": {
+          "type": "object",
+          "properties": {
+            "reactionProbability": {
+              "type": "number",
+              "description": "Reaction probability"
+            },
+            "surfaceCoverage": {
+              "type": "number",
+              "description": "Surface coverage"
+            }
+          },
+          "description": "Ideal self-limited process"
+        },
+        "softSaturating": {
+          "type": "object",
+          "properties": {
+            "fastComponent": {
+              "type": "object",
+              "properties": {
+                "reactionProbability": {
+                  "type": "number",
+                  "description": "Reaction probability of fast component"
+                },
+                "surfaceCoverage": {
+                  "type": "number",
+                  "description": "Surface coverage of fast component"
+                }
+              },
+              "description": "Fast component of soft-saturating process"
+            },
+            "slowComponent": {
+              "type": "object",
+              "properties": {
+                "reactionProbability": {
+                  "type": "number",
+                  "description": "Reaction probability of slow component"
+                },
+                "surfaceCoverage": {
+                  "type": "number",
+                  "description": "Surface coverage of slow component"
+                }
+              },
+              "description": "Slow component of soft-saturating process"
+            }
+          },
+          "description": "Soft-saturating process"
+        },
+        "siteBlocking": {
+          "type": "object",
+          "properties": {
+            "byProductReactivity": {
+              "type": "number",
+              "description": "By-product reactivity"
+            },
+            "surfaceCoverage": {
+              "type": "number",
+              "description": "Surface coverage"
+            }
+          },
+          "description": "Site-blocking process"
+        }
+      },
+      "description": "Self-limited processes"
+    },
+    "inhibitorProperties": {
+      "type": "object",
+      "properties": {
+        "inhibitorMolecule": {
+          "type": "string",
+          "description": "Inhibitor molecule (e.g., Hacac)"
+        },
+        "adsorptionEnergy": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Adsorption energy"
+        },
+        "activationBarrier": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Activation barrier"
+        },
+        "desorptionEnergy": {
+          "type": "number",
+          "unit": "kcal/mol",
+          "description": "Desorption energy"
+        }
+      },
+      "description": "Inhibitor properties"
+    },
+    "selectivity": {
+      "type": "number",
+      "description": "Selectivity of the ALD process"
+    },
+    "temperature": {
+      "type": "number",
+      "unit": "/C14 C",
+      "description": "Temperature of the ALD process"
+    },
+    "depositionTime": {
+      "type": "number",
+      "unit": "s",
+      "description": "Deposition time of the ALD process"
+    },
+    "precursorConcentration": {
+      "type": "number",
+      "unit": "sccm",
+      "description": "Concentration of the precursor"
+    },
+    "effectiveExposure": {
+      "type": "number",
+      "unit": "s",
+      "description": "Effective exposure of the precursor"
+    },
+    "growthRate": {
+      "type": "number",
+      "unit": "A˚ /cycle",
+      "description": "Growth rate of the ALD process"
+    },
+    "kinetics": {
+      "type": "string",
+      "description": "Kinetics of the ALD process"
+    },
+    "physisorption": {
+      "type": "boolean",
+      "description": "Physisorption of the precursor"
+    },
+    "chemisorption": {
+      "type": "boolean",
+      "description": "Chemisorption of the precursor"
+    },
+    "surfaceReactivity": {
+      "type": "boolean",
+      "description": "Surface reactivity of the precursor"
+    },
+    "precursorDeposition": {
+      "type": "object",
+      "properties": {
+        "occupationProbabilities": {
+          "type": "object",
+          "properties": {
+            "pP1": {
+              "type": "number",
+              "description": "Probability of precursor P1 formation"
+            },
+            "pP2": {
+              "type": "number",
+              "description": "Probability of precursor P2 formation"
+            }
+          },
+          "description": "Occupation probabilities for precursor products"
+        }
+      },
+      "description": "Precursor deposition properties"
+    }
+  }
+}
+```
+
+The changes made to the schema include:
+
+* Added new properties to the `simulationParameters` object to reflect the findings of the research paper, including `methods`, `materials`, `decompositionAndBinding`, `growthRate`, and `surfaceDesorptionDiffusionReactionRates`.
+* Added new properties to the `observables` object to reflect the findings of the research paper, including `filmProperties` and `bindingAffinityStickingCoefficients`.
+* Added new properties to the `designAndOperationVariables` object to reflect the findings of the research paper, including `gapDistance`, `purgeGasFlowRates`, `precursorGasFlowRates`, `substrateVelocity`, and `vacuumPressure`.
+* Added new properties to the `aldProcessParameters` object to reflect the findings of the research paper, including `zirconiumPrecursor`, `waterPrecursor`, `surfaceHydroxylGroups`, `adsorptionEnergy`, `activationBarrier`, and `desorptionEnergy`.
+* Added new properties to the `surfaceChemistry` object to reflect the findings of the research paper, including `adsorption` and `dissociation`.
+* Added new properties to the `precursorProperties` object to reflect the findings of the research paper, including `siliconPrecursors`, `carbonPrecursors`, and `singleSourcePrecursors`.
+* Added new properties to the `aluminaDeposition` object to reflect the findings of the research paper, including `methylCoverage`, `hydroxylCoverage`, `growthRate`, and `temperatureDependency`.
+* Added new properties to the `precursorExposure` object to reflect the findings of the research paper, including `substrateVelocity`, `precursorConcentration`, and `effectiveExposure`.
+* Added new properties to the `fluidDynamics` object to reflect the findings of the research paper, including `ReynoldsNumber`, `flowRate`, `pressure`, and `temperature`.
+* Added new properties to the `surfaceCoverage` object to reflect the findings of the research paper, including `surfaceCoverage`.
+* Added new properties to the `growthRateFactor` object to reflect the findings of the research paper, including `growthRateFactor`.
+* Added new properties to the `selfLimitedProcesses` object to reflect the findings of the research paper, including `idealSelfLimited`, `softSaturating`, and `siteBlocking`.
+* Added new properties to the `inhibitorProperties` object to reflect the findings of the research paper, including `inhibitorMolecule`, `adsorptionEnergy`, `activationBarrier`, and `desorptionEnergy`.
+* Added new properties to the `selectivity` object to reflect the findings of the research paper, including `selectivity`.
+* Added new properties to the `temperature` object to reflect the findings of the research paper, including `temperature`.
+* Added new properties to the `depositionTime` object to reflect the findings of the research paper, including `depositionTime`.
+* Added new properties to the `precursorConcentration` object to reflect the findings of the research paper, including `precursorConcentration`.
+* Added new properties to the `effectiveExposure` object to reflect the findings of the research paper, including `effectiveExposure`.
+* Added new properties to the `growthRate` object to reflect the findings of the research paper, including `growthRate`.
+* Added new properties to the `kinetics` object to reflect the findings of the research paper, including `kinetics`.
+* Added new properties to the `physisorption` object to reflect the findings of the research paper, including `physisorption`.
+* Added new properties to the `chemisorption` object to reflect the findings of the research paper, including `chemisorption`.
+* Added new properties to the `surfaceReactivity` object to reflect the findings of the research paper, including `surfaceReactivity`.
+* Added new properties to the `precursorDeposition` object to reflect the findings of the research paper, including `occupationProbabilities`.
+
+Note that some of the new properties may have been added to existing objects, and some of the existing properties may have been modified to reflect the findings of the research paper.

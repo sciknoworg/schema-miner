@@ -1,0 +1,421 @@
+Based on the research paper and domain expert feedback, the following refinements have been made to the JSON schema for the Atomic Layer Deposition (ALD) process:
+
+1. **Incorporated Spatial ALD (SALD) Parameters**: The research paper highlights the importance of precursor exposure, substrate velocity, and deposition gap in SALD. These parameters have been added to the schema under a new section `saldParameters`.
+
+2. **Updated Growth Rate Section**: The paper discusses the impact of growth rate on film properties. The `growthRate` section has been updated to include `substrateVelocity` and `precursorExposure`.
+
+3. **Added Film Density**: The paper emphasizes the relationship between growth rate and film density. A `density` property has been added under `filmProperties`.
+
+4. **Revised Descriptions and Units**: Descriptions and units have been revised for clarity and accuracy based on the paper's findings.
+
+5. **Expert Feedback**: The feedback suggested ensuring the schema captures the nuances of different ALD techniques, such as SALD. This has been addressed by adding specific parameters related to SALD.
+
+Here is the refined JSON schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process Schema",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "description": "Parameters and methodologies used in the ALD simulation.",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "description": "Computational methods used in the ALD process simulation.",
+          "items": {
+            "type": "string",
+            "enum": ["DFT", "HF", "post-HF", "ML", "kMC", "MD", "Hybrid ONIOM", "CCSD(T)", "MP2", "Continuum Fluid Dynamics (CFD)", "RMD"]
+          }
+        },
+        "functionals": {
+          "type": "string",
+          "description": "Functionals used in DFT calculations, if applicable."
+        },
+        "basisSets": {
+          "type": "string",
+          "description": "Basis sets used in quantum chemical calculations, if applicable."
+        },
+        "timestep": {
+          "type": "number",
+          "description": "Timestep used in MD simulations, if applicable.",
+          "unit": "femtoseconds"
+        },
+        "materials": {
+          "type": "object",
+          "description": "Materials involved in the ALD process.",
+          "properties": {
+            "precursors": {
+              "type": "array",
+              "description": "List of precursor materials.",
+              "items": {
+                "type": "string",
+                "enum": ["SiH4", "Si2H6", "SiH3Cl", "C2H2", "CCl4", "CHCl3", "Al(CH3)3", "H2O"]
+              }
+            },
+            "coReactants": {
+              "type": "array",
+              "description": "List of co-reactant materials.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "substrates": {
+              "type": "array",
+              "description": "List of substrate materials.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "growthRate": {
+      "type": "object",
+      "description": "Information related to the growth rate of the film.",
+      "properties": {
+        "rate": {
+          "type": "number",
+          "description": "Growth rate of the film per cycle.",
+          "unit": "angstroms/cycle"
+        },
+        "temperatureDependence": {
+          "type": "number",
+          "description": "Temperature dependence of the growth rate.",
+          "unit": "Celsius"
+        },
+        "chemisorbedPrecursorDensity": {
+          "type": "number",
+          "description": "Density of chemisorbed precursor on the surface.",
+          "unit": "nm^-2"
+        },
+        "stericHindranceEffect": {
+          "type": "string",
+          "description": "Description of the steric hindrance effect on growth rate."
+        },
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate during deposition.",
+          "unit": "cm/s"
+        },
+        "precursorExposure": {
+          "type": "number",
+          "description": "Effective exposure of precursor to the substrate.",
+          "unit": "sccm"
+        }
+      }
+    },
+    "surfaceProperties": {
+      "type": "object",
+      "description": "Properties related to surface reactions and coverage.",
+      "properties": {
+        "adsorptionSites": {
+          "type": "array",
+          "description": "Preferred adsorption sites on the surface.",
+          "items": {
+            "type": "string",
+            "enum": ["top", "hollow", "bridge1", "bridge2"]
+          }
+        },
+        "adsorptionEnergies": {
+          "type": "object",
+          "description": "Adsorption energies for different species on the surface.",
+          "properties": {
+            "species": {
+              "type": "string",
+              "description": "Species for which adsorption energy is measured."
+            },
+            "energy": {
+              "type": "number",
+              "description": "Adsorption energy of the species on the surface.",
+              "unit": "eV"
+            }
+          }
+        },
+        "desorptionRate": {
+          "type": "number",
+          "description": "Rate of surface desorption.",
+          "unit": "1/second"
+        },
+        "diffusionRate": {
+          "type": "number",
+          "description": "Rate of surface diffusion.",
+          "unit": "1/second"
+        },
+        "reactionRate": {
+          "type": "number",
+          "description": "Rate of surface reactions.",
+          "unit": "1/second"
+        },
+        "stickingCoefficient": {
+          "type": "number",
+          "description": "Probability of an adsorbate sticking to the surface."
+        },
+        "bindingAffinity": {
+          "type": "number",
+          "description": "Binding affinity of the adsorbate to the surface.",
+          "unit": "kJ/mol"
+        },
+        "surfaceCoverage": {
+          "type": "object",
+          "description": "Coverage of the surface by the adsorbate.",
+          "properties": {
+            "coverage": {
+              "type": "number",
+              "description": "Percentage of surface coverage.",
+              "unit": "%"
+            },
+            "timeDependent": {
+              "type": "boolean",
+              "description": "Indicates if surface coverage is time-dependent."
+            }
+          }
+        },
+        "chlorineLossReactions": {
+          "type": "object",
+          "description": "Details of chlorine loss reactions in the ALD process.",
+          "properties": {
+            "pathways": {
+              "type": "array",
+              "description": "Possible pathways for chlorine loss.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dominantPathway": {
+              "type": "string",
+              "description": "Dominant pathway for chlorine loss at given conditions."
+            }
+          }
+        },
+        "reactionPathways": {
+          "type": "array",
+          "description": "Reaction pathways for specific surface reactions.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "precursor": {
+                "type": "string",
+                "description": "Precursor involved in the reaction."
+              },
+              "coReactant": {
+                "type": "string",
+                "description": "Co-reactant involved in the reaction."
+              },
+              "intermediateComplex": {
+                "type": "string",
+                "description": "Description of the intermediate complex formed."
+              },
+              "activationEnergy": {
+                "type": "number",
+                "description": "Activation energy for the reaction.",
+                "unit": "kcal/mol"
+              },
+              "adsorptionEnergy": {
+                "type": "number",
+                "description": "Adsorption energy of the precursor or co-reactant.",
+                "unit": "kcal/mol"
+              }
+            }
+          }
+        },
+        "selectiveEncapsulation": {
+          "type": "object",
+          "description": "Details about selective encapsulation mechanisms.",
+          "properties": {
+            "preferredFacets": {
+              "type": "array",
+              "description": "Facets where selective encapsulation occurs.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mechanism": {
+              "type": "string",
+              "description": "Mechanism of selective encapsulation."
+            }
+          }
+        },
+        "surfaceTerminationChemistry": {
+          "type": "string",
+          "description": "Description of the surface termination chemistry affecting precursor adsorption."
+        },
+        "surfaceFunctionalities": {
+          "type": "object",
+          "description": "Different surface functionalities affecting ALD reactions.",
+          "properties": {
+            "isolatedHydroxylGroups": {
+              "type": "boolean",
+              "description": "Presence of isolated hydroxyl groups on the surface."
+            },
+            "adjacentHydrogenBondedHydroxylGroups": {
+              "type": "boolean",
+              "description": "Presence of adjacent hydrogen-bonded hydroxyl groups on the surface."
+            },
+            "oxygenBridges": {
+              "type": "boolean",
+              "description": "Presence of oxygen bridges on the surface."
+            }
+          }
+        }
+      }
+    },
+    "filmProperties": {
+      "type": "object",
+      "description": "Properties of the deposited film.",
+      "properties": {
+        "uniformity": {
+          "type": "number",
+          "description": "Uniformity of the film.",
+          "unit": "%"
+        },
+        "roughness": {
+          "type": "number",
+          "description": "Surface roughness of the film.",
+          "unit": "nm"
+        },
+        "density": {
+          "type": "number",
+          "description": "Density of the film.",
+          "unit": "g/cm^3"
+        },
+        "temperatureProfile": {
+          "type": "array",
+          "description": "Temperature profile across the film.",
+          "items": {
+            "type": "number"
+          },
+          "unit": "Celsius"
+        },
+        "chemicalComposition": {
+          "type": "array",
+          "description": "Elemental composition of the film.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "reactorConditions": {
+      "type": "object",
+      "description": "Conditions inside the reactor during ALD.",
+      "properties": {
+        "pressure": {
+          "type": "number",
+          "description": "Pressure inside the reactor.",
+          "unit": "Pascal"
+        },
+        "carrierGasFlow": {
+          "type": "number",
+          "description": "Flow rate of the carrier gas.",
+          "unit": "sccm"
+        },
+        "precursorFlow": {
+          "type": "number",
+          "description": "Flow rate of the precursor gas.",
+          "unit": "sccm"
+        },
+        "gapDistance": {
+          "type": "number",
+          "description": "Gap distance in the reactor.",
+          "unit": "mm"
+        }
+      }
+    },
+    "precursorChemistry": {
+      "type": "object",
+      "description": "Details about the precursor's chemistry and interactions.",
+      "properties": {
+        "adsorptionSites": {
+          "type": "array",
+          "description": "Preferred adsorption sites for the precursor.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dissociationPathways": {
+          "type": "array",
+          "description": "Pathways for precursor dissociation on the surface.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "substituentEffects": {
+          "type": "string",
+          "description": "Effects of substituents on precursor behavior."
+        },
+        "ligandType": {
+          "type": "string",
+          "description": "Type of ligand used in the precursor."
+        },
+        "stericHindrance": {
+          "type": "string",
+          "description": "Description of steric hindrance effects due to ligand geometry."
+        }
+      }
+    },
+    "coReactantReactivity": {
+      "type": "object",
+      "description": "Reactivity of different co-reactants with the precursor.",
+      "properties": {
+        "reactivityOrder": {
+          "type": "array",
+          "description": "Order of reactivity of co-reactants.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reactionByProducts": {
+          "type": "array",
+          "description": "By-products formed during the reaction with co-reactants.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "saldParameters": {
+      "type": "object",
+      "description": "Parameters specific to Spatial ALD (SALD) processes.",
+      "properties": {
+        "precursorExposure": {
+          "type": "number",
+          "description": "Effective exposure of precursor to the substrate in SALD.",
+          "unit": "sccm"
+        },
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate in SALD.",
+          "unit": "cm/s"
+        },
+        "depositionGap": {
+          "type": "number",
+          "description": "Gap between the substrate and the injection head in SALD.",
+          "unit": "µm"
+        }
+      }
+    },
+    "resultSource": {
+      "type": "string",
+      "description": "Source of the results, either simulation or experimental.",
+      "enum": ["simulation", "experimental"]
+    }
+  },
+  "required": [
+    "simulationParameters",
+    "growthRate",
+    "surfaceProperties",
+    "filmProperties",
+    "reactorConditions",
+    "precursorChemistry",
+    "coReactantReactivity",
+    "saldParameters",
+    "resultSource"
+  ]
+}
+```
+
+This refined schema now includes parameters specific to Spatial ALD, such as precursor exposure and substrate velocity, and addresses the relationship between growth rate and film density, as highlighted in the research paper.

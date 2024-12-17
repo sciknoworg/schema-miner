@@ -1,0 +1,82 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "description": "A schema representing the steps and parameters involved in setting up and verifying an Atomic Layer Deposition process for various materials, including platinum, hafnium, zirconium oxides, titanium nitride (TiN), and tin oxide (SnOx).",
+    "type": "object",
+    "properties": {
+        "reactantSelection": {
+            "type": "object",
+            "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+            "properties": {
+                "precursor": {
+                    "type": "string",
+                    "description": "Chemical used as a precursor in the ALD process, e.g., TiCl4."
+                },
+                "coReactant": {
+                    "type": "string",
+                    "description": "Chemical used as a co-reactant in the ALD process, e.g., H2O."
+                },
+                "precursorPulseTime": {
+                    "type": "number",
+                    "description": "Duration of the precursor pulse in seconds, affecting growth rate and film properties."
+                },
+                "coReactantPulseTime": {
+                    "type": "number",
+                    "description": "Duration of the co-reactant pulse in seconds."
+                },
+                "purgeTime": {
+                    "type": "number",
+                    "description": "Time for purging the reactor chamber between pulses, measured in seconds."
+                },
+                "chlorineAdsorption": {
+                    "type": "boolean",
+                    "description": "Indicates if significant chlorine is adsorbed during the precursor pulse."
+                },
+                "surfaceIntermediateSpecies": {
+                    "type": "boolean",
+                    "description": "Indicates if stable surface intermediate species are formed."
+                }
+            },
+            "required": [
+                "precursor",
+                "coReactant",
+                "precursorPulseTime",
+                "coReactantPulseTime",
+                "purgeTime",
+                "chlorineAdsorption",
+                "surfaceIntermediateSpecies"
+            ]
+        },
+        "processConditions": {
+            "type": "object",
+            "description": "Details about the ALD process conditions.",
+            "properties": {
+                "temperatureDependency": {
+                    "type": "object",
+                    "description": "Dependency of various process parameters on the substrate temperature.",
+                    "properties": {
+                        "growthTemperatureRange": {
+                            "type": "string",
+                            "description": "Range of substrate temperatures tested, e.g., 100\u00b0C to 400\u00b0C."
+                        },
+                        "temperatureEffectOnGrowthRate": {
+                            "type": "boolean",
+                            "description": "Indicates if the growth rate is affected by the substrate temperature."
+                        },
+                        "temperatureEffectOnCrystallinity": {
+                            "type": "boolean",
+                            "description": "Indicates if the crystallinity and texture development are affected by the substrate temperature."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "temperatureDependency"
+            ]
+        }
+    },
+    "required": [
+        "reactantSelection",
+        "processConditions"
+    ]
+}

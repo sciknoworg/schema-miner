@@ -1,0 +1,41 @@
+Property Merging:
+ThicknessControl and Saturation -> ThicknessControl
+
+Property Grouping:
+-> ProcessParameters(Temperature, Pressure, PrecursorDosingTime, CoReactantExposureTime)
+Describe the process parameters, the ones that are independent and affect the final film.
+
+-> ThicknessControl (GPC, Film Thickness, NucleationBehavior)
+Describe parameters that are affected by the film thickness
+
+Missing Properties:
+1. Material Deposited
+2. ALD Method
+3. Reactor
+4. Pressure
+5. Crystallinity
+6. Film Density
+
+Adequacy of Descriptions:
+Stoichiometry -> Should be translated into concentration of reactants used (in the case of thermal ALD). The stoichiometry would make more sense in the ternary/quaternary materials in the cycle ratio.
+GPC -> nm or nm/cycle
+Co-reactor -> should be Co-reactant
+
+Domain expert edited schema of the initial generated version:
+
+ALD Process
+-> ALD Method
+-> Material Deposited
+-> ReactantSelection (Precursor, Co-reactant, Concentration)
+-> Reactor
+-> ProcessParameters(Temperature, Pressure, PrecursorDosingTime, CoReactantExposureTime)
+-> ThicknessControl (GPC, Film Thickness, NucleationBehavior)
+
+MaterialProperties
+-> ChemicalComposition
+-> Optical
+-> Electrical
+-> Uniformity
+-> Conformality
+-> Crystallinity
+-> Film Density

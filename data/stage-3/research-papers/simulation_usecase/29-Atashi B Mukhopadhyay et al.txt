@@ -1,0 +1,777 @@
+Atomic Layer Deposition of Hafnium Oxide from Hafnium
+Chloride and Water
+Atashi B. Mukhopadhyay,† Charles B. Musgrave,† and Javier Fdez. Sanz* ,‡
+Department of Chemical Engineering, Stanford UniVersity, 380 Roth Way, Stanford, California
+94305, and Departamento de Quı´mica Fı´sica, Uni Versidad de SeVilla, E-41012 SeVilla, Spain
+Received March 6, 2008; E-mail: sanz@us.es
+Abstract: Hafnium oxide (HfO 2) is a leading candidate to replace silicon oxide as the gate dielectric for
+future generation metal-oxide-semiconductor based nanoelectronic devices. Atomic layer deposition (ALD)
+has recently gained interest because of its suitability for fabrication of conformal ﬁlms with thicknesses in
+the nanometer range. This study uses periodic density functional theory (DFT) to investigate the mechanisms
+of both half-reactions occurring on the growing surface during the ALD of HfO2 using HfCl4 and water as
+precursors. We ﬁnd that the adsorption energy and the preferred site of adsorption of the metal precursor
+are strong functions of the water coverage. As water coverage increases, the metal precursor preferentially
+interacts with multiple surface adsorption sites. During the water pulse the removal of Cl can be facilitated
+by either a ligand exchange reaction or the dissociation of Cl upon increase in coordination of the Hf atom
+of the precursor. Our predicted potential energy surface indicates that a more likely mechanism is hydration
+of the adsorbed Hf complex up to a coordination number of 7, followed by the dissociation of a chloride ion
+that is stabilized by solvation. Born-Oppenheimer molecular dynamics (BOMD) simulations of an adsorbed
+metal precursor in the presence of a multilayer of water shows that Cl dissociation is facile if sufﬁcient
+water molecules are present to solvate the Cl- anions. Hence, solvation plays a crucial role during the
+water pulse and provides an alternative explanation for why ALD growth rates for this system decrease at
+high temperatures.
+Introduction
+Moore’s law, which states that the number of electronic
+devices in integrated circuits increases exponentially over time,
+has driven the microelectronic industry for the past several
+decades. However, continued scaling of semiconductor devices
+requires the integration of novel fabrication processes and new
+materials into future semiconductor technology. For example,
+as the thickness of the SiO2 gate dielectric in silicon metal oxide-
+semiconductor ﬁeld effect transistor devices approaches atomic
+dimensions, the tunneling current through the gate dielectric
+increases exponentially and serious performance and reliability
+issues arise.1 Hence, there is a need for an alternative higher
+permittivity gate dielectric (high-k) to replace SiO2.2 In addition,
+the deposition process must result in uniform, conformal and
+pinhole-free thin ﬁlms of the high-k dielectric material with
+atomic level control over large areas. HfO2 has become a leading
+candidate to replace SiO 2 due to its relatively high dielectric
+constant, sufﬁcient band offset from Si, low electrical conduc-
+tivity, and good thermodynamic stability against silicide
+formation.3–5 Among other possibilities, atomic layer deposition
+(ALD) has been proposed for the deposition of high- k gate
+dielectrics, including HfO 2, because of its ability to deposit
+uniform and conformal thin ﬁlms.6–10 ALD can be viewed as a
+chemical vapor deposition process based on sequential, self-
+terminating reactions between the surface and precursors.
+Because the precursors are introduced into the reactor separately,
+ALD does not involve gas phase reactions, meaning that it is
+ideally a completely surface-reaction-limited process. To achieve
+the desirable characteristics of ALD deposited ﬁlms, the
+precursors must possess several key chemical and physical
+properties. They must be volatile and thermally stable and must
+either chemisorb on the substrate or react rapidly with the
+surface groups resulting from the previous pulse in order to reach
+the saturation stage rapidly and thereby ensure a reasonable
+deposition rate.
+ALD of HfO2 using HfCl4 as the metal precursor and water
+as the oxygen source has been studied extensively 11,12 It is
+widely believed that in the ALD of metal oxides using water
+† Stanford University.
+‡ Universidad de Sevilla.
+(1) Kingon, A.; Maria, J.-P.; Streiffer, S.Nature (London)2000, 406, 1032.
+(2) Packan, P. A. Science 1999, 285, 2079.
+(3) Ritala, M.; Leskela, M.; Niinisto, L.; Prohaska, T.; Friedbacher, G.;
+Grasserbauer, M. Thin Solid Films1994, 250,7 2.
+(4) Aarik, J.; Aidla, A.; Kiisler, A.-A.; Uustare, T.; Sammelselg, V. Thin
+Solid Films 1999, 340, 110.
+(5) Sankur, H. O.; Gunning, W. Appl. Opt. 1989, 28, 2806.
+(6) Ritala, M.; Kukli, K.; Rahtu, A.; Raisanen, P. I.; Leskela, M.;
+Sajavaara, T.; Keinonen, J. Science 2000, 288, 319.
+(7) Cho, M. H.; Roh, Y. S.; Whang, C. N.; Jeong, K.; Nahm, S. W.; Ko,
+D. H.; Lee, J. H.; Lee, N. I.; Fujihara, K. Appl. Phys. Lett.2002, 81,
+472.
+(8) Aarik, J.; Aidla, A.; Ma¨ndar, H.; Sammelselg, V.; Uustare, T.J. Cryst.
+Growth 2000, 220, 105.
+(9) Aarik, J.; Ma ¨ndar, H.; Kirm, M.; Pung, L. Thin Solid Films 2004,
+466,4 1.
+(10) Kukli, K.; Aarik, J.; Ritala, M.; Uustare, T.; Sajavaara, T.; Lu, J.;
+Sundqvist, J.; Aidla, A.; Pung, L.; Harsta, A.; Lesela, M. J. Appl.
+Phys. 2004, 96, 5298.
+(11) Widjaja, Y.; Musgrave, C. B. J. Chem. Phys.2002, 117, 1931.
+(12) Kukli, K.; Ritala, M.; Sajavaara, T.; Keinonen, J.; Leskela ¨, M. Thin
+Solid Films 2002, 416,7 2.
+Published on Web 08/13/2008
+10.1021/ja801616u CCC: $40.75  2008 American Chemical Society11996 9 J. AM. CHEM. SOC. 2008, 130, 11996–12006
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 13:05:09 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+as the oxygen source that surface hydroxyls play an important
+role as the reactive species that remain on the surface of the
+growing ﬁlm after the water pulse.13–15 During the metal
+precursor (HfCl 4) pulse hydroxyl groups are thought to react
+with the incoming precursor producing a surface bound complex
+that consists of the precursor with a reduced number of chlorine
+ligands. In the subsequent water pulse, this intermediate reacts
+with water and the surface is converted from chlorine termina-
+tion to hydroxyl termination. These reactions of gaseous HfCl4
+and H2O with the surface during the precursor and waterpulses,
+respectively, can be summarized by the two half-reactions:
+HfO2(OH)m+nHfCl4(g) fHfO2(OH)m-n(O - HfCl3)n +
+nHCl(g) (1)
+HfO2(OH)m-n(O - HfCl3)n +
+3nH2O(g) fHfO2(OH)m-n(O - Hf(OH)3)n + 3nHCl(g) (2)
+where HfO2(OH)m stands for a hydroxylated HfO 2 surface.
+Due to the high technological relevance of ALD processes,
+much experimental work has been devoted to understanding of
+the details of the mechanism. However, although the usefulness
+of computational techniques is widely recognized, the number
+of theoretical studies on this subject appears to be relatively
+low. In the case of the ALD of HfO2 this dearth is not surprising
+due to the well-known hurdle involved in the realistic modeling
+of both transition metal surfaces and surface reactions. Thus,
+most of the previous mechanistic work has addressed the ALD
+of HfO2 on silicon and silicon oxide substrates. 11,12,16–19 Yet,
+the number of mechanistic studies investigating the ALD of
+HfO2 on as-grown HfO 2 is even more scarce. Furthermore, in
+order to make the simulations tractable, the few theoretical
+studies that have been done describe the surface using cluster
+models of limited size which neglect the effect of both the
+environment relaxation and the electrostatic ﬁeld of the extended
+surface. Similarly, the ALD of related transition metal oxides,
+such as TiO2 and ZrO 2, on SiO 2 using their corresponding
+halides as precursors has also been theoretically studied using
+either naked cluster models20 or introducing environment effects
+through a QM/MM approach. 21 Moreover, a common aspect
+of the simulations of metal oxide ALD that use SiO 2 surfaces
+as a substrate are intended to model the initial substrate
+conditions that take place in the ﬁrst few ALD cycles, which
+most likely differs signiﬁcantly from the mechanisms on the
+as-grown oxide.
+ALD under steady state conditions, i.e., conditions subsequent
+to initiation and the point at which the thickness of the deposited
+HfO2 ﬁlm has increased so that each ALD cycle is identical to
+the previous cycle, involves ALD on as-grown HfO 2 surfaces.
+However, modeling of these surfaces brings additional chal-
+lenges commonly found in the simulation of transition metal
+oxides, which are better described using periodic slab models.
+Also, different ALD growth conditions can lead to changes in
+the HfO2 growth surface because different crystal faces of HfO2
+are stabilized differently by the nature of the water/hydroxyl
+ﬁlm on the growing surface, which depends on the temperature
+and water partial pressure. We previously reported ﬁrst prin-
+ciples studies of the structure and stability of various dehydrated
+and hydrated monoclinic HfO2 surfaces22,23 that predicted that
+the monoclinic HfO2 (1j11) face is the most stable under strictly
+anhydrous conditions, but the presence of water decreases the
+surface energy of the m-HfO 2 (001) face, making it thermody -
+namically more stable under ALD process conditions. The
+hydroxylated (001) HfO2 surface consists of different adsorption
+sites, including bridging oxygen sites and hydroxyl groups. An
+additional challenge to take into account is the variability of
+the coordination number of Hf atoms, as it is a transition metal
+element, and exhibits coordination numbers ranging from 4 to
+8. Although this feature has not been considered in any of the
+previous studies, the activation barriers of the elementary ALD
+reactions may be highly sensitive to the Hf coordination number.
+Here, we present a theoretical study of the ALD of HfO 2 on
+as-grown HfO2 using state-of-the-art periodic DFT simulations
+and for this purpose have performed a detailed analysis of the
+chemical mechanisms of both half-reactions occurring on the
+growing surface during the ALD of HfO2 using HfCl4 and water.
+This contribution does not report a comprehensive study of all
+active pathways subsequent to the reactions of the precursor
+and water with the growing surface. For example, reactions
+leading to densiﬁcation, such as condensation reactions between
+neighboring hydroxyl groups, are not reported here. To the best
+of our knowledge, this is the ﬁrst theoretical simulation to
+consider the effect of different coordination numbers of Hf as
+well as the effect of various adsorption sites on the reaction
+energetics of the ALD process. The ﬁrst phase of this study
+involves an approach based on a series of static structural
+optimizations and calculated energies at low water coverage.
+However, during the water pulse, i.e., in the high water coverage
+regime, there is a large number of possible conﬁgurations that
+makes a comprehensive investigation of the chemistry during
+the water pulse from a static point of view extremely complex
+(and likely incomplete). Therefore, we also carried out ﬁrst
+principles molecular dynamics simulations on the Born-Oppen-
+heimer potential energy hypersurface. These simulations showed
+that under the water pulse conditions, a more efﬁcient mecha-
+nism for the removal of chlorine is viable that involves
+(13) Matero, R.; Rahtu, A.; Ritala, M.; Leskela ¨, M.; Sajavaara, T. Thin
+Solid Films 2000, 368,1 .
+(14) Puurunen, R. L. J. Appl. Phys.2004, 95, 4774.
+(15) Alam, M. A.; Green, M. L. J. Appl. Phys.2003, 94, 3403.
+(16) Deminsky, M.; Knizhnik, A.; Belov, I.; Umanskii, S.; Rykova, E.;
+Bagaturyants, A.; Potapkin, S.; Stoker, M.; Korkin, A.Surf. Sci.2004,
+549,6 7.
+(17) Esteve, A.; Rouhani, M. D.; Jeloaica, L.; Esteve, D. Comput. Mater.
+Sci. 2003, 27,7 5.
+(18) Jeloaica, L.; Esteve, A.; Rouhani, M. D.; Esteve, D. Appl. Phys. Lett.
+2003, 83, 542.
+(19) Fenno, R. D.; Halls, M. D.; Raghavachari, K. J. Phys. Chem. B2005,
+109, 4969.
+(20) Hu, Z.; Turner, C. H. J. Phys. Chem.2006, 110, 8387.
+(21) Hu, Z.; Turner, C. H. J. Am. Chem. Soc.2007, 129, 3863.
+(22) Mukhopadhyay, A. B.; Sanz, J. F.; Musgrave, C. B. Phys. ReV.B
+2006, 73, 115330.
+(23) Mukhopadhyay, A. B.; Sanz, J. F.; Musgrave, C. B. Chem. Mater.
+2006, 18, 3397.
+Table 1. Adsorption Energies of HfCl 4 (in kcal/mol) on Different
+Adsorption Sites on the (001) Surface of HfO 2 as a Function of
+Water Coverage
+coverage
+(H2O molecule.nm-2)a
+bridge-O
+site
+hydroxyl
+site
+dibridge
+sites
+bridge-hydroxyl
+sites
+di-hydroxyl
+sites
+0 (0%) 40.7 -- - -
+1.9 (25%) 26.9 4.7 35.2 33.4 16.9
+3.8 (50%) 23.5 14.7 33.8 35.6 16.1
+5.7 (75%) 25.5 15.8 25.6 32.4 20.1
+7.6 (100%)- 25.5 -- 22.3
+a The percentage of water coverage is shown in parentheses.
+J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008 11997
+Atomic Layer Deposition of HfO2 from HfCl4 and H2O ARTICLES
+
+
+subsequent ligand elimination reactions from the adsorbed metal
+precursor driven by solvation of chloride ions.
+Surface Models and Computational Approach
+The ﬁrst step in the modeling of the m-HfO 2 surface concerns
+the choice of the exposed face and degree of hydroxylation. Under
+growth conditions both the monoclinic (1 j11) and (001) faces of
+HfO2 have been observed with the ratio of the two depending on
+the experimental variables. As stated above, we showed that
+although the anhydrous (1j11) surface is more stable, the (001)
+termination is preferred after surface hydroxylation. Therefore, given
+that the reaction involves water as an oxygen source, we chose the
+m-HfO2 (001) face for further modeling. Also, with the aim of
+modeling the extended nature of the surface we adopted the well-
+known supercell approach with periodic three-dimensional spanning.
+The supercell consisted of a 2×2 array of unit cells four-layers
+thick and vacuum with the thickness of the slab chosen so that
+both surface energies and surface atom displacements were
+converged. Every layer of HfO2 is composed of three atomic
+sublayers with a central plane containing HfO and two planes of
+bridging oxygen atoms above and below the central plane. We found
+that a vacuum width of 15 Å was wide enough to prevent slab-to-
+slab interactions. Further replication of this supercell along the three
+lattice vectors resulted in a ﬁnal model consisting of an arrangement
+of parallel HfO2 slabs exhibiting the (001) surface separated by
+vacuum. Additional computational details are provided in reference
+22.
+Density functional theory (DFT) based calculations were carried
+out under periodic conditions using the Vienna ab initiosimulation
+package (VASP).24,25 In these calculations the energy was calcu-
+lated using the PW91 generalized gradient approximation (GGA)
+implementation of DFT proposed by Perdew et al.26,27 The
+electronic states were expanded in a plane wave basis set with an
+energy cutoff of 450 eV. The calculations were performed using
+the projected augmented wave (PAW) approach as implemented
+in the VASP code.28 For Hf atoms, the semicore 5p electrons have
+been included in addition to the 5d 2 and 6s 2 valence electrons
+because we previously found that explicitly including the 5p
+electrons is required in order to obtain correct lattice parameters
+for bulk HfO2.22 The 2s and 2p electrons of O atoms and the 3s
+and 3p electrons of Cl atoms were explicitly described. Preliminary
+test calculations with k-point sampling meshes of varying size
+revealed that computations at theΓ point were reasonable while
+allowing a noticeable speed up of the extensive calculations here
+reported. Thus, comparing energies calculated using a 2×2×1 mesh
+to those calculated using just the Γ point we found the energy
+converged to within 0.01% and nearly identical optimized structures,
+while the speedup was about 450%. Such an improvement was
+especially desirable for the calculations of transitions states as well
+as for the intensive molecular dynamics simulations. This ap-
+proximation also seems reasonable bearing in mind the size of the
+cell and the number of atoms of our model: 120-130 atoms in the
+static calculations and more than 240 atoms in the MD simulations.
+Forces on the ions were calculated using the Hellmann-Feynman
+theorem and adjusted using the Harris-Foulkes correction to the
+forces.29 This approach for calculating the forces allows a geometry
+optimization using the conjugate-gradient scheme. Iterative relax-
+ation of atomic positions was stopped when the change in total
+energy between successive steps was less than 0.001 eV. The
+transition states were located using the climbing image nudged
+elastic band method as implemented in VASP.30,31
+Results and Discussion
+First Half-Reaction or Metal Precursor Pulse.To investigate
+the reactions of HfCl 4 with the growing surface we must ﬁrst
+determine the surface sites present under the growth conditions
+and then how the precursor interacts with these sites. The
+anhydrous m-HfO2 (001) surface is terminated by oxygen atoms
+that are coordinated to two hafnium atoms. Relative to the usual
+bulk coordination it exhibits a large number of broken Hf -O
+(24) Kresse, G.; Hafner, J. Phys. ReV.B 1993, 47, R558.
+(25) Kresse, G.; Furthmuller, J. Comput. Mater. Sci.1996, 6,1 5.
+(26) Perdew, J. P.; Chevary, J.; Vosko, S.; Jackson, K.; Pederson, M.; Singh,
+D.; Fiolhais, C. Phys. ReV.B 1992, 46, 6671.
+(27) Perdew, J. P. In Electronic Structure in Solids; Ziesche, P., Eschrig,
+H. Eds.; Akademie Verlag: Berlin, 1991.
+(28) Blo¨chl, P. E. Phys. ReV.B 1994, 50, 17953.
+(29) Harris, J. Phys. ReV.B 1985, 31, 1770.
+(30) Henkelman, G.; Uberuaga, B. P.; Jonsson, H. J. Chem. Phys.2000,
+113, 9901.
+(31) Henkelman, G.; Jonsson, H. J. Chem. Phys.2000, 113, 9978.
+Figure 1. Structure of adsorbed HfCl4 at bridge oxygen sites of the monoclinic HfO2 (001) surface with coverages of (a) 0 and (b) 5.7 H 2O molecule.nm-2.
+The white, red, green, and gray spheres represent hydrogen, oxygen, chlorine, and hafnium atoms, respectively.
+11998 J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008
+ARTICLES Mukhopadhyay et al.
+
+
+bonds (22.8 nm -2).23 Water molecules readily adsorb on this
+surface leading to a hydrated surface whose structure strongly
+depends on the experimental conditions. The water on m-HfO2
+(001) phase diagram theoretically estimated from DFT periodic
+calculations23 shows that water dissociatively chemisorbs on
+the m-HfO2 (001) face and gives rise to a surface with a wide
+range of hydroxyl coverages. Therefore, because the experi-
+mental conditions for HfO 2 ALD vary during the process, for
+example, during transients, it seems reasonable to begin by ﬁrst
+considering the possible scenarios that correspond to the
+different degrees of water coverage. For instance, at a typical
+ALD water partial pressure of 10.1 Pa, the m-HfO2 (001) surface
+retains a coverage greater than 9.5 H 2O molecules.nm -2 at
+temperatures below 400 K. Upon increasing the temperature
+water coverage decreases due to desorption of water. Above
+400 K the coverage reduces to 5.7 H 2O molecules.nm-2 and
+further decreases to 1.9 H 2O molecules.nm -2 when the tem -
+perature increases to 600 K. The m-HfO 2 (001) surface only
+becomes completely dehydroxylated above 860 K. Hence,
+during the metal precursor pulse the adsorption of HfCl 4 on
+the HfO2 surface can occur on various types of reactive sites
+depending upon the water coverage of the surface. Furthermore,
+HfCl4 can adsorb on either single or multiple sites. In the case
+of adsorption to a single adsorption site the precursor can bind
+to the surface through either oxygen atoms bound to two Hf
+atoms (bridge oxygens) or to hydroxyl groups. In the case of
+adsorbing to multiple surface sites the interaction can be with
+two bridge oxygen atoms, (dibridge sites), with two hydroxyl
+groups (dihydroxyl sites) or a mixed bridge oxygen and hydroxyl
+group (bridge-hydroxyl sites).
+The adsorption energies of HfCl 4 on the various adsorption
+sites of the m-HfO 2 (001) surface as a function of coverage of
+water are reported in Table 1. Notice that because we are adding
+a given number of water molecules per unit cell, the water
+coverage is not a continuous function. As can be seen in Table
+1 both the adsorption energy and the preferred site are strong
+functions of the water coverage. Starting with the bare (com-
+pletely dehydroxylated) surface, in which only bridge oxygen
+sites are available, we found a strong HfCl4-surface interaction
+with an adsorption energy of 40.7 kcal/mol, which is the largest
+value of adsorption energy of the adsorbed states we have
+calculated. Increasing the water coverage noticeably lowers the
+adsorption energy, converging to an interaction energy of about
+25 kcal/mol. The largest adsorption energy for HfCl4 adsorbing
+on the completely dehydroxylated surface can be understood
+by comparing the structures of the adsorbed HfCl 4 molecule at
+this site for coverages of 0 and 75% as reported in Figure 1a
+and b. On the completely dehydroxylated surface (Figure 1a)
+additional interactions exist from dative bonding between two
+chlorine atoms of the precursor and under-coordinated neighbor-
+ing surface hafnium atoms. As water coverage increases these
+additional interactions are precluded as intervening hydroxyl
+groups saturate the under-coordinated Hf atoms. Table 1 also
+shows that adsorption at the dibridge sites on the completely
+Figure 2. Structure of adsorbed HfCl 4 at dibridge oxygen sites on the
+m-HfO2 (001) surface with coverages of (a) 1.9 and (b) 5.7 H 2O
+molecule.nm-2
+.
+Figure 3. Structure of the HfCl4 precursor adsorbed at a bridge-hydroxyl
+multiple site of the m-HfO 2 (001) surface with a water coverage of 5.7
+H2O molecule.nm-2 (75%).
+J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008 11999
+Atomic Layer Deposition of HfO2 from HfCl4 and H2O ARTICLES
+
+
+dehydroxylated surface was found to be unstable, likely due to
+the strain of the rigid four-membered cycles involved.
+As the water coverage increases, the metal precursor pref-
+erentially interacts with multiple adsorption sites. In general, it
+is observed that the largest adsorption energies at any water
+coverage involve sites with bridge oxygen atoms combined with
+either each other or with hydroxyl groups. Thus, at 25%
+coverage the dibridge sites are preferred while at 50 and 75%
+coverage adsorption on the mixed bridge-hydroxyl sites is found
+to be more stable. The relative stability of the dibridge
+adsorption sites at low water coverage results from the
+constraints imposed by a relatively small unit cell and the
+uniform distribution of water imposed by the periodic boundary
+conditions. Thus, at low water coverages the supercell slab
+model presents the adsorbing precursor with bridge and dibridge
+sites, mixed bridge-hydroxyl sites and hydroxyl sites, but with
+hydroxyls spaced too far apart to allow coordination to two
+hydroxyls on precursor adsorption. However, on the actual
+surface at the same water coverage ﬂuctuations in coverage will
+present some dihydroxyl sites for adsorption. At 100% water
+coverage bridge oxygen atom sites are no longer available so
+that dibridge and mixed adsorption sites are precluded. However,
+for lower coverages it is worth noting that like the precursor-
+bridge oxygen interaction, the adsorption energies on dibridge
+sites are also a function of coverage. Indeed, on increasing the
+water coverage from 25 to 75% the adsorption energy of HfCl4
+on dibridge sites decreases from 35.2 to 25.6 kcal/mol. This
+behavior can again be understood by analyzing the effect of
+water coverage on the interactions between the chlorine atoms
+of the precursor and the undercoordinated hafnium atoms of
+the substrate. At both 25 and 50% water coverage undercoor-
+dinated hafnium atoms still persist, but by 75% coverage all
+surface Hf atoms are fully coordinated, either bound to surface
+oxygens or to adsorbed water. These interactions are illustrated
+in Figure 2a and b, which depict the structures of adsorbed HfCl4
+on dibridge oxygen sites at coverages of 25 and 75%,
+respectively.
+Experimentally, it is found that the growth per cycle decreases
+with increasing temperature. Increasing the temperature causes
+desorbtion of water and dehydroxylation, thereby decreasing
+the coverage of hydroxyl groups on the surface. The ALD
+literature often describes the role of surface hydroxyl groups
+as the only anchoring group for metal precursors. In contrast,
+our adsorption energies indicate that bridge oxygen atoms
+present on the HfO2 surface have the largest adsorption energy.
+Hence, the relationship between the amount of metal precursor
+anchored to the surface and the hydroxyl group density and
+thereby its relation to the ALD growth rate does not seem to
+be straightforward.13
+At moderate water coverages (50 and 75%) bridge-hydroxyl
+sites are the preferred precursor adsorption sites with the
+adsorption energies of HfCl4 on these sites being 35.6 and 32.4
+kcal/mol, respectively. At 100% coverage the metal precursor
+primarily interacts with surface OH groups and the adsorption
+energy decreases to 22-25 kcal/mol. It is worth noting that at
+high coverages the adsorbed precursor also interacts with
+neighboring surface hydroxyl groups through hydrogen bonding.
+Our previous study which reported the ab initio phase diagram
+Figure 4. Potential energy proﬁle for the ligand exchange reaction between gaseous HfCl 4 and Hf-OH (s) where the metal precursor is adsorbed at a
+bridge-hydroxyl mixed site. The stationary points correspond to (a) initial reactant: Hf -(OH) (s) + HfCl4 (g), (b) adsorbed complex: Hf-(OH).HfCl4(s), (c)
+transition state, (d) adsorbed HCl on the HfO 2 surface, and (e) products: Hf -OHfCl3 + HCl.
+12000 J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008
+ARTICLES Mukhopadhyay et al.
+
+
+relating the water on HfO2 surface energy to the partial pressure
+of water and temperature predicts that coverages approaching
+100% can only occur at temperatures below 450 K. However,
+at the optimum ALD conditions for HfO2 deposition using HfCl4
+and H 2O (commonly 575 K and 10.1 Pa), the surface water
+coverage is approximately 5.7 H 2O molecule.nm -2 (75%).
+Therefore, according to Table 1, under the optimal ALD
+conditions the bridge-hydroxyl sites are the preferred ones for
+metal precursor adsorption. The optimized structure of HfCl4
+adsorbed on this site (see Figure 3) shows the Hf atom of the
+adsorbed precursor 2.24 and 2.09 Å away from hydroxyl oxygen
+atom and bridge oxygen atoms, respectively and additional
+hydrogen bonding interactions between the Cl of HfCl4 and the
+surface. Because of the larger stability of this structure we will
+adopt it as a model for further analysis of the reaction
+mechanism during the water pulse. A further comment here
+concerns the adequacy of the DFT functional used in these
+calculations as it has been pointed out that pure PWGGA
+functionals tend to moderately overestimate the strength of
+(32) Ugliengo, P.; Pascale, F.; Merawa, M.; Labeguerie, P.; Tosoni, S.;
+Dovesi, R. J. Phys. Chem. B.2004, 108, 13632.
+Figure 5. Comparison of the potential energy proﬁles for the reaction of gaseous HfCl 4 and Hf-OH(s) calculated using a cluster model (dashed line) and
+a periodic model (full line) with 100% coverage. The data for the cluster model have been taken from Reference 33. The stationary points correspond to ( a)
+initial reactant: Hf -(OH) (s) + HfCl4 (g), (b) adsorbed complex: Hf -(OH).HfCl4 (s), (c) transition state, and (d) products: Hf -OHfCl3 + HCl.
+Scheme 1.Reaction of Water with the Pre-Adsorbed Metal Precursor Complex during the Water Pulse Followed by Either Dissociation of a
+Cl- Ion or a Ligand Exchange Reaction
+J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008 12001
+Atomic Layer Deposition of HfO2 from HfCl4 and H2O ARTICLES
+
+
+hydrogen bonds. 32 Although it has not been quantiﬁed for
+hydrogen bonding to chloride ions, we do not expect this to
+signiﬁcantly change the energetics of the processes investigated
+in this work.
+Once the precursor is adsorbed on the surface, various
+possible reaction mechanisms are feasible. One path that has
+been proposed involves ligand exchange in which Cl is
+abstracted from the precursor to produce HCl, which desorbs
+as outlined in reaction 1 above. In Figure 4, we show the
+potential energy surface, PES, for the ligand exchange reaction
+between HfCl4 and a surface hydroxyl group, where the metal
+precursor is adsorbed on a bridge-hydroxyl site. Note that this
+PES is schematic in the sense that only stationary points are
+calculated and the lines drawn connecting these states are only
+indicative of the reaction path. According to Table 1, the
+adsorbed precursor is 32.4 kcal/mol more stable than the
+entrance channel. This intermediate undergoes an exchange
+reaction through a transition state with a barrier of 30.0 kcal/
+mol relative to the adsorbed precursor and energy 2.4 kcal/mol
+below the entrance channel. The product HCl is initially weakly
+physisorbed and then desorbs to leave an HfCl3 group on the
+surface.
+Comparing these results with those calculated using the cluster
+model of the surface can give an indication of how well the
+cluster model represents the reacting surface for the conditions
+of high coverage. We previously reported cluster DFT simula-
+tions of ligand exchange reactions associated with the ﬁrst and
+second ALD half-reactions on the as-grown HfO 2 surface.11,33
+The clusters used to model the surface hydroxyl sites were Hf-
+[O-Hf(OH)3]3-OH and Hf 8O22H13-OH, which correspond to
+the limit of 100% water coverage. The adsorption energy
+estimated from the cluster calculations of 24.1kcal/mol is in
+quite good agreement with the 25.5 kcal/mol obtained using
+the periodic model at 100% water coverage. Figure 5 shows
+the potential energy proﬁles for the ligand exchange reaction
+between HfCl4 and a single surface hydroxyl group calculated
+using both cluster and periodic model calculations (100%
+coverage). As can be seen the overall reaction proﬁles are quite
+similar. The activation barrier heights with respect to the energy
+of the intermediate complex for the ligand exchange reaction
+from the cluster and periodic models are 20.2 and 23.1 kcal/
+mol, respectively. These results show that the cluster models
+used in previous studies were a reasonable approach to model
+the surface in the regime of high water coverage.
+Second Half-Reaction or Water pulse. After the metal
+precursor pulse the ALD reactor is usually purged with an inert
+gas, such as nitrogen, to remove any undesirable excess reactant
+from the reaction chamber. This purge is followed by a pulse
+of water vapor injected into the reactor with the goal of replacing
+chlorine atoms of the Hf-Cl terminated surface with OH groups
+to regenerate the Hf-OH terminated surface. We ﬁrst consider
+the addition of a water molecule to the preadsorbed HfCl 4
+precursor (1a) as shown in Scheme 1.
+(33) Mukhopadhyay, A. B.; Musgrave, C. B. Chem. Phys. Lett.2006, 421,
+216.
+Scheme 2.Cascade of Reactions Occurring from the Aquo-tri-chloro-hafnium Complex a
+a Structure 2a is structure 1c, the product of Cl ion dissociation, in Scheme 1.
+12002 J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008
+ARTICLES Mukhopadhyay et al.
+
+
+Our calculations show that water adsorption proceeds over a
+0.2 kcal/mol barrier and is exothermic by 8.8 kcal/mol. During
+this almost barrierless process the coordination number of Hf
+atom of the adsorbed complex increases from 6 to 7 (see Scheme
+1, structure1b). However, addition of another water molecule
+to this complex is endothermic by 2 kcal/mol, suggesting that
+a coordination number of 7 is preferred here. This aquo-tetra-
+chloro complex (1b) is characterized by having one of the
+Hf-Cl bonds signiﬁcantly stretched (2.6 Å). This structure
+easily dissociates to give a chloride ion, which remains bound
+to the surface through interactions with hydroxyl groups (1c),
+with a barrier height of 3.0 kcal/mol and reaction energy 0.9
+kcal/mol exothermic. Although the dissociation reduces the
+coordination number of Hf from 7 to 6, the increase in stability
+is likely due to the interaction of the chloride ion with the
+surface. Alternatively, the aquo-tetra-chloro complex1b may
+undergo a ligand exchange reaction, as indicated by structure
+1d, Scheme 1. Our calculations show that this reaction is
+endothermic by 2.1 kcal/mol and involves a signiﬁcant activation
+barrier of 8.1 kcal/mol, indicating that the Cl- ion dissociation
+pathway is preferred.
+The aquo-trichloro-hafnium complex (1c) resulting from Cl-
+ion dissociation may now undergo a cascade of reactions either
+of ligand exchange type or with water followed by ligand
+exchange. Also, additional dissociation of chloride ions is
+possible resulting in a reaction scenario that might be quite
+involved. Some of the possible reactions for this complex are
+depicted in Scheme 2.
+Let us start with the ligand exchange reaction represented in
+Scheme 2 which transforms structure 1c, hereafter labeled as
+2a, into structure 2b. The initial step involves a barrier height
+of 24.0 kcal/mol and as shown in Figure 6 produces an HCl
+molecule weakly bound to the surface that subsequently desorbs.
+The whole process is endothermic by 10.0 kcal/mol. The second
+possibility is dissociation of a Cl- ion from 2a leading to
+structure 2c. The barrier for this dissociation is similar to that
+of Scheme 1 although now the reaction is exothermic by 2.9
+kcal/mol. Notice that in this case the adduct is 3-fold anchored
+to the surface, increasing the Hf coordination number and
+therefore the stability of the adduct. We were not able to isolate
+an Hf complex 2-fold bound to the surface during the structural
+optimization.
+The reaction steps ( 2af2b and 2af2c) represented in
+Scheme 2 could now be repeated for the successive removal of
+the remaining chlorine atoms from the surface Hf adduct. Yet,
+bearing in mind the results obtained so far, it seems reasonable
+to conclude that in the presence of even small amounts of water,
+either the ligand-exchange reaction or Cl- dissociation have little
+chance to occur. Instead, the more likely mechanism is hydration
+of the surface Hf complex 2a until reaching a Hf coordination
+number of 7, species2d, which subsequently transforms to either
+2e or 2f. As shown in the PES of Figure 7, water addition to
+the aquo-trichloro hafnium complex is clearly favored. From
+this structure, the ligand-exchange reaction involves a barrier
+of 10.0 kcal/mol and is exothermic by 1.5 kcal/mol (step2df2e
+in Scheme 2). Alternatively, Cl - dissociation from 2d to give
+species 2f is expected again to involve only a small barrier. Of
+course, eventually a proton must be transferred from the water
+ligands to the surface in order to equilibrate the global charge
+of both adduct and surface.
+Figure 6. Potential energy proﬁle for the ligand exchange reaction between gaseous water and the preadsorbed metal precursor. Notice that the precursor
+Hf atom of the adsorption complex is 5-fold coordinated. The stationary points correspond to (a) initial reactants: -HfCl3(s) + H2O (g), (b) adsorbed
+complex: -HfCl3.H2O (s), (c) transition state, (d) adsorbed HCl on HfO 2 surface, and (e) products: -HfCl2.OH + HCl.
+J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008 12003
+Atomic Layer Deposition of HfO2 from HfCl4 and H2O ARTICLES
+
+
+The dissociation of hydrated- supported HfCl x adducts
+involves the heterolytic cleavage of an Hf -Cl bond whose
+energetic cost is nearly balanced by the interaction of the surface
+with the Cl- ion resulting in an essentially thermal neutral
+reaction. Furthermore, the relatively small 3 kcal/mol barrier
+to this process indicates that it can easily be done at ALD
+process temperatures. However, because the elementary step
+itself appears to be only slightly exothermic it is far from being
+a fast and complete reaction as expected for an ALD process.
+In other words, the produced Cl- ions must be removed or
+further stabilized on the surface for this reaction to have a
+reasonable net rate. Of course, because ALD is conducted under
+ﬂowing conditions, removal of volatile reaction products
+increases the net rate of reaction.
+We now consider how realistic these models are in the context
+that under realistic ALD conditions such a “dry ambient” is far
+from what actually occurs. In fact, it is well-known that water
+molecules may be adsorbed from the gas phase forming
+multilayers on the surfaces of various oxides, such as Al2O3,34
+TiO2,35 SiO2,36 SnO2,37 ZrO2,38–40 and HfO 2.39,40 It is found
+that the ﬁrst adsorbed layer is strongly bonded to the surface
+by chemisorption and that the second layer is strongly bonded
+to the ﬁrst chemisorbed layer by physisorption. Additional layers
+are all physisorbed with slowly diminishing bonding strength
+that approaches the bonding strength of liquid water. ZrO2 and
+HfO2 show especially high adsorption loading due to their higher
+polarity and higher site density. 40 Hence, under high water
+partial pressures, such as occurs during the water pulse of HfO2
+ALD, it is quite likely that several layers of water molecules
+will be accommodated on the HfO 2 surface.
+(34) Contescu, C.; Contescu, A.; Schwarz, J. A. J. Phys. Chem.1994, 98,
+4327.
+(35) Morimoto, T.; Nagao, M.; Tokuda, F. J. Phys. Chem.1969, 78, 243.
+(36) Sneh, O.; Cameron, M. A.; George, S. M. Surf. Sci. 1996, 364,6 1.
+(37) Egashira, M.; Nakashima, M.; Kawasumi, S. J. Phys. Chem. 1981,
+85, 4125.
+(38) Raz, S.; Sasaki, K.; Maier, J.; Riess, I. Solid State Ionics2001, 143,
+181.
+(39) Raghu, P.; Yim, C.; Shero, E. AIChE J. 2004, 50, 1881.
+(40) Juneja, H. S.; Iqbal, A.; Yao, J.; Shadman, F. Ind. Eng. Chem. Res.
+2006, 45, 6585.
+Figure 7. Potential energy proﬁle for the ligand exchange reaction between gaseous water and the preadsorbed metal precursor complex. Notice that here
+the Hf atom of the adsorbed precursor is 6-fold coordinated. The stationary points correspond to (a) initial reactant: -HfCl3.H2O (s) + H2O (g), (b) adsorbed
+complex: -HfCl3.(H2O)2 (s), (c) transition state, (d) adsorbed HCl on the HfO 2 surface, and (e) products: -HfCl2.H2O.OH + HCl.
+Figure 8. BOMD simulations performed on adsorbed precursors in the
+presence of ﬁve layers of water.
+12004 J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008
+ARTICLES Mukhopadhyay et al.
+
+
+To model these conditions we have performed Born -
+Oppenheimer molecular dynamics (BOMD) simulations for a
+metal precursor adsorbed on the surface, the initial conﬁguration
+being that corresponding to structure2d of Scheme 2, in the
+presence of a multilayer of water. The model consisted of four
+layers of water placed upon the 75% water covered HfO2 surface
+resulting in roughly 5 layers of water. Under these conditions,
+the average density of water was 0.7 g/cc. We initiated the
+simulations with a random velocity Boltzmann distribution
+followed by an equilibration run of 1.4 ps at 100 K. These
+structures were further heated to 300 K in 1000 time steps using
+a velocity rescaling technique. The rate of heating was
+maintained at 0.1 K/femtosecond to produce structures which
+were further equilibrated for 2.0 ps at 300 K. After equilibration,
+the structures were further heated from 300 to 575 K in 1000
+time steps. After heating, the structures were again equilibrated
+for 3.0 ps. Equilibration was performed under canonical
+ensemble conditions performed using the Nose´ algorithm. In
+total 9.6 ps of BOMD simulations were performed for four
+different structures. In Figure 8 we summarize the scheme used
+for the BOMD simulations on these structures. The time-step
+in the numerical integration was 2 fs for all MD runs.
+Before reporting the results of these simulations we should
+mention the limited character of such calculations. For example,
+both the size of the system and the restrictions on computational
+time limit these simulations to short simulation times. Conse-
+quently, the equilibration steps are most likely too short and
+the heating ramps too fast. Therefore, the results may be
+Figure 9. Snapshots of MD runs at (a) 4.6 ps (300 K), (b) 6.6 ps (575 K), (c) 8.4 ps (575 K), and (d) 9.6 ps (575 K). The Cl - ions of the adsorbed metal
+precursors get solvated with water molecules associated with the water multilayer at 575 K. Note that concomitant with dissociation of Hf -Cl bonds
+facilitated by solvation, the water adsorbed on the metal precursor looses its proton to the surface. Generally, one also sees the densiﬁcation proce ss, where
+the precursor forms a third bond with the HfO 2 surface.
+J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008 12005
+Atomic Layer Deposition of HfO2 from HfCl4 and H2O ARTICLES
+
+
+interpreted only in a qualitative way. However, even with these
+restrictions, meaningful conclusions can be drawn about the role
+played by the solvent during the water pulse. First, we found
+that the preadsorbed metal precursor was stable on the surface
+up to 300 K, at least for the time we simulated. During
+equilibration at 300 K, water molecules present in the vacuum
+region undergo a reorientation and solvates Cl atoms. We also
+observed some unusual processes. For instance, the water
+molecule adsorbed on the metal precursor complex exchanges
+protons with neighboring surface hydroxyl groups and water
+molecules. Also, at 3.3 ps one of the water molecules adsorbed
+on the metal precursor donates a proton to surface bridge oxygen
+atom. Here, the time reported is more of a labeling system with
+little physical signiﬁcance. After heating to 575 K, we noticed
+that Hf-Cl bonds exhibited large elongations along the stretch-
+ing vibrations, especially the Hf -Cl bond quasi-perpendicular
+to the surface. This Cl atom was surrounded by water molecules
+that were clearly pulling it. After a few picoseconds, this Hf-Cl
+bond was broken resulting in a dichloro-complex on the surface.
+These structures can be observed in the snapshots reported in
+Figure 9, where the structures of a few relevant Hf adducts with
+different numbers of Cl atoms are shown. In any case, even
+bearing in mind the qualitative nature of this approach we can
+see that Cl dissociation easily takes place at this typical ALD
+temperature once there are water molecules nearby to solvate
+the Cl- anions.
+Additional insight may be obtained from Figure 10 where
+we monitor the distance between all three Cl atoms attached to
+the Hf atom belonging to metal precursor during the last 2.0 ps
+of the MD simulation at 575 K. As can be seen, at∼8.4 ps, the
+Hf-Cl bond length of one of the Cl atoms (represented as
+dashed line in Figure 10) increases to 3.3 Å from an equilibrium
+bond distance of 2.5 Å. As this Cl- ion dissociates from the
+metal precursor, it gets stabilized by solvation by neighboring
+water molecules throughout the remaining simulation period.
+Further simulation of the adsorbed precursor leads to dissociation
+of another Cl- ion (represented as a dotted line in Figure 10)
+at around 8.8 ps.
+Conclusions
+In summary, we have performed periodic density functional
+theory and BOMD simulations to investigate the mechanisms
+of both half-reactions occurring during the earliest steps of the
+ALD of HfO2 using HfCl 4 and water as precursors. We ﬁnd
+that the adsorption energy and the preferred adsorption site for
+the metal precursor are strong functions of the water coverage.
+Experimentally, it is found that the growth per cycle decreases
+when the temperature rises. Increasing the temperature causes
+dehydroxylation, thereby decreasing the coverage of hydroxyl
+groups on the surface. There is often some misconception in
+the literature associated with the role of hydroxyl groups in ALD
+where water is used as an oxygen source. They are usually
+considered to be the only anchoring groups for metal precursors.
+In contrast, our adsorption energies indicate that bridge oxygen
+atoms present on HfO2 surface have the largest adsorption
+energy. Hence, the relationship between the amount of metal
+precursor anchored to the surface and the hydroxyl group density
+and consequently the effect of hydroxyl group density on the
+ALD growth rate does not seem to be straightforward.
+As the water coverage increases, the metal precursor pref-
+erentially interacts with multiple surface adsorption sites with
+the distribution of these sites changing as a function of water
+coverage. During the water pulse the removal of Cl can be
+facilitated by either a ligand exchange reaction or the dissocia-
+tion of Cl upon increase in coordination of the Hf of the
+adsorbed precursor. Our calculated potential energy surface
+indicates that a more likely mechanism is hydration of the
+surface Hf complex until the Hf atom reaches a coordination
+number of 7, followed by the dissociation of a chloride ion.
+Furthermore, Born-Oppenheimer molecular dynamics (BOMD)
+simulations of the adsorbed HfCl 4 precursor in the presence of
+a multilayer of water show that Cl dissociation easily takes place
+when sufﬁcient water molecules are nearby to solvate the Cl -
+anions. Hence, solvation plays a central role during the water
+precursor pulse.
+Acknowledgment. We are grateful for the support of the
+Stanford Initiative for Nanoscale Materials and Processing and the
+Materials Structures and Devices SRC/DARPA MARCO Center.
+This work was partially supported by the Spanish Ministerio de
+Educacio´n y Ciencia, and the European FEDER, project MAT2008-
+04918. J.F.S. thanks the Ministerio de Educacio ´n y Ciencia, the
+Universidad de Sevilla and Stanford University for supporting his
+sabbatical stay at Stanford. We also thank the computer resources
+provided by the Barcelona Supercomputing Center-Centro Na-
+cional de Supercomputacio´n.
+JA801616U
+Figure 10. Time-dependent distances of all three Hf -Cl bonds of the
+adsorbed metal precursor complex for the last 2 ps of the simulation at 575
+K. The ﬁrst Cl atom dissociates from the complex at 8.4 ps, followed by
+the second Cl atom at 8.8 ps.
+12006 J. AM. CHEM. SOC.9 VOL. 130, NO. 36, 2008
+ARTICLES Mukhopadhyay et al.

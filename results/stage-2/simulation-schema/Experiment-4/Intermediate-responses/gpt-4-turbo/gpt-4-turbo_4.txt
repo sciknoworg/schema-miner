@@ -1,0 +1,173 @@
+Based on the provided research paper and the current JSON schema, the schema needs to be refined to include the new precursor "dimethylaluminum isopropoxide" (DMAI) and its specific properties related to the ALD process. The paper provides detailed insights into the selective growth mechanism of AlOx using DMAI, which can be used to enhance the schema.
+
+### Refinements to the JSON Schema:
+
+1. **Addition of DMAI Precursor:**
+   - Include properties such as adsorption and decomposition mechanisms on different Pt facets, which are crucial for understanding the selective growth mechanism.
+
+2. **Adsorption Details for DMAI:**
+   - Include properties like `adsorptionSites` and `adsorptionEnergies` specific to DMAI, as these are different from other precursors due to the unique behavior of DMAI on hydroxylated Pt facets.
+
+3. **Decomposition Products and Mechanisms:**
+   - Detailed decomposition pathways and products for DMAI should be added, as the research paper provides specific reactions and products formed during the ALD process.
+
+4. **Process Conditions Specific to DMAI:**
+   - The schema should reflect specific process conditions like temperature and pressure ranges that are optimal for DMAI, as mentioned in the research paper.
+
+5. **Observable Properties Affected by DMAI:**
+   - The impact of using DMAI on film properties such as electrical properties, barrier effectiveness, and crystalline structure should be documented.
+
+### Updated JSON Schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "precursors": {
+      "type": "object",
+      "properties": {
+        "Cu_acac2": {
+          "type": "object",
+          "properties": {
+            "adsorptionDetails": {
+              "type": "object",
+              "properties": {
+                "adsorptionSites": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Preferred adsorption sites on the surface."
+                },
+                "adsorptionEnergies": {
+                  "type": "object",
+                  "properties": {
+                    "Cu": {"type": "number"},
+                    "CuO": {"type": "number"},
+                    "Cu2O": {"type": "number"}
+                  },
+                  "description": "Adsorption energies on different surfaces."
+                },
+                "dissociationProducts": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Products formed after precursor dissociation."
+                }
+              }
+            }
+          }
+        },
+        "DMAI": {
+          "type": "object",
+          "properties": {
+            "adsorptionDetails": {
+              "type": "object",
+              "properties": {
+                "adsorptionSites": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Specific adsorption sites on Pt facets for DMAI."
+                },
+                "adsorptionEnergies": {
+                  "type": "object",
+                  "properties": {
+                    "Pt111": {"type": "number"},
+                    "Pt100": {"type": "number"},
+                    "Edge": {"type": "number"}
+                  },
+                  "description": "Adsorption energies of DMAI on different Pt facets."
+                },
+                "decompositionMechanism": {
+                  "type": "string",
+                  "description": "Description of DMAI decomposition mechanism on Pt facets."
+                },
+                "decompositionProducts": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Products formed after DMAI decomposition."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "coReactants": {
+      "type": "object",
+      "properties": {
+        "H2": {
+          "type": "object",
+          "properties": {
+            "reactivity": {"type": "string"},
+            "products": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "atomicH": {
+          "type": "object",
+          "properties": {
+            "reactivity": {"type": "string"},
+            "reactionMechanism": {"type": "string"},
+            "products": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "H2O": {
+          "type": "object",
+          "properties": {
+            "reactivity": {"type": "string"},
+            "reactionMechanism": {"type": "string"},
+            "products": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "O3": {
+          "type": "object",
+          "properties": {
+            "reactivity": {"type": "string"},
+            "reactionMechanism": {"type": "string"},
+            "products": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "processConditions": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Optimal temperature for the ALD process."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Optimal pressure for the ALD process."
+        }
+      }
+    },
+    "observableProperties": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "electricalProperties": {"type": "string"},
+            "barrierEffectiveness": {"type": "string"},
+            "crystallineStructure": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This updated schema now includes the new precursor DMAI with its specific properties and effects on the ALD process, ensuring a more comprehensive and accurate representation of the process.

@@ -1,0 +1,237 @@
+Based on the research paper and the current JSON schema, the following refinements are proposed to enhance the schema's comprehensiveness and accuracy, particularly focusing on the aspects of Spatial ALD (SALD) and the impact of precursor exposure on process efficiency and film properties:
+
+1. **Addition of SALD-Specific Properties**:
+   - **Precursor Exposure**: The research paper emphasizes the importance of controlling precursor exposure in SALD. This includes the exposure time and the concentration of the precursor in the carrier gas, which are critical for optimizing the growth rate and film properties.
+   - **Substrate Velocity**: The paper discusses the impact of substrate velocity on the growth rate and film properties, which is a unique aspect of SALD not covered in the current schema.
+
+2. **Modification of Existing Properties**:
+   - **Process Conditions**: Enhance the `processConditions` object to include properties specific to SALD, such as `substrateVelocity` and `precursorExposure`.
+   - **Growth Per Cycle (GPC)**: The paper provides detailed insights into how GPC is affected by various parameters like substrate velocity and precursor concentration. This should be reflected in the schema with more detailed descriptions or sub-properties.
+
+3. **Enhanced Descriptions and Constraints**:
+   - **Temperature and Pressure**: The paper mentions that SALD can be performed at atmospheric pressure and low temperatures. The schema should specify that these conditions are particularly relevant for SALD.
+   - **Reactor Type**: Include details about the possibility of open-air reactors in SALD, which is different from conventional vacuum-based ALD systems.
+
+4. **New Nested Objects for SALD**:
+   - **SALD Specifics**: A new nested object to encapsulate all unique SALD parameters such as `substrateVelocity`, `precursorExposure`, and `injectionHeadGap`.
+
+Here is the refined JSON schema incorporating the above suggestions:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "precursor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the precursor used in the ALD process."
+        },
+        "formula": {
+          "type": "string",
+          "description": "Chemical formula of the precursor."
+        },
+        "reactionMechanism": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string",
+                "description": "Step description in the reaction mechanism."
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Products formed in this step."
+              }
+            }
+          },
+          "description": "Detailed reaction mechanism of the precursor with the surface."
+        },
+        "selectivity": {
+          "type": "string",
+          "description": "Description of the precursor's selectivity towards specific sites on the substrate."
+        },
+        "chemisorption": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Type of chemisorption (e.g., dissociative)."
+            },
+            "reactions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "with": {
+                    "type": "string",
+                    "description": "Substance the precursor reacts with during chemisorption."
+                  },
+                  "products": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Products formed during the chemisorption."
+                  }
+                }
+              }
+            }
+          },
+          "description": "Details of the chemisorption behavior of the precursor."
+        },
+        "ligandGeometry": {
+          "type": "string",
+          "description": "Description of the ligand geometry affecting steric hindrance."
+        }
+      }
+    },
+    "coReactants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the co-reactant."
+          },
+          "reactions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "with": {
+                  "type": "string",
+                  "description": "Substance the co-reactant reacts with."
+                },
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Products formed during the reaction."
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "List of co-reactants and their specific reactions in the ALD process."
+    },
+    "processConditions": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "string",
+          "description": "Temperature range for the ALD process."
+        },
+        "pressure": {
+          "type": "string",
+          "description": "Pressure conditions during the ALD process."
+        },
+        "cycleParameters": {
+          "type": "object",
+          "properties": {
+            "numberOfCycles": {
+              "type": "integer",
+              "description": "Number of cycles in the ALD process."
+            },
+            "cycleTime": {
+              "type": "string",
+              "description": "Duration of each cycle in the ALD process."
+            }
+          },
+          "description": "Parameters defining the cycles in the ALD process."
+        },
+        "reactorType": {
+          "type": "string",
+          "description": "Type of reactor used for the ALD process."
+        },
+        "substrateDetails": {
+          "type": "string",
+          "description": "Details about the substrate used in the ALD process."
+        },
+        "sequenceTimings": {
+          "type": "object",
+          "properties": {
+            "precursorFeeding": {
+              "type": "integer",
+              "description": "Time for precursor feeding in seconds."
+            },
+            "purge": {
+              "type": "integer",
+              "description": "Time for purging in seconds."
+            },
+            "coReactantFeeding": {
+              "type": "integer",
+              "description": "Time for co-reactant feeding in seconds."
+            }
+          },
+          "description": "Specific timings for each sequence step in the ALD process."
+        },
+        "temperatureEffects": {
+          "type": "object",
+          "properties": {
+            "surfaceIntermediates": {
+              "type": "object",
+              "properties": {
+                "CH3": {
+                  "type": "number",
+                  "description": "Surface coverage of CH3, affecting the growth rate."
+                },
+                "OH": {
+                  "type": "number",
+                  "description": "Surface coverage of OH, affecting the growth rate."
+                }
+              },
+              "description": "Effect of temperature on the surface intermediates' coverage."
+            }
+          },
+          "description": "Detailed effects of temperature on the ALD process."
+        }
+      }
+    },
+    "growthPerCycle": {
+      "type": "number",
+      "description": "Growth per cycle (GPC) measurement indicating the thickness of film deposited per cycle."
+    },
+    "SALDspecifics": {
+      "type": "object",
+      "properties": {
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate in cm/s, critical for SALD processes."
+        },
+        "precursorExposure": {
+          "type": "object",
+          "properties": {
+            "exposureTime": {
+              "type": "number",
+              "description": "Time in seconds for which the precursor is exposed to the substrate."
+            },
+            "precursorConcentration": {
+              "type": "number",
+              "description": "Concentration of the precursor in the carrier gas, measured in mol/cm3."
+            }
+          },
+          "description": "Details about the exposure of the precursor to the substrate, critical for optimizing SALD processes."
+        },
+        "injectionHeadGap": {
+          "type": "number",
+          "description": "Distance in micrometers between the injection head and the substrate, affecting precursor distribution."
+        }
+      },
+      "description": "Specific properties and parameters relevant to Spatial ALD (SALD)."
+    }
+  }
+}
+```
+
+This refined schema now better reflects the complexities and specificities of the SALD process as discussed in the research paper, ensuring a more accurate and comprehensive representation of the ALD process.

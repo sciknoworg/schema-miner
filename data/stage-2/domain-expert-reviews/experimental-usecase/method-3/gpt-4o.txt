@@ -1,0 +1,47 @@
+Property Grouping:
+The reactivity should be mentioned either at the process conditions or film properties. It’s the result of deposition under specific conditions not a standard property of the precursor or co-reactant.
+
+Missing Properties:
+1. ALD Method used (e.g. PEALD, Thermal ALD)
+2. Material Deposited
+3. Carrier Gas
+4. Bubbler Temperatures
+5. Reactor (Name and Manufacturer)
+6. Substrate
+7. Nucleation period (cycles)
+8. Self-Limiting growth (yes, or no, cannot be quantified)
+9. Crystallinity
+10. Film Density
+
+Adequacy of Descriptions:
+1. Delivery method: ["vaporDrawn", "carrierGasAssisted", "bubbling"] I don’t think that these should be mentioned. Instead, use the type of carrier gas used as a property
+2. Reactivity: "Reactivity description of the precursor with surface groups..”, this seems quite generic to me, has to be quantified in a way. For example, by IR spectra which depicts the changes on the surface.
+3. TemperatureRange: "default": [50, 350] Why have a default range?
+4. GPC: "description": "Growth per cycle in nanometers (or atoms -> Not correct) per unit area." 
+enum: ["nm", "atoms/unit area" -> nm/cycle or nm]
+5. "filmStability" "description": "Stability of the film under various conditions." -> again seems very generic description. Is this thermal stability? Other?
+6. "reproducibility": "description": "Indicates whether the ALD process is reproducible."
+This is something not always mentioned on the text. Usually it is assumed based on the results e.g. performs multiple experiments on the same conditions and the results remain stable within a specific error.
+
+Domain expert edited schema of the initial generated version:
+
+Title
+-> ALD Method
+-> Material Deposited
+Reactants
+-> Precursors(Name,Description,Bubbler Temperature,Carrier Gas)
+-> Co-reactant (Name,Description, Bubbler temperature(if thermal ALD), Plasma properties(if PEALD))
+ProcessProperties 
+-> Reactor
+-> TemperatureRange (oC)
+-> Pressure (bar)
+-> Number of Cycles
+-> GPC (Nm/cycle)
+-> Nucleation period
+-> Self-limiting growth
+-> Substrate
+Film Properties
+-> ChemicalComposition(%)
+-> StructuralProperties(Thickness,Crystallinity, Uniformity, Conformality,Roughness,Density)
+-> ElectricalProperties(resistivity, carrier mobility)
+-> OpticalProperties(refractive index, absorption coeff.)

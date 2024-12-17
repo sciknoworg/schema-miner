@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ALDProcessSchema",
+  "type": "object",
+  "properties": {
+    "precursor": {
+      "type": "object",
+      "description": "Details of the precursor used in the ALD process.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the precursor."
+        },
+        "delivery_method": {
+          "type": "string",
+          "enum": ["vapor_drawn", "carrier_gas_assisted", "bubbling"],
+          "description": "Method of delivering the precursor to the chamber."
+        },
+        "dosing_time": {
+          "type": "number",
+          "description": "Time for dosing the precursor, in seconds.",
+          "default": 0
+        },
+        "purge_time": {
+          "type": "number",
+          "description": "Time for purging the precursor, in seconds.",
+          "default": 0
+        }
+      },
+      "required": ["name", "delivery_method", "dosing_time", "purge_time"]
+    },
+    "co_reactant": {
+      "type": "object",
+      "description": "Details of the co-reactant used in the ALD process.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the co-reactant."
+        },
+        "exposure_time": {
+          "type": "number",
+          "description": "Time for exposure to the co-reactant, in seconds.",
+          "default": 0
+        },
+        "purge_time": {
+          "type": "number",
+          "description": "Time for purging the co-reactant, in seconds.",
+          "default": 0
+        }
+      },
+      "required": ["name", "exposure_time", "purge_time"]
+    },
+    "process_details": {
+      "type": "object",
+      "description": "Details about the ALD process cycles and conditions.",
+      "properties": {
+        "number_of_cycles": {
+          "type": "integer",
+          "description": "Number of ALD cycles.",
+          "minimum": 1
+        },
+        "deposition_temperature": {
+          "type": "number",
+          "description": "Temperature for the deposition, in Celsius.",
+          "default": 150
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure in the chamber, in Pascals.",
+          "default": 1
+        }
+      },
+      "required": ["number_of_cycles", "deposition_temperature", "pressure"]
+    },
+    "material_properties": {
+      "type": "object",
+      "description": "Material properties of the deposited film.",
+      "properties": {
+        "composition": {
+          "type": "string",
+          "description": "Chemical composition of the deposited film."
+        },
+        "thickness": {
+          "type": "number",
+          "description": "Thickness of the deposited film, in nanometers.",
+          "default": 0
+        },
+        "uniformity": {
+          "type": "boolean",
+          "description": "Uniformity of the film over the substrate."
+        },
+        "conformality": {
+          "type": "boolean",
+          "description": "Conformality of the film on 3D structures."
+        },
+        "initial_growth": {
+          "type": "string",
+          "enum": ["linear", "accelerated", "delayed"],
+          "description": "Type of initial growth observed."
+        }
+      },
+      "required": ["composition", "thickness", "uniformity", "conformality", "initial_growth"]
+    },
+    "saturation": {
+      "type": "object",
+      "description": "Saturation details for the ALD process.",
+      "properties": {
+        "precursor_saturation": {
+          "type": "boolean",
+          "description": "Indicates if precursor dosing is in saturation."
+        },
+        "co_reactant_saturation": {
+          "type": "boolean",
+          "description": "Indicates if co-reactant exposure is in saturation."
+        },
+        "purge_saturation": {
+          "type": "boolean",
+          "description": "Indicates if purging is in saturation."
+        }
+      },
+      "required": ["precursor_saturation", "co_reactant_saturation", "purge_saturation"]
+    },
+    "other_aspects": {
+      "type": "object",
+      "description": "Other important aspects of the ALD process.",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for the process and materials."
+        },
+        "film_stability": {
+          "type": "string",
+          "description": "Stability of the deposited film over time and under various conditions."
+        },
+        "reproducibility": {
+          "type": "boolean",
+          "description": "Indicates if the process is reproducible."
+        },
+        "precursor_consumption": {
+          "type": "string",
+          "description": "Efficiency of precursor use."
+        },
+        "precursor_stability": {
+          "type": "string",
+          "description": "Stability of the precursor during heating."
+        },
+        "literature_comparison": {
+          "type": "boolean",
+          "description": "Comparison with previous literature on the ALD process."
+        },
+        "device_performance": {
+          "type": "string",
+          "description": "Performance of the film in a working device."
+        }
+      },
+      "required": ["safety", "film_stability", "reproducibility", "precursor_consumption", "precursor_stability", "literature_comparison", "device_performance"]
+    }
+  },
+  "required": ["precursor", "co_reactant", "process_details", "material_properties", "saturation", "other_aspects"]
+}

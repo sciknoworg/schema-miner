@@ -1,0 +1,32 @@
+Property Grouping:
+1. Include PulseLength in the processproperties property box
+2. Place CarrierGas outside of the precursor box but inside the reactants box, because it can refer to both co-reactant and precursor
+3. In the reactor property box, include name of the reactor and the manufacturer
+4. Group AnnealingTemperature and AnnealingAtmosphere in AnnealingConditions property box
+5. Include chemicalcomposition and stoichiometry properties in the structuralproperies box
+6. Place bandgap in the electrical properties box and remove the optical description
+7. Include dielectricconstant in the electrical properties box
+8. Include the impurityContent in the structural properties box
+9. Include AnnealingConditions  in the FilmProperties box
+
+Missing Properties:
+1. Dosing and purging times for co-reactant and precursor
+
+Adequacy of Descriptions:
+1. Title: Should be more of: Methods and results for the deposition of a film through a specific ALD process
+2. Remove the reactivity from the precursor property box
+3. Description of coReactant Vapor Pressure: “"Vapor pressure of the co-reactant in Torr."’: insert if applicable
+4. Remove the CounterReactant property
+5. Remove the DepositionRate property
+6. Remove SurfaceIntermediates, LigandRelease and adsorptionSites properties
+7. Remove EffectivePermittivity
+8. Remove the min and max values in the refractiveindex property
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> Reactants(Precursor, Co-Reactant, Carrier Gas)
+-> ProcessProperties(Reactor, Substrate, TemperatureRange, Pressure, DosingTimes, PurgingTimes, NumberofCycles, GrowthperCycle, NucleationPeriod, SelfLimitingGrowth,depositionTemperature)
+-> FilmProperties (ChemicalProperties, StructuralProperties, ElectricalProperties, OpticalProperties)
+-> SafetyandStability(ChemicalSafety, FilmStability, Reproducibility)

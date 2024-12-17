@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "Schema representing the atomic layer deposition process",
+  "type": "object",
+  "properties": {
+    "processParameters": {
+      "type": "object",
+      "description": "General parameters of the ALD process",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Temperature of the substrate table in Celsius",
+          "unit": "°C"
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure in the reactor chamber in Pascals",
+          "unit": "Pa"
+        },
+        "cycleCount": {
+          "type": "integer",
+          "description": "Number of ALD cycles"
+        }
+      },
+      "required": ["temperature", "pressure", "cycleCount"]
+    },
+    "precursor": {
+      "type": "object",
+      "description": "Precursor properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the precursor molecule"
+        },
+        "deliveryMethod": {
+          "type": "string",
+          "description": "Method of delivering the precursor to the chamber (e.g., vapor drawn, carrier gas assisted)",
+          "enum": ["vapor drawn", "carrier gas assisted", "bubbling"]
+        },
+        "dosingTime": {
+          "type": "number",
+          "description": "Time for precursor dosing in seconds",
+          "unit": "s"
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Time for precursor purge in seconds",
+          "unit": "s"
+        }
+      },
+      "required": ["name", "deliveryMethod", "dosingTime", "purgeTime"]
+    },
+    "coReactant": {
+      "type": "object",
+      "description": "Co-reactant properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the co-reactant molecule"
+        },
+        "exposureTime": {
+          "type": "number",
+          "description": "Time for co-reactant exposure in seconds",
+          "unit": "s"
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Time for co-reactant purge in seconds",
+          "unit": "s"
+        }
+      },
+      "required": ["name", "exposureTime", "purgeTime"]
+    },
+    "filmCharacteristics": {
+      "type": "object",
+      "description": "Characteristics of the deposited film",
+      "properties": {
+        "thickness": {
+          "type": "number",
+          "description": "Film thickness in nanometers",
+          "unit": "nm"
+        },
+        "composition": {
+          "type": "string",
+          "description": "Chemical composition of the film"
+        },
+        "uniformity": {
+          "type": "number",
+          "description": "Uniformity of the film thickness across the substrate",
+          "unit": "%"
+        },
+        "conformality": {
+          "type": "number",
+          "description": "Conformality of the film on 3D structures",
+          "unit": "%"
+        }
+      },
+      "required": ["thickness", "composition", "uniformity", "conformality"]
+    },
+    "growthBehavior": {
+      "type": "object",
+      "description": "Growth behavior of the film",
+      "properties": {
+        "growthPerCycle": {
+          "type": "number",
+          "description": "Growth per cycle in nanometers",
+          "unit": "nm/cycle"
+        },
+        "saturationBehavior": {
+          "type": "boolean",
+          "description": "Whether the growth per cycle shows saturation behavior"
+        },
+        "nucleationBehavior": {
+          "type": "string",
+          "description": "Type of nucleation behavior (e.g., linear, accelerated, delayed)",
+          "enum": ["linear", "accelerated", "delayed"]
+        }
+      },
+      "required": ["growthPerCycle", "saturationBehavior", "nucleationBehavior"]
+    }
+  },
+  "required": ["processParameters", "precursor", "coReactant", "filmCharacteristics", "growthBehavior"]
+}

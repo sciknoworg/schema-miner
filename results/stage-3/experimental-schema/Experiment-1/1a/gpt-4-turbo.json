@@ -1,0 +1,184 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "description": "A schema representing the steps and parameters involved in setting up and verifying a plasma-assisted Atomic Layer Deposition process for various materials, including transition metal-doped ZnO layers.",
+    "type": "object",
+    "properties": {
+        "ALDMethod": {
+            "type": "string",
+            "description": "The specific ALD technique used, e.g., thermal ALD, plasma-enhanced ALD."
+        },
+        "MaterialDeposited": {
+            "type": "string",
+            "description": "The material being deposited, including metals, metal oxides, and doped materials such as transition metal-doped ZnO."
+        },
+        "Substrate": {
+            "type": "object",
+            "description": "Details about the substrate used for deposition.",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "description": "Type of substrate, e.g., Si(100) with native oxide layer."
+                },
+                "Orientation": {
+                    "type": "string",
+                    "description": "Orientation of the substrate surface."
+                },
+                "SeedLayer": {
+                    "type": "object",
+                    "description": "Details about the seed layer used, if any.",
+                    "properties": {
+                        "Material": {
+                            "type": "string",
+                            "description": "Material of the seed layer, e.g., Iridium."
+                        },
+                        "Thickness": {
+                            "type": "number",
+                            "description": "Thickness of the seed layer in nm."
+                        }
+                    }
+                }
+            }
+        },
+        "ProcessParameters": {
+            "type": "object",
+            "description": "Parameters that define the conditions and settings of the ALD process.",
+            "properties": {
+                "DepositionTemperature": {
+                    "type": "number",
+                    "description": "Temperature at which the ALD process is carried out, typically in \u00b0C."
+                },
+                "VacuumCondition": {
+                    "type": "string",
+                    "description": "Vacuum conditions used during the ALD process."
+                },
+                "PlasmaConditions": {
+                    "type": "object",
+                    "description": "Specific conditions related to the plasma used in the ALD process, including type, power, duration, species, gas flow, and pressure.",
+                    "properties": {
+                        "GasFlow": {
+                            "type": "number",
+                            "description": "Flow rate of the plasma gas, typically in sccm."
+                        },
+                        "Pressure": {
+                            "type": "number",
+                            "description": "Pressure of the plasma in mTorr."
+                        },
+                        "GasResidenceTime": {
+                            "type": "number",
+                            "description": "The residence time of the gas in the reactor, typically in seconds, affecting the redeposition rate."
+                        }
+                    }
+                },
+                "ReactorType": {
+                    "type": "string",
+                    "description": "Type of ALD reactor used."
+                },
+                "ReactorConfiguration": {
+                    "type": "string",
+                    "description": "Configuration of the reactor."
+                },
+                "LowTemperatureGrowth": {
+                    "type": "boolean",
+                    "description": "Indicates if the process supports growth at low temperatures."
+                },
+                "LowTemperatureLimit": {
+                    "type": "number",
+                    "description": "Lowest successful deposition temperature achieved, in \u00b0C."
+                },
+                "OxygenSource": {
+                    "type": "string",
+                    "description": "Type of oxygen source used, e.g., Pure Oxygen, Air."
+                }
+            }
+        },
+        "DiagnosticTechniques": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of diagnostic techniques used to monitor the ALD process."
+        },
+        "FilmProperties": {
+            "type": "object",
+            "description": "Properties of the deposited film, including impurity content, wet-etch rates, magneto-optical properties, and dielectric properties.",
+            "properties": {
+                "ImpurityContent": {
+                    "type": "object",
+                    "description": "Content of impurities such as Carbon and Oxygen in the film.",
+                    "properties": {
+                        "Carbon": {
+                            "type": "number",
+                            "description": "Percentage of Carbon impurities."
+                        },
+                        "Oxygen": {
+                            "type": "number",
+                            "description": "Percentage of Oxygen impurities."
+                        }
+                    }
+                },
+                "WetEtchRate": {
+                    "type": "number",
+                    "description": "Wet etch rate of the film in nm/min, indicating film resistance."
+                },
+                "MagnetoOpticalProperties": {
+                    "type": "object",
+                    "description": "Magneto-optical properties such as Kerr effect and coercivity.",
+                    "properties": {
+                        "KerrEffect": {
+                            "type": "number",
+                            "description": "Kerr rotation angle in degrees, indicating the magneto-optical response."
+                        },
+                        "Coercivity": {
+                            "type": "number",
+                            "description": "Coercivity in Oersted, indicating the resistance to demagnetization."
+                        }
+                    }
+                },
+                "DielectricProperties": {
+                    "type": "object",
+                    "description": "Dielectric properties such as dielectric constant and loss.",
+                    "properties": {
+                        "DielectricConstant": {
+                            "type": "number",
+                            "description": "Dielectric constant of the film."
+                        },
+                        "DielectricLoss": {
+                            "type": "number",
+                            "description": "Dielectric loss of the film, indicating energy dissipation as heat."
+                        }
+                    }
+                }
+            }
+        },
+        "Precursor": {
+            "type": "object",
+            "description": "Details about the precursor used in the ALD process.",
+            "properties": {
+                "Name": {
+                    "type": "string",
+                    "description": "Name of the precursor."
+                },
+                "Formula": {
+                    "type": "string",
+                    "description": "Chemical formula of the precursor."
+                },
+                "PulseTime": {
+                    "type": "number",
+                    "description": "Time for which the precursor is pulsed into the reactor, typically in seconds."
+                },
+                "FlowRate": {
+                    "type": "number",
+                    "description": "Flow rate of the precursor, typically in sccm."
+                }
+            }
+        }
+    },
+    "required": [
+        "ALDMethod",
+        "MaterialDeposited",
+        "Substrate",
+        "ProcessParameters",
+        "FilmProperties"
+    ]
+}

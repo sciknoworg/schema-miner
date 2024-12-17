@@ -1,0 +1,144 @@
+Based on the provided research paper and domain expert feedback, the JSON schema for the ALD process needs to be refined to include specific details about the use of plasma reactants, particularly N2O, and its effects on the properties of IGZO TFTs. The paper highlights the impact of selective application of N2O plasma reactant during the PEALD process and its influence on the electrical characteristics and stability of the devices. Here's the refined JSON schema incorporating these insights:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "methodology": {
+          "type": "string",
+          "description": "Describes the overall methodology used in the ALD process, including experimental or simulation approaches."
+        },
+        "source": {
+          "type": "string",
+          "description": "Indicates whether the data comes from experimental results or simulations."
+        },
+        "simulationMethodology": {
+          "type": "string",
+          "description": "Type of simulation used, e.g., DFT (Density Functional Theory), MD (Molecular Dynamics), KMC (Kinetic Monte Carlo)."
+        },
+        "simulationDetails": {
+          "type": "string",
+          "description": "Details about the simulation parameters and configurations used in the ALD process modeling."
+        },
+        "reactorGeometry": {
+          "type": "object",
+          "properties": {
+            "geometryType": {
+              "type": "string",
+              "description": "Geometry of the reactor used in simulations or experiments, e.g., cylindrical, cross-flow."
+            },
+            "inletGeometry": {
+              "type": "string",
+              "description": "Describes the geometry of inlets in the reactor."
+            },
+            "outletGeometry": {
+              "type": "string",
+              "description": "Describes the geometry of outlets in the reactor."
+            },
+            "separatorType": {
+              "type": "string",
+              "description": "Type of separator used to isolate reaction zones, e.g., inert gas curtain, vacuum zones."
+            }
+          }
+        },
+        "reactorScale": {
+          "type": "string",
+          "description": "Scale of the reactor used, indicating dimensions relevant to the process."
+        },
+        "plasmaReactants": {
+          "type": "object",
+          "properties": {
+            "N2O": {
+              "type": "object",
+              "properties": {
+                "usage": {
+                  "type": "string",
+                  "description": "Describes how N2O plasma is used in the process, e.g., selectively during each ALD cation cycle."
+                },
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "Describes the effects of N2O plasma on the electrical characteristics and stability of the devices."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "reactionMechanism": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "General description of the reaction mechanisms in the ALD process."
+        },
+        "byProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "activationBarriers": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "description": "List of activation energy barriers for various reactions, measured in electron volts (eV)."
+          }
+        },
+        "reactionPathways": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Detailed description of reaction pathways including adsorption, surface reactions, and desorption."
+          }
+        },
+        "computationalModelsUsed": {
+          "type": "string",
+          "description": "Describes the computational models used for understanding the reaction mechanisms."
+        },
+        "modelOutcomes": {
+          "type": "string",
+          "description": "Outcomes and predictions from the computational models used."
+        },
+        "precursorDecomposition": {
+          "type": "string",
+          "description": "Details the decomposition process of the precursor during the ALD cycle."
+        },
+        "waterInteraction": {
+          "type": "string",
+          "description": "Describes the interaction between water molecules and the surface during the hydrolysis phase."
+        },
+        "surfaceCoordination": {
+          "type": "object",
+          "properties": {
+            "coordinationNumbers": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "description": "List of coordination numbers relevant to surface sites during reactions."
+              }
+            },
+            "neighborList": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "List of neighboring atoms or groups affecting the surface reactions."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This schema now includes a new section under `processDetails` for `plasmaReactants`, specifically detailing the use of N2O and its effects, which is critical based on the insights from the research paper. This addition ensures the schema is more comprehensive and accurately reflects the complexities and nuances of the ALD process as used in high-performance IGZO TFTs.

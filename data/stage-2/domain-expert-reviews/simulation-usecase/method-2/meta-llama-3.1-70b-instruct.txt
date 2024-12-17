@@ -1,0 +1,159 @@
+Domain expert edited schema of the initial generated version:
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "A JSON schema representing the ALD process, including its key parameters, observables, and methodologies.",
+  "type": "object",
+  "properties": {
+    "ProcessParameters": {
+      "type": "object",
+      "description": "ALD process parameters",
+      "properties": {
+        "Temperature": {
+          "type": "number",
+          "description": "Temperature in Celsius",
+          "units": "°C"
+        },
+        "Pressure": {
+          "type": "number",
+          "description": "Pressure in Pascals",
+          "units": "Pa"
+        },
+        "PrecursorGasFlowRate": {
+          "type": "number",
+          "description": "Precursor gas flow rate",
+          "units": "mL/min"
+        },
+        "PurgeGasFlowRate": {
+          "type": "number",
+          "description": "Purge gas flow rate",
+          "units": "mL/min"
+        },
+        "SubstrateVelocity": {
+          "type": "number",
+          "description": "Substrate velocity",
+          "units": "m/s"
+        },
+        "VacuumPressure": {
+          "type": "number",
+          "description": "Vacuum pressure",
+          "units": "Pa"
+        }
+      }
+    },
+    "ChemisorptionMechanisms": {
+      "type": "object",
+      "description": "Chemisorption mechanisms and thermodynamics",
+      "properties": {
+        "EnergyBarrier": {
+          "type": "number",
+          "description": "Energy barrier in eV",
+          "units": "eV"
+        },
+        "ReactionEnergies": {
+          "type": "array",
+          "description": "Reaction energies in eV",
+          "items": {
+            "type": "number",
+            "units": "eV"
+          }
+        },
+        "StickingCoefficient": {
+          "type": "number",
+          "description": "Sticking coefficient",
+          "units": "unitless"
+        },
+        "BindingAffinity": {
+          "type": "number",
+          "description": "Binding affinity in eV",
+          "units": "eV"
+        }
+      }
+    },
+    "FilmProperties": {
+      "type": "object",
+      "description": "Film properties",
+      "properties": {
+        "Uniformity": {
+          "type": "number",
+          "description": "Film uniformity",
+          "units": "unitless"
+        },
+        "Roughness": {
+          "type": "number",
+          "description": "Film roughness",
+          "units": "nm"
+        },
+        "Density": {
+          "type": "number",
+          "description": "Film density",
+          "units": "g/cm³"
+        },
+        "TemperatureProfile": {
+          "type": "array",
+          "description": "Temperature profile in Celsius",
+          "items": {
+            "type": "number",
+            "units": "°C"
+          }
+        },
+        "ChemicalComposition": {
+          "type": "object",
+          "description": "Chemical composition",
+          "properties": {
+            "ElementalAnalysis": {
+              "type": "array",
+              "description": "Elemental analysis",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Methodologies": {
+      "type": "array",
+      "description": "Methodologies used",
+      "items": {
+        "type": "string",
+        "examples": ["DFT", "kMC", "MD", "CFD", "LBM", "HF", "CCSD(T)", "MP2", "B3LYP"]
+      }
+    },
+    "Materials": {
+      "type": "array",
+      "description": "Materials involved in the ALD process.",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        "Al2O3",
+        "TiO2",
+        "Cu(acac)2",
+        "Ti(CpMe5)",
+        "ZrO2",
+        "HfO2",
+        "Pt on graphene",
+        "Zinc Oxide",
+        "Silicon precursors",
+        "Carbon precursors"
+      ]
+    },
+    "PrecursorProperties": {
+      "type": "object",
+      "description": "Precursor properties",
+      "properties": {
+        "PrecursorPressure": {
+          "type": "number",
+          "description": "Precursor pressure in Pascals",
+          "units": "Pa"
+        },
+        "PrecursorType": {
+          "type": "string",
+          "description": "Precursor type"
+        }
+      }
+    }
+  }
+}

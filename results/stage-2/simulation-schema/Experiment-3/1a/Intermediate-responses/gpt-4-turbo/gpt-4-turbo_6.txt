@@ -1,0 +1,129 @@
+Based on the detailed research paper and the current JSON schema, several refinements and additions are necessary to accurately represent the ALD process, particularly focusing on the initial surface reactions of TiO2 deposition onto SiO2 surfaces using TiCl4 and H2O as precursors.
+
+### Refinements and Additions to the JSON Schema:
+
+1. **Addition of Precursor Details**:
+   - The precursors used are specifically TiCl4 and H2O. This should be explicitly mentioned in the schema under `precursors`.
+
+2. **Surface Reactions**:
+   - The paper discusses various surface reactions including those with isolated hydroxyl groups, adjacent hydrogen-bonded hydroxyl groups, and oxygen bridges. These details should be incorporated into the `reactionMechanism` property.
+
+3. **Reaction Pathways and Energy Barriers**:
+   - The schema should include properties for activation barriers and reaction pathways as detailed in the paper. This includes the energy profiles for different reactions which are crucial for understanding the ALD process dynamics.
+
+4. **Surface Functionalities and Reactivity**:
+   - The reactivity of different surface functionalities (isolated -OH groups, adjacent hydrogen-bonded -OH groups, and oxygen bridges) should be detailed under `surfaceType` in `reactorDesign`.
+
+5. **Model Chemistries and Computational Details**:
+   - The schema should include a section for computational details used in simulations, such as the DFT calculations, basis sets, and model chemistries.
+
+6. **Adsorption Energies and Complexes**:
+   - Details about adsorption energies and different adsorbed complexes should be included, as these are critical for understanding the surface interactions during the ALD process.
+
+### Updated JSON Schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "precursors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "selectivity": {
+                "type": "string",
+                "description": "Describes the selective behavior of the precursor on specific facets"
+              },
+              "decompositionMechanism": {
+                "type": "object",
+                "properties": {
+                  "byProducts": {"type": "array", "items": {"type": "string"}},
+                  "interactionWithHydroxyls": {"type": "string"}
+                }
+              },
+              "stericHindrance": {
+                "type": "object",
+                "properties": {
+                  "ligandGeometry": {"type": "string"},
+                  "effectOnGPC": {"type": "string"}
+                },
+                "description": "Effects of ligand geometry on growth per cycle due to steric hindrance"
+              }
+            }
+          }
+        },
+        "reactionMechanism": {
+          "type": "object",
+          "properties": {
+            "description": {"type": "string"},
+            "byProducts": {"type": "array", "items": {"type": "string"}},
+            "activationBarriers": {"type": "array", "items": {"type": "number"}},
+            "reactionPathways": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "reactionConditions": {
+          "type": "object",
+          "properties": {
+            "temperature": {"type": "string"},
+            "pressure": {"type": "string"}
+          }
+        },
+        "growthPerCycle": {
+          "type": "number",
+          "description": "Thickness of film deposited per cycle, influenced by chemisorbed precursor amount"
+        }
+      }
+    },
+    "observableProperties": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {"type": "string"},
+            "roughness": {"type": "string"},
+            "density": {"type": "string"},
+            "temperatureProfile": {"type": "string"},
+            "chemicalComposition": {"type": "string"}
+          }
+        }
+      }
+    },
+    "reactorDesign": {
+      "type": "object",
+      "properties": {
+        "surfaceType": {
+          "type": "string",
+          "description": "Describes the type of surface functionalities involved in reactions"
+        },
+        "gapDistance": {"type": "number"},
+        "gasFlowRates": {
+          "type": "object",
+          "properties": {
+            "purgeRate": {"type": "number"},
+            "precursorRate": {"type": "number"}
+          }
+        },
+        "substrateVelocity": {"type": "number"},
+        "vacuumPressure": {"type": "number"}
+      }
+    },
+    "dynamicProperties": {
+      "type": "object",
+      "properties": {
+        "timeEvolutionOfSpecies": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
+```
+
+This schema now includes more detailed properties related to the precursors, reaction mechanisms, and surface functionalities, which are crucial for accurately modeling the ALD process as described in the research paper.

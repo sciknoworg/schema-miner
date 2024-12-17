@@ -1,0 +1,24 @@
+Property Merging:
+1. Place ALDMethod and MaterialDeposited in the initial properties box. 
+2. Instead place reactantselection in the Processpamaters box.
+
+Property Grouping:
+1. Crystallinity -> place it in the film properties group
+2. Combine permittivity with breakdownresistance to dielectric constant property
+
+Adequacy of Descriptions:
+1. Description for the schema: "…for various materials, including platinum, hafnium, zirconium oxides, titanium nitride, and tin oxide." Remove this, it should be for all types of materials deposited by ALD.
+2. Description for the coReactantPulseTime: "e.g., varies for NH3." -> Remove this
+3. Remove the property temperatureimpact of the substrate.
+4. ThicknessControl: "Control and verification of material thickness per cycle including dosing and purge times", based on this description it should be included in the processparameters but already there are the purge and pulse parameters, therefore it should be removed. Instead  it should be thickness meaning the thickness obtained in nm or angstrom.
+5. Carbon impurities description: "Carbon content in the film, measured in atomic percentage, varies for titanium nitride due to potential incorporation of dimethylamino species."
+That is an example of carbon impurities specifically for titatium nitride but instead it should be a description of the carbon impurities term for every type o film. Therefore it should be removed and instead be: "Carbon content in the film"
+6. Rename SafetyandEnvironmental to StabilityandSafety, because no information is given about the environmental aspects of this process.
+
+Domain expert edited schema of the initial generated version:
+
+-> Title
+-> Properties(ALDMethod,MaterialDeposited)
+-> ProcessParameters(ReactantSelection, Substrate, DepTemperature,Pressure,Reactor, PulseTimes, PurgeTimes,GrowthRate)
+-> FilmProperties (Thickness, FilmDensity, Crystallinity, OpticalProperties, ElectricalProperties, Uniformity, Impurities, Conformality)
+-> StabilityandSafety

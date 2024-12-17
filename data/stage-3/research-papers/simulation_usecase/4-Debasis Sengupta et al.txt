@@ -1,0 +1,1230 @@
+Journal of Crystal Growth 279 (2005) 369–382
+Combined ab initio quantum chemistry and
+computational ﬂuid dynamics calculations for
+prediction of gallium nitride growth
+Debasis Senguptaa, Sandip Mazumderb,/C3, William Kuykendallc,
+Samuel A. Lowrya
+aCFD Research Corporation, Huntsville, AL 35805, USA
+bDepartment of Mechanical Engineering, The Ohio State University, Ackerman Road, Columbus, OH 43202, USA
+cESI CFD Inc, 215 Wynn Drive, Huntsville, AL 35805, USA
+Received 1 October 2004; accepted 15 February 2005
+Available online 31 March 2005
+Communicated by J.J. Derby
+Abstract
+Computational ﬂuid dynamics (CFD) is used in the semiconductor industry for the analysis and design of chemical
+vapor deposition reactors. One critical input needed for prediction of epitaxial thin ﬁlm growth rates and uniformity is
+the chemistry occurring in the gas phase and at the surface. Traditionally, simpliﬁed chemistry derived from
+experimental observations has been used for this purpose. With the advent of modern high-speed computational
+techniques,itisnowpossibletoformulatedetailedreactionmechanismsusingabinitiomethods.Suchdetailedreaction
+mechanisms, comprising mostly of elementary reactions, have the advantage that they require little or no calibration.
+This paper presents a methodology in which the density functional theory, in combination with rate theories, was used
+to determine the reaction pathways and rates in the gas phase as well as at the surface for gallium nitride growth from
+tri-methyl gallium and ammonia. The reaction mechanisms were then used as input to a multi-dimensional CFD code
+enabling accurate prediction of growth rates. Validation studies were performed for four different laboratory-scale
+reactors, and one commercial reactor. In each case, the predictions agreed reasonably well with the experimental data
+indicating the universality of the reaction mechanisms.
+r 2005 Elsevier B.V. All rights reserved.
+Keywords: A1. Computer simulation; A1. Growth models; A3. Metalorganic vapor phase epitaxy; B1. Gallium compounds; B1.
+Nitrides; B2. Semiconducting gallium compounds
+ARTICLE IN PRESS
+www.elsevier.com/locate/jcrysgro
+0022-0248/$-see front matterr 2005 Elsevier B.V. All rights reserved.
+doi:10.1016/j.jcrysgro.2005.02.036
+/C3Corresponding author. Tel.: +16142478099; fax: +16142923163.
+E-mail addresses: dxs@cfdrc.com (D. Sengupta), mazumder.2@osu.edu (S. Mazumder).
+
+1. Introduction
+Wide band-gap III–V semiconductors, such as
+gallium nitride (GaN) and aluminum gallium
+nitride (AlGaN), have drawn much attention due
+to their unique ability to produce blue-green light
+[1]. This property is currently being used to
+develop light emitting diodes (LED) and lasers.
+In order to make such devices, a thin ﬁlm of the
+materials must be deposited on a wafer. At
+present, the technique of choice for depositing
+thin ﬁlms of III–V semiconductor materials is
+metal organic vapor phase epitaxy (MOVPE).
+Modeling and simulation, based on computa-
+tionalﬂuiddynamics(CFD),isnowusedroutinely
+within the semiconductor industry for design,
+optimization and troubleshooting of epitaxial
+growth processes that occur on the substrate.
+The efﬁcacy of such modeling is currently limited
+by the availability of chemical reaction mechan-
+isms that describe the growth process. In the past,
+reaction rates have been obtained primarily by
+calibrating a reduced set of reactions against
+available experimental data, which in most cases,
+is somewhat limited. With the advent of high-
+speed computers it is now possible to explore
+larger reaction sets comprising of mostly elemen-
+tary reactions using ﬁrst-principle methods, such
+as density function theory (DFT). Such detailed
+reaction mechanisms can provide more generality
+and requires less calibration.
+In the speciﬁc case of GaN, a handful of past
+studies have reported reaction mechanisms[2,3].
+All of these mechanisms are based on the one
+proposed originally by Mihopoulos [4]. In their
+study, the activation barriers of some of the gas-
+phasereactionstepswerecalculatedusingabinitio
+methods. Pre-exponential factors of the formation
+and dissociation of adducts were adjusted to
+reproduce the time versus concentration proﬁles
+obtained through experiments. While the ab initio
+methods were used to determine the activation
+energies of some of the gas-phase reactions, most
+of the surface reactions were considered to be
+collision-limited, and the activation barriers were
+calibrated.The salientfeatureof thismechanismis
+theformation of a‘‘ring’’ compound (ora trimeric
+species)withmolecularformula[Ga(CH3)2/C1NH2]3
+through the gas phase reaction between trimethyl
+gallium (TMG) and ammonia (NH3) according to
+the following reaction:
+TMGþ NH3 ! TMG/C1NH3
+! GaðCH3Þ2 /C1NH2 þ CH4;
+3GaðCH3Þ2 /C1NH2 !½ GaðCH3Þ2 /C1NH2/C1383:
+This compound reacts at the surface and
+constitutes the major pathway for GaN growth
+[4]. Although there is no direct evidence of such a
+proposition, this mechanism has been frequently
+used by others for GaN growth modeling and
+reactor design[2,3,5].
+In a recent paper[6], it has been shown that the
+possibility of ‘‘ring’’ compound formation is
+extremely low under typical growth conditions
+due to very low concentration of Ga(CH3)2/C1NH2.
+These results are further supported by a recent
+experimental report of Bergman et al.[7], who
+pointed out that the contribution of growth due to
+the trimeric species has been overestimated in the
+past. Based on these experimental and theoretical
+ﬁndings, a new mechanism for GaN growth is
+proposed that does not support the formation of
+the ‘‘ring’’ compound in the gas phase. The
+proposed mechanism is based on ﬁrst-principle
+calculations in combination with reaction rate
+theories, such as absolute rate theory (ART) and
+quantum Rice–Rapmsperger–Kassel (QRRK)[8].
+The present mechanism is tested for several
+different reactors, and is able to reproduce
+experimental data consistently.
+2. Calculation procedure
+In order to obtain activation barrier and
+vibrational frequencies of the stable and inter-
+mediate molecules, we used density functional
+theory (DFT). All quantum chemistry calculations
+were performed using GAUSSIAN98TM [9] pro-
+gram package. For the calculation of the activa-
+tion barrier, the DFT with Lee–Yang–Parr
+gradient corrected correlation functional in
+conjunction with Becke’s three-parameter ex-
+change functional (B3LYP) was used[10,11]. The
+ARTICLE IN PRESS
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382370
+
+geometries of the equilibrium molecular structures
+and transition states were optimized using
+6–31G**basissetsforcarbon,hydrogen,nitrogen.
+Forgallium,effectivecorepotential(ECP)ofHay-
+Wadt, which is known as LANL2DZ ECP[12],
+was used. In order to obtain more accurate
+energies, calculations using cc-pVTZ[13] basis
+set on previously optimized geometries were
+performed. Normal mode analyses for all equili-
+brium and transition structures were performed.
+All equilibrium structures were found to have real
+vibrational frequencies while the transition struc-
+tures have only one imaginary vibrational fre-
+quency corresponding to the reaction coordinate.
+2.1. Gas phase reactions
+The gas phase reactions primarily involve the
+decomposition of TMG to dimethyl gallium
+(DMG) and monomethyl gallium (MMG) and
+their reactions with NH3:
+GaðCH3Þx ! GaðCH3Þx/C01 þ CH3 ðx ¼ 123Þ;
+GaðCH3Þyþ1 þ NH3 ! GaðCH3Þyþ1 /C1NH3 ðadductÞ
+!ð CH3Þy:GaNH2 þ CH4 ðy ¼ 0/C02Þ:
+Details, pertaining to the gas-phase reactions
+and their calculation methods may be obtained
+from the recent paper by Sengupta[6]. The
+activation barrier and vibrational frequencies for
+the decomposition of TMG and its intermediate
+products have been calculated using DFT method.
+These are subsequently used to calculate the rate
+constants as a function of temperature and
+pressure using QRRK theory. These reactions
+are pressure dependent, and the rate constants
+havebeenevaluatedatatypicalreactorpressurein
+which GaN is grown (approximately 76torr). In
+Fig. 1, the calculated rate constants for TMG
+decomposition have been compared with the
+experimental data of Jacko and Price[14],a n d
+shows excellent agreement. Our calculations show
+that TMG, DMG and MMG form strong adducts
+with NH3. The adducts subsequently eliminate
+CH4. The adduct formation reaction and elimina-
+tion of CH4 are not two independent reactions
+since the energy released by the formation of
+adducts is stored in quantized vibrational level of
+the adducts, and can be utilized to cross the
+activation barrier for CH4 elimination reaction.
+Therefore, these reactions have been treated via
+chemical activation1[15,16] and the rate constants
+have been calculated using QRRK theory. In the
+earlier mechanism by Mihopoulos[4] these reac-
+tionshavebeenassumedtobeindependenttoeach
+other. These reactions are also pressure dependent
+because the adduct is initially at the energized
+state, and molecular collisions are needed to
+deactivate them. Following calculation of the
+gas-phase reaction rate constants, they were ﬁtted
+to the modiﬁed Arrhenius expression [i.e.
+k(T) ¼ ATn exp(/C0Ea/RT)]. The ﬁtted rate con-
+stants for these reactions are shown inTable 1.
+2.2. Surface reactions
+Since the bulk is a continuous repetition of the
+unitcell,themostappropriatemethodwouldbeto
+apply DFT with periodic boundary conditions
+[17]. However, considering the large number of
+surface reactions that one needs to examine,
+calculation with periodic boundary condition is
+still not practical. A popular simplifying alter-
+native is to use the so-called cluster model, where
+only a small cluster of atoms on the surface is
+modeled[18–20]. These cluster models have been
+successfully used by others [18–20] to model
+surface reactions for silicon nitride, and atomic
+ARTICLE IN PRESS
+-15
+-10
+-5
+0
+5
+10
+51 0 1 5 2 0
+10000/T (1/k)
+log k (k in sec -1 ) This work
+Experiment
+Fig.1. Comparisonofcalculatedrateconstantwithexperiment
+[14] for the reaction TMG-DMG+CH3.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 371
+
+layer deposition of aluminum, zirconium and
+hafnium oxides.
+In bulk GaN, every Ga and N are tetrahedrally
+coordinated. However, each surface atom has at
+leastonedanglingbond,andthesurfaceatomscan
+accommodate adsorbates. In the present calcula-
+tions, the reduced cluster model shown inFig. 2
+has been used for surface gallium and nitrogen
+atoms. The surface gallium atom is bonded to[3]
+nitrogen atoms, and the nitrogen atoms are
+terminated by three hydrogen atoms. Similarly,
+surface nitrogen is bonded to[3] gallium atoms,
+and they are terminated by three hydrogen atoms.
+The structures of the chemisorbed species were
+optimized using the method described in the
+previous section. The geometries of the clusters
+were ﬁxed at their bulk values, and no geometry
+optimization was performed for the bare cluster.
+For adsorbed structures, the geometry of the
+adsorbate and the bond connecting the cluster
+andtheadsorbatewereoptimized. Forexample,in
+structure of adsorbed MMG on nitrogen surface,
+allgeometricalparametersinMMGandtheGa–N
+bond length were optimized while the N–Ga
+distance in the cluster remained ﬁxed. In the
+crystal structure of GaN, the hydrogen atoms in
+the small cluster models (Fig. 2, top) are actually
+N (surface N) or Ga (surface Ga). Since termina-
+tion of Ga or N by hydrogen atoms can lead to
+ARTICLE IN PRESS
+Table 1
+Gas phase reactions considered for GaN MOVPE
+Reactions An E =R
+G1 TMG 2DMG+CH3 1.0/C21047 /C09.18 38,750
+G2 DMG 2MMG+CH3 7.67/C21043 /C09.8 17,120
+G3 MMG 2Ga+CH3 1.68/C21030 /C05.07 42,290
+G4 TMG+NH 3-TMG/C1NH3 2.28/C21034 /C08.31 1568
+G5 TMG+NH 3-(CH3)2GaNH2+CH4 1.7/C2104 2.0 10,050
+G7 DMG+NH 3-DMG.NH3 4.08/C21031 /C07.03 1628
+G8 DMG+NH 3-CH3GaNH2+CH4 5.30/C2105 1.56 10,440
+G9 MMG+NH 3-MMG/C1NH3 7.95/C21024 /C05.21 1054
+G10 MMG+NH 3-GaNH2+CH4 8.10/C2105 1.3 8919
+G11 NH 3+CH32NH2+CH4 3.31/C2103 2.51 4962
+G12 CH 3+H22CH4+H 1.2 /C21012 0 6300
+G13 TMG+H 2DMG+CH4 5.0/C21013 0 5051
+G14 DMG+H 2MMG+CH4 5.0/C21013 0 5051
+G15 TMG.NH 32MMG+2CH3+NH3 1.33/C21044 /C08.24 39,150
+G16 CH 3+H+M2CH4+M 2.40 /C21022 /C010
+G17 2CH 32C2H6 2.0/C21013 00
+G18 2H+M 2H2+M 2.0 /C21016 00
+Rate constants for unimolecular and bimolecular reactions are expressed as s/C01 and cm3/(mols), respectively. Backward rates are
+calculated from equilibrium by minimizing the Gibb’s free energy.
+N
+N
+Ga
+N
+GaGa
+N
+Ga
+N
+N
+Ga
+N
+GaGa
+N
+Ga
+Surface Ga Surface N
+Ga Ga
+Ga
+N N N
+N N
+Ga Ga Ga
+Ga Ga
+N N
+N
+Ga Ga
+N
+Surface Ga with large cluster 
+Fig. 2. Reduced cluster models of surface Ga and surface N
+(top ﬁgures), and larger cluster model used for surface Ga to
+examine the validity of the reduced cluster model.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382372
+
+enhanced charge transfer, the calculated adsorp-
+tion energies may be inaccurate. In order to
+examine the reliability of our cluster model, we
+performed test calculations using a larger cluster
+model for surface Ga (Fig. 2, bottom). In this
+model, the hydrogen atoms in NH3 were replaced
+by Ga, and the terminal Ga atoms are tetrahed-
+rally coordinated to two nitrogen atoms and two
+hydrogen atoms. Since such calculations require
+extreme computational times, the test was per-
+formed only for adsorption energy calculation for
+the NH2 radical. First, all geometrical parameters
+in NH 2 were optimized keeping the cluster
+parameters ﬁxed. The adsorption energy of NH2,
+thus obtained, was found to be 50kcal/mol, which
+is approximately 12kcal/mol smaller than that
+obtained using the reduced cluster model. We then
+performed another calculation where bond lengths
+around the surface Ga in the adsorbed state were
+optimized. This essentially means that the surface
+of GaN reconstruct upon adsorption of NH2,
+which is a more realistic phenomenon. The
+adsorption energy, thus obtained, was found to
+be only 2.5kcal/mol lower than that with the
+reduced cluster model. The ﬁndings of these
+investigations point to the fact the error intro-
+duced by using a reduced cluster model is small,
+and that reduced cluster models may still be used
+to make reasonable engineering predictions.
+The adsorption enthalpy on N surface, was
+calculated by
+DHad ¼ EðN_surÞþ EðadsorbateÞ
+/C0EðadsorbedÞþ thermalcorrection; ð1Þ
+where DHad is the enthalpy of adsorption,
+E(N_sur), E(adsorbate) and E(adsorbed) are the
+energies of the surface nitrogen (cluster model),
+gas phase adsorbate and the adsorbed molecule.
+The thermal correction is a term that accounts
+for the temperature dependence of the enthalpy
+of adsorption, and calculated using the complete
+partition functions of the adsorbate before
+and after adsorption. The pre-exponential factor
+for a surface reaction is calculated using the
+expression[21]:
+AF ¼ð ekbT=hÞcts expðDS#=RÞ, (2)
+where cts is maximum concentration of the
+transition state when the surface is bare. Using
+the DFT calculated vibrational, rotational, trans-
+lational and electronic partition functions of the
+adsorbed species and transition state for deso-
+rption, the entropy of activation for desorption is
+calculated. The entropy of the adsorbed species
+and transition state is calculated using the follow-
+ing expression:
+S ¼ R ln Q þ RT qQ
+q ln T
+/C18/C19
+V
+, (3)
+where Q is the complete partition function.
+Finally, the pre-exponential factors are ﬁtted to
+the expressionATn.
+2.3. Reactor scale model
+The prediction of growth rate and uniformity at
+the surface requires coupled solution of the
+equations of conservation of mass, momentum,
+energy and species. In addition, multi-step ﬁnite-
+rate homogeneous and heterogeneous chemical
+reactions must be considered. The underlying
+equations necessary to perform such calculations
+and their numerical solution is presented else-
+where [3,5,22], and is omitted here for the sake of
+brevity. For the purposes of the current study,
+the commercial CFD code, CFD-ACE+TM was
+used [23].
+3. Results and discussion
+3.1. Mechanism for GaN growth
+While TMG and MMG decompose slowly (G1
+and G2 inTable 1) due to their large activation
+barriers, decomposition of DMG to MMG (G3) is
+very fast. Therefore, TMG to MMG conversion is
+fast at high temperatures, and concentration of
+MMG is expected to be large at higher tempera-
+tures. Thus, MMG and MMG.NH3 are expected
+to be the dominant gallium-containing precursor
+at high temperatures, while TMG and TMG.NH3
+are expected to contribute to the deposition at low
+temperature. Also at higher temperature, the
+formation of atomic Ga is expected to be
+ARTICLE IN PRESS
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 373
+
+appreciable, and will probably inﬂuence the
+deposition process. The dissociation energy of an
+N–H bond is NH3 is 108kcal/mol [24]. Thus, it
+may be postulated that direct dissociation of NH3
+isnotimportantevenattemperaturesmuchhigher
+than conventional growth temperatures. However,
+CH3 canabstractonehydrogenatomfromNH 3 to
+produce NH2 with a low barrier (G11). Therefore,
+thisreactionisincluded,inviewofthefactthatGa
+and NH2 could combine to contribute to the
+deposition. Reactions G12 is active when H2 is the
+carrier gas, and produces active H atoms. The H
+atoms can enhance decomposition of TMG and
+DMG. Rate constants of G12, G13 and G14 were
+taken from literature[25].
+As mentioned earlier, the proposed gas phase
+mechanism does not include ‘‘ring’’ formation,
+since it has been found recently that the concen-
+tration of Ga(CH3)2NH2, the precursor to ‘‘ring’’
+formation, is negligible under typical growth
+conditions[6]. The mass spectrometric studies of
+Bergmanetal. [7]suggestthattheconcentrationof
+the ‘‘ring’’ is negligible at all temperatures.
+Mazzarese et al.[26] performed FTIR and surface
+analysis for the TMG and NH3 reaction below
+573K. They concluded that the ﬁnal step for
+growth of GaN is the reaction between Ga(CH3)x
+(x ¼ 1–3) and NH3 at the surface which produces
+CH4. This work indicates that the methane
+eliminated product from Ga(CH3)x.NH3 can be
+formed at the surface rather than in the gas phase.
+These results suggest that the ‘‘ring’’ formation is
+more likely to occur at the surface via successive
+addition of Ga(CH3)x and NH3 followed by
+methane elimination. Therefore, the proposed
+surface mechanism includes ‘‘ring’’ formation at
+the surface.
+The surface reactions that areconsidered for the
+studyarelistedin Table2.Theﬁrstpathwayisone
+where the chemisorption of MMG on surface
+nitrogen site (SN) and its desorption are consid-
+ered. Ammoniathen formsa complex with MMG,
+namely MMG/C1NH3(s) (analogous to that in the
+gas phase adduct, MMG /C1NH3). The direct
+adsorption of gas phase MMG /C1NH3 is also
+considered. The binding energy of the complex is
+assumed to be same as that of the gas phase
+counterpart. The MMG/C1NH3(s) then successively
+reacts with gas phase MMG and NH3 eliminating
+CH4 to form a ‘‘ring’’ at the surface as shown
+in Fig. 3. The activation barrier for CH4 elimina-
+tion was estimated as follows. First, it was
+assumed that the ratio of the activation barrier
+for TMG/C1NH3+TMG-TMG/C1NH2/C1DMG+
+CH4 and TMG/C1NH3-(CH3)2GaNH2+CH4 is
+the same that of MMG/C1NH3+MMG-MMG/C1
+NH2Ga+CH4 and MMG/C1NH3-GaNH2+CH4.
+The ratio of the former two reactions was
+estimated from DFT calculations of Nakamura
+et al. [27] while the activation barrier for the
+MMG/C1NH3+MMG-MMG/C1NH2Ga+CH4 was
+evaluated using the methods described an earlier
+section. The ring is then attached to a nearby
+surface Ga (SG). Finally, the hydrogen atoms
+are eliminated as H2 resulting in the formation of
+GaN(b).
+The second path for GaN formation initiates
+from adsorbed GaNH2 [GaNH2(s)]. This species
+can directly be formed from the gas phase reaction
+G15 and also via the reaction of adsorbed Ga
+[Ga(s)] and adsorbed NH2 [NH2(s)]. Successive
+adsorption of MMG and NH3 and elimination of
+CH4 produce a ‘‘ring’’ (Fig. 3). The adsorption of
+two CH3 radicals at each Ga atom of the ring
+followed by elimination of CH4 produces GaN.
+The activation barriers for successive adsorption
+ofMMGandNH3 wereassumedtobethesameas
+their adduct formation energy in the gas phase
+while the adsorption of CH3 was calculated using
+the cluster model. Activation barrier for CH 4
+elimination step was calculated using DFT. To
+calculate this barrier, a ring structure of formula
+[Ga(CH3)2NH2]3, was considered . The activation
+barrier for the CH4 elimination from the ring was
+found to be substantially higher than the similar
+reaction between TMG and NH3. This is probably
+due to the constrained structure of the above ring
+compared to the TMG.NH3 complex.
+In the third pathway, TMG adsorbs on SN to
+form TMG(s). Ammonia is then adsorbed on
+TMG to form TMG /C1NH3(s). The adsorption
+energy is assumed to be the same as the adduct
+formation energy in the gas phase. This complex
+ﬁrst eliminates one molecule of CH4 and conse-
+quently the N atom forms a strong bond with the
+Ga atom. The activation barrier of this step is
+ARTICLE IN PRESS
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382374
+
+ARTICLE IN PRESS
+Table 2
+Surface reactions considered for GaN deposition. The units are expressed in terms of cm, mol and s
+Reaction An E =R
+S1 MMG+S N-MMG(s) 1.160 /C2105 2.98 0
+S2 MMG(s) -MMG+SN 1.115/C21014 0.55 5.4189 /C2104
+S3 NH 3+MMG(s)-COMPM1(s) 3.354 /C2107 3.33 0
+S4 COMPM1(s) -NH3+MMG(s) 5.700 /C21013 /C00.16 4.1000 /C2103
+S5 MMG+COMPM1(s) -CH4+COMPM2(s) 1.230 /C21010 3.22 1.1800 /C2104
+S6 NH 3+COMPM2(s)-COMPM3(s) 3.354 /C2107 3.33 0
+S7 COMPM3(s) -NH3+COMPM2(s) 5.700 /C21013 /C00.161 4.1000 /C2103
+S8 MMG+COMPM3(s) -CH4+COMPM4(s) 1.230 /C21010 3.22 1.1800 /C2104
+S9 NH 3+COMPM4(s)-COMPM5(s) 3.354 /C2107 3.33 0
+S10 COMPM5(s) -NH3+COMPM4(s) 5.700 /C21013 /C00.161 4.1000 /C2103
+S11 COMPM5(s) -CH4+RINGM1(s) 1.230 /C2107 3.22 1.1800 /C2104
+S12 S G+RINGM1(s)-RINGM2(s) 3.354 /C2107 3.33 0
+S13 RINGM2(s)-3H2+3GaN+SG+SN 3.680/C2109 2.05 3.0000 /C2104
+S14 CH 3+Ga(s)-MMG(s) 1.760 /C2109 1.39 0
+S15 MMG(s) -CH3+Ga(s) 4.540 /C21013 0.0346 4.0000 /C2104
+S16 NH 2+SG-NH2(s) 3.168 /C2108 1.83 0
+S17 GaNH 2+SN-GaNH2(s) 2.273 /C2106 2.247 0
+S18 GaNH 2(s)-GaNH2+SN 4.826/C21013 0.614 4.2215 /C2104
+S19 COMPM1(s) -CH4+GaNH2(s) 1.490 /C21011 0.609 1.3060 /C2104
+S20 MMG+GaNH 2(s)-COMPMM1(s) 1.160 /C2105 2.98 0
+S21 NH 3+COMPMM1(s)-COMPMM2(s) 3.354 /C2107 3.33 0
+S22 COMPMM2(s) -CH4+COMPMM3(s) 1.490 /C21011 0.609 1.3060 /C2104
+S23 MMG+COMPMM3(s) -COMPMM4(s) 1.160 /C2105 2.98 0
+S24 NH 3+COMPMM4(s)-COMPMM5(s) 3.345 /C2107 3.33 0
+S25 COMPMM5(s) -CH4+RINGM1(s) 1.490 /C21011 0.609 1.3060 /C2104
+S26 NH 2(s)-NH2+SG 1.450/C21014 0.09 3.0089 /C2104
+S27 COMPMM1(s) -MMG+GaNH2(s) 1.000 /C21014 0.55 2.1550 /C2104
+S28 COMPMM2(s) -NH3+COMPMM1(s) 5.700 /C21013 /C00.1 4.1000 /C2103
+S29 COMPMM4(s) -MMG+COMPMM3(s) 1.000 /C21014 0.55 2.1550 /C2104
+S30 COMPMM5(s) -NH3+COMPMM4(s) 5.700 /C21013 /C00.1 4.1000 /C2103
+S31 Ga+S N-Ga(s) 1.000 /C21011 1.50 0
+S32 Ga(s)+NH 2(s)-GaNH2(s)+SG 1.000/C21025 0.0 0
+S33 Ga(s) -Ga+SN 1.000/C21013 0.0 2.2732 /C2104
+S34a 6CH3+RINGM2(s)-COM1(s) 7.550 /C2107 2.31 0
+S35 COM1(s) -6CH3+RINGM2(s) 1.000 /C21013 0.71 2.2902 /C2104
+S36 COM1(s)-6CH4+3GaN+SG+SN 4.000/C21012 0.0 2.5000 /C2104
+S37 TMG+S N-TMG(s) 1.160 /C2105 2.98 0
+S38 NH 3+TMG(s)-TCOM1(s) 3.354 /C2107 3.33 0
+S39 TCOM1(s) -CH4+TCOM2(s) 1.490 /C21011 0.609 1.6500 /C2104
+S40 S G+TCOM2(s)-TCOM3(s) 3.354 /C2107 3.33 0
+S41 TCOM3(s)-2CH4+GaN+SG+SN 1.490/C21011 0.609 2.5000 /C2104
+S42 TMG(s) -TMG+SN 1.115/C21014 0.55 2.5000 /C2104
+S43 TCOM1(s) -NH3+TMG(s) 5.700 /C21013 /C00.161 6.0000 /C2103
+S44 TMG /C1NH3+SN-TCOM1(s) 1.160 /C2105 2.98 0
+S45 TCOM1(s) -TMG.NH3+SN 1.115/C21014 0.55 2.5000 /C2104
+S46 TCOM1(s) -2CH3+MMG+NH3+SN 1.115/C21014 0.55 5.4189 /C2104
+S47 MMG.NH 3+SN-COMPM1(s) 1.160 /C2105 2.98 0
+S48 COMPM1(s) -MMG/C1NH3+SN 1.115/C21014 0.55 5.4189 /C2104
+S49 MMG /C1NH3+COMPM1(s)-CH4+COMPM3(s) 1.230 /C21010 3.22 1.1800 /C2104
+S50 MMG /C1NH3+COMPM3(s)-CH4+COMPM5(s) 1.230 /C21010 3.22 1.1800 /C2104
+S51 MMG /C1NH3+GaNH2(s)-COMPMM2(s) 1.160 /C2105 2.98 0
+S52 MMG /C1NH3+COMPMM3(s)-COMPMM5(s) 1.160 /C2105 2.98 0
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 375
+
+assumed to be the same as that of its gas phase
+counterpart. Finally, the complex eliminates two
+molecules of CH4 toproduceGaN(b)( Fig. 3).The
+activation barrier of this ﬁnal step was assumed to
+be the same as the CH4 elimination barrier from
+thering(50kcal/mol).Wehavealsoconsideredthe
+direct adsorption of TMG.NH3 adduct. Fig. 4
+schematically shows the various pathways leading
+to GaN deposition.
+3.2. Validation studies
+The proposed mechanisms for GaN growth
+were used in a series of simulations of several
+different reactors. The same set of reaction rates
+(without any calibration, whatsoever) were used in
+all of the simulations.
+The ﬁrst set of simulations was performed for a
+simple horizontal reactor, for which experimental
+data are available from Chen et al.[28]. The
+reactor geometry, and boundary conditions are
+shown inFig. 5. The average deposition rate is
+shown for the temperature range 700–1300K in
+Fig. 6. It is clear that the predicted growth rates
+agree well with experimental data. Between 700
+and 850K, the growth rate varies drastically. This
+is the rate-limited regime where diffusion of
+precursors to the surface dominates over the rate
+at which they react. The activation barriers for
+most reactions are not crossed, and the reaction
+rates are low, leading to low deposition rates. At
+about 850K, the TMG/C1NH3(s) complex starts
+eliminating CH4, since sufﬁcient energy is avail-
+able to cross the activation barrier for CH 4
+elimination. The formation of MMG in the gas
+phase steadily increases as the temperature is
+increased further. This results in deposition
+through both MMG pathways as well as through
+the TMG pathway. Beyond about 1100K, there is
+hardly any TMG available at the surface, and
+almost all of the deposition occurs via the two
+MMG pathways. At temperatures above 1350K,
+MMG(s) starts desorbing from the surface, lead-
+ing to decrease in growth.
+Thesecondsetofsimulationswasperformedfor
+the reactor geometry reported by Safvi et al.[5].
+Thereactorgeometryandoperatingconditionsare
+illustrated inFig. 7. The growth rate proﬁles at
+two different operating conditions are shown in
+Figs. 8 and 9. For the higher TMG ﬂow case, the
+match is not very good near the center of the
+wafer, where the TMG jet directly impinges. This
+may be attributed to our lack of knowledge of the
+geometric details pertaining to both the position
+and shape of the TMG nozzle, and due to the fact
+that we did not model the actual showerhead. For
+ARTICLE IN PRESS
+aConcentration exponent of 1 has been used for CH3.
+Compounds names Chemical formula
+COMPM1 NH 3/C1MMG(s)
+COMPM2 Ga /C1NH2/C1MMG(s)
+COMPM3 NH 3/C1Ga/C1NH2.MMG(s)
+COMPM4 Ga /C1NH2/C1Ga/C1NH2/C1MMG(s)
+COMPM5 NH 3/C1Ga/C1NH2/C1Ga/C1NH2/C1MMG(s)
+RINGM1 NH 2/C1Ga/C1NH2/C1Ga/C1NH2/C1Ga(s)
+RINGM2 (s)NH 2/C1Ga/C1NH2/C1Ga/C1NH2/C1Ga(s)
+COMPMM1 MMG /C1GaNH2(s)
+COMPMM2 NH 3/C1MMG/C1NH2/C1Ga(s)
+COMPMM3 NH 2/C1Ga/C1NH2/C1Ga(s)
+COMPMM4 MMG /C1NH2/C1Ga/C1NH2/C1Ga(s)
+COMPMM5 NH 3/C1MMG/C1NH2/C1Ga/C1NH2/C1Ga(s)
+TCOM1 NH 3/C1TMG(s)
+TCOM2 NH 2/C1DMG(s)
+TCOM3 (s)NH 2/C1DMG(s)
+COM1 RINGM2/C1CH3 complex
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382376
+
+the lower ﬂow-rate case, where diffusion domi-
+nates the transport, the exact placement of the
+nozzle is insigniﬁcant, and a much better agree-
+ment with experimental data is observed.
+The third set of simulations was performed for
+the reactor geometry reported by Theodoropoulos
+et al.[3]. The reactor geometry and operating
+conditions are illustrated inFig. 10. The average
+growth rates at various temperatures are shown in
+Fig. 11. Although this data is only for the
+diffusion-limited regime, the excellent match be-
+tween predicted and experimental results does
+highlight the universality of the proposed mechan-
+ism. It is worth noting that Theodoropoulos et al.
+ARTICLE IN PRESS
+N
+Ga
+Ga
+N
+C
+Ga
+N
+Ga
+N
+Ga
+GaNH 2 (s)
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+N
+C
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+C NH 3MMG -C H 4
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+N
+MMG
+NH 3
+C
+N
+N
+Ga
+Ga
+Ga
+N
+N
+N
+Ga
+Ga
+-C H 4
+Ga
+NN
+GaGa
+NN
+GaGa
+N
+-6 H 2
+MMG(s)
+NH 3
+Ga
+N
+N
+Ga
+C
+Ga
+N
+Ga
+C
+N
+Ga
+Ga
+N
+N
+Ga
+MMG
+-C H 4
+NH 3 +MMG+NH 3
+-2 C H 4
+6CH 3
+-6 C H 4
+N
+Ga
+Ga
+N
+Ga
+N
+Ga
+N
+N
+Ga
+MMG.NH 3 +S N
+N
+Ga
+Ga
+N
+C
+Ga
+N
+Ga
+N
+Ga
+GaNH 2 (s)
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+N
+C
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+C NH 3MMG -C H 4
+Ga
+N
+N
+Ga
+Ga
+N
+Ga
+N
+MMG
+NH 3
+C
+N
+N
+Ga
+Ga
+Ga
+N
+N
+N
+Ga
+Ga
+-C H 4
+Ga
+NN
+GaGa
+NN
+GaGa
+N
+-6 H 2
+MMG(s)
+NH 3
+Ga
+N
+N
+Ga
+C
+Ga
+N
+Ga
+C
+N
+Ga
+Ga
+N
+N
+Ga
+MMG
+-C H 4MMG(s)
+NH 3
+Ga
+N
+N
+Ga
+C
+Ga
+N
+Ga
+C
+N
+Ga
+Ga
+N
+N
+Ga
+MMG
+-C H 4
+NH 3 +MMG+NH 3
+-2 C H 4
+6CH 3
+-6 C H 4
+N
+Ga
+Ga
+N
+Ga
+N
+Ga
+N
+N
+Ga
+MMG.NH 3 +S N
+Ga
+C
+N
+N
+C
+Ga
+Ga
+N
+C
+N
+GaGa
+NN
+Ga
+TMG(s)+NH 3
+-3 C H 4
+TMG.NH 3 +S N
+Fig.3. MolecularrepresentationofthesurfacereactionsthathavebeenconsideredforGaNdeposition.Thestructuresareviewsalong
+the (100) surface similar to that shown in Ref.[25] for GaAs.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 377
+
+[3] also performed modeling studies for the same
+data, and underpredicted the experimental data
+consistently using a reduced mechanism.
+One critical issue for MOVPE of an III–V
+material is the effect of V–III ratio on growth rate.
+While it has been generally observed that GaN
+growth rate increases with increasing V–III ratio
+(more ammonia), there are instances, where a
+reverse trend has been reported. Notably, Niebuhr
+et al.[29] reported that during their experimental
+studies, they found that the growth rate actually
+decreased with increasing V–III ratio. A schematic
+ARTICLE IN PRESS
+-CH 3
+TMG
+DMG
+MMG
+TMG.NH 3
+MMG.NH 3
+NH 3
+GaNH 2
+-CH 3
+NH 2
+-2CH 3
+-CH 4
+AdductsV Precursors
+-CH 3
+TMG(s)
+MMG(s)
+TMG.NH 3 (s)
+GaNH 2 (s)
+MMG.NH 3 (s)
+NH 3
+MMG,NH 3
+MMG.NH 3
+RING
+Ga(s)
+GaNH 2 (s)
+NH 2 (s)
+MMG,NH 3
+MMG.NH 3
+MMG,NH 3
+MMG.NH 3
+RING
+NH 2 (s)
+MMG,NH 3
+MMG.NH 3
+GAS SURFACE
+GaN
+-CH 3
+TMG
+DMG
+MMG
+TMG.NH 3
+MMG.NH 3
+NH 3
+GaNH 2
+-CH 3
+NH 2
+-2CH 3
+-CH 4
+III PrecursorsAdductsV Precursors
+-CH 3
+TMG(s)
+MMG(s)
+TMG.NH 3 (s)
+GaNH 2 (s)
+MMG.NH 3 (s)
+NH 3
+MMG,NH 3
+MMG.NH 3
+RING
+Ga(s)
+GaNH 2 (s)
+NH 2 (s)
+MMG,NH 3
+MMG.NH 3
+MMG,NH 3
+MMG.NH 3
+MMG,NH 3
+MMG.NH 3
+RING
+NH 2 (s)
+MMG,NH 3
+MMG.NH 3
+GAS SURFACE
+GaN
+BULK
+Fig. 4. Schematic representation of the pathways (gas phase and surface) for GaN deposition.
+40cm
+10cm
+inlet outle t
+2cm
+5cm
+wafer
+Fig. 5. Reactor geometry and boundary conditions[28] used
+for calculation of growth rate at different temperatures using
+CFD-ACE+TM.
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+0.7 0.9 1.1 1.3
+1000/T (1/K)
+Growth rate ( µ m/hr)
+Experiment
+This work
+Fig. 6. Comparison of numerically calculated growth rate with
+experimental data of Chen et al.[28].
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382378
+
+of the reactor used for their studies is shown in
+Fig. 12. When simulations were performed for this
+reactor geometry with various V–III ratio, it was
+indeed observed that the growth rate decreased
+with increasing V–III ratio (Fig. 13). A plausible
+explanation for this type of behavior is that as the
+V–III ratio is increased, the ammonia concentra-
+tion near the substrate increases and the hydrogen
+concentration decreases. Since ammonia is much
+heavier than hydrogen, the diffusion of TMG in
+ammonia is much weaker than the diffusion of
+TMG in hydrogen. Consequently, although more
+ammonia is available to react at the surface, very
+little TMG actually diffuses in through the
+ammonia stream to the substrate. As the V–III
+ratio is decreased, hydrogen replaces ammonia,
+ARTICLE IN PRESS
+Axis of symmetry
+inlets
+0.32cm
+4.25cm
+11.4cm
+2.54cm
+wafer
+3.54cm
+20cm
+outlet
+Fig. 7. Reactor geometry and boundary conditions[5] used for
+growth calculations.
+0.0
+4.0
+8.0
+12.0
+16.0
+20.0
+0.0 0.5 1.0 1.5 2.0
+Radius (cm)
+Growth Rate (mm/hr)
+Numerical (present study)
+Experiment 
+Fig.8. Comparisonofnumericallycalculatedgrowthrateswith
+experiment [5] along the radius of the wafer for the reactor
+shown in Fig. 7. Case I: pressure 100torr, T ¼ 1273K;
+NH3 ¼ 2slpm, H2 ¼ 10slpm, TMG¼ 0.248sccm.
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+0.0 0.5 1.0 1.5 2.0 2.5
+Radius (cm)
+Growth Rate ( µ m/hr)
+Numerical (present study)
+Experiment
+Fig.9. Comparisonofnumericallycalculatedgrowthrateswith
+experiment [5] along the radius of the wafer for the reactor
+shown in Fig. 7. Case II: pressure 100torr, T ¼ 1273K;
+NH3 ¼ 2slpm, H2 ¼ 0.2slpm, TMG¼ 0.248sccm.
+outlet
+4.45cm
+30cm2.54cm
+wafer
+5.72cm
+inletAxis of symmetry
+10cm
+Fig. 10. Reactor geometry[3]used for numerical calculation of
+growth rate at the diffusion-limited regime.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 379
+
+and the diffusion of TMG becomes more pro-
+nounced leading to higher growth rates. This
+continues until the V–III ratio is so low that not
+enough ammonia is available at the surface.
+Beyond this point, the growth rate decreases
+again. In contrast, such behavior does not occur
+in stagnation-ﬂow type reactors, such as the one
+employed by Safvi et al.[5], and the growth rate
+increases with increasing V–III ratio. This is
+shown inFig. 14.
+Finally, we test our mechanism versus measured
+values from the paper by Thrush et al.[30] for a
+Thomas Swan Scientiﬁc Ltd reactor. The axi-
+symmetric modelgeometryusedforthesimulation
+is shown inFig. 15. It should be noted that the
+exact geometry of this reactor is proprietary and
+our geometry is based on the visual inspection of
+the published reactor’s picture. The ratio of TMG
+and NH3 was kept at a constant V/III mole ratio
+of2200.The ﬂowrateofthecarrier gas, hydrogen,
+was adjusted accordingly to maintain a total ﬂow
+rate of 20slm, as set by the experiment. The
+pressure of the reactor is 100Torr. The wafer
+rotates and is assumed to have a uniform
+temperature of 1303K. The outside walls of the
+reactor are water-cooled and are assumed to be
+333K. The boundary conditions corresponding to
+the showerhead was modeled as multiple inlets to
+increase the penetration of the inlet ﬂow.Fig. 16
+shows that the simulated deposition rate in
+excellent agreement with the experiment as a
+function of NH3 ﬂow.
+4. Summary and conclusions
+The effectiveness of combining ab initio quan-
+tum chemistry calculations with CFD in the
+modeling of growth of GaN has been demon-
+strated. Reaction pathways have been calculated
+using the ﬁrst-principles quantum chemistry tech-
+niques. The activation barriers and the vibrational
+frequencies have been used to calculate rate
+constants using QRRK and transition state
+theory. The rate constant for the surface reactions
+have been calculated using transition state theory
+after taking into account the various degrees of
+freedom of the molecules in the gas phase,
+adsorbed state and transition state. The new
+mechanism has been used to calculate deposition
+rate for ﬁve different reactors using CFD. CFD
+ARTICLE IN PRESS
+9cm
+inlets
+outlet
+10cm
+4.5cm
+NH 3
+TMG
+Wafer
+40cm
+Fig. 12. Reactor geometry and boundary conditions[29] used
+for calculation growth rate as a function of V/III ratio.
+Fig. 11. Comparison of numerically calculated growth rate
+with experiment[3] at the diffusion-limited regime using the
+reactor geometry shown inFig. 10.
+Fig. 13. Growth rate as a function of V/III ratio at 1273K.
+Note that growth rate decreases as the amount of V-precursor
+for the reactor shown inFig. 12.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382380
+
+calculation using the proposed mechanism is able
+to reproduce the correct temperature dependence
+of the growth rate for both laboratory-scale and
+commercial reactors. Also, the present mechanism
+is able to reproduce two opposing trend of growth
+rate as a function of V–III ratio. All of these
+observations lead to the conclusion that the
+proposed mechanism for GaN growth is fairly
+universal and accounts for most of the important
+pathways leading to epitaxial growth of GaN.
+Acknowledgments
+This work was funded by the National Science
+Foundation through a Phase II SBIR (DMI
+9983415) grant. Mr. William Kuykendall was
+supported through the NSF REU program. The
+authors thank Dr. R. Pollard (DoW Chemicals),
+Professor R. Masel (University of Illinois, Urba-
+na-Champaign), James B. Adams (Arizona State
+ARTICLE IN PRESS
+Fig. 14. Growth rate as a function of V/III ratio at 1273K. Note that growth rate increases as the amount of V-precursor for the
+reactor shown inFig. 7.
+Rotating Disc         
+T = 1303K 
+Inlet, F total  = 20slm, T=333k 
+Outlet
+Wafer 
+T = 1303K 
+Side Walls 
+T = 333K
+Symmetry
+Fig. 15. Schematic drawing of the reactor geometry used to
+simulate Thomas Swan Ltd. reactor[30].
+0.0
+0.4
+0.8
+1.2
+1.6
+2.0
+04 26 8 1 0 1 2
+Ammonia Flow (slm)
+Deposition Rate (microns/hr)
+Experiment
+Simulation
+Fig. 16. Comparison of simulated deposition rate with experi-
+ment [30] as a function of NH3 ﬂow rate using the reactor
+shown inFig. 15.
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382 381
+
+University) and Dr. R. Sumathi (MIT) for helpful
+discussion.
+References
+[1] G.B. Stringfellow, Organometallic Vapor-Phase Epitaxy:
+Theory and Practice, Academic Press, New York, 1999.
+[2] J. Sun, J.M. Redwing, T.F. Kuech, Phys. Stat. Sol. (a) 176
+(1999) 693.
+[3] C.Theodorpoulos,T.J.Mountziaris,H.K.Moffat,J.Han,
+J. Crystal Growth 217 (2000) 65.
+[4] T. Mihopoulos, Ph.D. Thesis, Dept. Chem. Eng., MIT,
+Cambridge, 1999.
+[5] S.A. Safvi, J.M. Redwing, M.A. Tischler, T.F. Kuech,
+J. Electrochem. Soc. 144 (1997) 1789.
+[6] D. Sengupta, J. Phys. Chem. B 107 (2003) 291.
+[7] U. Bergman, V. Reimer, B. Atakan, Phys. Chem. Chem.
+Phys. 1 (1999) 5593.
+[8] P.J. Robinson, K.A. Holbrook, Unimolecular Reactions,
+Wiley-Interscience, New York, 1972.
+[9] M.J. Frisch, G.W. Trucks, H.B. Schlegel, G.E. Scuseria,
+M.A. Robb, J.R. Cheeseman, V.G. Zakrzewski,
+J.A.S.R.E. Montgomery, J.C. Burant, S. Dapprich, J.M.
+Millam, A.D. Daniels, K.N. Kudin, M.C. Strain, O.
+Farkas, J. Tomasi, V. Barone, M. Cossi, R. Cammi, B.
+Mennucci,C.Pomelli,C.Adamo,S.Clifford,J.Ochterski,
+G.A.P. Petersson, Y. Ayala, Q. Cui, K. Morokuma, D.K.
+Malick,A.D.Rabuck,K.Raghavachari,J.B.Foresman,J.
+Cioslowski, J.V. Ortiz, A.G. Baboul, B.B. Stefanov, G.
+Liu,A.Liashenko,P.Piskorz,I.Komaromi,R.Gomperts,
+A.L. Martin, D.J.K.T. Fox, M.A. Al-Laham, C.Y. Peng,
+A. Nanayakkara, M. Challacombe, P.M.W. Gill, B.
+Johnson, W. Chen, M.W. Wong, J.L. Andres, C.
+Gonzalez, M. Head-Gordon, E.S. Replogle, J.A. Pople,
+Gaussian Inc., Pittsburg, PA., 1998.
+[10] C. Lee, W. Yang, R.G. Parr, Phys. Rev. B 37 (1988) 785.
+[11] A.D. Becke, J. Chem. Phys. 98 (1993) 5658.
+[12] P.J. Hay, W.R. Wadt, J. Chem. Phys. 82 (1985) 299.
+[13] T.H. Dunning Jr., J. Chem. Phys. 90 (1989) 1007.
+[14] M.G. Jacko, S.J.W. Price, Can. J. Chem. 41 (1963) 1560.
+[15] K.A. Holbrook, M.J. Pilling, S.H. Robertson, Unimole-
+cular Reactions, Wiley, New York, 1996.
+[16] A.M. Dean, J. Phys. Chem. 89 (1985) 4600.
+[17] M.C.Payne,M.P.Teter,D.C.Allan,Mod.Phys.64(1992)
+1045.
+[18] Y. Widjaja, C.B. Musgrave, Appl. Phys. Lett. 81 (2002)
+304.
+[19] Y. Widjaja, C.B. Musgrave, Appl. Phys. Lett. 80 (2002)
+3304.
+[20] J.K. Kang, C.B. Musgrave, J. Chem. Phys. 117 (2002)
+1931.
+[21] Y.-F. Wang, R. Pollard, J. Electrochem. Soc. 142 (1995)
+1712.
+[22] S. Mazumder, S.A. Lowry, J. Crystal Growth 224 (2001)
+165.
+[23] CFD-ACE+TM, A multi-physics CFD code developed by
+CFD Research Corporation, Hunsville, AL 35805, cur-
+rently marketed by ESI Group.
+[24] NIST, Chemistry webbook. ( http://www.webbook.nist.
+gov/chemistry).
+[25] T.J. Mountziaris, K.F. Jensen, J. Electrochem. Soc. 138
+(1991) 2426.
+[26] D. Mazzarese, A. Tripathi, W.C. Conner, K.A. Jones, L.
+Calderon, D.W. Eckart, J. Electron. Mater. 18 (1989) 369.
+[27] K. Nakamura, O. Makino, A. Tachibana, K. Matsumoto,
+J. Organomet. Chem. 611 (2000) 514.
+[28] C.H. Chen, H. Liu, D. Steigerwald, W. Imler, C.P. Kuo,
+M.G. Craford, M. Ludowise, S. Lester, J. Amano,
+J. Electron. Mater. 25 (1996) 1004.
+[29] R. Niebuhr, K. Bachem, K. Dombroski, M. Maier, W.
+Pletschen, U. Kaufmann, J. Electron. Mater. 24 (1995)
+1531.
+[30] E.J. Thrush, M. Kappers, L. Considine, J.T. Mullins, V.
+Saywell, F.C. Bentham, N. Sharma, C.J. Humphreys, in:
+Nitride Workshop, Chin. J. Lumin. 22 (z1)(2001).
+ARTICLE IN PRESS
+D. Sengupta et al. / Journal of Crystal Growth 279 (2005) 369–382382

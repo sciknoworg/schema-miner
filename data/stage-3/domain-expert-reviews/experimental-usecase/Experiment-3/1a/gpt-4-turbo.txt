@@ -1,0 +1,24 @@
+Property Merging:
+1. Remove the temperaturedependency information unit. Make it: DepositionTemperature range, which is the range of temperatures tested under the specific ALD method and for the deposition of the selected film. There should not be comments of its effect on the growth rate and crystallinity yet. Those effects could be mentioned in comments under the corresponding properties in the film properties box, where after mentioning each film property, there would be a comment highlighting any correlation to process conditions.
+
+Missing Properties:
+1. ProcessConditions
+2. FilmProperties
+3. ALD method used
+4. MaterialDeposited
+
+Adequacy of Descriptions:
+1. Description for the schema:replace verifying by characterizing and remove the ", including platinum, hafnium, zirconium oxides, titanium nitride (TiN), and tin oxide (SnOx)".
+2. purgeTime: insert two input values one for the precursor and one for the co-reactant
+3. Remove the chlorineadsorption and surfaceintermediatespecies parameters.
+4. Also, under each film property in the comments, there could be a mention about the characterization method used to measure this property and related information about executing this method.
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> Reactants(Precursor, CoReactant, CarrierGas)
+-> ProcessConditions(Reactor[Name,Manufacturer,Dimensions, Characteristics], TemperatureRange, ChamberPressure, Substrate, DosingTimes[Precursor,CoReactant], PurgingTimes[Precursor,CoReactant])
+-> GrowthBehavior (Thickness(Value,Comments), GPC(Value,Comments), SelfLimitingGrowth, NucleationPeriod, Graphs)
+-> FilmProperties (ChemicalComposition[Value,Properties], StructuralProperties(density, uniformity, conformality, crystallinity  [value,comments]), OpticalProperties(absorption coeffiecient, refractive index [value,comments]), ElectricalProperties(resistivity, carrier density, mobility, bandgap[value,comments]))
+-> SafetyandStability

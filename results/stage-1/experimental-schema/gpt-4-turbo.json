@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "A schema representing the steps and parameters involved in setting up and verifying an Atomic Layer Deposition process.",
+  "type": "object",
+  "properties": {
+    "reactantSelection": {
+      "type": "object",
+      "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+      "properties": {
+        "precursor": {
+          "type": "string",
+          "description": "Chemical used as a precursor in the ALD process."
+        },
+        "coReactant": {
+          "type": "string",
+          "description": "Chemical used as a co-reactant in the ALD process."
+        },
+        "deliveryMethod": {
+          "type": "string",
+          "description": "Method of delivering the precursor to the reaction chamber."
+        }
+      },
+      "required": ["precursor", "coReactant", "deliveryMethod"]
+    },
+    "chemicalComposition": {
+      "type": "object",
+      "description": "Verification of the material's chemical composition post-deposition.",
+      "properties": {
+        "verificationMethods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Methods used to verify the chemical composition, e.g., XPS or RBS."
+        }
+      }
+    },
+    "thicknessControl": {
+      "type": "object",
+      "description": "Control and verification of material thickness per cycle.",
+      "properties": {
+        "growthPerCycle": {
+          "type": "number",
+          "description": "The amount of material deposited per cycle, typically measured in nm per cycle."
+        }
+      }
+    },
+    "saturation": {
+      "type": "object",
+      "description": "Optimization of dosing and purge times to ensure self-limiting growth.",
+      "properties": {
+        "dosingTime": {
+          "type": "number",
+          "description": "Time for dosing the precursor or co-reactant, measured in seconds."
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Time for purging the reactor chamber, measured in seconds."
+        }
+      }
+    },
+    "materialProperties": {
+      "type": "object",
+      "description": "Assessment of the physical and chemical properties of the deposited film.",
+      "properties": {
+        "opticalProperties": {
+          "type": "object",
+          "properties": {
+            "refractiveIndex": {
+              "type": "number",
+              "description": "Refractive index of the film."
+            },
+            "absorptionCoefficient": {
+              "type": "number",
+              "description": "Optical absorption coefficient."
+            }
+          }
+        },
+        "electricalProperties": {
+          "type": "object",
+          "properties": {
+            "resistivity": {
+              "type": "number",
+              "description": "Electrical resistivity of the film."
+            },
+            "carrierDensity": {
+              "type": "number",
+              "description": "Carrier density in the film."
+            },
+            "mobility": {
+              "type": "number",
+              "description": "Carrier mobility in the film."
+            }
+          }
+        }
+      }
+    },
+    "temperatureDependence": {
+      "type": "object",
+      "description": "Observation of GPC under varying substrate temperatures to find the ALD window.",
+      "properties": {
+        "temperatureRange": {
+          "type": "string",
+          "description": "Range of substrate temperatures tested, e.g., 50°C to 350°C."
+        }
+      }
+    },
+    "uniformity": {
+      "type": "object",
+      "description": "Assessment of film thickness uniformity across large substrate areas.",
+      "properties": {
+        "variation": {
+          "type": "number",
+          "description": "Permissible variation in film thickness, typically measured in percentage."
+        }
+      }
+    },
+    "conformality": {
+      "type": "object",
+      "description": "Ability of the film to coat 3D structures uniformly.",
+      "properties": {
+        "aspectRatio": {
+          "type": "number",
+          "description": "Aspect ratio of the 3D structures used in testing conformality."
+        }
+      }
+    },
+    "nucleationBehavior": {
+      "type": "object",
+      "description": "Initial growth behavior of the film during the first few ALD cycles.",
+      "properties": {
+        "initialGrowthType": {
+          "type": "string",
+          "description": "Type of initial growth observed, e.g., linear, accelerated, or delayed."
+        }
+      }
+    },
+    "otherAspects": {
+      "type": "object",
+      "description": "Other important aspects of the ALD process development such as safety and reproducibility.",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for handling chemicals and reaction products."
+        },
+        "filmStability": {
+          "type": "boolean",
+          "description": "Whether the film remains stable under intended environmental conditions."
+        },
+        "reproducibility": {
+          "type": "boolean",
+          "description": "Consistency of film thickness and properties in repeated experiments."
+        }
+      }
+    }
+  },
+  "required": ["reactantSelection", "chemicalComposition", "thicknessControl", "saturation", "materialProperties", "temperatureDependence", "uniformity", "conformality", "nucleationBehavior", "otherAspects"]
+}

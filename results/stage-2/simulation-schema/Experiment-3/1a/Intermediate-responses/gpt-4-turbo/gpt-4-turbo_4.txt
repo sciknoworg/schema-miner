@@ -1,0 +1,122 @@
+Based on the provided research paper and the current JSON schema, the schema can be refined to better represent the details of the ALD process, particularly focusing on the selective growth mechanism using dimethylaluminum isopropoxide (DMAI) as a precursor. The research paper provides detailed insights into the reaction mechanisms, the role of hydroxylated sites, and the effects of DMAI decomposition, which are crucial for enhancing the schema.
+
+### Refinements Based on Research Paper:
+
+1. **Precursors**:
+   - Add specific details about DMAI as a precursor, including its selective behavior on Pt (111) facets.
+   - Include properties related to the decomposition mechanism of DMAI, particularly its interaction with hydroxyl sites.
+
+2. **Reaction Sites**:
+   - Introduce properties that describe the hydroxylated sites on Pt facets, which are crucial for the precursor's adsorption and reaction.
+
+3. **Reaction Mechanism**:
+   - Detail the decomposition pathways of DMAI, including the formation of methane and isopropanol as by-products.
+   - Include the role of water in the reaction cycle, particularly in the hydrolyzation of residual intermediates.
+
+4. **Temperature and Pressure Conditions**:
+   - Specify the optimal temperature and pressure conditions for DMAI-based ALD processes as described in the paper.
+
+5. **Microkinetic Model**:
+   - Introduce properties that describe the microkinetic models used to predict the deposition rates on different Pt facets.
+
+### Updated JSON Schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "precursors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "selectivity": {
+                "type": "string",
+                "description": "Describes the selective behavior of the precursor on specific facets"
+              },
+              "decompositionMechanism": {
+                "type": "object",
+                "properties": {
+                  "byProducts": {
+                    "type": "array",
+                    "items": {"type": "string"}
+                  },
+                  "interactionWithHydroxyls": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "reactionMechanism": {
+          "type": "object",
+          "properties": {
+            "description": {"type": "string"},
+            "byProducts": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "reactionConditions": {
+          "type": "object",
+          "properties": {
+            "temperature": {"type": "string"},
+            "pressure": {"type": "string"}
+          }
+        }
+      }
+    },
+    "observableProperties": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {"type": "string"},
+            "roughness": {"type": "string"},
+            "density": {"type": "string"},
+            "temperatureProfile": {"type": "string"},
+            "chemicalComposition": {"type": "string"}
+          }
+        }
+      }
+    },
+    "reactorDesign": {
+      "type": "object",
+      "properties": {
+        "surfaceType": {"type": "string"},
+        "gapDistance": {"type": "number"},
+        "gasFlowRates": {
+          "type": "object",
+          "properties": {
+            "purgeRate": {"type": "number"},
+            "precursorRate": {"type": "number"}
+          }
+        },
+        "substrateVelocity": {"type": "number"},
+        "vacuumPressure": {"type": "number"}
+      }
+    },
+    "dynamicProperties": {
+      "type": "object",
+      "properties": {
+        "timeEvolutionOfSpecies": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}
+```
+
+### Notes:
+- The schema now includes detailed properties related to the precursor's selectivity and reaction mechanisms, which are crucial for accurately modeling the ALD process described in the research paper.
+- Further iterations may refine these properties based on additional expert feedback or subsequent research findings.

@@ -1,0 +1,1556 @@
+/gid00030/gid00035/gid00032/gid00030/gid00038/gid00001/gid00033/gid00042/gid00045/gid00001
+/gid00048/gid00043/gid00031/gid00028/gid00047/gid00032/gid00046
+Citation: Shahmohammadi, M.;
+Mukherjee, R.; Sukotjo, C.; Diwekar,
+U.M.; Takoudis, C.G. Recent
+Advances in Theoretical
+Development of Thermal Atomic
+Layer Deposition: A Review.
+Nanomaterials 2022, 12, 831.
+https://doi.org/10.3390/
+nano12050831
+Academic Editor: Sotirios
+Baskoutas
+Received: 12 February 2022
+Accepted: 25 February 2022
+Published: 1 March 2022
+Publisher’s Note:MDPI stays neutral
+with regard to jurisdictional claims in
+published maps and institutional afﬁl-
+iations.
+Copyright: © 2022 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+nanomaterials 
+Review
+Recent Advances in Theoretical Development of Thermal
+Atomic Layer Deposition: A Review
+Mina Shahmohammadi 1, Rajib Mukherjee 2,3 , Cortino Sukotjo 4
+ , Urmila M. Diwekar 2,5, *
+and Christos G. Takoudis 1,5, *
+1 Department of Chemical Engineering, University of Illinois at Chicago, Chicago, IL 60607, USA;
+mshahm2@uic.edu
+2 Vishwamitra Research Institute, Crystal Lake, IL 60012, USA; rmukhe0@gmail.com
+3 Department of Chemical Engineering, University of Texas Permian Basin, Odessa, TX 79762, USA
+4 Department of Restorative Dentistry, University of Illinois at Chicago, Chicago, IL 60612, USA;
+csukotjo@uic.edu
+5 Department of Biomedical Engineering, University of Illinois at Chicago, Chicago, IL 60607, USA
+* Correspondence: urmila@vri-custom.org (U.M.D.); takoudis@uic.edu (C.G.T.)
+Abstract: Atomic layer deposition (ALD) is a vapor-phase deposition technique that has attracted
+increasing attention from both experimentalists and theoreticians in the last few decades. ALD
+is well-known to produce conformal, uniform, and pinhole-free thin ﬁlms across the surface of
+substrates. Due to these advantages, ALD has found many engineering and biomedical applications.
+However, drawbacks of ALD should be considered. For example, the reaction mechanisms cannot be
+thoroughly understood through experiments. Moreover, ALD conditions such as materials, pulse
+and purge durations, and temperature should be optimized for every experiment. It is practically
+impossible to perform many experiments to ﬁnd materials and deposition conditions that achieve a
+thin ﬁlm with desired applications. Additionally, only existing materials can be tested experimentally,
+which are often expensive and hazardous, and their use should be minimized. To overcome ALD
+limitations, theoretical methods are beneﬁcial and essential complements to experimental data.
+Recently, theoretical approaches have been reported to model, predict, and optimize different ALD
+aspects, such as materials, mechanisms, and deposition characteristics. Those methods can be
+validated using a different theoretical approach or a few knowledge-based experiments. This review
+focuses on recent computational advances in thermal ALD and discusses how theoretical methods
+can make experiments more efﬁcient.
+Keywords: atomic layer deposition (ALD); precursors; mechanisms; deposition characteristics
+density functional theory; molecular dynamics; lattice Boltzmann method; Monte Carlo; group
+contribution method; computer-aided molecular design
+1. Introduction
+Atomic layer deposition (ALD) is a vapor-phase technique to deposit thin-ﬁlm materi-
+als on various substrates through sequential and self-limiting surface reactions [1]. ALD
+originated from two different methods: atomic layer epitaxy (ALE) and molecular layering
+(ML), which were ﬁrst introduced in the 1970s [ 2]. ALD then emerged due to the need
+for precise ﬁlm thickness on small devices with high aspect ratios [ 2–4]. The thin ﬁlms
+produced by ALD are deposited using chemical gas or vapor phase species, called precur-
+sors, in a cyclic fashion [5]. Thus, ALD is often called an advanced form of chemical vapor
+deposition (CVD). However, unlike CVD, ALD consists of alternative pulses and purges
+of the precursors, resulting in deposition of the desired ﬁlm with an expected thickness
+and composition [5,6]. Furthermore, ALD is often performed under vacuum and at various
+ranges of temperatures, from room temperatures up to high temperatures, due to which
+ALD has a wide temperature window [4].
+Nanomaterials 2022, 12, 831. https://doi.org/10.3390/nano12050831 https://www.mdpi.com/journal/nanomaterials
+
+Nanomaterials 2022, 12, 831 2 of 25
+Each cycle is composed of two half-cycles or half-reactions, in which up to one mono-
+layer of a metal or metal oxide is deposited on the surface of the substrate [3]. During the
+ﬁrst half-cycle, the precursor is carried by inert gas and pulsed into the reactor with a deter-
+mined duration, reacts with the available active sites of the substrate, and is chemisorbed
+on the surface [ 5]. In this step, ideally, the precursor saturates the surface through a
+self-limiting reaction. Then, excess unreacted precursor molecules are purged out of the
+chamber using inert gas. In the second half-cycle, the co-reactant pulses into the reactor
+to react with the adsorbed precursor molecules on the substrate [ 7,8]. The common co-
+reactants for ALD are water vapor, O 2, O3, and NH3 [9]. Finally, the excess co-reactant
+molecules and the by-products of the reaction are purged out of the reactor. These two
+half-cycles are repeated until the required ﬁlm thickness and composition are achieved [10].
+The schematic of an ALD cycle is presented in Figure 1.
+Nanomaterials 2022, 12, x FOR PEER REVIEW 2 of 26 
+ 
+ 
+and at various ranges of temperatures, from room temperatures up to high temperatures, 
+due to which ALD has a wide temperature window [4]. 
+Each cycle is composed of two half-cycles or half-reactions, in which up to one mon-
+olayer of a metal or metal oxide is deposited on the surface of the substrate [3]. During the 
+first half-cycle, the precursor is carried by inert gas and pulsed into the reactor with a 
+determined duration, reacts with the available active sites of the substrate, and is chemi-
+sorbed on the surface [5]. In this step, ideally, the precursor saturates the surface through 
+a self-limiting reaction. Then, excess unreacted precursor molecules are purged out of the 
+chamber using inert gas. In the second half-cycle, the co-reactant pulses into the reactor to 
+react with the adsorbed precursor molecules on the substrate [7,8]. The common co-reac-
+tants for ALD are water vapor, O 2, O3, and NH3 [9]. Finally, the excess co -reactant mole-
+cules and the by -products of the reaction are purged out of the reactor. These two half -
+cycles are repeated until the required film thickness and composition are achieved [10]. 
+The schematic of an ALD cycle is presented in Figure 1. 
+ 
+Figure 1. Schematic of each ALD cycle (Created with BioRender.com). 
+The thin film deposition technique of ALD has a wide range of applications [3,5,9,10]. 
+Some of the important applications of ALD include but are not limited to the following 
+areas: semiconductor engineering [11–13], lithium-ion batteries [14–16], microelectrome-
+chanical systems (MEMS) [17,18], capacitors [19,20], fuel cells [21–23], solar cells [24–26], 
+transistors [27–29], drug delivery [30,31], medical and biomedical fields [32–35], dental 
+materials [6,10], and orthopedical implants [36–38]. Due to the capability of precisely de-
+positing conformal ultra -thin films, ALD has found a wide range of applications in the 
+fabrication of microelectronics such as gate oxides, semiconductors, and ferroelectrics 
+[12,39,40]. This techn ique has also attracted much attention in medical and biomedical 
+applications, where organic substrates such as polymers or biomaterials are required 
+[6,34,41]. 
+Previous works have reviewed the important advantages and disadvantages of ALD 
+[5,10,42,43]. Th e films produced by ALD are ultra -thin with exact controllability over 
+thickness, composition, and crystallinity at the Å ngström level [4]. The films are also uni-
+form, conformal, and pinhole-free across various substrates, even those with high aspect 
+ratios or complex three-dimensional (3D) structures [43,44]. Additionally, many different 
+metals, oxides, nitrides, sulfides, selenides, tellurides, fluorides, and metal–organic frame-
+works (MOF s) can be deposited by ALD as long as the associated precursors exis t 
+[3,9,10,42,45]. A wide range of temperatures can be used in ALD depending on different 
+properties such as the nature of the materials involved and the final applications. ALD 
+can produce high-quality films even at low substrate temperatures [46]. 
+Being a slow process is one of the main drawbacks of ALD [3]. Depending on the 
+conditions, a 100-nm thin film with thermal ALD would take around 20 h or more to de-
+posit. Although spatial ALD (SALD) has been developed to overcome this drawback [47], 
+it is a rather new tool and not always accessible. Moreover, SALD can be sensitive to am-
+bient air if performed in open air, highly volatile precursors are needed for SALD, and , 
+Figure 1. Schematic of each ALD cycle (Created with BioRender.com).
+The thin ﬁlm deposition technique of ALD has a wide range of applications [3,5,9,10].
+Some of the important applications of ALD include but are not limited to the following
+areas: semiconductor engineering [11–13], lithium-ion batteries [14–16], microelectrome-
+chanical systems (MEMS) [17,18], capacitors [19,20], fuel cells [21–23], solar cells [24–26],
+transistors [27–29], drug delivery [ 30,31], medical and biomedical ﬁelds [ 32–35], dental
+materials [6,10], and orthopedical implants [36–38]. Due to the capability of precisely de-
+positing conformal ultra-thin ﬁlms, ALD has found a wide range of applications in the fabri-
+cation of microelectronics such as gate oxides, semiconductors, and ferroelectrics [12,39,40].
+This technique has also attracted much attention in medical and biomedical applications,
+where organic substrates such as polymers or biomaterials are required [6,34,41].
+Previous works have reviewed the important advantages and disadvantages of
+ALD [5,10,42,43]. The ﬁlms produced by ALD are ultra-thin with exact controllability
+over thickness, composition, and crystallinity at the Ångström level [ 4]. The ﬁlms are
+also uniform, conformal, and pinhole-free across various substrates, even those with high
+aspect ratios or complex three-dimensional (3D) structures [43,44]. Additionally, many dif-
+ferent metals, oxides, nitrides, sulﬁdes, selenides, tellurides, ﬂuorides, and metal–organic
+frameworks (MOFs) can be deposited by ALD as long as the associated precursors ex-
+ist [3,9,10,42,45]. A wide range of temperatures can be used in ALD depending on different
+properties such as the nature of the materials involved and the ﬁnal applications. ALD can
+produce high-quality ﬁlms even at low substrate temperatures [46].
+Being a slow process is one of the main drawbacks of ALD [ 3]. Depending on the
+conditions, a 100-nm thin ﬁlm with thermal ALD would take around 20 h or more to deposit.
+Although spatial ALD (SALD) has been developed to overcome this drawback [47], it is a
+rather new tool and not always accessible. Moreover, SALD can be sensitive to ambient
+air if performed in open air, highly volatile precursors are needed for SALD, and, still,
+not many precursors for SALD exist [47]. Before each ALD experiment, all the conditions
+should be determined to ﬁnd the optimized ones. Thus, for each ALD experiment, different
+questions need to be answered:
+• What would be the ﬁnal applications?
+• What materials (i.e., precursor, oxidizer, and substrate) should be used?
+• How long should the pulse and purge durations be to obtain a high-quality ﬁlm?
+• What would be the growth rate based on the determined conditions?
+
+Nanomaterials 2022, 12, 831 3 of 25
+• What should be the temperature and pressure of the reactor and the precursorbubblers?
+• Are all the materials stable in those conditions?
+Deciding on each of these factors requires many experiments to adjust the conditions
+resulting in high-quality ﬁlms and an optimized growth rate. Moreover, each experiment
+should be repeated a few times to validate the results and ensure the reproducibility of
+the samples. On the other hand, the common precursors for ALD are often expensive,
+and performing many experiments to tune the conditions is inefﬁcient. Additionally,
+some of the mechanisms result in hazardous by-products, and it is preferred to reduce the
+number of experiments. Theoretical modeling is one of the ways to ﬁnd optimal conditions
+without performing any experiments, which would tremendously reduce the cost and time
+associated with those experiments.
+Recently, many research studies have used computer simulations and theoretical
+models in conjunction with ALD for a variety of purposes, such as the study of thin ﬁlm
+structure and composition and material selection [48]. The modeling technique varies over
+multiple scales and is based on the interaction between atoms, molecules, particles, and
+groups of atoms, also known as functional groups. Here, we present an overview of the
+common theoretical methods used to model ALD and the insight that can be obtained
+about the process of ALD from the different types of modeling. Thus, we adopt a reverse
+engineering approach, where we deﬁne various aspects of ALD, describe the experimental
+procedure used for ALD process development, and describe how modeling and simulation
+have been used for a proper understanding and improvement of the ALD process. The rest
+of the paper is organized as follows. First, different aspects of ALD are brieﬂy introduced
+and discussed, then the computational methods commonly used for modeling and simula-
+tion of ALD are presented, and, ﬁnally, recent studies on theoretical approaches to ALD
+are reviewed.
+2. Aspects of ALD
+Extensive experimental and theoretical research has so far been performed on different
+aspects of ALD. Experimentalists often focused on one or some of the following areas:
+precursors, mechanisms happening in an ALD reactor, and deposition characteristics such
+as temperature window, saturating pulse and purge times, growth rate, composition,
+morphology, and surface properties of the deposited ﬁlm. Since conventional ALD is a slow
+process and due to the disadvantages of SALD mentioned above, many time-consuming
+and expensive experiments are required to tune an ALD condition for desired applications.
+Thus, not many of the areas mentioned above would be examined in a single research
+study, and the researchers usually focus on a few of them when studying ALD systems.
+2.1. ALD Precursors
+An ALD precursor is often a metal surrounded by organic functional groups held in a
+vessel known as a bubbler. The bubbler temperature in an ALD system varies depending
+on the properties of the precursor. ALD precursors are volatile, thermally stable, and highly
+reactive [49]. A few physical properties are considered when selecting a precursor for
+an ALD study, such as materials of interest, reactivity toward the other co-reactant, ALD
+conditions, ﬁnal applications, and desired ﬁlm properties (e.g., dielectric constant, adsorp-
+tion capacity, gas impermeability, leakage current, electrical conductivity, photochemical
+activity, and antimicrobial activity) [49–53].
+Precursors should be able to react quickly with the active sites of the substrates
+and other precursor molecules. Hence, precursor chemistry is a key factor in an ALD
+process, which also affects the growth mechanisms. In recent years, the introduction
+of new precursors has attracted much attention. Theoretical methods are appropriate
+for designing new materials based on existing experimental data and predicting their
+properties before synthesizing them [6]. Moreover, ﬁrst-principles calculations can be used
+to suggest new materials with predicted properties that would be proved later through
+experiments [39,54,55]. In addition, there is often the need to compare ALD precursors in
+
+Nanomaterials 2022, 12, 831 4 of 25
+terms of various aspects that could become practically impossible through experimentation.
+Theoretical approaches are useful for these purposes.
+2.2. Deposition Characteristics
+2.2.1. Growth
+The growth rate in ALD is deﬁned as the thickness of the ﬁlm divided by the number
+of cycles (nm/cycle) and depends on multiple factors, including the precursor ﬂux reaching
+the substrate [ 5]. The growth rate is a prime factor in ALD studies since it provides a
+direct method to understand the amount of time each deposition takes and predict the ﬁlm
+thickness before deposition. Thus, the growth rate is often reported for each system under
+study. In addition, the growth rate is affected by the reactor temperature and pressure,
+pulse and purge times of the reactants, and the nature of the substrate. The growth rate is
+often reported as a constant value (the slope of the plot showing ﬁlm thickness versus the
+number of cycles); however, some studies reported that the growth rate might change over
+the number of cycles. For instance, a recent study reported duo-linear plots of TiO2 ﬁlm
+thickness versus the number of ALD cycles. According to them, absorbed water molecules
+in pores of a polymethyl methacrylate (PMMA) substrate were released into the reactor
+during the initial cycles, affecting the growth mechanism and resulting in a higher growth
+rate compared with later deposition cycles (Figure 2) [6].
+Nanomaterials 2022, 12, x FOR PEER REVIEW 4 of 26 
+ 
+ 
+adsorption capacity, gas impermeability, leakage current, electrical conductivity, photo-
+chemical activity, and antimicrobial activity) [49–53]. 
+Precursors should be able to react quickly with the active sites of the substrates and 
+other precursor molecules. Hence, precursor chemistry is a key factor in an ALD process, 
+which also affects the grow th mechanisms. In recent years, the introduction of new pre-
+cursors has attracted much attention. Theoretical methods are appropriate for designing 
+new materials based on existing experimental data and predicting their properties before 
+synthesizing them [6]. Moreover, first-principles calculations can be used to suggest new 
+materials with predicted properties that would be proved later through experiments 
+[39,54,55]. In addition, there is often the need to compare ALD precursors in terms of var-
+ious aspects that could become practically impossible through experimentation. Theoret-
+ical approaches are useful for these purposes. 
+2.2. Deposition Characteristics 
+2.2.1. Growth 
+The growth rate in ALD is defined as the thickness of the film divided by the number 
+of cycles (nm/cycle) and depends on multiple factors, including the precursor flux reach-
+ing the substrate [5]. The growth rate is a prime factor in ALD studies since it provides a 
+direct method to understand the amount of time each deposition takes and predict the 
+film thickness before deposition. Thus, the growth rate is often reported for each system 
+under study. In addition, the growth rate is affected by the reactor temperature and pres-
+sure, pulse and purge times of the reactants, and the nature of the substrate. The growth 
+rate is often reported as a constant value ( the slope of the plot showing film thickness 
+versus the number of cycles); however, some studies reported that the growth rate might 
+change over the number of cycles. For instance, a recent study reported duo -linear plots 
+of TiO2 film thickness versus the number of ALD cycles. According to them, absorbed 
+water molecules in pores of a polymethyl methacrylate (PMMA) substrate were released 
+into the reactor during the initial cycles, affecting the growth mechanism and resulting in 
+a higher growth rate compared with later deposition cycles (Figure 2) [6]. 
+ 
+Figure 2. Duo-linear plot of TiO2 film thickness versus the number of cycles and a silicon reference 
+(reprinted with permission from [6]). 
+Another aspect of ALD growth is the growth mode,  meaning how the materials are 
+arranged on the surface of the substrate during ALD growth [56]. The ALD growth modes 
+are mainly attributed to one of the following modes:  Volmer–Weber growth, Frank–van 
+der Merwe growth, and Stranski–Krastanov growth [57,58]. In the Volmer–Weber growth 
+mode, also known as island growth, small clusters or islands are first nucleated on the 
+surface. The reason for island nucleation, in this case, is that the interaction of the adsorbed 
+atoms within themselves is stronger compared with the interaction between the atoms 
+Figure 2. Duo-linear plot of TiO2 ﬁlm thickness versus the number of cycles and a silicon reference
+(reprinted with permission from [6]).
+Another aspect of ALD growth is the growth mode, meaning how the materials are
+arranged on the surface of the substrate during ALD growth [56]. The ALD growth modes
+are mainly attributed to one of the following modes: Volmer–Weber growth, Frank–van
+der Merwe growth, and Stranski–Krastanov growth [57,58]. In the Volmer–Weber growth
+mode, also known as island growth, small clusters or islands are ﬁrst nucleated on the
+surface. The reason for island nucleation, in this case, is that the interaction of the adsorbed
+atoms within themselves is stronger compared with the interaction between the atoms
+and the substrate. That is, the cohesive force within the atoms is stronger than the surface
+adhesive force, so the atoms tend to accumulate. Then, those small clusters grow into larger
+three-dimensional ones and reach each other, covering the whole surface [57].
+On the other hand, in the Frank–van der Merwe growth mode, also known as bi-
+dimensional growth, the surface adhesive force is stronger than the intra atom cohesive
+force, leading to layer-by-layer growth on the substrate. That is, the atoms completely cover
+the surface, producing a complete monolayer before the subsequent layer is formed on
+top [59]. If both the Volmer–Weber and Frank–van der Merwe growth modes are combined,
+the growth mode is called Stranski–Krastanov. In the Stranski–Krastanov growth mode,
+which is the more common growth mode, the ﬁlm starts to form on the surface of the
+substrate as a whole layer. After forming a rather thick ﬁlm, the growth mode switches to
+
+Nanomaterials 2022, 12, 831 5 of 25
+island growth [58]. Where the transition happens is affected by the chemical and physical
+properties of both ﬁlm and substrate materials [57–59]. Figure 3 presents a schematic of the
+three growth modes.
+Nanomaterials 2022, 12, x FOR PEER REVIEW 5 of 26 
+ 
+ 
+and the substrate. That is, the cohesive force within the atoms is stronger than the surface 
+adhesive force, so the atoms tend to accumulate. Then, those small clusters grow into 
+larger three-dimensional ones and reach each other, covering the whole surface [57]. 
+On the other hand, in the Frank–van der Merwe growth mode, also known as bi -
+dimensional growth, the surface adhesive force is stronger than the intra atom cohesive 
+force, leading to layer -by-layer growth on the substrate. That is, the atoms completely 
+cover the surface, producing a complete monolayer before the subsequent layer is formed 
+on top [59]. If both the Volmer–Weber and Frank–van der Merwe growth modes are com-
+bined, the growth mode is  called Stranski–Krastanov. In the Stranski–Krastanov growth 
+mode, which is the more common growth mode, the film start s to form on the surface of 
+the substrate as a whole layer. After forming a rather thick film, the growth mode switches 
+to island growth [58]. Where the transition happens is affected by the chemical and phys-
+ical properties of both film and substrate materials [57–59]. Figure 3 presents a schematic 
+of the three growth modes. 
+ 
+Figure 3. Schematic of common growth modes in ALD : (a) Volmer–Weber; (b) Frank–van der 
+Merwe; and (c) Stranski–Krastanov. 
+2.2.2. Surface Morphology 
+Surface morphology is another characteristic of thin films usually examined and re-
+ported in ALD -related studies. Different techniques , such as atomic force micros copy 
+(AFM), profilometry, and scanning electron microscopy (SEM) , are used to scan the sur-
+face and provide three -dimensional images of surface topography. Surface morphology 
+depends on many factors, including nucleation and growth mechanisms, growth rate, 
+crystallinity, surface roughness, deposition conditions, substrate, and impurities [60,61]. 
+2.2.3. Surface Roughness 
+Another thin-film property that is often investigated in ALD studies is surface rough-
+ness. Roughness is a part of surface texture, defined as a measure of waviness or irregu-
+larities on the film surface. Mapping technologies such as AFM and optical or contact pro-
+filometry can be used to calculate the surface roughness. The surface roughness is signif-
+icantly affected by the growth mode discusse d earlier. For instance, the Volmer –Weber 
+growth mode starts with island nucleation; the islands enlarge over time, and, most likely, 
+their heights become larger than the thickness of one monolayer before they converge. 
+Thus, if the growth follows the Volmer–Weber growth mode, the film is often made of 
+rough layers. However, due to the layer -by-layer nature of the Frank–van der Merwe  
+growth mode, smoother films are produced with this growth mode [57]. Aside from the 
+growth modes, the surface roughness depends on other factors such as crystallinity, film 
+thickness, and the nature of the substrate. 
+2.2.4. Step Coverage (Conformality)  
+Conformality can be defined as the deposition of a film with the same thickness on 
+all topographic features, including the top, sides, and bottom surfaces of a three -dimen-
+sional substrate [62]. Since deposition in ALD happens through surface -controlled reac-
+tions, the thin films formed have excellent conformality. That is, the step coverage pro-
+vided by ALD to the surface of complex structures  is higher than that of conventional 
+deposition processes such as CVD and physical vapor deposition (PVD). Conformality is 
+Figure 3. Schematic of common growth modes in ALD: (a) Volmer–Weber; (b) Frank–van der Merwe;
+and (c) Stranski–Krastanov.
+2.2.2. Surface Morphology
+Surface morphology is another characteristic of thin ﬁlms usually examined and
+reported in ALD-related studies. Different techniques, such as atomic force microscopy
+(AFM), proﬁlometry, and scanning electron microscopy (SEM), are used to scan the surface
+and provide three-dimensional images of surface topography. Surface morphology depends
+on many factors, including nucleation and growth mechanisms, growth rate, crystallinity,
+surface roughness, deposition conditions, substrate, and impurities [60,61].
+2.2.3. Surface Roughness
+Another thin-ﬁlm property that is often investigated in ALD studies is surface rough-
+ness. Roughness is a part of surface texture, deﬁned as a measure of waviness or irreg-
+ularities on the ﬁlm surface. Mapping technologies such as AFM and optical or contact
+proﬁlometry can be used to calculate the surface roughness. The surface roughness is sig-
+niﬁcantly affected by the growth mode discussed earlier. For instance, the Volmer–Weber
+growth mode starts with island nucleation; the islands enlarge over time, and, most likely,
+their heights become larger than the thickness of one monolayer before they converge.
+Thus, if the growth follows the Volmer–Weber growth mode, the ﬁlm is often made of
+rough layers. However, due to the layer-by-layer nature of the Frank–van der Merwe
+growth mode, smoother ﬁlms are produced with this growth mode [57]. Aside from the
+growth modes, the surface roughness depends on other factors such as crystallinity, ﬁlm
+thickness, and the nature of the substrate.
+2.2.4. Step Coverage (Conformality)
+Conformality can be deﬁned as the deposition of a ﬁlm with the same thickness on all
+topographic features, including the top, sides, and bottom surfaces of a three-dimensional
+substrate [62]. Since deposition in ALD happens through surface-controlled reactions, the
+thin ﬁlms formed have excellent conformality. That is, the step coverage provided by ALD
+to the surface of complex structures is higher than that of conventional deposition processes
+such as CVD and physical vapor deposition (PVD). Conformality is a signiﬁcant aspect,
+especially when there is a great desire to coat a complex three-dimensional nanostructured
+surface or substrates with high aspect ratios [ 63]. Recently, Cremers et al. [63] provided
+an extensive review of different aspects of our current knowledge about conformality in
+ALD processes.
+2.2.5. Deposition Temperature
+In thermal ALD, the temperature is the main driving force for the process. One of the
+terms in ALD studies is the temperature window, deﬁned as the temperature range over
+which the self-controlled growth would occur at a constant rate. Inside the ALD window,
+the growth rate would change signiﬁcantly with an increase in the temperature due to the
+physisorption/condensation of precursors on the surface or low reaction rates, leading to
+uncontrolled growth. At temperatures outside the ALD window, the precursor molecules
+may decompose or desorb the heated substrate, resulting in uncontrolled growth [64]. The
+
+Nanomaterials 2022, 12, 831 6 of 25
+typical temperature window for thermal ALD processes is 150–350 ◦C [5], although some
+studies reported a temperature window out of this range. For instance, for the organic
+and heat-sensitive substrates, the reactor temperature should be adjusted accordingly to
+prevent the deformation and degradation of the substrate. Room temperature ALD has
+been reported on collagen materials for biomaterial functionalization [34,65].
+2.3. Thermal ALD Mechanisms
+2.3.1. Mechanisms
+As previously mentioned, a binary ALD process consists of a dose–purge–dose–purge
+sequence of each reactant forming an ALD cycle. In thermal ALD, the surface reactions
+typically happen due to a relatively high temperature. The self-limiting nature of ALD
+allows for saturation to occur on the surface of the substrate during the dosage steps before
+the extra unreacted materials are purged out of the reactor. That is, after the chemisorbed
+species saturate all the available active sites, no more chemisorption would happen beyond
+that point, although more reactants exist in the reactor [66]. However, the exact mechanisms
+of ALD reactions remain sophisticated and challenging subjects. Nevertheless, some
+studies have modeled and predicted ALD reaction mechanisms. The ALD mechanisms are
+divided into three categories (initial surface reactions, reaction pathways, and precursor
+decomposition), each of which is brieﬂy discussed below.
+2.3.2. Initial Surface Reactions
+A ﬁnite number of active sites are available on the surface of a substrate per each
+ALD cycle. Through the initial surface reactions in an ALD process, those active sites
+are occupied by the reactants and depleted at the end of each half-cycle, and then more
+active sites are created in a subsequent halfcycle. The initial growth per cycle in ALD
+depends on the number of nucleation sites and is categorized into three groups: linear,
+surface-enhanced, and surface-inhibited [67].
+2.3.3. Reaction Pathways
+When describing the reaction pathways occurring in an ALD reactor, the formation
+of aluminum oxide (Al 2O3) from trimethylaluminum (TMA) and water (H 2O) is well-
+discussed. TMA acts as the aluminum precursor in that system, and water is the oxygen
+source. The simpliﬁed forms of some of the common and well-known reaction pathways in
+ALD processes are summarized and tabulated here (Table 1).
+Table 1. Well-known ALD reaction pathways.
+Thin
+Film Precursor Co-Reactant Reaction Pathway Refs.
+Al2O3 TMA a H2O –OH + AlMe3→–OAlMen + (3 −n) CH4
+–AlMe + H2O →–AlOH + CH4
+[62]
+MO2 b MCl4 H2O
+n (–OH) + MCl4 →(-O-)nMCl4−n + n HCl
+(–O–)nMCl4−n + (4 −n) H2O →
+(–O–)nM(OH)4−n + (4 −n) HCl
+[68–70]
+MO2 TDMAM c H2O M(NMe2)4 + 2 H2O →MO2 (solid)
++ 4 HNMe2
+[71]
+a TMA, trimethylaluminum; b M = Ti, Hf, Zr; c TDMAM, tetrakis(dimethylamido)metal (Ti, Hf, or Zr).
+2.3.4. Precursor Chemisorption
+Previous studies are focused on describing different mechanisms of precursor chemiso-
+rption during an ALD process. These mechanisms are mainly categorized into three groups
+(ligand exchange, dissociation, and association) [66,72]. In ligand exchange chemisorption,
+the split of the precursor occurs on the surface, where its ligand is exchanged with a
+surface group, and a gaseous product is released [66]. In the dissociation process, one or
+
+Nanomaterials 2022, 12, 831 7 of 25
+more ligands of the precursors are separated from the molecule, bounded with the surface
+groups, and create active sites on the substrate [66]. The molecule fragments are usually
+separated due to an external source such as light or heat [ 72]. On the other hand, in the
+association process, no ligand is split from the precursor, and a coordinated bond is formed
+between the precursor and the surface active sites [66]. A schematic of these mechanisms
+was reprinted from reference [73] and is shown in Figure 4.
+Nanomaterials 2022, 12, x FOR PEER REVIEW 7 of 26 
+ 
+ 
+MO2 b MCl4 H2O 
+n (–OH) + MCl4 → (-O-)nMCl4−n + n HCl 
+(–O–)nMCl4-n + (4−n) H2O → (–
+O–)nM(OH)4-n + (4−n) HCl 
+[68–70] 
+MO2 TDMAM c H2O M(NMe2)4 + 2 H2O → MO2 (solid) + 4 
+HNMe2  [71] 
+a TMA, trimethylaluminum; b M = Ti, Hf, Zr; c TDMAM, tetrakis(dimethylamido)metal (Ti, Hf, or 
+Zr). 
+2.3.4. Precursor Chemisorption 
+Previous studies are focused on describing different mechanisms of precursor chem-
+isorption during an ALD process. These mechanisms a re mainly categorized into three 
+groups (ligand exchange, dissociation, and association) [66,72]. In ligand exchange chem-
+isorption, the split of the precursor occurs on the surface, where its ligand is exchanged 
+with a surface group, and a gaseous product is released [66]. In the dissociation process, 
+one or more ligands of the precursors are separated from the molecule, bounded with the 
+surface groups, and create active sites on the substrate [66]. The molecule fragments are 
+usually separated due to an external source such as light or heat [72]. On the other hand, 
+in the association process, no ligand is split from the precursor, and a coordinated bond 
+is formed between the precursor and the surface active sites [66]. A schematic of these 
+mechanisms was reprinted from reference [73] and is shown in Figure 4. 
+ 
+Figure 4. Schematic illustration of the TMA reaction possibilities on oxide surfaces: ligand exchange 
+with (a) one, (b) two, and (c) three OH groups; (d) dissociation; and (e) association (reprinted with 
+permission from [73]). 
+An example of ligand exchange precursor chemisorption is the Al2O3 ALD from TMA 
+and H2O, the pathway of which is shown in Figure 4. During the first half -cycle of the 
+reaction, TMA molecules chemisorb on a hydroxylated surface and react with the OH 
+groups, where a ligand exchange occurs, and methane gas is released. After the surface is 
+thoroughly saturated with the TMA molecules, all unreacted precursors and the by-prod-
+ucts of the reactions are purged out. Water molecules enter the reactor in the second half-
+reaction and react with the CH3-terminated surface sites. Again, the ligand exchange hap-
+pens between the CH3 groups of chemisorbed TMA molecules, and OH groups of water 
+vapor and methane gas are released until all the active sites are filled. Lastly, by-products 
+and unreacted water molecules are pumpe d out of the reactor [62]. The surface is now 
+hydroxylated again, and the steps are repeated. Another example of ligand -exchange 
+ALD reactions is the deposition of metal oxides using alkoxide precursors [74]. ALD of 
+metals such as copper, ruthenium, and platinum often occurs based on dissociation chem-
+isorption [72,75]. The association mechanism is the hardest to identify since it usually hap-
+pens after a gas -phase dissociation or before a ligan d-exchange reaction. A common ex-
+ample is ALD from metal halide precursors[72]. 
+  
+Figure 4. Schematic illustration of the TMA reaction possibilities on oxide surfaces: ligand exchange
+with (a) one, (b) two, and (c) three OH groups; (d) dissociation; and (e) association (reprinted with
+permission from [73]).
+An example of ligand exchange precursor chemisorption is the Al2O3 ALD from TMA
+and H2O, the pathway of which is shown in Figure 4. During the ﬁrst half-cycle of the
+reaction, TMA molecules chemisorb on a hydroxylated surface and react with the OH
+groups, where a ligand exchange occurs, and methane gas is released. After the surface
+is thoroughly saturated with the TMA molecules, all unreacted precursors and the by-
+products of the reactions are purged out. Water molecules enter the reactor in the second
+half-reaction and react with the CH3-terminated surface sites. Again, the ligand exchange
+happens between the CH3 groups of chemisorbed TMA molecules, and OH groups of water
+vapor and methane gas are released until all the active sites are ﬁlled. Lastly, by-products
+and unreacted water molecules are pumped out of the reactor [ 62]. The surface is now
+hydroxylated again, and the steps are repeated. Another example of ligand-exchange
+ALD reactions is the deposition of metal oxides using alkoxide precursors [ 74]. ALD
+of metals such as copper, ruthenium, and platinum often occurs based on dissociation
+chemisorption [72,75]. The association mechanism is the hardest to identify since it usually
+happens after a gas-phase dissociation or before a ligand-exchange reaction. A common
+example is ALD from metal halide precursors [72].
+3. Theoretical Methods
+3.1. Density Functional Theory
+Density Functional Theory (DFT) is one of the computational methods based on the
+interaction between particles. DFT is used to investigate the electronic structure of many-
+body systems by reducing a 3N-dimensional problem to N 3-dimensional problems. In
+DFT, the structure of molecules may be predicted via the calculation of total energies and
+forces [75]. There are several examples where DFT has been broadly used along with ALD.
+DFT can be used to perform precursor design and comparison, predict ALD deposition
+characteristics such as overall growth, predict activation barriers and transition states, and
+determine reaction mechanisms such as initial surface reactions, reaction pathways, and
+the precursor chemisorption process [48,76–80].
+3.2. Microscopic or Atomic Modeling Scale: Molecular Dynamics
+Molecular Dynamics (MD) can be used to simulate the interaction between parti-
+cles [81]. In MD simulations, Newton’s equation of motion is integrated and numerically
+solved for simulating the movement of atoms and molecules [5,82]. MD simulation is capa-
+
+Nanomaterials 2022, 12, 831 8 of 25
+ble of studying rather large systems for a relatively long time and results in the trajectory
+of the particles as a function of time [ 81]. For instance, when it comes to predicting the
+reaction pathways or precursor chemisorption processes in ALD, MD simulation is another
+method that is extremely helpful [75,83].
+3.3. Lattice Boltzmann Method
+The Lattice Boltzmann Method (LBM) is one of the methods used in Computational
+Fluid Dynamics (CFD), which was introduced in the late 1980s and is used for ﬂuid
+simulations [84,85]. LBM is categorized as being on the mesoscopic modeling scale, which
+is appropriate for less complex systems as it needs less memory and has a short processing
+time [86]. This method employs the Boltzmann equation to model a ﬂuid consisting of
+ﬁctitious particles that are propagating and colliding [ 87]. LBM can be used along with
+ALD to simulate the ﬂow of gases [86].
+3.4. Off-Lattice Pseudo-Particle Method: Monte Carlo
+Monte Carlo simulation is a stochastic computational technique to predict the prob-
+ability of outcomes of various processes and obtain numerical results [88]. Monte Carlo
+can be used to solve intractable analytical problems or substitute for time-consuming or
+expensive experiments. Furthermore, researchers can employ this simulation technique to
+explore different aspects or modify the conditions of an experiment [88]. Random-based
+has a broad range of applications in ﬁnance, engineering, and science [89–92]. Monte Carlo
+simulation has been extensively used along with ALD for different purposes, e.g., deter-
+mining ﬁlm and precursor properties and the evolution of ﬁlm morphology, modeling ﬁlm
+growth, and studying the kinetics of reactions and the mechanism of materials processing
+in ALD [93–97]. Moreover, Kinetic Monte Carlo (kMC) simulation, which accounts for
+changes in the process with time, is invaluable in bridging the gap between individual
+reaction data from DFT and average growth characteristics from experiments [97].
+3.5. Group Contribution Method
+The Group Contribution Method (GCM) can be employed to estimate the binary
+interaction parameters between different groups of atoms [98] where there is no available
+experimental data and can avoid the need for expensive experiments. In the GCM, the
+thermodynamic properties of a compound are predicted from its molecular structure. For
+this purpose, the molecule is split up into structural and functional groups composed of
+individual atoms or small groups of atoms. The GCM parameter of a functional group is
+estimated by the number of times a particular group appears on the adsorbent, multiplied
+by its contribution [99]. The GCM can be employed to estimate the thermodynamic proper-
+ties of precursors used in ALD. For instance, ALD precursor molecules can be divided into
+smaller groups of atoms, and the GCM estimates the binary interaction parameters between
+those groups. Then, the activity coefﬁcients of each group can be calculated based on those
+interaction parameters. Our group recently reported the thermodynamic properties of
+some well-known precursor molecules, which will be discussed in detail later [100,101].
+3.6. Computer-Aided Molecular Design
+Computer-Aided Molecular Design (CAMD) generates molecules with desired prop-
+erties from functional groups using a reverse technique to that of the GCM. While the GCM
+estimates the molecular properties based on the functional groups comprising the molecule,
+CAMD, on the other hand, combines different functional groups to generate molecules
+having desired properties [102]. CAMD methods have been applied extensively in var-
+ious areas such as extraction solvents [ 103–108], polymer designs [ 109,110], degreasing
+solvents [111], blanket wash solvents [ 112,113], absorption solvents [ 114–118], refriger-
+ant design [ 119,120], distillation solvents [ 102,106,121,122], reaction solvents [ 123,124],
+catalysts [124], value-added products [ 125], crystallization solvents [ 126], and foaming
+agents [127]. CAMD has been used effectively to design novel clay-based adsorbents to
+
+Nanomaterials 2022, 12, 831 9 of 25
+adsorb radioactive elements from ﬂowback/produced water [128] and remove arsenic from
+water [129]. Mukherjee et al. [110] used CAMD to design a novel polymer resin for metal
+ion removal from water. CAMD is also an appropriate method to be combined with ALD,
+especially to design novel precursor materials, which will be discussed later on [100].
+4. Theoretical Studies on ALD
+In the previous sections, different aspects of ALD as well as theoretical methods to
+study the ALD technique were brieﬂy discussed. In this section, the previous research
+studies on theoretical ALD are reviewed. Table 2 summarizes the theoretical-study-only
+ALD articles found in the Web of Science and covered in this review. It is worth mentioning
+that this review mostly focuses on the theoretical-study-only ALD articles and does not
+cover the combined experimental and theoretical ones, which are cited here [75,76,130–156].
+Figure 5 displays the publications, summarized in Table 2, that are covered in this study.
+Figure 5a illustrates the time evolution of publications on ALD studied with at least one of
+the theoretical methods mentioned above. In this ﬁgure, the theoretical-study-only articles
+are separated from the total set of articles, i.e., those that combine theory and experiments.
+During the last six years, researchers have focused more on combining experimental ALD
+studies with theory rather than performing a purely theoretical study. The reason most
+likely lies within the greater desire to validate experimental data with a computational
+model to establish their ALD method better. Figure 5b categorizes the publications based
+on the regions those studies were performed in.
+Table 2. Summary of the theoretical-study-only ALD articles.
+Materials Aspect of Study Theoretical Method References
+Al2O3
+Introduce new precursor
+Predict decomposition mechanism, chemisorption
+process, growth rate, intermediates of the reaction and
+their concentration, oxidizer reactivity, ﬁlm thickness,
+and sticking coefﬁcients
+Correlate growth rate quantitatively with hydroxyl
+group concentrations
+Simulate ﬁlm uniformity, roughness, density, atomic
+ratio, gas ﬂow, temperature proﬁle, and
+surface reactions
+DFT; Mass balance; Monte
+Carlo; CFD;
+Numerical model/ANSYS
+Fluent; MD
+[73,78,83,93,96,157–165]
+HfO2
+Compare two precursors
+Predict growth rate and mechanisms
+Design novel precursors
+Simulate gas ﬂow and temperature proﬁle
+DFT; GCM/CAMD; CFD;
+Monte Carlo
+[70,74,79,100,162,166–
+168]
+TiO2
+Compare halide precursors
+Kinetics of reactions
+Design novel precursors
+Predict growth rate and mechanisms
+DFT; GCM/CAMD [77,100,101,161,169,170]
+ZrO2 Predict mechanisms and growth DFT [80,170–173]
+ZnO Simulate growth rate and temperature dependency of
+growth DFT/Monte Carlo [97]
+Zr(Hf)O2
+Predict temperature dependency of growth
+rate (Kinetics) Monte Carlo [95]
+Cu/CuO Introduce new precursor
+Predict mechanisms and growth DFT [48,174–176]
+Ru Compare reactions of precursors DFT [177]
+Y2O3 Predict chemisorption process Mass balance [161]
+
+Nanomaterials 2022, 12, 831 10 of 25
+Table 2. Cont.
+Materials Aspect of Study Theoretical Method References
+SiC Introduce precursor DFT [178]
+N/A
+Simulate growth rate based on chemisorption process
+Describe growth mode
+Characterize carrier gas ﬂow
+Model morphology evolution
+Compare precursor exposure on 3D substrates
+Predict cation ratios in ternary oxides
+Mass balance; LBM Monte
+Carlo; DFT [56,66,86,94,179,180]
+Nanomaterials 2022, 12, x FOR PEER REVIEW 11 of 26 
+ 
+ 
+steric hindrance but, at the same time, a more distinct fraction of a monolayer during one 
+cycle [145]. 
+ 
+Figure 5. Illustration of the number of publications summarized in Table 2 categorized (a) per year 
+between 2002 and 2021 and (b) per publication country. The search was performed with Web of 
+Science using the following keywords: Atomic Layer Deposition and Theoretical. Irrelevant works 
+were omitted and works combining experiments and theory are not covered in detail. 
+Dey and Elliott [48] introduced a copper (I) carbene hydride using DFT calculations  
+that acted both as a reducing agent and a precursor for Cu ALD. They proposed a Cu -
+based reducing agent in case a co-deposition happened, which would be desirable as cop-
+per was still deposited [48]. In addition to Cu ALD [48,75,174], other materials have been 
+studied through DFT, e.g.,  platinum [148], aluminum oxide [76,146,147], hafnium oxide 
+[74,166,167], titanium oxide [77,169], and zirconium oxide [80,171]. Another study used 
+DFT to design an aluminum ALD precursor by substituting one methyl in TMA and se-
+lectively decorating Pt nano particles by AlOx via ALD [76]. Yang et al. [76] showed that 
+dimethylaluminum isopropoxide (DMAI) could be used as an ALD precursor, and they 
+predicted the decomposition mechanism of DMAI with DFT [76]. Recently, Park et al. 
+Figure 5. Illustration of the number of publications summarized in Table 2 categorized (a) per year
+between 2002 and 2021 and ( b) per publication country. The search was performed with Web of
+Science using the following keywords: Atomic Layer Deposition and Theoretical. Irrelevant works
+were omitted and works combining experiments and theory are not covered in detail.
+Figure 6a presents the percentage of articles on ALD thin ﬁlm materials studied with
+theoretical methods. Most researchers have focused on Al2O3 thin ﬁlms presumably due
+
+Nanomaterials 2022, 12, 831 11 of 25
+to the simple and well-understood reaction mechanism of TMA and water. In this ﬁgure,
+the “others” section includes the theoretically studied ALD materials of yttrium oxide,
+silicon oxide, and ruthenium. Figure 6b–d visually categorize the research articles based
+on theoretical methods and ALD aspects (i.e., precursors, deposition characterization, and
+reaction mechanisms, respectively).
+Nanomaterials 2022, 12, x FOR PEER REVIEW 12 of 26 
+ 
+ 
+[166] compared two different hafnium precursors for ALD. DFT was used to predict that 
+the cyclic precursor would result in a lower growth rate compared with the alkylamide 
+precursor due to the low probability of final chemical adsorption of the bulky cyclic ligand 
+on the surface [166]. 
+ 
+Figure 6. Theoretical studies of ALD categorized based on the theoretical method and (a) thin film 
+material and the ALD aspect under study, i.e., (b) precursors, (c) deposition characterization, and 
+(d) reaction mechanisms. 
+When a decision needs to be made between two similar precursors, DFT can be used 
+to compare different ALD precursors without performing any experiments. For instance, 
+halide precursors have been compared with regard to thermodynamics and kinetics [169]. 
+Hu and Turner [169] compared TiI4 and TiCl4 from different aspects. Their results revealed 
+that the difference in bond strength between Ti-I and Ti-Cl would not lead to a consider-
+able change in the kinetics of their reactions with water. In contrast, different bond 
+strengths significantly affected the reaction thermodynamics [169]. Without performing a 
+single experiment, one would choose TiI4 over TiCl4 when a film with less impurity and a 
+lower ALD temperature is more favored; for instance, TiI 4 would probably be a better 
+precursor for TiO2 ALD on organic substrates compared with TiCl4. 
+Recently, Shahmohammadi et al . [100] developed a theoretical method to design 
+novel precursor materials for ALD. First, they developed a GCM model to predict the 
+thermodynamic properties (i.e., activity coefficients) of the functional groups of already -
+existing ALD precursor materials such a s tetrakis(dimethylamido)titanium (TDMAT), 
+tetrakis (diethylamino) titanium (TDEAT), tetrakis (diethylamino) hafnium (TDEAH), 
+and tetrakis (ethylmethylamino) hafnium (TEMAH). Then, using the estimated activity 
+coefficients of those groups, they formulated a CAMD framework to optimally design 
+novel precursor materials for ALD. Compared with the commercially available precur-
+sors, the most optimal designed precursors were predicted to have a ~40% increase in the 
+ALD growth rate [100]. The same GCM model was employed to quantify the water impu-
+rity in an ALD reactor, which will be discussed in the next section [101]. 
+Figure 6. Theoretical studies of ALD categorized based on the theoretical method and (a) thin ﬁlm
+material and the ALD aspect under study, i.e., (b) precursors, (c) deposition characterization, and
+(d) reaction mechanisms.
+4.1. Precursors
+First-principles theoretical methods can be used to select and optimize ALD precursors
+given any conditions. For instance, no experimental condition for ALD of silicon carbide
+(SiC) was known when Filatova et al. [178] performed DFT calculations to introduce the
+most promising precursors for this ALD system. They predicted that the combinations of
+disilane (Si2H6), silane (SiH4), or monochlorosilane (SiH3Cl) with ethyne (C2H2), carbon
+tetrachloride (CCl4), or trichloromethane (CHCl3) would be the most promising materials
+for ALD of SiC at 400◦C. As of then, SiC was only deposited via high-temperature CVD, and
+that was how they validated their method [178]. Therefore, those materials and conditions
+for ALD were proposed without performing a single experiment, saving a huge amount of
+time and energy. Thus, theoretical techniques can be used in a stand-alone manner without
+experiments, making them very powerful methods.
+In 2014, Jung et al. [145] studied a newly synthesized zirconium precursor for ZrO2
+ALD on silicon and compared their results with a commonly used zirconium precursor.
+Aside from exploring the properties of the precursor and ﬁlm growth, they performed
+DFT to examine the initial growth mechanism of ZrO2 on hydroxylated silicon. According
+to their DFT calculations, the new precursor would result in a lower growth rate due to
+steric hindrance but, at the same time, a more distinct fraction of a monolayer during one
+cycle [145].
+Dey and Elliott [48] introduced a copper (I) carbene hydride using DFT calculations
+that acted both as a reducing agent and a precursor for Cu ALD. They proposed a Cu-
+based reducing agent in case a co-deposition happened, which would be desirable as
+
+Nanomaterials 2022, 12, 831 12 of 25
+copper was still deposited [48]. In addition to Cu ALD [ 48,75,174], other materials have
+been studied through DFT, e.g., platinum [ 148], aluminum oxide [ 76,146,147], hafnium
+oxide [74,166,167], titanium oxide [77,169], and zirconium oxide [80,171]. Another study
+used DFT to design an aluminum ALD precursor by substituting one methyl in TMA and
+selectively decorating Pt nanoparticles by AlO x via ALD [ 76]. Yang et al. [ 76] showed
+that dimethylaluminum isopropoxide (DMAI) could be used as an ALD precursor, and
+they predicted the decomposition mechanism of DMAI with DFT [ 76]. Recently, Park
+et al. [166] compared two different hafnium precursors for ALD. DFT was used to predict
+that the cyclic precursor would result in a lower growth rate compared with the alkylamide
+precursor due to the low probability of ﬁnal chemical adsorption of the bulky cyclic ligand
+on the surface [166].
+When a decision needs to be made between two similar precursors, DFT can be used
+to compare different ALD precursors without performing any experiments. For instance,
+halide precursors have been compared with regard to thermodynamics and kinetics [169].
+Hu and Turner [169] compared TiI4 and TiCl4 from different aspects. Their results revealed
+that the difference in bond strength between Ti-I and Ti-Cl would not lead to a considerable
+change in the kinetics of their reactions with water. In contrast, different bond strengths
+signiﬁcantly affected the reaction thermodynamics [ 169]. Without performing a single
+experiment, one would choose TiI4 over TiCl4 when a ﬁlm with less impurity and a lower
+ALD temperature is more favored; for instance, TiI4 would probably be a better precursor
+for TiO2 ALD on organic substrates compared with TiCl4.
+Recently, Shahmohammadi et al. [ 100] developed a theoretical method to design
+novel precursor materials for ALD. First, they developed a GCM model to predict the
+thermodynamic properties (i.e., activity coefﬁcients) of the functional groups of already-
+existing ALD precursor materials such as tetrakis(dimethylamido)titanium (TDMAT),
+tetrakis (diethylamino) titanium (TDEAT), tetrakis (diethylamino) hafnium (TDEAH),
+and tetrakis (ethylmethylamino) hafnium (TEMAH). Then, using the estimated activity
+coefﬁcients of those groups, they formulated a CAMD framework to optimally design
+novel precursor materials for ALD. Compared with the commercially available precursors,
+the most optimal designed precursors were predicted to have a ~40% increase in the ALD
+growth rate [100]. The same GCM model was employed to quantify the water impurity in
+an ALD reactor, which will be discussed in the next section [101].
+4.2. Deposition Characterization
+Different theoretical models can be used to describe the growth rate in ALD. In 2003,
+Puurunen [66] derived a mathematical model based on mass balance to describe ALD
+growth rate as a function of growth chemistry. The chemistry of growth was deﬁned as
+the size of the reactants and their chemisorption mechanism on the substrate. Using that
+model, if the size of the ligands is known, one can simulate the growth per cycle from any
+compound with a certain chemisorption mechanism. The chemisorption processes of ligand
+exchange, association, and dissociation were theoretically described for the adsorption
+of the precursor on the substrate. It was found that either a steric hindrance or a limited
+number of active sites on the substrate causes surface saturation. According to the author,
+the steric hindrance of ligands would lead to the growth rate being less than a monolayer
+per cycle [ 66]. In another article, the same model was applied to three ALD systems,
+i.e., Al2O3 from TMA and H2O, Yttrium oxide (Y2O3) from Y(thd)3 and O3 (thd = 2,2,6,6-
+tetramethyl-3,5-heptanedionate), and TiO2 from TiCl4 and H2O. Based on that report, the
+ligand exchange would occur with all OH groups in the TMA/H2O process and with one
+or more OH groups in the Y(thd)3/O3 and TiCl4/H2O processes. Moreover, in all three
+systems, the steric hindrance of ligands likely deﬁned the saturation [ 161]. A year later,
+the same author theoretically described random deposition as an ALD growth mode [56].
+According to that research, random deposition and the growth rate value related the surface
+coverage to the surface fractions and the coverage of different layers. The surface fraction
+
+Nanomaterials 2022, 12, 831 13 of 25
+was deﬁned as the difference between coverages of a layer and the previous layer, whereas
+the sum of those fractions resulted in the surface coverage [56].
+Murray and Elliott [180] performed a comprehensive DFT investigation on ALD from
+17 different metal precursors. Using hydrolysis models, they were able to predict the
+reactivity and stoichiometry of metal cation ratios in a variety of ternary oxides grown by
+ALD [180]. In another article, Elliot [78] developed a theoretical framework based on DFT to
+predict the growth rate and the intermediates of the reaction as well as their concentration
+in an Al 2O3 ALD system. The well-known TMA and water system was employed for
+that study. The DFT analysis was performed with respect to the surface coverage of the
+intermediates, such as CH3 and H, and the effect of temperature as a processing condition
+was studied. According to the author, the higher processing temperature caused a higher
+concentration of hydrogen intermediates, reducing the growth rate. In addition, the lower
+temperature limited the mobility of hydrogen atoms, which decreased the growth rate in
+the system of that study [78].
+In another TMA/water study by Puurunen [73], the growth rate was shown to quanti-
+tatively correlate to the concentration of hydroxyl groups on the surface before the TMA
+reaction. Based on the results of that study, the correlation parameters depended on the
+precursor chemisorption and steric hindrance [73]. The temperature dependency of the
+growth rate was also discussed in Puurunen’s study, where the temperature effect was
+related to the concentration of hydroxyl groups on the surface. As the substrate temperature
+increased, the concentration of surface hydroxyl groups decreased, which in turn reduced
+the growth rate [73]. The ﬁnding was in agreement with the previously discussed study
+by Elliot [78]. Both of those studies considered Al2O3 ALD using TMA and water, while,
+recently, Seo et al. [163] employed DFT to study the effect of different oxidizers (i.e., H2O2
+and O3) reacting with TMA. According to their results, the molecular reactivity toward ALD
+of Al2O3 on a CH-terminated surface at low deposition temperatures for the three oxidizing
+agents was expected to be H2O < H2O2 < O3. Moreover, one H2O molecule was required
+to complete the reaction, whereas this number for both O3 and H2O2 was 2 [163]. DFT was
+used in another research study to investigate ALD-grown copper oxide nanoclusters on a
+porphyrin, supporting their similar reactivity characteristics with Cu-exchanged zeolites
+toward direct methane-to-methanol oxidation in a stepped conversion process [175].
+One of the well-established numerical techniques extensively used in different areas
+is Monte Carlo simulation. Monte Carlo simulation was previously performed to explain
+ALD ﬁlm growth in nanopores [ 96]. In that study, uniform ﬁlm growth was observed
+up to 75 cycles, beyond which the ﬁlm grew non-uniformly. At higher cycles, a thicker
+ﬁlm was observed at the pore edge compared with the pore center, which was attributed
+to increasing the resistance to precursor diffusion at the pore mouth and the precursor
+depletion in the central regions with increasing the cycle numbers [96]. In 2018, Weckman
+et al. [97] performed a comprehensive study on the overall growth and surface chemistry
+of ZnO ALD by implementing a DFT calculation into a kMC model. According to the
+authors, the temperature dependency of ﬁlm growth was in agreement with experimental
+data, while the growth rate per cycle was overestimated with simulation. Based on their
+report, the ﬁlm growth in the reported system was low at lower temperatures, which was
+attributed to the high activation energy required to eliminate ethyl ligands of the precursor,
+which in turn caused impurities in the ﬁlm. However, those barriers would be overcome at
+higher temperatures, resulting in a higher growth rate [97].
+Moreover, the gas ﬂow and temperature proﬁle in ALD have been studied experi-
+mentally and theoretically. Burgess et al. [162] used CFD codes to simulate the gas ﬂow
+and temperature proﬁle in the AL2O3 and HfO2 ALD systems. They employed quantum
+calculations to identify reaction pathways and energies in both systems [ 162]. The gas
+ﬂow and surface reactions in Al 2O3 ALD using TMA and water were studied using 3D
+transient numerical models. The predicted growth rate under different ALD conditions
+(i.e., temperature and precursor purging time) was compared with experimental values.
+Slightly higher growth rates were predicted compared with the experimental results. The
+
+Nanomaterials 2022, 12, 831 14 of 25
+longer purge times at lower temperatures would result in closer agreement between the
+experimental and predicted growth rates. One interesting observation of that work was
+that the growth rate was dependent on the location of the sample in their ALD reactor,
+and the samples near the inlet of the reactor had a higher growth rate than those near
+the outlet [ 149]. Although their results showed good agreement between experiments
+and simulations, they only considered one full ALD cycle in their numerical study. A
+previous study suggested that after a speciﬁc number of ALD cycles where a rather thick
+ﬁlm is formed, the growth mechanism and the growth rate may change since the effect
+of the substrate is diminished [6]. Pan et al. [86] compared two common LBM models to
+characterize the carrier gas ﬂow in ALD: the lattice Bhatnagar–Gross–Krook (LBGK) and
+two-relaxation-time (TRT) models. According to their results, the TRT model was more
+reliable regarding stability, while the LBGK model was better in terms of computational
+efﬁciency [86].
+Monte Carlo simulation is also applicable in implementing the kinetics of ALD. For
+example, Deminsky et al. [ 95] performed kMC simulation to study the temperature de-
+pendency of the growth rate and reported its slight decrease between 200 and 600 ◦C
+in Zr(Hf)O 2 ALD. The observed temperature dependency of the growth rate was re-
+ported to be in agreement with experimental data and due to the steric repulsion between
+chemisorbed groups and adsorbed precursor molecules [95]. This is in line with another
+work, where the researchers used CAMD to design novel precursor materials for ALD, and
+the predicted growth rates displayed temperature dependency [100].
+The morphology evolution of the ﬁlms produced by ALD can be modeled and studied
+through Monte Carlo simulation. In a previous study, amorphous ﬁlms deposited by ALD
+were examined with Monte Carlo simulation [94]. Based on the results, steric hindrance
+would delay the linear growth [ 94]. In addition, 3D Monte Carlo simulation has been
+used to determine the ﬁlm thickness and sticking coefﬁcients of TMA and bis-diethyl
+aminosilane (BDEAS) precursors in high-aspect-ratio 3D substrates [93]. In another work,
+Cremers et al. [179] reported the results of 3D Monte Carlo simulation in ALD on different
+large geometries, i.e., pillars versus holes. According to the authors, much less precursor
+exposure is needed for conformal ALD on pillars than holes, which, as a result, makes
+arrays of pillars more appropriate for ALD [179].
+A recent report from the authors employed the GCM and ASST to quantify the
+impurity in an ALD reactor [101] reported earlier. When PMMA and a silicon reference
+were present in the same ALD reactor, the TiO 2 growth rate on silicon was higher than
+stand-alone silicon. This elevated growth rate had been observed experimentally and was
+attributed to the released water molecules from PMMA pores [ 6]. With the help of the
+theoretical methods, the precise amount of water vapor from PMMA was calculated and
+conﬁrmed the previously reported hypothesis. The predicted growth rate on the silicon
+reference was in agreement with the experimental data. The model also showed that the
+moles of water molecules acting as the second co-reactant of ALD decreased with increasing
+the number of ALD cycles [101]. This decreasing trend had been observed with experiments
+as well [6].
+4.3. Mechanisms
+The reaction mechanism happening in the Al2O3 ALD system using TMA and water
+has been studied theoretically to determine thermodynamically favorable pathways at
+various stages of ALD [157–159,164,165]. DFT cluster models have been used to predict re-
+action energetics and transition state structures for adsorption and a single ligand exchange
+during both the TMA and water half-reactions. Both half-cycle reactions are reported to
+be exothermic, happening through the formation of an Al–O Lewis acid–base complex
+followed by CH4 formation [164]. Another article was focused on atomic-scale models to
+investigate the reaction steps involved in the growth of Al2O3 ALD, especially precursor
+adsorption and by-product elimination [165]. Recently, reaction mechanisms between TMA
+
+Nanomaterials 2022, 12, 831 15 of 25
+and O3 were investigated using DFT. Some plausible intermediates of those reactions were
+found to be methoxy, formate, bicarbonate, and hydroxyl intermediates [160].
+The dissociation of water molecules, when adsorbed on the substrate, hydroxylates
+the surface. Thus, when studying reaction mechanisms, the OH groups should be con-
+sidered. DFT is used to study in detail energetics of the initial reaction pathways on the
+hydroxylated surface during the TMA pulse. TMA is reported to adsorb exothermically
+on the surface, reacting with the hydroxylated Al 2O3 surface through ligand exchange
+reactions [157]. Travis and Adomaitis [158] used existing energetics data to determine ki-
+netic parameters using statistical thermodynamics and absolute reaction rate theory. They
+presented a surface reaction kinetics and ﬁlm growth model for the TMA half-reactions of
+Al2O3 ALD on a range of surfaces from bare to full hydroxylated states. According to their
+results, the reaction pathway differed if the surface was bare or hydroxylated, and maxi-
+mum ALD growth only occurred at an initially saturating hydroxyl group density [158].
+Brown et al. [83] performed MD on Al2O3 ALD, focusing on dissociation reactions. Based
+on their results, the studied variables, such as growth rate and surface roughness, were
+in close agreement with the experimentally reported values. However, the previous stud-
+ies that only considered the ligand exchange reactions achieved less agreement with the
+experimental data [181].
+Metal alkoxides were reported to be used as both hafnium and oxygen precursors in
+ALD. Mui and Musgrave [74] predicted the chemical mechanism of HfO2 ALD using DFT
+calculations, in which they examined Tetraethoxyl Hafnium (Hf(OEt)4) as both a precursor
+and an oxidizer. They studied different reaction pathways that would affect the ALD
+growth rate. According to the authors, incomplete surface elimination most likely led to
+carbon contamination and competed kinetically with the ligand exchange half-reactions.
+Additionally, the use of Hf(OEt) 4 as the oxygen precursor was not advantageous as it
+violated the self-limiting characteristic of ALD [ 74]. The halide hafnium precursor was
+used in another work to examine the mechanisms of half-reactions happening in HfO2 ALD.
+It was reported that the adsorption energy and the preferred adsorption sites for metal
+precursors depended on the water coverage. That is, increasing the water coverage would
+lead to higher interaction between the metal precursor and multiple surface adsorption
+sites [167]. Another study reported the effect of cluster size on the formation of the HfCl4
+complex during the precursor half-reaction [70].
+The densiﬁcation process in HfO2 ALD on SiO2 was studied through combined DFT
+and kMC [168]. The introduced possible densiﬁcation reactions, which impacted growth
+evolution, were nucleation, the “inter-side” reaction, and the “on-site” reaction. The authors
+compared the simulation results of surface coverage to the experimental data up to 10 ALD
+cycles. They concluded that considering the densiﬁcation reactions was the only condition
+that caused the agreement with experiments [168]. A year later, another group used DFT to
+study the reactions happening in HfO2 ALD [79]. They reported a detailed mechanism for
+that ALD system from tetrakis(dimethylamido)hafnium and water. Based on calculated
+activation energies, multiple proton diffusions from the surface to amide ligands and
+rotation of the protonated amine are more energetically favorable than ligand elimination
+in the initial stage. Thus, multiple proton diffusions to the amide ligands happen before
+the protonated amine ligands desorb. When the precursor was adsorbed on the surface,
+multiple protons diffused to amine ligands. That freed up hafnium to bond with oxygen,
+which had already been freed due to protonation and desorption of ligands and become
+ﬁve-coordinated. Then, hafnium became four-coordinated upon further ligand elimination.
+Hafnium became more highly coordinated as more ligands were eliminated, forming bonds
+with more oxygens and causing densiﬁcation. The remaining ligands exchanged with
+hydroxyl groups during the water pulse, preparing the surface for the next precursor
+pulse [79].
+Hu and Turner [77] employed DFT to investigate, in detail, the initial surface reactions
+of TiO2 ALD from TiCl4 and water. They studied different reactive groups of the SiO 2
+surface as the substrate, i.e., isolated hydroxyl groups, adjacent hydrogen-bonded hydroxyl
+
+Nanomaterials 2022, 12, 831 16 of 25
+groups, and surface oxygen bridges. According to their report, all the investigated surfaces
+were reactive toward TiCl4, where different intermediate species with different activation
+barriers were formed on each surface [77]. Later on, DFT was employed to compare the
+initial growth mechanisms in ALD of TiO2 and ZrO2 on SiOH surfaces using cyclohepta-
+trienyl (CHT)–cyclopentadienyl (Cp) precursors [170,172]. According to the authors’ DFT
+calculations, the reactions happened through similar pathways in both metal oxides, where
+one hydrogen atom from the surface was transferred to the precursor ligand (Figure 7,
+reprinted with permission from reference [170]). However, the Zr precursor adsorption
+was exothermic and thus energetically favorable, whereas that of the Ti precursor was
+endothermic and thermodynamically unfavorable. The authors reported this difference to
+be a reason why an ALD window had been experimentally observed for ZrO2 growth and
+not for TiO2 growth [170]. The same researchers proposed initial reaction pathways for an
+ansa-metallocene Zr precursor ((Cp2CMe2)ZrMe2), where the steric hindrance of the large
+ligand prevented the reaction from occurring through chemisorption, and it happened due
+to the dispersion effect of the bulky ligand [173].
+Nanomaterials 2022, 12, x FOR PEER REVIEW 16 of 26 
+ 
+ 
+evolution, were nucleation, the “inter-side” reaction, and the “on-site” reaction. The au-
+thors compared the simulation results of surface coverage to the experimental data up to 
+10 ALD cycles. They concluded that considering the densification reactions was the only 
+condition that caused the agreement with experiments [168]. A year later, another group 
+used DFT to study the reactions happening in HfO 2 ALD [79]. They reported a detailed 
+mechanism for that ALD system from tetrakis(dimethylamido)hafnium and water. Based 
+on calculated activation energies, multiple proton diffusions from the surface to amide 
+ligands and rotation of the protonated amine are more energetically favorable than ligand 
+elimination in the initial stage. Thus, multiple proton diffusions to the amide ligands hap-
+pen before the protonated amine ligands desorb. When the precursor was adsorbed on 
+the surface, multiple protons diffused to amine ligands. That freed up hafnium to bond 
+with oxygen, which had already been freed due to protonation and desorption of ligands 
+and become five-coordinated. Then, hafnium became four-coordinated upon further lig-
+and elimination. Hafnium became more highly coordinated as more ligands were elimi-
+nated, forming bonds with more oxygens and causing densification. The r emaining lig-
+ands exchanged with hydroxyl groups during the water pulse, preparing the surface for 
+the next precursor pulse [79]. 
+Hu and Turner [77] employed DFT to investigate, in detail, the initial surface reac-
+tions of TiO2 ALD from TiCl4 and water. They studied different reactive groups of the SiO2 
+surface as the substrate, i.e., isolated hydroxyl groups, adjacent hydrogen -bonded hy-
+droxyl groups, and surface oxygen bridges. According to their report, all the investigated 
+surfaces were reactive toward TiC l4, where different intermediate species with different 
+activation barriers were formed on each surface [77]. Later on, DFT was employed to com-
+pare the initial growth mechanisms in ALD of TiO2 and ZrO2 on SiOH surfaces using cy-
+cloheptatrienyl (CHT)–cyclopentadienyl (Cp) precursors [170,172]. According to the au-
+thors’ DFT calculations, the reactions happened through similar pathways in both metal 
+oxides, where one hydrogen atom from the surface was transferred to the precursor ligand 
+(Figure 7, reprinted with permission from reference [170]). However, the Zr precursor ad-
+sorption was exothermic and thus energetically favorable, whereas that of the Ti precursor 
+was endothermic and thermodynamically unfavorable. The  authors reported this differ-
+ence to be a reaso n why an ALD window had been experimentally observed for ZrO 2 
+growth and not for TiO 2 growth [170]. The same researchers proposed initial reaction 
+pathways for an ansa-metallocene Zr precursor ((Cp2CMe2)ZrMe2), where the steric hin-
+drance of the large ligand prevented the reaction from occurring through chemisorption, 
+and it happened due to the dispersion effect of the bulky ligand [173]. 
+ 
+Figure 7. Surface reactions of Cp MeZr(CHT) and CpTi(CHT) on the SiOH surface ( reprinted with 
+permission from reference [170]). 
+Figure 7. Surface reactions of CpMeZr(CHT) and CpTi(CHT) on the SiOH surface (reprinted with
+permission from reference [170]).
+Han et al. [171] studied the initial growth mechanisms in ZrO2 ALD on hydroxylated
+SiO2 substrates by DFT. The intermediate complexes formed after each half-reaction of
+ZrCl4 and water were similar to the ones shown in Table 1. Furthermore, they reported that
+increasing the temperature would increase the precursor desorption and sub-monolayer
+growth. Another research study was performed on a similar system. Cui and Ren [ 80]
+investigated fourteen possible pathways of chlorine loss reactions in ZrO 2 ALD using
+ZrCl4 and water through DFT. They reported that the HCl by-product did not prefer to
+self-eliminate throughout the process. Thus, eliminating chloride contaminations should
+be considered in that ALD system. Moreover, they discussed temperature effects on
+chlorine loss reactions, where the self-elimination of HCl was the dominant pathway at a
+lower temperature. At elevated temperatures, although the self-elimination of HCl was
+still favorable, hydrolysis was the dominant pathway due to the decrease in hydroxyl
+groups [80].
+In addition to metal oxides, the mechanisms happening in metal ALD have also
+been investigated through DFT. For instance, Karasulu et al. [148] investigated platinum
+ALD on graphene using DFT. As a result, they were able to minimize the experimental
+procedures for process development and revealed that graphene oxide is an effective seed
+layer to obtain a uniform continuous Pt thin ﬁlm. Ab initio DFT MD simulations were
+also helpful for investigating the thermal stability of simulation models [ 148]. Another
+interesting study used DFT to compare the reactions of two precursors in ruthenium
+ALD on different ruthenium surfaces [177]. The authors’ comparison between reactions
+on various substrates proved that a surface with a high surface energy and a complex
+
+Nanomaterials 2022, 12, 831 17 of 25
+topology, i.e., a surface with more defective sites for the adsorption and reaction, was the
+best substrate for ALD. Moreover, the presence of hydrogen atoms on the surface would
+prevent precursor adsorption [177].
+In 2015, Hu et al. [ 75] studied the ALD of Copper(II) acetylacetonate (Cu(acac) 2)
+on Cu(110) substrates, and investigated initial surface reactions of the copper precursor
+through DFT calculations and reactive molecular dynamics (RMD) simulations. Based on
+their results, the dissociation of Cu(acac)2 easily happened on Cu atoms, while the acac
+ligand could dissociate on both copper and copper oxide surfaces. Their DFT calculations
+revealed the sequential dissociation and reduction of the Cu(acac)2 precursor on the copper
+substrate (Cu(acac)2-Cu(acac)-Cu), which was in line with the reaction pathways they ob-
+served through RMD. Their RMD simulations revealed that the copper-rich surfaces were
+more reactive toward the precursor’s decomposition. They also reported that the atomic
+hydrogen was more reactive toward the precursors with hydrocarbon ligands than ozone
+or water as co-reactants [ 75]. Two years later, the mechanisms of metal ALD chemistry
+on an atomic scale were investigated through DFT [ 174]. The work by Elliot et al. [ 174]
+supported the reduction of a Cu(acac) 2 precursor on Cu substrates, which had been re-
+ported earlier [75]. Another DFT study investigated the transmetalation reactions as the
+mechanism for Cu ALD using diethylzinc (ZnEt2) as the reducing agent [176]. The most
+thermodynamically favorable gas-phase reactions in both the precursor and co-reagent
+pulses are presented in Figure 8 (reprinted from reference [176]). The letter L in Figure 8
+refers to the ligands of the reagents, meaning the reactions were generalized for commonly
+used Cu precursors, irrespective of which was used, while copper dimethyl-2-propoxide
+(Cu(dmap)2) was reported to be the best one [176].
+Nanomaterials 2022, 12, x FOR PEER REVIEW 18 of 26 
+ 
+ 
+ 
+Figure 8. Flowcharts depicting possible ALD mechanisms for (a) a precursor pulse and (b) a reduc-
+ing-agent pulse. Rectangular shapes denote starting reagents and end produ cts, and slanted boxes 
+denote intermediates. The upward arrows represent desorption of volatile species ( reprinted with 
+permission from [176]). 
+5. Summary, Insights, and Future Challenges 
+In this review, all theoretical methods that have been employed so far to study ALD 
+are discussed. The fundamental and ab initio (first-principles) techniques such as DFT are 
+used to predict atomic behavior at the micro-level. These methods provide detailed infor-
+mation on atomic interactions without  depending on experiments since they do not re-
+quire initial data to be obtained. However, they are time-consuming and can become very 
+expensive. On the contrary, macro -level methods such as CAMD are much faster and 
+more cost -efficient than the aforemention ed ones. These methods predict the optimal 
+chemical molecules based on information about building blocks (functional groups) rather 
+than atoms and can be used for reverse engineering. However, the main drawback of these 
+techniques is the necessity of experimental data. For instance, one would need the prop-
+erties of groups of molecules to use CAMD, requiring experimental data. Thus, whenever 
+there is a lack of experimental data, the  ab initio methods are useful, but if the experi-
+mental data are available, it would be more efficient to use reverse engineering methods. 
+Most of the researchers have so far focused on varying the operating temperature to 
+theoretically predict the growth, film properties, and reaction mechanisms in an ALD sys-
+tem. However, the temperature is not the only factor affecting ALD reactions. Other fac-
+tors, such as the substrate, gas flow, reactor design, and adsorbate–adsorbate and adsorb-
+ate–adsorbent interactions, affect the predicted mechanisms happening in ALD reactions. 
+Those factors may be varied through computational methods to better predict the behav-
+ior of different ALD process es. In addition, most of the theoretical research articles o n 
+ALD so far have focused on the processes on inorganic substrates. However, since more 
+and more experimental ALD studies are being performed on organic substrates, such as 
+polymers and biomaterials, the actual growth behavior and reaction mechanisms on these 
+materials are largely unknown. Due to the nature of organic materials, it would be highly 
+complicated and challenging to predict the growth behavior, thin film characteristics, and 
+Figure 8. Flowcharts depicting possible ALD mechanisms for (a) a precursor pulse and (b) a reducing-
+agent pulse. Rectangular shapes denote starting reagents and end products, and slanted boxes denote
+intermediates. The upward arrows represent desorption of volatile species (reprinted with permission
+from [176]).
+
+Nanomaterials 2022, 12, 831 18 of 25
+5. Summary, Insights, and Future Challenges
+In this review, all theoretical methods that have been employed so far to study ALD are
+discussed. The fundamental and ab initio (ﬁrst-principles) techniques such as DFT are used
+to predict atomic behavior at the micro-level. These methods provide detailed information
+on atomic interactions without depending on experiments since they do not require initial
+data to be obtained. However, they are time-consuming and can become very expensive. On
+the contrary, macro-level methods such as CAMD are much faster and more cost-efﬁcient
+than the aforementioned ones. These methods predict the optimal chemical molecules
+based on information about building blocks (functional groups) rather than atoms and
+can be used for reverse engineering. However, the main drawback of these techniques is
+the necessity of experimental data. For instance, one would need the properties of groups
+of molecules to use CAMD, requiring experimental data. Thus, whenever there is a lack
+of experimental data, the ab initio methods are useful, but if the experimental data are
+available, it would be more efﬁcient to use reverse engineering methods.
+Most of the researchers have so far focused on varying the operating temperature
+to theoretically predict the growth, ﬁlm properties, and reaction mechanisms in an ALD
+system. However, the temperature is not the only factor affecting ALD reactions. Other
+factors, such as the substrate, gas ﬂow, reactor design, and adsorbate–adsorbate and
+adsorbate–adsorbent interactions, affect the predicted mechanisms happening in ALD
+reactions. Those factors may be varied through computational methods to better predict the
+behavior of different ALD processes. In addition, most of the theoretical research articles
+on ALD so far have focused on the processes on inorganic substrates. However, since more
+and more experimental ALD studies are being performed on organic substrates, such as
+polymers and biomaterials, the actual growth behavior and reaction mechanisms on these
+materials are largely unknown. Due to the nature of organic materials, it would be highly
+complicated and challenging to predict the growth behavior, thin ﬁlm characteristics, and
+reaction mechanisms on those substrates. We hope to see such interesting studies from
+theoreticians in the future to better assist in the design of experiments in those ﬁelds.
+Author Contributions: Conceptualization, M.S. and R.M.; investigation, M.S.; resources, C.G.T.;
+writing—original draft preparation, M.S.; writing—review and editing, R.M., C.S., U.M.D., C.G.T.;
+visualization, M.S.; supervision, U.M.D., C.G.T.; project administration, U.M.D., C.G.T.; funding
+acquisition, C.G.T. All authors have read and agreed to the published version of the manuscript.
+Funding: This research was partially funded by National Science Foundation (NSF 1309114).
+Acknowledgments: Partial support by the National Science Foundation, NSF 1309114, is gratefully
+acknowledged. Figure 1 was created with BioRender.com.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1. Ritala, M.; Leskelä, M. Chapter 2—Atomic layer deposition. In Handbook of Thin Films; Singh Nalwa, H.B.T.-H., Ed.; Academic
+Press: Burlington, VT, USA, 2002; pp. 103–159. ISBN 978-0-12-512908-4.
+2. Puurunen, R.L. A short history of atomic layer deposition: Tuomo Suntola’s atomic layer epitaxy.Chem. Vap. Depos.2014, 20,
+332–344. [CrossRef]
+3. George, S.M. Atomic layer deposition: An overview. Chem. Rev.2010, 110, 111–131. [CrossRef] [PubMed]
+4. Leskelä, M.; Ritala, M. Atomic Layer Deposition Chemistry: Recent Developments and Future Challenges. Angew. Chemie - Int.
+Ed. 2003, 42, 5548–5554. [CrossRef]
+5. Oviroh, P .O.; Akbarzadeh, R.; Pan, D.; Coetzee, R.A.M.; Jen, T.-C. New development of atomic layer deposition: Processes,
+methods and applications. Sci. Technol. Adv. Mater.2019, 20, 465–496. [CrossRef] [PubMed]
+6. Shahmohammadi, M.; Pensa, E.; Bhatia, H.; Yang, B.; Jursich, G.; Takoudis, C.G. Enhancing the surface properties and func-
+tionalization of polymethyl methacrylate with atomic layer-deposited titanium(IV) oxide. J. Mater. Sci.2020, 55, 17151–17169.
+[CrossRef]
+7. Knoops, H.C.M.; Potts, S.E.; Bol, A.A.; Kessels, W.M.M. Atomic Layer Deposition. In Handbook of Crystal Growth: Thin Films and
+Epitaxy; Kuech, T., Ed.; Elsevier: Amsterdam, The Netherlands, 2015; Volume 3, pp. 1101–1134. ISBN 9780444633057.
+8. Hagen, D.J.; Pemble, M.E.; Karppinen, M. Atomic layer deposition of metals: Precursors and ﬁlm growth. Appl. Phys. Rev.2019,
+6, 41309. [CrossRef]
+
+Nanomaterials 2022, 12, 831 19 of 25
+9. Johnson, R.W.; Hultqvist, A.; Bent, S.F. A brief review of atomic layer deposition: From fundamentals to applications. Mater.
+Today 2014, 17, 236–246. [CrossRef]
+10. Shahmohammadi, M.; Yang, B.; Takoudis, C.G. Applications of Titania Atomic Layer Deposition in the Biomedical Field and
+Recent Updates. Am. J. Biomed. Sci. Res.2020, 8, 465–468. [CrossRef]
+11. Tao, Q.; Jursich, G.; Takoudis, C. Selective atomic layer deposition of HfO2 on copper patterned silicon substrates. Appl. Phys.
+Lett. 2010, 96, 192105. [CrossRef]
+12. Sheng, J.; Han, K.-L.; Hong, T.; Choi, W.-H.; Park, J.-S. Review of recent progresses on ﬂexible oxide semiconductor thin ﬁlm
+transistors based on atomic layer deposition processes. J. Semicond.2018, 39, 11008. [CrossRef]
+13. Majumder, P .; Jursich, G.; Takoudis, C. Structural phase transformation of Y2O3 doped HfO2 ﬁlms grown on Si using atomic layer
+deposition. J. Appl. Phys.2009, 105, 104106. [CrossRef]
+14. Meng, X.; Yang, X.; Sun, X. Emerging applications of atomic layer deposition for lithium-ion battery studies. Adv. Mater.2012, 24,
+3589–3615. [CrossRef] [PubMed]
+15. Jung, Y.S.; Cavanagh, A.S.; Dillon, A.C.; Groner, M.D.; George, S.M.; Lee, S.-H. Enhanced stability of LiCoO 2 cathodes in
+lithium-ion batteries using surface modiﬁcation by atomic layer deposition. J. Electrochem. Soc.2009, 157, A75. [CrossRef]
+16. Cao, Y.-Q.; Wang, S.-S.; Liu, C.; Wu, D.; Li, A.-D. Atomic layer deposition of ZnO/TiO2 nanolaminates as ultra-long life anode
+material for lithium-ion batteries. Sci. Rep.2019, 9, 1–9. [CrossRef]
+17. Lin, Y.-C.; Chung, V .P .J.; Santhanam, S.; Mukherjee, T.; Fedder, G.K. Sidewall Metallization on CMOS MEMS by Platinum ALD
+Patterning. J. Microelectromechanical Syst.2020, 29, 978–983. [CrossRef]
+18. Fraga, M.; Pessoa, R. Progresses in Synthesis and Application of SiC Films: From CVD to ALD and from MEMS to NEMS.
+Micromachines 2020, 11, 799. [CrossRef]
+19. Vulpe, S.; Nastase, F.; Dragoman, M.; Dinescu, A.; Romanitan, C.; Iftimie, S.; Moldovan, A.; Apostol, N. Physical properties of the
+ferroelectric capacitors based on Al-doped HfO2 grown via Atomic Layer Deposition on Si. Appl. Surf. Sci.2019, 483, 324–333.
+[CrossRef]
+20. Fang, C.; Wang, M.; Han, P .; Cao, Y.-Q.; Wu, D.; Li, A.-D. High-Performance MIM Capacitors Using Zr-Sn-Ti-O Dielectrics Derived
+from Atomic Layer Deposition. IEEE Electron. Device Lett.2019, 40, 682–685. [CrossRef]
+21. Shim, J.H.; Chao, C.-C.; Huang, H.; Prinz, F.B. Atomic layer deposition of yttria-stabilized zirconia for solid oxide fuel cells. Chem.
+Mater. 2007, 19, 3850–3854. [CrossRef]
+22. Liu, C.; Wang, C.; Kei, C.; Hsueh, Y.; Perng, T. Atomic layer deposition of platinum nanoparticles on carbon nanotubes for
+application in proton-exchange membrane fuel cells. Small 2009, 5, 1535–1538. [CrossRef]
+23. Li, Y.K.; Choi, H.J.; Kim, H.K.; Chean, N.K.; Kim, M.; Koo, J.; Jeong, H.J.; Jang, D.Y.; Shim, J.H. Nanoporous silver cathodes
+surface-treated by atomic layer deposition of Y: ZrO2 for high-performance low-temperature solid oxide fuel cells. J. Power Sources
+2015, 295, 175–181. [CrossRef]
+24. Wang, C.; Zhao, D.; Grice, C.R.; Liao, W.; Yu, Y.; Cimaroli, A.; Shrestha, N.; Roland, P .J.; Chen, J.; Yu, Z. Low-temperature
+plasma-enhanced atomic layer deposition of tin oxide electron selective layers for highly efﬁcient planar perovskite solar cells. J.
+Mater. Chem. A2016, 4, 12080–12087. [CrossRef]
+25. Standridge, S.D.; Schatz, G.C.; Hupp, J.T. Toward plasmonic solar cells: Protection of silver nanoparticles via atomic layer
+deposition of TiO2. Langmuir 2009, 25, 2596–2600. [CrossRef] [PubMed]
+26. Dong, X.; Fang, X.; Lv, M.; Lin, B.; Zhang, S.; Ding, J.; Yuan, N. Improvement of the humidity stability of organic–inorganic
+perovskite solar cells using ultrathin Al2O3 layers prepared by atomic layer deposition. J. Mater. Chem. A2015, 3, 5360–5367.
+[CrossRef]
+27. Sheng, J.; Park, E.J.; Shong, B.; Park, J.-S. Atomic layer deposition of an indium gallium oxide thin ﬁlm for thin-ﬁlm transistor
+applications. ACS Appl. Mater. Interfaces2017, 9, 23934–23940. [CrossRef]
+28. Lim, S.J.; Kwon, S.; Kim, H.; Park, J.-S. High performance thin ﬁlm transistor with low temperature atomic layer deposition
+nitrogen-doped ZnO. Appl. Phys. Lett.2007, 91, 183517. [CrossRef]
+29. Kwon, S.; Bang, S.; Lee, S.; Jeon, S.; Jeong, W.; Kim, H.; Gong, S.C.; Chang, H.J.; Park, H.; Jeon, H. Characteristics of the ZnO thin
+ﬁlm transistor by atomic layer deposition at various temperatures. Semicond. Sci. Technol.2009, 24, 35015. [CrossRef]
+30. Choi, J.H.; Jung, C.H.; Hwang, I.T.; Choi, J.H. Preparation and characterization of crosslinked poly(butylene adipate-co-
+terephthalate)/polyhedral oligomeric silsesquioxane nanocomposite by electron beam irradiation. Radiat. Phys. Chem.2013, 82,
+100–105. [CrossRef]
+31. Narayan, R.J.; Adiga, S.P .; Pellin, M.J.; Curtiss, L.A.; Stafslien, S.; Chisholm, B.; Monteiro-Riviere, N.A.; Brigmon, R.L.; Elam, J.W.
+Atomic layer deposition of nanoporous biomaterials. Mater. Today2010, 13, 60–64. [CrossRef]
+32. Skoog, S.A.; Elam, J.W.; Narayan, R.J. Atomic layer deposition: Medical and biological applications. Int. Mater. Rev.2013, 58,
+113–129. [CrossRef]
+33. Narayan, R.J.; Monteiro-Riviere, N.A.; Brigmon, R.L.; Pellin, M.J.; Elam, J.W. Atomic layer deposition of TiO 2 thin ﬁlms on
+nanoporous alumina templates: Medical applications. JOM 2009, 61, 12–16. [CrossRef]
+34. Bishal, A.K.; Sukotjo, C.; Jokisaari, J.R.; Klie, R.F.; Takoudis, C.G. Enhanced Bioactivity of Collagen Fiber Functionalized with
+Room Temperature Atomic Layer Deposited Titania. ACS Appl. Mater. Interfaces2018, 10, 34443–34454. [CrossRef] [PubMed]
+
+Nanomaterials 2022, 12, 831 20 of 25
+35. Xie, X.; Rieth, L.; Caldwell, R.; Diwekar, M.; Tathireddy, P .; Sharma, R.; Solzbacher, F. Long-Term Bilayer Encapsulation
+Performance of Atomic Layer Deposited Al2O3 and Parylene C for Biomedical Implantable Devices. IEEE Trans. Biomed. Eng.
+2013, 60, 2943–2951.
+36. Nazarov, D.V .; Smirnov, V .M.; Zemtsova, E.G.; Yudintceva, N.M.; Shevtsov, M.A.; Valiev, R.Z. Enhanced osseointegrative
+properties of ultra-ﬁne-grained titanium implants modiﬁed by chemical etching and atomic layer deposition. ACS Biomater. Sci.
+Eng. 2018, 4, 3268–3281. [CrossRef]
+37. Liu, L.; Bhatia, R.; Webster, T.J. Atomic layer deposition of nano-TiO2 thin ﬁlms with enhanced biocompatibility and antimicrobial
+activity for orthopedic implants. Int. J. Nanomedicine2017, 12, 8711–8723. [CrossRef] [PubMed]
+38. Devlin-Mullin, A.; Todd, N.M.; Golrokhi, Z.; Geng, H.; Konerding, M.A.; Ternan, N.G.; Hunt, J.A.; Potter, R.J.; Sutcliffe, C.; Jones,
+E. Atomic layer deposition of a silver nanolayer on advanced titanium orthopedic implants inhibits bacterial colonization and
+supports vascularized de novo bone ingrowth. Adv. Healthc. Mater.2017, 6, 1700033. [CrossRef] [PubMed]
+39. Chang, S.; Selvaraj, S.K.; Choi, Y.-Y.; Hong, S.; Nakhmanson, S.M.; Takoudis, C. Atomic layer deposition of environmentally
+benign SnTiOx as a potential ferroelectric material. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.2016, 34, 01A119. [CrossRef]
+40. Koveshnikov, S.; Goel, N.; Majhi, P .; Wen, H.; Santos, M.B.; Oktyabrsky, S.; Tokranov, V .; Kambhampati, R.; Moore, R.; Zhu, F. In
+0.53 Ga 0.47 As based metal oxide semiconductor capacitors with atomic layer deposition ZrO2 gate oxide demonstrating low
+gate leakage current and equivalent oxide thickness less than 1 nm. ApPhL 2008, 92, 222904.
+41. Darwish, G.; Huang, S.; Knoernschild, K.; Sukotjo, C.; Campbell, S.; Bishal, A.K.; Wu, C.D.; Takoudis, C.G.; Adelino, V .; Yang,
+B. Improving Polymethyl Methacrylate Resin Using a Novel Titanium Dioxide Coating. J. Prosthodont. 2019, 28, 1011–1017.
+[CrossRef] [PubMed]
+42. Mallick, B.C.; Hsieh, C.-T.; Yin, K.-M.; Gandomi, Y.A.; Huang, K.-T. Review—On Atomic Layer Deposition: Current Progress and
+Future Challenges. ECS J. Solid State Sci. Technol.2019, 8, N55–N78. [CrossRef]
+43. Bishal, A.K.; Butt, A.; Selvaraj, S.K.; Joshi, B.; Patel, S.B.; Yang, B.; Shukohfar, T.; Sukotjo, C.; Takoudis, C.G. Atomic Layer
+Deposition in Bio-Nanotechnology: A Brief Overview. Crit. Rev. Biomed. Eng.2015, 43, 255–276. [CrossRef] [PubMed]
+44. He, W. ALD: Atomic Layer Deposition-Precise and Conformal Coating for Better Performance; Springer: London, UK, 2015.
+45. Hämäläinen, J.; Ritala, M.; Leskelä, M. Atomic layer deposition of noble metals and their oxides. Chem. Mater.2014, 26, 786–801.
+[CrossRef]
+46. Ritala, M. Atomic layer deposition. In High-K Gate Dielectrics; Elsevier: Amsterdam, The Netherlands, 2003; pp. 17–64.
+ISBN 9781420034141.
+47. Muñoz-Rojas, D.; Nguyen, V .H.; de la Huerta, C.M.; Aghazadehchors, S.; Jiménez, C.; Bellet, D. Spatial Atomic Layer Deposition
+(SALD), an emerging tool for energy materials. Application to new-generation photovoltaic devices and transparent conductive
+materials. Comptes Rendus Phys.2017, 18, 391–400. [CrossRef]
+48. Dey, G.; Elliott, S.D. Copper(I) carbene hydride complexes acting both as reducing agent and precursor for Cu ALD: A study
+through density functional theory. Theor. Chem. Acc.2014, 133, 1–7. [CrossRef]
+49. Leskelä, M.; Ritala, M. Atomic layer deposition (ALD): From precursors to thin ﬁlm structures. Thin Solid Films2002, 409, 138–146.
+[CrossRef]
+50. Huang, S. Improving Polymethyl Methacrylate Resin Using Novel Nano-Ceramic Coating. Master dissertation, University of
+Illinois at Chicago, Chicago, IL, USA, 2017.
+51. Majumder, P .; Katamreddy, R.; Takoudis, C. Effect of ﬁlm thickness on the breakdown temperature of atomic layer deposited
+ultrathin HfO2 and Al2O3 diffusion barriers in copper metallization. J. Cryst. Growth2007, 309, 12–17. [CrossRef]
+52. Xu, R.; Tao, Q.; Yang, Y.; Takoudis, C.G. Atomic layer deposition and characterization of stoichiometric erbium oxide thin
+dielectrics on Si (100) using (CpMe)3Er precursor and ozone. Appl. Surf. Sci.2012, 258, 8514–8520. [CrossRef]
+53. Leskelä, M.; Ritala, M. ALD precursor chemistry: Evolution and future challenges. Le J. Phys. IV1999, 9, Pr8–Pr837. [CrossRef]
+54. Parker, W.D.; Rondinelli, J.M.; Nakhmanson, S.M. First-principles study of misﬁt strain-stabilized ferroelectric SnTiO3. Phys. Rev.
+B 2011, 84, 245126. [CrossRef]
+55. Agarwal, R.; Sharma, Y.; Chang, S.; Pitike, K.C.; Sohn, C.; Nakhmanson, S.M.; Takoudis, C.G.; Lee, H.N.; Tonelli, R.; Gardner, J.
+Room-temperature relaxor ferroelectricity and photovoltaic effects in tin titanate directly deposited on a silicon substrate. Phys.
+Rev. B2018, 97, 54109. [CrossRef]
+56. Puurunen, R.L. Random Deposition as a Growth Mode in Atomic Layer Deposition. Chem. Vap. Depos. 2004, 10, 159–170.
+[CrossRef]
+57. Fornari, C.I.; Fornari, G.; Paulo, H.d.O.; Abramof, E.; dos Travelho, J.S. Monte Carlo Simulation of Epitaxial Growth. In Epitaxy;
+Zhong, M., Ed.; BoD–Books on Demand: Norderstedt, Germany, 2018; p. 113.
+58. Venables, J. Surface processes in epitaxial growth. In Introduction to Surface and Thin Film Processes; Cambridge University Press:
+Cambridge, UK, 2000; pp. 144–151. ISBN 0521785006.
+59. Itagaki, N.; Nakamura, Y.; Narishige, R.; Takeda, K.; Kamataki, K.; Koga, K.; Hori, M.; Shiratani, M. Growth of single crystalline
+ﬁlms on lattice-mismatched substrates through 3D to 2D mode transition. Sci. Rep.2020, 10, 4669. [CrossRef] [PubMed]
+60. Carlsson, J.O.; Martin, P .M. Chemical Vapor Deposition; Third Edit.; Elsevier Ltd.: Amsterdam, The Netherlands, 2010;
+ISBN 9780815520313.
+61. Barna, P .B.; Radnóczi, G. 3—Structure formation during deposition of polycrystalline metallic thin ﬁlms. In Coffey Optical and
+Magnetic Applications; Barmak, K., Ed.; Woodhead Publishing: Sawston, UK, 2014; pp. 67–120. ISBN 978-0-85709-057-7.
+
+Nanomaterials 2022, 12, 831 21 of 25
+62. Vandalon, V .; Kessels, W.M.M. Revisiting the growth mechanism of atomic layer deposition of Al2O3: A vibrational sum-frequency
+generation study. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.2017, 35, 05C313. [CrossRef]
+63. Cremers, V .; Puurunen, R.L.; Dendooven, J. Conformality in atomic layer deposition: Current status overview of analysis and
+modelling. Appl. Phys. Rev.2019, 6, 21302. [CrossRef]
+64. Dezelah, C.L. Atomic Layer Deposition BT-Encyclopedia of Nanotechnology. In Encyclopedia of Nanotechnology; Bhushan, B., Ed.;
+Springer Netherlands: Dordrecht, The Netherlands, 2012; pp. 161–171. ISBN 978-90-481-9751-4.
+65. Bishal, A.K.; Sukotjo, C.; Takoudis, C.G. Room temperature TiO2 atomic layer deposition on collagen membrane from a titanium
+alkylamide precursor. J. Vac. Sci. Technol. A Vacuum Surfaces Film.2017, 35, 01B134. [CrossRef]
+66. Puurunen, R.L. Growth per cycle in atomic layer deposition: A theoretical model. Chem. Vap. Depos.2003, 9, 249–257. [CrossRef]
+67. Kim, J.; Kim, T.W. Initial surface reactions of atomic layer deposition. Jom 2009, 61, 17–22. [CrossRef]
+68. Leem, J.; Park, I.; Li, Y.; Zhou, W.; Jin, Z.; Shin, S.; Min, Y.S. Role of HCl in atomic layer deposition of TiO2 thin ﬁlms from titanium
+tetrachloride and water. Bull. Korean Chem. Soc.2014, 35, 1195–1201. [CrossRef]
+69. Matero, R.; Rahtu, A.; Ritala, M. In situ quadrupole mass spectrometry and quartz crystal microbalance studies on the atomic
+layer deposition of titanium dioxide from titanium tetrachloride and water. Chem. Mater.2001, 13, 4506–4511. [CrossRef]
+70. Ren, J.; Zhang, Y.; Zhang, D.W. Density functional theory study of initial stage of HfO2 atomic layer deposition on hydroxylated
+SiO2 surface. J. Mol. Struct. Theochem2007, 803, 23–28. [CrossRef]
+71. Lownsbury, J.M.; Gladden, J.A.; Campbell, C.T.; Kim, I.S.; Martinson, A.B.F. Direct Measurements of Half-Cycle Reaction Heats
+during Atomic Layer Deposition by Calorimetry. Chem. Mater.2017, 29, 8566–8577. [CrossRef]
+72. Richey, N.E.; De Paula, C.; Bent, S.F. Understanding chemical and physical mechanisms in atomic layer deposition. J. Chem. Phys.
+2020, 152, 1–17. [CrossRef] [PubMed]
+73. Puurunen, R.L. Correlation between the growth-per-cycle and the surface hydroxyl group concentration in the atomic layer
+deposition of aluminum oxide from trimethylaluminum and water. Appl. Surf. Sci.2005, 245, 6–10. [CrossRef]
+74. Mui, C.; Musgrave, C.B. Atomic layer deposition of HfO2 using alkoxides as precursors. J. Phys. Chem. B2004, 108, 15150–15164.
+[CrossRef]
+75. Hu, X.; Schuster, J.; Schulz, S.E.; Gessner, T. Surface chemistry of copper metal and copper oxide atomic layer deposition from
+copper(ii) acetylacetonate: A combined ﬁrst-principles and reactive molecular dynamics study. Phys. Chem. Chem. Phys.2015, 17,
+26892–26902. [CrossRef] [PubMed]
+76. Yang, J.; Cao, K.; Hu, Q.; Wen, Y.; Liu, X.; Chen, R.; Shan, B. Unravelling the selective growth mechanism of AlO X with
+dimethylaluminum isopropoxide as a precursor in atomic layer deposition: A combined theoretical and experimental study. J.
+Mater. Chem. A2020, 8, 4308–4317. [CrossRef]
+77. Hu, Z.; Turner, C.H. Initial surface reactions of TiO 2 atomic layer deposition onto SiO 2 surfaces: Density functional theory
+calculations. J. Phys. Chem. B2006, 110, 8337–8347. [CrossRef]
+78. Elliott, S.D. Predictive process design: A theoretical model of atomic layer deposition. Comput. Mater. Sci. 2005, 33, 20–25.
+[CrossRef]
+79. Shirazi, M.; Elliott, S.D. Multiple proton diffusion and ﬁlm densiﬁcation in atomic layer deposition modeled by density functional
+theory. Chem. Mater.2013, 25, 878–889. [CrossRef]
+80. Cui, C.; Ren, J. A density functional theory study on the reactions of chlorine loss in ZrO2 thin ﬁlms by atomic-layer deposition.
+Comput. Theor. Chem.2012, 979, 38–43. [CrossRef]
+81. Athavale, S.D.; Economou, D.J. Molecular dynamics simulation of atomic layer etching of silicon. J. Vac. Sci. Technol. A Vacuum,
+Surfaces, Film.1995, 13, 966–971. [CrossRef]
+82. Bahramian, A. Study on growth rate of TiO 2 nanostructured thin ﬁlms: Simulation by molecular dynamics approach and
+modeling by artiﬁcial neural network. Surf. Interface Anal.2013, 45, 1727–1736. [CrossRef]
+83. Brown, K.S.; Saggese, C.; Le Monnier, B.P .; Héroguel, F.; Luterbacher, J.S. Simulation of Gas- and Liquid-Phase Layer-By-Layer
+Deposition of Metal Oxides by Coarse-Grained Modeling. J. Phys. Chem. C2018, 122, 6713–6720. [CrossRef]
+84. He, X.; Luo, L. Theory of the lattice Boltzmann method: From the Boltzmann equation to the lattice Boltzmann equation. Phys.
+Rev. E1997, 56, 6811–6817. [CrossRef]
+85. Chen, S.; Doolen, G.D. Lattice Boltzmann method for ﬂuid ﬂows. Annu. Rev. Fluid Mech.1998, 30, 329–364. [CrossRef]
+86. Pan, D.; Li, T.; Chien Jen, T.; Yuan, C. Numerical modeling of carrier gas ﬂow in atomic layer deposition vacuum reactor: A
+comparative study of lattice Boltzmann models. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.2014, 32, 01A110. [CrossRef]
+87. Ernst, M.; Dietzel, M.; Sommerfeld, M. A lattice Boltzmann method for simulating transport and agglomeration of resolved
+particles. Acta Mech.2013, 224, 2425–2449. [CrossRef]
+88. Harrison, R.L. Introduction to Monte Carlo simulation. AIP Conf. Proc.2009, 1204, 17–21. [CrossRef]
+89. Mordechai, S. Applications of Monte Carlo Method in Science and Engineering; IntechOpen: London, UK, 2011; ISBN 9533076917.
+90. Brandimarte, P .Handbook in Monte Carlo simulation: Applications in Financial Engineering, Risk Management, and Economics; John
+Wiley & Sons: Hoboken, NJ, USA, 2014; ISBN 1118593642.
+91. Kwak, Y.H.; Ingall, L. Exploring Monte Carlo simulation applications for project management. Risk Manag. 2007, 9, 44–57.
+[CrossRef]
+92. Bird, G.A. Monte-Carlo simulation in an engineering context. Prog. Astronaut. Aeronaut.1981, 74, 239–255.
+
+Nanomaterials 2022, 12, 831 22 of 25
+93. Schwille, M.C.; Schössler, T.; Barth, J.; Knaut, M.; Schön, F.; Höchst, A.; Oettel, M.; Bartha, J.W. Experimental and simulation
+approach for process optimization of atomic layer deposited thin ﬁlms in high aspect ratio 3D structures. J. Vac. Sci. Technol. A
+Vac. Surf. Film.2017, 35, 01B118. [CrossRef]
+94. Jin, L.; Li, Y.; Hu, Z.; Chu, J. Full three-dimensional morphology evolution of amorphous thin ﬁlms for atomic layer deposition.
+AIP Adv.2018, 8, 045304. [CrossRef]
+95. Deminsky, M.; Knizhnik, A.; Belov, I.; Umanskii, S.; Rykova, E.; Bagatur, A.; Potapkin, B.; Stoker, M.; Korkin, A.; Bagatur’yants,
+A.; et al. Mechanism and kinetics of thin zirconium and hafnium oxide ﬁlm growth in an ALD reactor. Surf. Sci.2004, 549, 67–86.
+[CrossRef]
+96. Adomaitis, R.A. Development of a multiscale model for an atomic layer deposition process. J. Cryst. Growth2010, 312, 1449–1452.
+[CrossRef]
+97. Weckman, T.; Shirazi, M.; Elliott, S.D.; Laasonen, K. Kinetic Monte Carlo Study of the Atomic Layer Deposition of Zinc Oxide. J.
+Phys. Chem. C2018, 122, 27044–27058. [CrossRef]
+98. Berti, C.; Ulbig, P .; Burdorf, A.; Seippel, J.; Schulz, S. Correlation and prediction of liquid-phase adsorption on zeolites using
+group contributions based on adsorbate-solid solution theory. Langmuir 1999, 15, 6035–6042. [CrossRef]
+99. Khalifa, M.; Lue, L. A group contribution method for predicting the solubility of mercury.Fluid Phase Equilib.2017, 432, 76–84.
+[CrossRef]
+100. Shahmohammadi, M.; Mukherjee, R.; Takoudis, C.G.; Diwekar, U.M. Optimal design of novel precursor materials for the atomic
+layer deposition using computer-aided molecular design. Chem. Eng. Sci.2021, 234, 116416. [CrossRef]
+101. Shahmohammadi, M.; Mukherjee, R.; Takoudis, C.G.; Diwekar, U.M. Quantiﬁcation of Water Impurity in an Atomic Layer
+Deposition Reactor Using Group Contribution Method. Res. Dev. Mater. Sci.2021, 15, 1703–1706. [CrossRef]
+102. Kim, K.-J.; Diwekar, U.M. Efﬁcient combinatorial optimization under uncertainty. 2. Application to stochastic solvent selection.
+Ind. Eng. Chem. Res.2002, 41, 1285–1296. [CrossRef]
+103. Cheng, H.-C.; Wang, F.-S. Optimal biocompatible solvent design for a two-stage extractive fermentation process with cell recycling.
+Comput. Chem. Eng.2008, 32, 1385–1396. [CrossRef]
+104. Gebreslassie, B.H.; Diwekar, U.M. Efﬁcient ant colony optimization for computer aided molecular design: Case study solvent
+selection problem. Comput. Chem. Eng.2015, 78, 1–9. [CrossRef]
+105. Giovanoglou, A.; Barlatier, J.; Adjiman, C.S.; Pistikopoulos, E.N.; Cordiner, J.L. Optimal solvent design for batch separation based
+on economic performance. AIChE J.2003, 49, 3095–3109. [CrossRef]
+106. Kim, K.-J.; Diwekar, U.M.; TOMAZI, K.G. Entrainer selection and solvent recycling in complex batch distillation. Chem. Eng.
+Commun. 2004, 191, 1606–1633. [CrossRef]
+107. Marcoulaki, E.C.; Kokossis, A.C. On the development of novel chemicals using a systematic optimisation approach. Part II.
+Solvent design. Chem. Eng. Sci.2000, 55, 2547–2561. [CrossRef]
+108. Samudra, A.P .; Sahinidis, N.V . Optimization-based framework for computer-aided molecular design.AIChE J.2013, 59, 3686–3701.
+[CrossRef]
+109. Hostrup, M.; Harper, P .M.; Gani, R. Design of environmentally benign processes: Integration of solvent design and separation
+process synthesis. Comput. Chem. Eng.1999, 23, 1395–1414. [CrossRef]
+110. Mukherjee, R.; Gebreslassie, B.; Diwekar, U.M. Design of novel polymeric adsorbents for metal ion removal from water using
+computer-aided molecular design. Clean Technol. Environ. Policy2017, 19, 483–499. [CrossRef]
+111. Trevizo, C.; Daniel, D.; Nirmalakhandan, N. Screening alternative degreasing solvents using multivariate analysis. Environ. Sci.
+Technol. 2000, 34, 2587–2595. [CrossRef]
+112. Chemmangattuvalappil, N.G.; Eljack, F.T.; Solvason, C.C.; Eden, M.R. A novel algorithm for molecular synthesis using enhanced
+property operators. Comput. Chem. Eng.2009, 33, 636–643. [CrossRef]
+113. Sinha, M.; Achenie, L.E.K. Systematic design of blanket wash solvents with recovery considerations. Adv. Environ. Res.2001, 5,
+239–249. [CrossRef]
+114. Eden, M.R.; Jørgensen, S.B.; Gani, R.; El-Halwagi, M.M. A novel framework for simultaneous separation process and product
+design. Chem. Eng. Process. Process Intensif.2004, 43, 595–608. [CrossRef]
+115. Eljack, F.T.; Eden, M.R. A systematic visual approach to molecular design via property clusters and group contribution methods.
+Comput. Chem. Eng.2008, 32, 3002–3010. [CrossRef]
+116. Odele, O.; Macchietto, S. Computer aided molecular design: A novel method for optimal solvent selection. Fluid Phase Equilib.
+1993, 82, 47–54. [CrossRef]
+117. Pistikopoulos, E.N.; Stefanis, S.K. Optimal solvent design for environmental impact minimization. Comput. Chem. Eng.1998, 22,
+717–733. [CrossRef]
+118. Salazar, J.; Diwekar, U.M.; Joback, K.; Berger, A.H.; Bhown, A.S. Solvent selection for post-combustion CO 2 capture. Energy
+Procedia 2013, 37, 257–264. [CrossRef]
+119. Churi, N.; Achenie, L.E.K. Novel mathematical programming model for computer aided molecular design. Ind. Eng. Chem. Res.
+1996, 35, 3788–3794. [CrossRef]
+120. Duvedi, A.P .; Achenie, L.E.K. Designing environmentally safe refrigerants using mathematical programming.Chem. Eng. Sci.
+1996, 51, 3727–3739. [CrossRef]
+
+Nanomaterials 2022, 12, 831 23 of 25
+121. Xu, W.; Diwekar, U.M. Environmentally friendly heterogeneous azeotropic distillation system design: Integration of EBS selection
+and IPS recycling. Ind. Eng. Chem. Res.2005, 44, 4061–4067. [CrossRef]
+122. Xu, W.; Diwekar, U.M. Multi-objective integrated solvent selection and solvent recycling under uncertainty using a new genetic
+algorithm. Int. J. Environ. Pollut.2007, 29, 70–89. [CrossRef]
+123. Folic, M.; Adjiman, C.S.; Pistikopoulos, E.N. Computer-aided solvent design for reactions: Maximizing product formation. Ind.
+Eng. Chem. Res.2008, 47, 5190–5202. [CrossRef]
+124. Lin, B.; Chavali, S.; Camarda, K.; Miller, D.C. Computer-aided molecular design using Tabu search. Comput. Chem. Eng.2005, 29,
+337–347. [CrossRef]
+125. Camarda, K.V .; Sunderesan, P . An Optimization Approach to the Design of Value-Added Soybean Oil Products.Ind. Eng. Chem.
+Res. 2005, 44, 4361–4367. [CrossRef]
+126. Karunanithi, A.T.; Achenie, L.E.K.; Gani, R. A computer-aided molecular design framework for crystallization solvent design.
+Chem. Eng. Sci.2006, 61, 1247–1260. [CrossRef]
+127. Yamamoto, H.; Tochigi, K. Computer-aided molecular design to select foaming agents using a neural network method. Ind. Eng.
+Chem. Res.2008, 47, 5152–5156. [CrossRef]
+128. Benavides, P .T.; Gebreslassie, B.H.; Diwekar, U.M. Optimal design of adsorbents for NORM removal from produced water in
+natural gas fracking. Part 2: CAMD for adsorption of radium and barium. Chem. Eng. Sci.2015, 137, 977–985. [CrossRef]
+129. Doshi, R.K.; Mukherjee, R.; Diwekar, U.M. Application of Adsorbate Solid Solution Theory To Design Novel Adsorbents for
+Arsenic Removal Using CAMD. ACS Sustain. Chem. Eng.2018, 6, 2603–2611. [CrossRef]
+130. Qi, F.X.Y.; Liu, K.; Ma, D.K.; Cai, F.F.; Liu, M.; Xu, Q.L.; Chen, W.; Qi, C.Z.; Yang, D.P .; Huang, S.M. Dual active sites fabricated
+through atomic layer deposition of TiO2 on MoS2 nanosheet arrays for highly efﬁcient electroreduction of CO2 to ethanol. J.
+Mater. Chem. A2021, 9, 6790–6796. [CrossRef]
+131. Cho, Y.; Kim, S.H.; Kim, B.S.; Kim, Y.; Jeon, W. Modulation of the adsorption chemistry of a precursor in atomic layer deposition
+to enhance the growth per cycle of a TiO2 thin ﬁlm. Phys. Chem. Chem. Phys.2021, 23, 2568–2574. [CrossRef]
+132. Park, B.E.; Oh, I.K.; Lee, C.W.; Lee, G.; Shin, Y.H.; Lansalot-Matras, C.; Noh, W.; Kim, H.; Lee, H.B.R. Effects of Cl-Based Ligand
+Structures on Atomic Layer Deposited HfO2. J. Phys. Chem. C2016, 120, 5958–5967. [CrossRef]
+133. Sasinska, A.; Bialuschewski, D.; Islam, M.M.; Singh, T.; Deo, M.; Mathur, S. Experimental and Theoretical Insights into Inﬂuence
+of Hydrogen and Nitrogen Plasma on the Water Splitting Performance of ALD Grown TiO2 Thin Films. J. Phys. Chem. C2017,
+121, 15538–15548. [CrossRef]
+134. Iatsunskyi, I.; Vasylenko, A.; Viter, R.; Kempinski, M.; Nowaczyk, G.; Jurga, S.; Bechelany, M. Tailoring of the electronic properties
+of ZnO-polyacrylonitrile nanoﬁbers: Experiment and theory. Appl. Surf. Sci.2017, 411, 494–501. [CrossRef]
+135. Sarkar, S.; Patel, R.L.; Liang, X.H.; Park, J. Unveiling the Role of CeO2 Atomic Layer Deposition Coatings on LiMn2O4 Cathode
+Materials: An Experimental and Theoretical Study. ACS Appl. Mater. Interfaces2017, 9, 30599–30607. [CrossRef] [PubMed]
+136. Kim, D.K.; Chae, J.; Hong, S.B.; Park, H.; Jeong, K.S.; Park, H.W.; Kwon, S.R.; Chung, K.B.; Cho, M.H. Interface engineering for a
+stable chemical structure of oxidized-black phosphorus via self-reduction in AlOx atomic layer deposition. Nanoscale 2018, 10,
+22896–22907. [CrossRef] [PubMed]
+137. Lawniczak-Jablonska, K.; Wolska, A.; Kuzmiuk, P .; Rejmak, P .; Kosiel, K. Local atomic order of the amorphous TaOx thin ﬁlms in
+relation to their chemical resistivity. RSC Adv.2019, 9, 35727–35734. [CrossRef]
+138. Lee, S.; Baek, G.; Lee, J.H.; Van, T.T.N.; Ansari, A.; Shong, B.; Park, J.S. Molecular layer deposition of indicone and organic-
+inorganic hybrid thin ﬁlms as ﬂexible transparent conductor. Appl. Surf. Sci.2020, 525, 146383. [CrossRef]
+139. Song, Z.X.; Zhu, Y.N.; Liu, H.S.; Banis, M.N.; Zhang, L.; Li, J.J.; Doyle-Davis, K.; Li, R.Y.; Sham, T.K.; Yang, L.J.; et al. Engineering
+the Low Coordinated Pt Single Atom to Achieve the Superior Electrocatalytic Performance toward Oxygen Reduction. SMALL
+2020, 16, 2003096. [CrossRef]
+140. Choi, S.; Ansari, A.; Yun, H.J.; Kim, H.; Shong, B.; Choi, B.J. Growth of Al-rich AlGaN thin ﬁlms by purely thermal atomic layer
+deposition. J. Alloys Compd.2021, 854, 157186. [CrossRef]
+141. He, Y.F.; Pham, H.; Gao, Y.; Patel, R.L.; Sarkar, S.; Liang, X.H.; Park, J. Discovery of an Unexpected Metal Dissolution of
+Thin-Coated Cathode Particles and Its Theoretical Explanation. Adv. Theory Simulations2020, 3, 2000002. [CrossRef]
+142. Zou, F.; Liu, Y.; Mou, C.; Zhu, S. Optimization of Refractive Index Sensitivity in Nanoﬁlm-Coated Long-Period Fiber Gratings
+near the Dispersion Turning Point. J. Light. Technol.2020, 38, 889–897. [CrossRef]
+143. Bermudez, V .M. Theoretical study of the adsorption of Lewis acids on MoS2 in relation to atomic layer deposition of Al2O3. J. Vac.
+Sci. Technol. A2020, 38, 062412. [CrossRef]
+144. Petersen, M. Theoretical study of reaction mechanisms of ZrCl4 with hydrated and hydroxlated Si(100) surfaces. Comput. Mater.
+Sci. 2004, 30, 77–80. [CrossRef]
+145. Jung, J.-S.S.; Lee, S.-K.K.; Hong, C.-S.S.; Shin, J.-H.H.; Kim, J.-M.M.; Kang, J.-G.G. Atomic layer deposition of ZrO2 thin ﬁlm on Si
+(100) using {η5: η1-Cp (CH2) 3NMe} Zr (NMe2) 2/O3 as precursors. Thin Solid Films2015, 589, 831–837. [CrossRef]
+146. Gharachorlou, A.; Detwiler, M.D.; Gu, X.K.; Mayr, L.; Klötzer, B.; Greeley, J.; Reifenberger, R.G.; Delgass, W.N.; Ribeiro, F.H.;
+Zemlyanov, D.Y. Trimethylaluminum and Oxygen Atomic Layer Deposition on Hydroxyl-Free Cu(111). ACS Appl. Mater.
+Interfaces 2015, 7, 16428–16439. [CrossRef]
+147. Seo, S.; Yeo, B.C.; Han, S.S.; Yoon, C.M.; Yang, J.Y.; Yoon, J.; Yoo, C.; Kim, H.J.; Lee, Y.B.; Lee, S.J.; et al. Reaction Mechanism of
+Area-Selective Atomic Layer Deposition for Al2O3 Nanopatterns. ACS Appl. Mater. Interfaces2017, 9, 41607–41617. [CrossRef]
+
+Nanomaterials 2022, 12, 831 24 of 25
+148. Karasulu, B.; Vervuurt, R.H.J.; Kessels, W.M.M.; Bol, A.A. Continuous and ultrathin platinum ﬁlms on graphene using atomic
+layer deposition: A combined computational and experimental study. Nanoscale 2016, 8, 19829–19845. [CrossRef]
+149. Pan, D.; Ma, L.; Xie, Y.; Jen, T.C.; Yuan, C. On the physical and chemical details of alumina atomic layer deposition: A combined
+experimental and numerical approach. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.2015, 33, 021511. [CrossRef]
+150. Halder, A.; Lenardi, C.; Timoshenko, J.; Mravak, A.; Yang, B.; Kolipaka, L.K.; Piazzoni, C.; Seifert, S.; Bonacic-Koutecky, V .;
+Frenkel, A.I.; et al. CO 2 Methanation on Cu-Cluster Decorated Zirconia Supports with Different Morphology: A Combined
+Experimental In Situ GIXANES/GISAXS, Ex Situ XPS and Theoretical DFT Study. ACS Catal.2021, 11, 6210–6224. [CrossRef]
+151. Perevalov, T.V .; Prosvirin, I.P .; Suprun, E.A.; Mehmood, F.; Mikolajick, T.; Schroeder, U.; Gritsenko, V .A. The atomic and electronic
+structure of Hf0.5Zr0.5O2 and Hf0.5Zr0.5O2:La ﬁlms. J. Sci. Mater. DEVICES2021, 6, 595–600. [CrossRef]
+152. Yu, N.K.; Moon, C.H.; Park, J.; Lee, H.B.R.; Shong, B. Evaluation of silicon tetrahalide precursors for low-temperature thermal
+atomic layer deposition of silicon nitride. Appl. Surf. Sci.2021, 565, 150603. [CrossRef]
+153. Beer, S.M.J.; Boysen, N.; Muriqi, A.; Zanders, D.; Berning, T.; Rogalla, D.; Bock, C.; Nolan, M.; Devi, A. A study on the inﬂuence of
+ligand variation on formamidinate complexes of yttrium: New precursors for atomic layer deposition of yttrium oxide. Dalt.
+Trans. 2021, 50, 12944–12956. [CrossRef] [PubMed]
+154. Borbon-Nunez, H.A.; Muniz, J.; El Hachimi, A.G.; Frausto-Silva, D.; Gutierrez-Diaz, J.L.; Dominguez, D.; Tiznado, H.; Cuentas-
+Gallegos, A.K. Effect of oxygen based functional groups on the nucleation of TiO2 by atomic layer deposition: A theoretical and
+experimental study. Mater. Chem. Phys.2021, 267, 124588. [CrossRef]
+155. Boukhari, A.; Deghfel, B.; Mahroug, A.; Amari, R.; Selmi, N.; Kheawhom, S.; Mohamad, A.A. Thickness effect on the properties of
+Mn-doped ZnO thin ﬁlms synthesis by sol-gel and comparison to ﬁrst-principles calculations. Ceram. Int.2021, 47, 17276–17285.
+[CrossRef]
+156. Zhu, X.P .; Guo, J.J.; Li, X.X.; Zhou, R.D.; Wang, D.; Zhao, W. Evolvement Investigation of Secondary Electron Emission for
+Ultrathin MgO Coatings Prepared by Atomic Layer Deposition. Appl. Sci.2021, 11, 4801. [CrossRef]
+157. Weckman, T.; Laasonen, K. First principles study of the atomic layer deposition of alumina by TMA-H2O-process. Phys. Chem.
+Chem. Phys.2015, 17, 17322–17334. [CrossRef]
+158. Travis, C.D.; Adomaitis, R.A. Modeling alumina atomic layer deposition reaction kinetics during the trimethylaluminum exposure.
+Theor. Chem. Acc.2014, 133, 3–11. [CrossRef]
+159. Xu, K.; Ye, P .D. Theoretical study of atomic layer deposition reaction mechanism and kinetics for aluminum oxide formation at
+graphene nanoribbon open edges. J. Phys. Chem. C2010, 114, 10505–10511. [CrossRef]
+160. Kayanuma, M.; Choe, Y.-K.; Hagiwara, T.; Kameda, N.; Shimoi, Y. Theoretical Study of the Mechanism for the Reaction of
+Trimethylaluminum with Ozone. ACS Omega2021, 6, 26282–26292. [CrossRef]
+161. Puurunen, R.L. Growth per cycle in atomic layer deposition: Real application examples of a theoretical model. Chem. Vap. Depos.
+2003, 9, 327–332. [CrossRef]
+162. Burgess, D.R.; Maslar, J.E.; Hurst, W.S.; Moore, E.F.; Kimes, W.A.; Fink, R.R.; Nguyen, N. V Atomic Layer Deposition—Process
+Models and Metrologies. AIP Conf. Proc.2005, 788, 141–146. [CrossRef]
+163. Seo, S.; Nam, T.; Lee, H.B.R.; Kim, H.; Shong, B. Molecular oxidation of surface –CH3 during atomic layer deposition of Al2O3
+with H2O, H2O2, and O3: A theoretical study. Appl. Surf. Sci.2018, 457, 376–380. [CrossRef]
+164. Widjaja, Y.; Musgrave, C.B. Quantum chemical study of the mechanism of aluminum oxide atomic layer deposition. Appl. Phys.
+Lett. 2002, 80, 3304–3306. [CrossRef]
+165. Elliott, S.D. Models for ALD and MOCVD growth of rare earth oxides. Top. Appl. Phys.2006, 106, 73–86. [CrossRef]
+166. Park, S.; Park, B.E.; Yoon, H.; Lee, S.; Nam, T.; Cheon, T.; Kim, S.H.; Cheon, H.; Im, S.; Seong, T.; et al. Comparative study on
+atomic layer deposition of HfO2: Via substitution of ligand structure with cyclopentadiene. J. Mater. Chem. C2020, 8, 1344–1352.
+[CrossRef]
+167. Mukhopadhyay, A.B.; Musgrave, C.B.; Sanz, J.F. Atomic layer deposition of hafnium oxide from hafnium chloride and water.J.
+Am. Chem. Soc.2008, 130, 11996–12006. [CrossRef] [PubMed]
+168. Mastail, C.; Lanthony, C.; Olivier, S.; Ducéré, J.-M.; Landa, G.; Estève, A.; Rouhani, M.D.; Richard, N.; Dkhissi, A. Introducing
+densiﬁcation mechanisms into the modelling of HfO2 atomic layer deposition. Thin Solid Films2012, 520, 4559–4563. [CrossRef]
+169. Hu, Z.; Turner, C.H. Atomic layer deposition of TiO2 from TiI4 and H2O onto SiO2 surfaces: Ab initio calculations of the initial
+reaction mechanisms. J. Am. Chem. Soc.2007, 129, 3863–3878. [CrossRef]
+170. Zhou, G.; Ren, J.; Zhang, S. Initial growth mechanisms of ZrO2 and TiO2 thin ﬁlms using cycloheptatrienyl-cyclopentadienyl
+heteroleptic precursors: A comparative study by density functional theory. Appl. Surf. Sci.2013, 283, 968–974. [CrossRef]
+171. Han, J.H.; Gao, G.; Widjaja, Y.; Garfunkel, E.; Musgrave, C.B. A quantum chemical study of ZrO2 atomic layer deposition growth
+reactions on the SiO2 surface. Surf. Sci.2004, 550, 199–212. [CrossRef]
+172. Ren, J.; Cui, C.; Zhou, G.; Liu, Y.; Hu, Y.; Wang, B. A theoretical study on initial growth mechanism of ZrO 2 ﬁlm using
+cyclopentadienyl-type precursor. Thin Solid Films2011, 519, 3716–3721. [CrossRef]
+173. Zhou, G.; Ren, J.; Zhang, S. Theoretical study on the initial reaction mechanisms of ansa-metallocene zirconium precursor on
+hydroxylated Si(100) surface. J. Mol. Model.2016, 22, 117. [CrossRef]
+174. Elliott, S.D.; Dey, G.; Maimaiti, Y. Classiﬁcation of processes for the atomic layer deposition of metals based on mechanistic
+information from density functional theory calculations. J. Chem. Phys.2017, 146, 052822. [CrossRef] [PubMed]
+
+Nanomaterials 2022, 12, 831 25 of 25
+175. Doan, H.A.; Li, Z.; Farha, O.K.; Hupp, J.T.; Snurr, R.Q. Theoretical insights into direct methane to methanol conversion over
+supported dicopper oxo nanoclusters. Catal. Today2018, 312, 2–9. [CrossRef]
+176. Dey, G.; Elliott, S.D. Mechanism for the atomic layer deposition of copper using diethylzinc as the reducing agent: A density
+functional theory study using gas-phase molecules as a model. J. Phys. Chem. A2012, 116, 8893–8901. [CrossRef] [PubMed]
+177. Phung, Q.M.; Pourtois, G.; Swerts, J.; Pierloot, K.; Delabie, A. Atomic layer deposition of ruthenium on ruthenium surfaces: A
+theoretical study. J. Phys. Chem. C2015, 119, 6592–6603. [CrossRef]
+178. Filatova, E.A.; Hausmann, D.; Elliott, S.D. Investigating routes toward atomic layer deposition of silicon carbide: Ab initio
+screening of potential silicon and carbon precursors. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.2017, 35, 01B103. [CrossRef]
+179. Cremers, V .; Geenen, F.; Detavernier, C.; Dendooven, J. Monte Carlo simulations of atomic layer deposition on 3D large surface
+area structures: Required precursor exposure for pillar- versus hole-type structures. J. Vac. Sci. Technol. A Vacuum, Surfaces, Film.
+2017, 35, 01B115. [CrossRef]
+180. Murray, C.; Elliott, S.D. Density functional theory predictions of the composition of atomic layer deposition-grown ternary oxides.
+ACS Appl. Mater. Interfaces2013, 5, 3704–3715. [CrossRef]
+181. Hu, Z.; Shi, J.; Heath Turner, C. Molecular dynamics simulation of the Al2O3 ﬁlm structure during atomic layer deposition. Mol.
+Simul. 2009, 35, 270–279. [CrossRef]

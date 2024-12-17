@@ -1,0 +1,797 @@
+Contents lists available atScienceDirect
+Chemical Engineering Journal
+journal homepage: www.elsevier.com/locate/cej
+Impact of precursor exposure on process eﬃciency andﬁlm properties in
+spatial atomic layer deposition
+Viet Huong Nguyena,⁎
+, Abderrahime Sekkatb, Carmen Jiménezb, Delﬁna Muñozc, Daniel Belletb,
+David Muñoz-Rojasb,⁎
+a Faculty of Electrical and Electronic Engineering, Phenikaa University, Hanoi 12116, Viet Nam
+b Univ. Grenoble Alpes, CNRS, Grenoble INP, LMGP, Grenoble, France
+c Univ. Grenoble Alpes, CEA, LITEN, INES, F-73375 Le Bourget-du-Lac, France
+HIGHLIGHTS
+• The impact of precursor exposure in SALD is studied via simulation and experiments.
+• We assess the close dependence of the eﬀective precursor exposure on substrate velocity.
+• We show the impact of growth rate on nanostructure and density of depositedﬁlms.
+• A guide on optimizing growth rate,ﬁlm density and precursor consumption is proposed.
+ARTICLE INFO
+Keywords:
+Spatial ALD
+Atmospheric pressure
+Precursor exposure
+Process eﬃciency
+Substrate velocity
+ABSTRACT
+Being able to control the exposure of precursors to the substrate surface is essential towards an optimum Atomic
+Layer Deposition (ALD) process. Conventional ALD usually requires large excess of precursors and expensive
+vacuum chamber in which the precursor exposure can be controlled via the injection pulse duration followed by
+a delay time. A version of ALD, namely Spatial ALD (SALD), which has the same unique assets as conventional
+ALD but being faster, vacuum-free, and easier to scale up, has recently attracted much attention. In SALD,
+precursors are continuously exposed to a moving surface, and thus it is more complicated to tune precursor
+exposure than with conventional ALD. Here, we present a study on how to control this critical parameter for the
+deposition of ZnOﬁlms using a close-proximity, open-air SALD. Our results are based on both simulations and
+experiments. A simple physical model supported by Comsol Multiphysics simulations has been developed to
+study the eﬀect of the substrate velocity as well as the precursor concentration in the carrier gas onﬁlm growth
+rate. We found that the precursor entrainment by the moving substrate induces an asymmetric precursor con-
+centration proﬁle that aﬀects the obtained GPC. Also, we show that the mass density and structural properties of
+the depositedﬁlms depend closely on theﬁlm growth rate. For instance, fast growth does not always produce
+dense ﬁlms. Indeed, a compromise between the growth rate and the precursor consumption should be considered
+to obtain both good process eﬃciency and high-qualityﬁlms. Our ﬁndings are particularly relevant for using
+SALD in large-scale coating applications, in which high deposition rate and good coating density should be
+obtained with a minimal ALD precursor consumption.
+1. Introduction
+Atomic layer deposition (ALD) has been considered as one of the
+best thin-ﬁlm growth technologies thanks to its capability of depositing
+pinhole-free, conformal ﬁlms at relatively low temperatures [1–3].
+Over the past decades, research advances have expanded the use of this
+surface-controlled layer-by-layer technology beyond microelectronic
+applications [4,5], including the development of biosensors[6], mate-
+rials for barrier coatings [7–11] or energy conversion and storage
+[12–18]. However, one of the main drawbacks of ALD is a slow growth
+rate, which can be attributed to slow purging steps alternatively per-
+formed between diﬀerent precursor injections[19]. Additionally, the
+use of a vacuum chamber makes conventional ALD technology more
+diﬃcult and expensive to scale up towards an industrial level. In this
+https://doi.org/10.1016/j.cej.2020.126234
+Received 2 April 2020; Received in revised form 21 June 2020; Accepted 8 July 2020
+⁎ Corresponding authors.
+E-mail addresses: huong.nguyenviet@phenikaa-uni.edu.vn (V.H. Nguyen),david.munoz-rojas@grenoble-inp.fr (D. Muñoz-Rojas).
+Chemical Engineering Journal 403 (2021) 126234
+Available online 16 July 2020
+1385-8947/ © 2020 Elsevier B.V. All rights reserved.
+T
+
+context, a variation of ALD technique, namely spatial ALD (SALD), has
+been recently attracting much attention since this ALD-based tech-
+nology can be applied to deposit materials at atmospheric pressure and
+low temperatures. Additionally, SALD provides very fast deposition rate
+and in a scalable fashion, while keeping the unique assets of ALD
+technology [20–23]. For instance, SALD is compatible with roll-to-roll
+technology for fast industrial thinﬁlm deposition[24]. The key point of
+an ALD technology is the possibility of thoroughly controlling the half-
+reactions between precursors and the substrate surface, and at the same
+time to minimize the precursor use and optimize the ALD growth rate
+(expressed in the thickness of the layer deposited on the surface after
+each ALD cycle, i.e. nm/cycle) [3,25]. In an ideal ALD process, a
+complete monolayer of precursor molecules would be formed on the
+substrate surface after each precursor exposure to the substrate surface.
+In such an adsorption process, the amount of precursor being exposed
+to the surface (calculated as the product of the precursor exposure time
+and the precursor concentration) should be appropriately selected to
+achieve the saturation state of the precursor-substrate surface reaction.
+The determination of a critical value of the exposure corresponding to
+such a complete ALD half-reaction is thus necessary. Indeed, since ALD
+is a self-limiting process, for a given precursor concentration in the gas
+phase, an exposure time longer than the critical value is not useful but
+causes a waste of ALD precursors, which are commonly expensive. In
+conventional ALD, the exposure time usually depends on the chamber/
+sample size, the concentration of the precursors in the gas phase, the
+chamber pressure, as well as the substrate temperature.
+Contrarily to conventional ALD, in SALD the precursors are con-
+tinuously injected onto the substrate, for instance from diﬀerent gas
+outlets of an injection head. These reactive precursor regions are spa-
+tially separated from mixing thanks to inert gas barriers, which are
+alternatively located between the precursor regions. Given the close
+distance needed between the injection head and the substrate
+(~200 µm) to avoid precursor cross-talk, this kind of approach is
+commonly called close-proximity SALD[26,27]. When performing
+SALD with a moving substrate, the distribution of precursors to the
+substrate surface will be considerably aﬀected. As a result, controlling
+the precursor exposure is much more complicated in the case of SALD
+than in ALD since there is no longer a deposition chamber and the
+purging step is indeed substituted by passing the substrate through an
+inert gas region. Obviously, the optimization of the exposure is more
+critical for metal precursors than for oxidizing agents, especially for
+large-scale applications since the ALD precursors are usually very ex-
+pensive. In literature, several approaches related to modeling the ALD
+deposition reaction, such as adsorption kinetics or surface reaction
+mechanisms have been proposed[28–31]. In the case of SALD, Poodt
+et al. developed a physical model to study the deposition kinetics of
+Al2O3 when using a rotating SALD injection system[32], in which the
+exposure time of precursors is simply supposed to be inversely pro-
+portional to the rotation frequency. Also, while Denget al. proposed a
+model to quantitatively link theﬁlm growth throughput and precursor
+utilization, it is only based on the gasﬂows and precursor concentra-
+tion, and other parameter such as the injector-substrate gap or the gas
+entrainment due to the moving substrate are not taken into account
+[33]. Finally, the eﬀect of the deposition parameters on the ﬁlm
+properties is not discussed in previous works. Thus, in-depth studies to
+link the optimization of theﬁlm growth rate with ALD precursor con-
+sumption, taking into account precursor concentration, gasﬂow values,
+substrate velocity and deposition gap, and discuss the properties of the
+ﬁlms obtained as a function of the parameters used are still needed.
+In this work, we present simulation and experimental results related
+to tuning the precursor exposure to the substrate surface via the sub-
+strate velocity, precursor concentration in the carrier gas and substrate/
+injection head gap. The eﬀect of these parameters on the growth rate
+and the physical properties of deposited ZnO thinﬁlms is thoroughly
+discussed. The study has been performed for the case of ZnO deposition
+using a close-proximity SALD approach. However, it can be easily
+extended to any material or other SALD approaches.
+2. Experimental section
+The deposition of ZnOﬁlms was performed with a home-made at-
+mospheric pressure spatial atomic layer deposition (AP-SALD) system
+[34]. Diethylzinc (DEZ, Zn(C2H5)2 from Sigma Aldrich) and water
+(H2O) were used as zinc precursor and oxidizing agent, respectively,
+while nitrogen was used as carrying and purging gas. The substrate
+oscillated at a constant distance of 180 µm from the injection head. All
+samples were deposited on borosilicate glass substrates at a substrate
+temperature of 200 °C. Such experimental conditions have been pre-
+viously used to deposit thin ZnO conformal layers at the top of silver
+nanowire networks to enhance both the thermal and electrical stability
+of such networks (seeFig. S1 in the supporting information) [35].
+Several simulation results were obtained using Comsol Multiphysics
+via a combination of three modules: heat transfer inﬂuids, laminar
+ﬂow, and transport of diluted species. The details related to the simu-
+lations are described in part 4 of theSupporting Information. When
+studying the eﬀect of the substrate velocity, other experimental para-
+meters such as substrate temperature, the substrate/injection head gap,
+or nitrogen bubblingﬂows through zinc precursor and water (which are
+supposed to be directly related to reactant quantity carried to the in-
+jection head) were maintained constant. The thickness, density, and
+crystalline structure of the depositedﬁlms were investigated using an
+FS‑1™ Multi-Wavelength Ellipsometer from Film Sense, an X-ray Re-
+ﬂectometry system (D500 Siemens), and an X-ray Di ﬀractometry
+system (D8 Advance Bruker). The texture coeﬃcients of the diﬀerent
+ZnO ﬁlms were calculated from the diﬀraction peak intensities relative
+to each other and to the standard powder pattern (ICSD 29272), as
+follows:
+=
+∑
+TC hkl I hkl I hkl
+I hkl I hkl
+() () / ()
+() / ()N
+0
+1
+0 (1)
+where TC hkl() and Ih k l( ) are the texture coeﬃcient and the peak in-
+tensity of the(hkl) reﬂection peak, respectively.Ih k l()0 is the(hkl) peak
+intensity in the powder pattern (considered from ICSD 29272) andN is
+the number of reﬂections present in the powder pattern (N = 4 in our
+case). For a randomly oriented polycrystalline sample, the texture
+coeﬃcients are equal to unity, as in the case of the powder pattern.
+Conversely, for samples having a preferential orientation, the corre-
+sponding texture coeﬃcient is equal toN while the other coeﬃcients
+are equal to zero.
+3. Theory
+An ideal ALD process should provide a single monolayer of pre-
+cursor after each successive exposure. However, when precursor mo-
+lecules from the gas phase impinge on the substrate surface and begin to
+stick, a complete monolayer may not be formed due to several factors
+including the steric hindrance of bulky precursors[36], or the balance
+between absorption and desorption kinetics of precursor molecules
+(which depends on the deposition pressure, substrate temperature, and
+precursor concentration in the gas phase). For a given precursor and
+deposition pressure and temperature, the eﬀect of the precursor con-
+centration in the gas phase on the ALD growth of ZnOﬁlm can easily be
+understood. In the case of the ZnO deposition presented here, we
+maintained suﬃcient water supply to ensure surface water saturation.
+The nitrogen bubblingﬂow through DEZ container was then varied to
+study the eﬀect of the concentration of DEZ con the growth rate of ZnO
+ﬁlms.
+Using a simple model based on Langmuir isotherm adsorption and
+desorption curves [37], the growth rate of ZnO at a constant tem-
+perature can be theoretically calculated. Beθt( ) the fraction of the
+surface covered at the timet, the variation of this quantity is simply the
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+2
+
+diﬀerence between the adsorption and desorption rates, expressed as
+follows:
+=− −dθ t
+dt kD E Z θ t k θ t() [] ( 1( ) ) ( )ad (2)
+where ka, kd and DEZ[ ] refer to the rate constants for the adsorption and
+desorption processes, and the gas phase concentration of the molecular
+species (in this case is zinc precursor,DEZ), respectively. This equation
+can be easily solved, giving the expression of the fraction of surface
+covered (with the boundary condition (==θt(0 ) 0 ):
+= + −− +θt kD E Z
+kD E Z k kD E Z kt() []
+[] [1 exp( ( [ ] ) )]a
+ad
+ad
+(3)
+In the case of SALD, the deposition is usually carried out at low
+temperatures and under atmospheric pressure. It can therefore be
+classed as a high-pressure process. As aﬁrst approximation, we as-
+sumed that the desorption rate is small compared to the adsorption rate
+during the precursor exposure time. Hence, Eq. (3) can be rewritten as:
+=− −θt k D E Zt() 1 e x p ( [ ])a (4)
+We assume that theGPC is proportional to the fraction of surface
+coverage θ after each precursor exposure, which is associated with the
+exposure time, also called residence timetres, calculated from the sub-
+strate velocity. Therefore, the dependence of GPC on precursor ex-
+posure can be simply expressed as follows:
+=− −GPC DEZ t K k DEZ t([ ], ) [1 exp( [ ] )]res a res1 (5)
+where K1 is a constant corresponding to the static growth rate,GPC0,
+when using a suﬃciently long exposure.
+A typical 3D scheme of a SALD injection head is shown inFig. 1a.
+The head, which is placed at a short distance from the moving sub-
+strate, delivers the reactive precursors onto the substrate surface to
+reproduce ALD cycles, i.e. DEZ/ N2/H 2O/ N2 and so on. If the substrate
+is immobile and placed close enough to the injection head, Comsol
+Multiphysics simulation shows that the reactants can be adequately
+separated from mixing, as shown by gas velocity and precursor con-
+centration proﬁle inFig. 1b and c, respectively, and by previous reports
+[38]. In the close-proximity SALD approach, the precursor exposure
+depends on several parameters including substrate velocity (ν), the
+distance between two adjacent exhaust channels next to the precursor
+outlets (noteddDEZ or dH O2 as shown inFig. 1c), the concentration of
+precursor in the gas phase (DEZ[ ] or HO[ ]2 ), the gasﬂow through each
+channel, as well as the distance between the injection head and the
+substrate (dgap).
+As aﬁrst approximation, at a givenDEZ[ ], when the substrate moves
+at a speedν (cm/s), every point on the substrate will be exposed to DEZ-
+containing gas during a so-called residence time, =t dv /res DEZ , where
+dDEZ is the distance between two adjacent exhaust channels, as shown in
+Fig. 1c(dDEZ = 2.5 mm in the design shown inFig. 1a). Therefore,GPC
+versus substrate velocity (ν) can be expressed as follows:
+= ⎡
+⎣⎢ − ⎛
+⎝
+− ⎞
+⎠
+⎤
+⎦⎥GPC DEZ v K kD E Z d
+v([ ], ) 1 exp []aD E Z
+1
+(6)
+In practice, the precursor concentration in the gas phase,DEZ[ ],i s
+not easily accessible but it is assumed to be proportional to the nitrogen
+bubbling ﬂow through DEZ, denoted fDEZ. Therefore, Eq. (6) can be
+rewritten as:
+⎜⎟= ⎡
+⎣⎢ − ⎛
+⎝
+− ⎞
+⎠
+⎤
+⎦⎥GPC f v K Kf d
+v(, ) 1 e x pDEZ
+DEZ DEZ
+1
+2
+(7)
+where K2 is a constant proportional to the rate constant for the
+adsorption reaction. This simple equation can be used to study the ef-
+fect of the substrate velocity or DEZ bubblingﬂow on the ZnO growth
+while keeping the other parameters constant. We will see later that the
+DEZ delivered to the substrate surface is signiﬁcantly aﬀected by the
+substrate velocity, leading to a spatial redistribution of the precursor
+along the substrate surface. The gas molecules at the substrate surface
+are indeed entrained by the movement of the latter. This eﬀect will be
+discussed in the next part with simulation and experimental results.
+4. Results and discussion
+4.1. Eﬀect of precursor concentration
+As mentioned previously, ALD precursors being usually expensive,
+an excess injection of precursors to the substrate surface is not desir-
+able. It may also lead to unexpected eﬀects such as precursor con-
+densation or etching, as schematically represented in Fig. 2a. The
+condensation eﬀect is more favorable at high deposition pressure and
+low-temperature [37], which is indeed the case of AP-SALD.
+Fig. 2b shows the experimentally obtainedGPCas a function offDEZ
+and the corresponding ﬁtting curve using the simple Langmuir ad-
+sorption kinetics model presented in Eq. (7). In this experiment, the
+substrate temperature (200 °C), the injector/substrate gap (180 µm),
+the substrate velocity (5 cm/s), or the N2 purging ﬂow (150 sccm) was
+maintained constant and onlyfDEZ varies. Theﬁrst ﬁtting parameterK1
+represents the growth rate at the saturating state of the substrate sur-
+face, whileK dv /DEZ2 represents a constant depending on the volatility,
+the adsorption coeﬃcient of DEZ[ ] and the substrate velocity. Theﬁt
+results in a growth rate value at the saturating state of the substrate
+surface of 0.235 nm/cycle, which is comparable to the values found in
+the literature [39]. The ﬁtting quality is good for low fDEZ values.
+However, for higher values (fDEZ > 30 sccm), the growth rate becomes
+faster and cannot be appropriatelyﬁtted using the simple model any-
+more. This might stem from precursor condensation for high fDEZ
+Fig. 1.a) 3D scheme of the close-proximity
+SALD injection head used in this work, re-
+presented along with a glass substrate
+placed underneath the injection head (the
+typical dimensions of the head are
+30 × 40 × 50 mm3), b) gas velocity and c)
+precursor concentration in such an injector,
+obtained by Comsol Multiphysics simula-
+tion in the case of an immobile substrate.
+The color bar schematically represents va-
+lues of velocity and precursor concentra-
+tion, where the hotter color corresponds to
+higher values.dDEZ, dHO2 and dgap represent
+the distances between two adjacent exhaust
+channels next to the precursor outlets, and
+the distance between the injection head and
+the substrate surface, respectively.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+3
+
+values. It could also originate from the use of a constant N2 purging
+ﬂow (150 sccm) which is no longer suﬃcient to remove the excess of
+DEZ (given the increasingﬂow of gas through the DEZ channels).
+The structural properties of the deposited ZnOﬁlms with varying
+precursor concentration were evaluated using X-ray diﬀraction (XRD).
+Fig. 3a shows an increase of the XRD peak intensities of ZnOﬁlms
+versus fDEZ, which is mainly due to the thickness eﬀect. We remark that
+the samples deposited with small fDEZ values ([10 sccm, 30 sccm])
+exhibit similar crystalline nanostructure with (100) reﬂection as the
+dominant peak. The texture coeﬃcients corresponding to (110) and
+(002) reﬂection peaks are rather close to each other, while the value
+for the (100) peak is almost twice higher, as shown inFig. 3b. In the
+cases of fDEZ > 30 sccm, the (002) reﬂection peak appears more in-
+tense compared to the (100) peak, which can also be visualized by an
+abrupt variation in the texture coeﬃcient. In summary, the precursor
+concentration in the gas phase, which is related tofDEZ in our case, has
+a signiﬁcant impact not only on theﬁlm growth rate but also on the
+nanostructure of the depositedﬁlms. Thus, while it has been shown that
+close-proximity SALD can be used in CVD mode[38,40], care must be
+taken to ensure that the properties of the depositedﬁlms are still ac-
+ceptable for the targeted applications. The ALD condition can thus be
+achieved by placing thefDEZ value in an appropriate range ([25 sccm,
+30 sccm]) to reach the ALD saturation condition while avoiding any
+precursor condensation.
+4.2. Eﬀect of substrate velocity on GPC andﬁlm properties
+Fig. 4a shows a 2D Comsol Multiphysics simulation of the DEZ
+concentration proﬁle at the corresponding injection channel for dif-
+ferent values of substrate velocity, i.e. from 0 cm/s to 16 cm/s. In the
+case of an immobile substrate, the DEZ concentration pro ﬁle is
+symmetric and centered between the two DEZ exhaust channels ad-
+jacent to the DEZ channel. When the substrate is moving beneath the
+gas injector (to the right in this illustration), the precursor molecules
+are entrained by the moving substrate, creating an asymmetric con-
+centration proﬁle, as observed inFig. 4a.
+As a consequence, the simple relationship between the precursor
+exposure and the substrate velocity previously shown Eq. (6) is no
+longer appropriate to describe the dependence of the GPC versus the
+substrate velocity and therefore needs a better approach. Although the
+precursor concentration in the gas phase is not constant in the vertical
+direction, the fraction of precursor molecules, that eﬃciently partici-
+pate in ALD half-reactions, concerns only theﬁrst layers in contact with
+the substrate.Fig. 4b shows this fraction for various substrate velocities.
+As the substrate velocity increases, both an asymmetry and a decrease
+in DEZ concentration are observed. This can be attributed to two main
+reasons: i) the gas-entraining eﬀect caused by the moving substrate, and
+ii) the presence of two adjacent exhaust channels located next to the
+DEZ outlet. Although the high velocity of the substrate could facilitate
+the mixture of DEZ and H2O in the gas phase, thus enhancing a CVD
+contribution to theﬁlm growth, our simulations show that this is not
+the case (see part 3 of theSupporting Informationfor details).
+In an ideal case, the substrate surface would be exposed to a con-
+stant concentration of DEZ, namely DEZ[ ]input as shown in Fig. 4c,
+during a constant exposure time that is simply equal to the ratio of the
+distance between two adjacent exhaust channels,dDEZ, to the substrate
+velocity, v. In such a case, the precursor exposure to the substrate
+surface would be calculated as follows:
+=Ex DEZ d
+v
+[] · input DEZ
+(8)
+where DEZ d[ ]·input DEZ represents the area of the ideal rectangle shown
+Fig. 2.a) Schematic representation of growth per
+cycle (GPC) versus exposure time, b) Experimental
+GPC as a function of N2 bubbling ﬂow through
+DEZ (sccm). The ﬁt using the simple Langmuir
+adsorption kinetics model (Eq. (7)) is shown by
+the dashed line for N2 bubbling ﬂow through DEZ
+in the range of [0 sccm, 33 sccm]. The substrate
+velocity, substrate temperature, and injector/
+substrate gap wereﬁxed at 5 cm/s, 200 °C, and
+180 µm, respectively.
+Fig. 3.a) X-ray diﬀraction patterns and b) texture coeﬃcients of ZnOﬁlms deposited with diﬀerent N2 bubbling ﬂows through DEZ,fDEZ.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+4
+
+in Fig. 4c. However, the simulation shows that the precursor con-
+centration proﬁles are not simply constant but quite complex and
+shifted to the direction of substrate motion. InFig. 4c, we suggest a
+more meticulous estimation of the eﬀective exposure of DEZ to the
+substrate surface by discretizing the DEZ[ ] proﬁles into N small seg-
+ments indicated by coordinatesx0, x1…xN.I fN is large enough, the
+precursor concentration in each segment +xx[ ,]ii 1 can be considered
+constant and the exposure of the precursor to this portion of the sub-
+strate would indeed be equal toDEZ x d x[ ]( ) ·i . Therefore, we deﬁne an
+eﬀective exposure,Exeffective, which can be calculated as follows:
+∫
+=
+⎛
+⎝
+⎜
+⎞
+⎠
+⎟
+Ex
+DEZ x dx
+v
+[] ( )
+effective x
+xN
+0
+(9)
+where ∫=AD E Z x d x[] ( )DEZ
+x
+x
+[]
+N
+0
+represents the area under the DEZ[ ]
+proﬁle.
+Fig. 5a illustrates the eﬀective exposure as a function of the sub-
+strate velocity (data obtained from Comsol Multiphysics simulation).
+Interestingly, the behavior ofADEZ[] versus substrate velocity,ν, can be
+appropriately ﬁtted by using a second-order polynomial regression
+without the linear term as aﬁrst approximation to reduce the number of
+ﬁtting parameters to only A0 and kss: =−AA k v ·DEZ ss[] 0 2. Here, A0
+corresponds to the symmetric DEZ[ ] distribution under the precursor
+channel when the substrate is immobile (ν=0 cm/s).kss is a constant
+depending on many parameters including the DEZ concentration in the
+gas phase, the viscosity of the mixed gas, as well as the substrate
+temperature. According to this simulation result, the exposure shown in
+the Eq (6) is not simply inversely proportional to the substrate velocity,
+but there exists an eﬀective exposure, as shown inFig. 5a. Hence, a new
+physical approach towardsGPC ν( ) can be calculated as follows:
+= ⎧
+⎨⎩
+− ⎡
+⎣
+− ⎛
+⎝
+− ⎞
+⎠
+⎤
+⎦
+⎫
+⎬⎭
+GPC v K k A
+v kv() 1 e x p as s1
+0
+(10)
+The right side of Eq. (10) can be simpliﬁed by setting =Xk Aa 0 and
+=Yk kas s . Fig. 5b shows the experimental data and correspondingﬁt-
+ting curves using Eq. (10) for theGPCof ZnOﬁlms deposited at diﬀerent
+DEZ[ ] values as a function of substrate velocity,ν. Our model properly
+ﬁts the data of the high and intermediate substrate velocities for various
+DEZ bubbling ﬂow rates (15, 30 and 50 sccm). Conversely, it can be
+observed that the growth rates deviate from the theoretical model at
+low substrate velocities, which correspond to the longer exposure time.
+As discussed inFig. 2, an extra injection of precursors to the substrate
+surface can create condensation if the subsequent purging step is not
+suﬃciently long. This fact was not taken into account in our simple
+model, yielding an underestimation of the growth rate at low substrate
+velocities. The same argument could also explain the increase of the
+static growth rate,K1, obtained at higher values offDEZ (30 or 50 sccm
+compared to 15 sccm). Indeed, the N2 purging ﬂow should be adapted
+for each value offDEZ and substrate velocity. However, in this work, it
+was maintained constant at 150 sccm to keep the gasﬂow balance at all
+the outlets of the injection head. Consequently, this value may not be
+suﬃcient to purge the excess physisorbed precursor molecules in the
+case of high DEZ[ ]. Concerning theﬁtting parameters, whileK1 is as-
+sociated with the static growth rate,X and Y do not have a direct
+physical meaning. On the contrary, the ratio betweenY and X is equal
+to the ratio betweenA0 and kss, which can be related to the eﬀective
+exposure tres
+eff as follows:
+Fig. 4.a) DEZ 2D concentration proﬁle at its injection channel for diﬀerent values of substrate velocity, b) the corresponding DEZ concentration proﬁles projected at
+the substrate surface level. In this case, the substrate temperature and the gap between the substrate and the injection head wereﬁxed at 200 °C and 180 µm,
+respectively, c) schematic illustration of the variation of [DEZ] as a function of position for a substrate velocity of 8 cm/s, as implemented in the proposed model. The
+data shown here were simulated with Comsol Multiphysics.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+5
+
+⎜ ⎟= − = ⎛
+⎝
+− ⎞
+⎠
+Ex Ak v
+v k vv
+v
+effective ss
+ss
+c0 22 2
+(11)
+where =vY X /c is a characteristic velocity (cm/s). Intuitively, when
+the substrate velocity approaches this critical value, the eﬀective ex-
+posure would rapidly decrease, which yields a lower growth rate. The
+summary of the parameters extracted from theﬁts is shown inTable 1.
+The static growth rate obtained when using the value offDEZ equal to
+30 sccm is about 0.27 nm/cycle, which is indeed similar to the value
+obtained in a conventional thermal ALD process at atmospheric pres-
+sure [39].
+In general, experimental parameters should be optimized to obtain a
+fast deposition rate, which is indeed a compromise between a high
+substrate velocity and a long enough residence time. Therefore, ac-
+cording to Eqs. (7) and (8), high values ofkss and vc are expected. Since
+kss characterizes how easily the DEZ ﬂow can be entrained by the
+moving substrate, the observed decreasing trend ofkss versus fDEZ in-
+dicates that the growth rate of ZnO is less aﬀected by the substrate
+velocity if higher DEZ bubbling ﬂow is used. The opposite trend is
+observed forvc. A higher value of this characteristic velocity is expected
+given the fact that a fast substrate velocity can be used while main-
+taining a constanttres
+eff. From another point of view, the optimization of
+the SALD process concerns the improvement of the growth rate with as
+little precursor consumption as possible. Three pivotal parameters
+should be taken into account: growth rateGPC (nm/cycle), precursor
+consumption that is directly proportional tofDEZ (sccm) and deposition
+time tdep (s), of which the latter is related to the substrate velocityv
+(cm/s). Let ηdep denote a parameter combining these factors, namely
+process eﬃciency, and be written as follows:
+=η GPC v
+f
+·
+dep
+DEZ (12)
+Fig. 6describes the variation of process eﬃciency ηdep as a function
+of the time required to perform a constant number of cycles (for ex-
+ample 100 cycles in this illustration). It can be calculated by using the
+experimental data shown inFig. 5b. A longer deposition time corre-
+sponds to a slower substrate velocity and leads to a high precursor
+consumption, which makes, in general, a low process eﬃciency. On the
+other hand, using the low value offDEZ (15 sccm) can save precursor,
+however, the disadvantage is a longer deposition time to maintain a
+constant process eﬃciency. Remarkably, using a moderate value offDEZ
+(30 sccm) yields a signiﬁcantly higher value of eﬃciency ηdep. This in-
+teresting observation provides a guide on how to optimize the SALD
+deposition process by controlling at the same time the precursor con-
+sumption and the deposition time.
+Apart from the growth rate, other important features that have to be
+considered such asﬁlm density.Fig. 7a shows the X-ray Reﬂectometry
+(XRR) patterns of ZnOﬁlms deposited at various substrate velocities in
+the range of [3.3, 8.3 cm/s], from which two important parameters can
+be extracted, i.e.ﬁlm mass density and thickness. This range of sub-
+strate velocities generates a variation inﬁlm thickness from 27.5 nm to
+60 nm, which corresponds to GPC values in between [0.15, 0.33 nm/
+cyc]. Fig. 7b shows the dependence of the mass density of the deposited
+ZnO ﬁlms on the growth rate. An optimum range of GPC values cor-
+responding to a maximum mass density of 5.42 g/cm3 can be appre-
+ciated, while the bulk value is expected to be 5.61 g/cm3. For high GPC
+values (≥0.3 nm/cycle), the lower mass density of the depositedﬁlms
+can be related to excess precursor physisorbed on the substrate surface,
+making somehow a mixed CVD-ALD deposition mode rather than a
+pure ALD mode. In the case of slower growth rates (< 0.2 nm/s),
+corresponding to non-saturating ALD surface reaction, the low mass
+density values could be related to theﬁlm thickness eﬀect. Indeed, ZnO
+thin ﬁlms prepared by SALD at 200 °C using diethylzinc result in
+Fig. 5.a) Simulation result of the eﬀective exposure (Exeffective) versus substrate velocity and theﬁt using a simple second-order polynomial regression; b) experi-
+mental values of the growth per cycle of ZnOﬁlms as a function of the substrate velocity, and DEZ bubblingﬂows, and the associatedﬁts using Eq. (10).
+Table 1
+Some critical parameters extracted or calculated from theﬁts shown inFig. 5b.
+fDEZ (sccm) K1 (nm/cycle) vc (cm/s) kss (s2cm−4)
+15 0.19 7.46 0.24
+30 0.27 9.11 0.41
+50 0.32 9.83 0.61
+Fig. 6.Process eﬃciency as a function of the time required to perform 100 ALD
+cycles in the case of ZnO deposition by SALD.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+6
+
+polycrystalline structure, in which the grain size (and therefore theﬁlm
+density) signiﬁcantly depends on theﬁlm thickness. The dependence of
+the optical properties of ZnOﬁlms deposited by SALD on the substrate
+velocity is also discussed in part 2 of theSupporting Information.
+5. Conclusions
+In this work, simulation and experimental studies have been con-
+ducted to study the eﬀect of a critical parameter, namely, precursor
+exposure in the case of a close-proximity spatial atomic layer deposition
+(SALD) approach. This parameter depends directly on the substrate
+velocity, the geometric design of the injection head, as well as the
+carrier gas ﬂow rate. A simple physical model has been developed to
+study the eﬀect of the substrate velocity and the precursor concentra-
+tion in the carrier gas (DEZ[ ]) on the growth rate of the deposited ZnO
+ﬁlms. Comsol Multiphysics results show that the entrainment of the
+precursor molecules by the moving substrate induces an asymmetry in
+the DEZ[ ] proﬁle that aﬀects the obtained growth per cycle (GPC).
+When studying thoroughly the experimental data based on the eﬀect of
+DEZ[ ] and the substrate velocity at constantDEZ[ ], we found that an
+excess of physisorbed precursor molecules on the substrate surface in
+the case of highDEZ[ ] can be indirectly observed via the clear variation
+of theﬁlm growth rate when either increasingDEZ[ ] or decreasing the
+substrate velocity beyond a certain value. The agreement between ex-
+perimental observations and the model appears very good. Finally, we
+have also shown that the mass density of the deposited ZnOﬁlms de-
+pends closely on the substrate velocity, and that a fast growth rate does
+not always produce denseﬁlms. Indeed, a compromise between growth
+rate and precursor consumption should be considered to obtain both a
+highﬁlm density and a good process eﬃciency, of which the latter is
+proposed for theﬁrst time to quantify such analysis in SALD. The simple
+and original approach presented can pave the way to better understand
+thin-ﬁlm growth using any SALD system, since it provides a compre-
+hensive guide on optimizing growth rate,ﬁlm density, and precursor
+consumption. This is indeed crucial when using SALD for large-scale
+coating applications.
+Declaration of Competing Interest
+The authors declare that they have no known competingﬁnancial
+interests or personal relationships that could have appeared to inﬂu-
+ence the work reported in this paper.
+Acknowledgments
+The authors thank the“ARC Energies Auvergne-Rhône Alpes”, for
+their economic support through a PhD grant, and the Agence Nationale
+de Recherche (ANR, France) via the programs ANR-16-CE05-0021
+(DESPATCH), ANR-18-CE09-0040 (Meaning), ANR-18-CE09-0036
+(Panassé), ANR-17-CE05-0034 (Oxygen), and ANR-15-IDEX-02
+(“Investissements d’avenir” program through Eco-SESA). This work was
+also performed within the framework of the Centre of Excellence of
+Multifunctional Architectured Materials“CEMAM” no. AN-10-LABX-
+44-01. David Muñoz-Rojas acknowledges funding through the Marie
+Curie Actions (FP7/2007-2013, Grant 631111). This research is funded
+by Vietnam National Foundation for Science and Technology
+Development (NAFOSTED) under grant number 103.02-2019-341. The
+authors would like to warmly thank L. Rapenne for her technical as-
+sistance, and Dr. César Masse de la Huerta and Dr. Hao Van Bui for
+fruitful discussions.
+Appendix A. Supplementary data
+Supplementary data to this article can be found online athttps://
+doi.org/10.1016/j.cej.2020.126234.
+References
+[1] S.M. George, Atomic layer deposition: an overview, Chem. Rev. 110 (2010)
+111–131, https://doi.org/10.1021/cr900056b.
+[2] H. Van Bui, F. Grillo, J.R. van Ommen, Atomic and molecular layer deposition: oﬀ
+the beaten track, Chem. Commun. 53 (2017) 45–71, https://doi.org/10.1039/
+C6CC05568K.
+[3] V. Cremers, R.L. Puurunen, J. Dendooven, Conformality in atomic layer deposition:
+current status overview of analysis and modelling, Appl. Phys. Rev. 6 (2019)
+021302, ,https://doi.org/10.1063/1.5060967.
+[4] R.W. Johnson, A. Hultqvist, S.F. Bent, A brief review of atomic layer deposition:
+from fundamentals to applications, Mater. Today 17 (2014) 236–246, https://doi.
+org/10.1016/j.mattod.2014.04.026.
+[5] L. Mai, D. Zanders, E. Subaşı, E. Ciftyurek, C. Hoppe, D. Rogalla, W. Gilbert, T. de
+los Arcos, K. Schierbaum, G. Grundmeier, C. Bock, A. Devi, Low-temperature
+plasma-enhanced atomic layer deposition of Tin(IV) oxide from a functionalized
+alkyl precursor: fabrication and evaluation of SnO2 -based thin-ﬁlm transistor
+devices, ACS Appl. Mater. Interfaces 11 (2019) 3169–3180, https://doi.org/10.
+1021/acsami.8b16443.
+[6] O. Graniel, M. Weber, S. Balme, P. Miele, M. Bechelany, Atomic layer deposition for
+biosensing applications, Biosens. Bioelectron. 122 (2018) 147–159, https://doi.
+org/10.1016/j.bios.2018.09.038.
+[7] J.-S. Park, H. Chae, H.K. Chung, S.I. Lee, Thinﬁlm encapsulation forﬂexible AM-
+OLED: a review, Semicond. Sci. Technol. 26 (2011) 034001, ,https://doi.org/10.
+1088/0268-1242/26/3/034001.
+[8] T. Maindron, T. Jullien, A. André, Defect analysis in low temperature atomic layer
+deposited Al2O3 and physical vapor deposited SiO barrierﬁlms and combination of
+both to achieve high quality moisture barriers, J. Vacuum Sci. Technol. A: Vacuum,
+Surf. Films 34 (2016) 031513, ,https://doi.org/10.1116/1.4947289.
+[9] A.K. Singh, K. Adstedt, B. Brown, P.M. Singh, S. Graham, Development of ALD
+coatings for harsh environment applications, ACS Appl. Mater. Interfaces 11 (2019)
+7498–7509, https://doi.org/10.1021/acsami.8b11557.
+[10] A. Khan, V.H. Nguyen, D. Muñoz-Rojas, S. Aghazadehchors, C. Jiménez,
+N.D. Nguyen, D. Bellet, Stability enhancement of silver nanowire networks with
+conformal ZnO coatings deposited by atmospheric pressure spatial atomic layer
+deposition, ACS Appl. Mater. Interfaces 10 (2018) 19208–19217, https://doi.org/
+10.1021/acsami.8b03079.
+[11] V.H. Nguyen, J. Resende, D.T. Papanastasiou, N. Fontanals, C. Jiménez, D. Muñoz-
+Rojas, D. Bellet, Low-cost fabrication ofﬂexible transparent electrodes based on Al
+Fig. 7.a) XRR patterns of ZnOﬁlms deposited at
+diﬀerent substrate velocities at 200 °C. The var-
+iation of critical angle indicates the change in the
+mass density of the depositedﬁlm, b) Mass den-
+sity (g/cm3) as a function of growth rate (nm/
+cycle). In this example, ZnO thinﬁlms deposited
+by SALD using an N2 bubbling ﬂow through DEZ
+of 25 sccm.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+7
+
+doped ZnO and silver nanowire nanocomposites: impact of the network density,
+Nanoscale 11 (2019) 12097–12107, https://doi.org/10.1039/C9NR02664A.
+[12] R. Liu, Y. Lin, L.-Y. Chou, S.W. Sheehan, W. He, F. Zhang, H.J.M. Hou, D. Wang,
+Water splitting by tungsten oxide prepared by atomic layer deposition and deco-
+rated with an oxygen-evolving catalyst, Angew. Chem. Int. Ed. 50 (2011) 499–502,
+https://doi.org/10.1002/anie.201004801.
+[13] X. Meng, X.-Q. Yang, X. Sun, Emerging applications of atomic layer deposition for
+lithium-ion battery studies, Adv. Mater. 24 (2012) 3589–3615, https://doi.org/10.
+1002/adma.201200397.
+[14] H.V. Bui, F. Grillo, S. Sharath Kulkarni, R. Bevaart, N.V. Thang, B. van der Linden,
+J.A. Moulijn, M. Makkee, M.T. Kreutzer, J.R. van Ommen, Low-temperature atomic
+layer deposition delivers more active and stable Pt-based catalysts, Nanoscale 9 (30)
+(2017) 10802–10810, https://doi.org/10.1039/C7NR02984E.
+[15] M.-W. Kim, K. Kim, T.Y. Ohm, H. Yoon, B. Joshi, E. Samuel, M.T. Swihart, S.K. Choi,
+H. Park, S.S. Yoon, Electrosprayed BiVO4 nanopillars coated with atomic-layer-
+deposited ZnO/TiO2 as highly eﬃcient photoanodes for solar water splitting, Chem.
+Eng. J. 333 (2018) 721–729, https://doi.org/10.1016/j.cej.2017.09.130.
+[16] F. Grillo, H. Van Bui, D. La Zara, A.A.I. Aarnink, A.Y. Kovalgin, P. Kooyman,
+M.T. Kreutzer, J.R. van Ommen, From single atoms to nanoparticles: autocatalysis
+and metal aggregation in atomic layer deposition of Pt on TiO2 nanopowder, Small
+14 (2018) 1800765,https://doi.org/10.1002/smll.201800765.
+[17] M. Liu, F. Xue, X. Wang, W. Fu, Y. Wang, Y. Lu, N. Li, Conformal deposition of
+atomic TiO2 layer on chalcogenide nanorod with excellent activity and durability
+towards solar H2 generation, Chem. Eng. J. 341 (2018) 335–343, https://doi.org/
+10.1016/j.cej.2018.02.031.
+[18] W.-Z. Fang, Y.-Q. Tang, C. Ban, Q. Kang, R. Qiao, W.-Q. Tao, Atomic layer de-
+position in porous electrodes: a pore-scale modeling study, Chem. Eng. J. 378
+(2019) 122099, ,https://doi.org/10.1016/j.cej.2019.122099.
+[19] D. Muñoz-Rojas, T. Maindron, A. Esteve, F. Piallat, J.C.S. Kools, J.-M. Decams,
+Speeding up the unique assets of atomic layer deposition, Mater. Today Chem. 12
+(2019) 96–120, https://doi.org/10.1016/j.mtchem.2018.11.013.
+[20] A.S. Yersak, K. Sharma, J.M. Wallas, A.A. Dameron, X. Li, Y. Yang, K.E. Hurst,
+C. Ban, R.C. Tenent, S.M. George, Spatial atomic layer deposition for coatingﬂex-
+ible porous Li-ion battery electrodes, J. Vacuum Sci. Technol. A: Vacuum, Surf.,
+Films 36 (2018) 01A123,https://doi.org/10.1116/1.5006670.
+[21] A. Illiberi, F. Roozeboom, P. Poodt, Spatial atomic layer deposition of zinc oxide
+thin ﬁlms, ACS Appl. Mater. Interfaces 4 (2012) 268–272, https://doi.org/10.1021/
+am2013097.
+[22] A. Illiberi, R. Scherpenborg, Y. Wu, F. Roozeboom, P. Poodt, Spatial atmospheric
+atomic layer deposition of AlxZn1-xO, ACS Appl. Mater. Interfaces 5 (2013)
+13124–13128, https://doi.org/10.1021/am404137e.
+[23] D. Muñoz-Rojas, V.H. Nguyen, C. Masse de la Huerta, S. Aghazadehchors,
+C. Jiménez, D. Bellet, Spatial Atomic Layer Deposition (SALD), an emerging tool for
+energy materials. Application to new-generation photovoltaic devices and trans-
+parent conductive materials, Comptes Rendus Phys. 18 (2017) 391–400, https://
+doi.org/10.1016/j.crhy.2017.09.004.
+[24] K.P. Musselman, C.F. Uzoma, M.S. Miller, Nanomanufacturing: high-throughput,
+cost-eﬀective deposition of atomic scale thinﬁlms via atmospheric pressure spatial
+atomic layer deposition, Chem. Mater. 28 (2016) 8443–8452, https://doi.org/10.
+1021/acs.chemmater.6b03077.
+[25] G.N. Parsons, S.M. George, M. Knez, Progress and future directions for atomic layer
+deposition and ALD-based chemistry, MRS Bull. 36 (2011) 865–871, https://doi.
+org/10.1557/mrs.2011.238.
+[26] D.H. Levy, D. Freeman, S.F. Nelson, P.J. Cowdery-Corvan, L.M. Irving, Stable ZnO
+thin ﬁlm transistors by fast open air atomic layer deposition, Appl. Phys. Lett. 92
+(2008) 192101, ,https://doi.org/10.1063/1.2924768.
+[27] R.L.Z. Hoye, D. Muñoz-Rojas, S.F. Nelson, A. Illiberi, P. Poodt, F. Roozeboom,
+J.L. MacManus-Driscoll, Research Update: atmospheric pressure spatial atomic
+layer deposition of ZnO thinﬁlms: reactors, doping, and devices, APL Mater. 3
+(2015) 040701, ,https://doi.org/10.1063/1.4916525.
+[28] S.D. Elliott, Atomic-scale simulation of ALD chemistry, Semicond. Sci. Technol. 27
+(2012) 074008, ,https://doi.org/10.1088/0268-1242/27/7/074008.
+[29] R.L. Puurunen, Surface chemistry of atomic layer deposition: a case study for the
+trimethylaluminum/water process, J. Appl. Phys. 97 (2005) 121301, ,https://doi.
+org/10.1063/1.1940727.
+[30] F. Grillo, M.T. Kreutzer, J.R. van Ommen, Modeling the precursor utilization in
+atomic layer deposition on nanostructured materials inﬂuidized bed reactors,
+Chem. Eng. J. 268 (2015) 384–398, https://doi.org/10.1016/j.cej.2015.01.067.
+[31] Y. Xie, L. Ma, D. Pan, C. Yuan, Mechanistic modeling of atomic layer deposition of
+alumina process with detailed surface chemical kinetics, Chem. Eng. J. 259 (2015)
+213–220, https://doi.org/10.1016/j.cej.2014.07.105.
+[32] P. Poodt, J. van Lieshout, A. Illiberi, R. Knaapen, F. Roozeboom, A. van Asten, On
+the kinetics of spatial atomic layer deposition, J. Vacuum Sci. Technol. A: Vacuum,
+Surf. Films 31 (2013) 01A108,https://doi.org/10.1116/1.4756692.
+[33] Z. Deng, W. He, C. Duan, R. Chen, B. Shan, Mechanistic modeling study on process
+optimization and precursor utilization with atmospheric spatial atomic layer de-
+position, J. Vacuum Sci. Technol. A: Vacuum, Surf. Films 34 (2016) 01A108,
+https://doi.org/10.1116/1.4932564.
+[34] V.H. Nguyen, D. Bellet, B. Masenelli, D. Muñoz-Rojas, Increasing the electron mo-
+bility of ZnO-based transparent conductiveﬁlms deposited by open-air methods for
+enhanced sensing performance, ACS Appl. Nano Mater. 1 (2018) 6922–6931,
+https://doi.org/10.1021/acsanm.8b01745.
+[35] S. Aghazadehchors, V.H. Nguyen, D. Muñoz-Rojas, C. Jiménez, L. Rapenne,
+N.D. Nguyen, D. Bellet, Versatility of bilayer metal oxide coatings on silver nano-
+wire networks for enhanced stability with minimal transparency loss, Nanoscale 11
+(2019) 19969–19979, https://doi.org/10.1039/C9NR05658K.
+[36] S. Kim, S. Lee, S.-Y. Ham, D.-H. Ko, S. Shin, Z. Jin, Y.-S. Min, A kinetic study of ZnO
+atomic layer deposition: eﬀects of surface hydroxyl concentration and steric hin-
+drance, Appl. Surf. Sci. 469 (2019) 804–810, https://doi.org/10.1016/j.apsusc.
+2018.11.064.
+[37] C. Tien, Introduction to Adsorption: Basics, Analysis, and Applications, Elsevier,
+2018.
+[38] C. Masse de la Huerta, V.H. Nguyen, J.-M. Dedulle, D. Bellet, C. Jiménez, D. Muñoz-
+Rojas, Inﬂuence of the geometric parameters on the deposition mode in spatial
+atomic layer deposition: a novel approach to area-selective deposition, Coatings 9
+(2019) 5,https://doi.org/10.3390/coatings9010005.
+[39] M.B.M. Mousa, C.J. Oldham, J.S. Jur, G.N. Parsons, Eﬀect of temperature and gas
+velocity on growth per cycle during Al2O3 and ZnO atomic layer deposition at
+atmospheric pressure, J. Vacuum Sci. Technol. A: Vacuum, Surf. Films 30 (2012)
+01A155, https://doi.org/10.1116/1.3670961.
+[40] K.P. Musselman, D. Muñoz-Rojas, R.L.Z. Hoye, H. Sun, S.-L. Sahonta, E. Croft,
+M.L. Böhm, C. Ducati, J.L. MacManus-Driscoll, Rapid open-air deposition of uni-
+form, nanoscale, functional coatings on nanorod arrays, Nanoscale Horiz. 2 (2017)
+110–117, https://doi.org/10.1039/C6NH00197A.
+V.H. Nguyen, et al. Chemical Engineering Journal 403 (2021) 126234
+8

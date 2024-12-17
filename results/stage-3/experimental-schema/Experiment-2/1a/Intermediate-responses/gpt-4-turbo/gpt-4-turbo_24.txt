@@ -1,0 +1,135 @@
+Based on the research paper and domain expert feedback, the JSON schema for the ALD process can be refined to include properties related to Optical Emission Spectroscopy (OES) as a tool for studying, optimizing, and monitoring the plasma-assisted ALD processes. The paper highlights the importance of OES in identifying reactant species and reaction products, which provides insights into the reaction mechanisms of the deposition process.
+
+Here is the refined JSON schema incorporating the insights from the research paper:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "A schema representing the detailed steps and parameters involved in the ALD process, including the deposition of various metals using different plasma-enhanced techniques.",
+  "type": "object",
+  "properties": {
+    "ALDMethod": {
+      "type": "string",
+      "description": "The specific ALD technique used, such as thermal ALD or plasma-enhanced ALD."
+    },
+    "MaterialDeposited": {
+      "type": "string",
+      "description": "The material being deposited, e.g., cobalt (Co)."
+    },
+    "processParameters": {
+      "type": "object",
+      "description": "Parameters that directly influence the ALD process.",
+      "properties": {
+        "reactor": {
+          "type": "object",
+          "description": "Details about the reactor used in the ALD process."
+        },
+        "depositionTemperature": {
+          "type": "number",
+          "description": "Temperature at which deposition occurs."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure within the reactor during deposition."
+        },
+        "coReactant": {
+          "type": "object",
+          "description": "Details about the co-reactant used, including type of plasma and gas mixture.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Type of plasma used, e.g., NH3, H2/N2."
+            },
+            "gasMixRatio": {
+              "type": "string",
+              "description": "Ratio of gases used in the plasma."
+            }
+          }
+        },
+        "plasmaSpecies": {
+          "type": "array",
+          "description": "List of species present in the plasma and their relative amounts.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "species": {
+                "type": "string",
+                "description": "Name of the species, e.g., NHx, H2, N2."
+              },
+              "amount": {
+                "type": "string",
+                "description": "Relative amount or concentration of the species."
+              }
+            }
+          }
+        },
+        "reactionProducts": {
+          "type": "array",
+          "description": "List of reaction products released during the plasma exposure.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "opticalEmissionSpectroscopy": {
+          "type": "object",
+          "description": "Details about the Optical Emission Spectroscopy used to monitor and optimize the process.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Indicates if OES is used in the process."
+            },
+            "spectra": {
+              "type": "array",
+              "description": "Spectral data collected during the ALD process.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "wavelength": {
+                    "type": "number",
+                    "description": "Wavelength of the emitted light."
+                  },
+                  "intensity": {
+                    "type": "number",
+                    "description": "Intensity of the emitted light."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "filmProperties": {
+      "type": "object",
+      "description": "Physical and chemical properties of the deposited film.",
+      "properties": {
+        "filmThickness": {
+          "type": "number",
+          "description": "Total thickness of the deposited film."
+        },
+        "impurityContent": {
+          "type": "object",
+          "description": "Content of impurities in the film, which may vary based on the co-reactant used.",
+          "properties": {
+            "nitrogen": {
+              "type": "number",
+              "description": "Nitrogen content in atomic percentage."
+            },
+            "other": {
+              "type": "array",
+              "description": "Other impurities detected in the film.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["ALDMethod", "MaterialDeposited", "processParameters", "filmProperties"]
+}
+```
+
+This schema now includes a new section under `processParameters` for `opticalEmissionSpectroscopy`, which captures whether OES is enabled and details about the spectra observed during the process. This addition helps in understanding the reaction mechanisms and optimizing the process based on real-time data from OES.

@@ -1,0 +1,51 @@
+Property Grouping:
+1. Place the delivery method to both precursor and co-reactant property boxes.
+2. Group: orientation with crystallinity under the crystallinity property in the film properties box
+3. Group: growth rate with nucleation behavior and self-limiting growth in a separate property box outside of the film properties box under the name: growth behavior.
+4. Group: dielectric constant, resistivity, carrier density, mobility under the name electrical properties box inside the film properties box.
+5. Group: refractive index, absorption coefficient under the name optical properties box inside the film properties box
+6. Gorup: reactor design, reactor type, manufacturer, name under the name Reactor in a property box outside of the deposition conditions box.
+7. Place Pulse times (Dosing Times is better!) to the deposition conditions property box.
+8. Place the delivery method property of the reactants in the reactor box.
+
+Missing Properties:
+1. Nitrogen impurity content
+2. Crystallinity (if it is amorphous, crystalline etc.)
+3. Nucleation Behavior, self limiting growth
+4. Carrier Density, Mobility
+5. Absorption coefficient
+6. Reactor type, manufacturer, name
+7. ALD Method
+8. Chamber Pressure
+9. Material Deposited
+10. Bubbler Temperatures for reactants (if applicable for the co-reactant)
+11. Elemental Composition of the film
+12. Final thickness of the film
+
+Adequacy of Descriptions
+1. Description of schema: rename verifying to characterizing and remove the part: "for metal oxide films using various precursors and water"
+2. Remove the airsensitivity, melting point and temperature range properties
+3. Place the same properties for the precursor as well as for the co-reactant if applicable (meaning: name, vapor temperature) and also plasma properties if PEALD.
+4. Rename Pulse times to Dosing Times.
+5. Remove the Thermal Stability property.
+6. Rename FilmThicknessUniformity to Uniformity
+7. Remove adhesion property. Also you should not specifically mention materials and substrates like ITO, silicon, glass etc. This should be universally applied to all papers and processes you encounter.
+8. Remove breakdown voltage property
+9. Remove the optical bandgap property
+10. Remove the adhesion to the substrate property box.
+11. Make sure that the purge times have two entries: one for the precursor and one for the co-reactant.
+12. Rename substrate temperature to deposition temperature
+13. Remove the precursor temperature property
+
+Domain expert edited schema of the initial generated version:
+
+-> ALD Method
+-> Material Deposited
+-> ReactantSelection(Precursor[Name, VaporPressure], coReactant[Name, VaporPressure, PlasmaProperties(ifapplicable)], Carrier Gas)
+-> Reactor(Name, Type, Manufacturer, Design Characteristics,reactants’ delivery method)
+-> DepositionConditions(DepositionTemperature,ChamberPressure, DosingTimes(Precursor,CoReactant), PurgingTimes(PrecursorCoReactant), gasFlowRates, Bubbler Temperatures)
+-> GrowthBehavior(NumberofCycles, GPC, Nucleation Behavior, Self-Limiting Growth)
+-> FilmProperties(Elemental Composition, Impurites(Nitrogen, Carbon, Hydrogen, Oxygen), Thickness, Roughness, Conformality, Uniformity, Porosity, ElectricalProperties[DielectricConstant, Resistivity, CarrierDensity, Mobility], Optical Properties[absorption coefficient, refractive index])
+-> Reproducibility(describe whether the process shows reproducible and reliable results)
+-> Safety(safety of the chemicals used etc.)
+-> Device Performance (describe the performance of the film in the device integrated if any)

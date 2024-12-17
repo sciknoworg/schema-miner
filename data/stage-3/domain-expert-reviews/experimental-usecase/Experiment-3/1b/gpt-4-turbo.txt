@@ -1,0 +1,22 @@
+Property Grouping:
+-Place crystallinity and filmdensity properties in the material properties information box.
+
+Missing Properties:
+1. Nucleation period
+2. roughness
+
+Adequacy of Descriptions:
+1. Description for schema: rename verifying to characterizing and remove the including titanium dioxide part. It should be more general and applied to various ALD systems, there is no reason to mention which materials are included.
+2. Delivery method description: rename the precursor to the reactants: delivery of the reactants to the reaction chamber it refers to both reactants if applicable (thermal ALD)
+3. Remove the purge and dosing time and temperature range from the thickness control property box to the process conditions box. Rename this property box to Growth Behavior. Include the nucleation period too in this property box.
+4. For each film property, in the comments mention the methods used to measure its property for example for chemical composition XPS, or for film thickness SE
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> ReactantSelection
+-> ProcessConditions(reactor, depositiontemperature, reactorchamber,dosing time[precursor, co-reactant], purging times[precursor, co-reactant])
+-> GrowthBehavior (thickness, GPC, nucleation behavior, nucleation period)
+-> MaterialProperties(chemical composition, structural properties[uniformity, conformality, crystallinity, roughness, film density],optical properties, electrical properties)
+-> SafetyandReproducibility (Safety,FilmStability,Reproducibility)

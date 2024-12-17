@@ -1,0 +1,26 @@
+Property Grouping:
+1. Group: chemical composition, film density, crystallinity, conformality, uniformity in  StructuralProperties group which is included in the FilmProperties box.
+
+Missing Properties:
+1. Purging time of precursor and co-reactant in the processparameters box
+
+Adequacy of Descriptions:
+1. Remove the saturation property box. It repeat properties already mentioned.
+2. Remove the stoichiometry property box 
+3. Remove the uniformity property in the uniformity box. Just keep the thickness variation.
+4. Remove the conformality property in the conformality box. Just keep the aspect ration property.
+5. Remove the nucleation behavior property.
+6. Rename MaterialProperties to FilmProperties
+
+Domain expert edited schema of the initial generated version:
+
+-> MaterialDeposited
+-> ALDMethod
+-> Reactor
+-> ProcessParameters(Temperature, Pressure, PrecursorDosingTime, PrecursorPurgingTime, coReactantDosingtime, coReactantPurgingTime)
+-> ThicknessControl(GPC,filmthickness,nucleationbehavior)
+-> Film Properties
+   -> StructuralProperties(ChemicalComposition(elements), Crystalinity, FilmDensity, Uniformity, Conformality)
+   -> OpticalProperties(refractiveindex, absorptioncoeff)
+   -> ElectricalProperties(resistivity,carrierDensity,Mobility)
+-> OtherAspects(Safety, FilmStability, Reproducibility, LiteratureComparison,DevicePerformance)

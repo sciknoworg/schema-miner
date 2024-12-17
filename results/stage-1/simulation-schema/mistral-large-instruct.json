@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ALD Process Schema",
+  "description": "Schema for representing the Atomic Layer Deposition (ALD) process",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "array",
+      "description": "Simulation parameters and observables for the ALD process",
+      "items": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "Specific task or observable being simulated",
+            "enum": [
+              "Decomposition and binding",
+              "Growth rate and temperature dependence",
+              "Surface desorption, diffusion and reaction rates",
+              "Binding affinity and sticking coefficients",
+              "Film properties",
+              "Designing new ALD precursors",
+              "Predict cation ratios",
+              "Carrier gas flow and temperature profile",
+              "Modelling morphology evolution",
+              "Precursor exposure on 3D substrates",
+              "Surface coverage by the adsorbate",
+              "Design and operation variables",
+              "Precursor pressure inside the reactor",
+              "Growing of nanoclusters"
+            ]
+          },
+          "methodology": {
+            "type": "array",
+            "description": "Methodologies used for the simulation",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DFT",
+                "HF",
+                "post-HF",
+                "ML",
+                "kMC",
+                "MD",
+                "Hybrid ONIOM method",
+                "CCSD(T)",
+                "MP2",
+                "B3LYP",
+                "HF/6-31G(d,p)",
+                "CI-NEB",
+                "RMD simulations using LAMMPS",
+                "CFD",
+                "Mass balance",
+                "LBM Monte Carlo",
+                "GCM/CAMD",
+                "ANSYS",
+                "Continuum Fluid Dynamics (CFD)",
+                "QM/MM calculations using ONIOM implementation"
+              ]
+            }
+          },
+          "materialType": {
+            "type": "array",
+            "description": "Example materials or types used in the simulation",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Al2O3",
+                "TiO2",
+                "Cu(acac)2",
+                "Ti(CpMe5)",
+                "ZrO2",
+                "Zinc Oxide",
+                "HfO2",
+                "Pt precursors on graphene",
+                "Silicon and Carbon precursors",
+                "Copper oxide nanoclusters on porphyrin"
+              ]
+            }
+          }
+        },
+        "required": ["task", "methodology", "materialType"]
+      }
+    },
+    "keyParameters": {
+      "type": "object",
+      "description": "Key parameters and observables for the ALD process",
+      "properties": {
+        "atomistic": {
+          "type": "object",
+          "description": "Atomistic (nano-mesoscale) parameters",
+          "properties": {
+            "energyBarrier": {
+              "type": "number",
+              "description": "Energy barrier (kinetics), in eV",
+              "units": "eV"
+            },
+            "reactionEnergies": {
+              "type": "number",
+              "description": "Reaction energies (thermodynamics), in eV",
+              "units": "eV"
+            },
+            "stickingCoefficient": {
+              "type": "number",
+              "description": "Sticking coefficient",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "surfaceCoverage": {
+              "type": "number",
+              "description": "Surface coverage",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "bindingAffinity": {
+              "type": "number",
+              "description": "Binding affinity",
+              "units": "eV"
+            }
+          },
+          "required": ["energyBarrier", "reactionEnergies", "stickingCoefficient", "surfaceCoverage", "bindingAffinity"]
+        },
+        "continuum": {
+          "type": "object",
+          "description": "Continuum (meso-macroscale) parameters",
+          "properties": {
+            "surfaceCoverage": {
+              "type": "number",
+              "description": "Surface coverage",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "filmUniformity": {
+              "type": "number",
+              "description": "Film uniformity",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "filmRoughness": {
+              "type": "number",
+              "description": "Film roughness, in nm",
+              "units": "nm"
+            },
+            "filmDensity": {
+              "type": "number",
+              "description": "Film density, in g/cm³",
+              "units": "g/cm³"
+            },
+            "temperatureProfile": {
+              "type": "array",
+              "description": "Temperature profile (thermal conduction), in °C",
+              "items": {
+                "type": "number",
+                "units": "°C"
+              }
+            },
+            "chemicalComposition": {
+              "type": "object",
+              "description": "Chemical composition (element analysis)",
+              "additionalProperties": {
+                "type": "number",
+                "description": "Percentage of each element"
+              }
+            }
+          },
+          "required": ["surfaceCoverage", "filmUniformity", "filmRoughness", "filmDensity", "temperatureProfile", "chemicalComposition"]
+        }
+      },
+      "required": ["atomistic", "continuum"]
+    }
+  },
+  "required": ["simulationParameters", "keyParameters"]
+}

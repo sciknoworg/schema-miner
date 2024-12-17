@@ -1,0 +1,21 @@
+Property Grouping:
+1. Place bubblertemperature in the processparameters box
+2. Place ALDMethod and MaterialDeposited in a single box called "ALDSystem"
+3. Place reactor and substrate in the processpconditions box
+4. Include the selflimitinggrowth and nucleation period properties in the cycledetails box (or thicknesscontrol box as I suggest later)
+5. Merge: composition, thickness, uniformity, conformality, density, crystallinity properties into StructuralProperties box inside the film properties box.
+
+Adequacy of Descriptions:
+1. CarrierGas: should be out of the precursor property and belong in the general reactants box.
+2. Description of nucleationperiod: number of cycles required to achieve self-limitation.
+3. Remove the ligandRelease and reactivity property
+4. Rename the processconditions property to processparameters
+5. Rename cycledetails property to thicknesscontrol
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDSystem(MaterialDeposited,ALDMethod)
+-> Reactants(Precursor,Co-reactant, Carrier Gas,)
+-> ProcessParameters(Temperature,Pressure, Substrate, Reactor, BubblerTemperature, ThicknessControl)
+-> FilmProperties(StructuralProperties, OpticalProperties, ElectricalProperties)
+-> SafetyandStability(chemicalSafety,FilmStability,Reproducibility)

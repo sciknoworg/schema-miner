@@ -1,0 +1,397 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "type": "object",
+    "properties": {
+        "reactants": {
+            "type": "object",
+            "properties": {
+                "precursor": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name of the precursor."
+                        },
+                        "carrierGas": {
+                            "type": "string",
+                            "description": "Type of carrier gas used in the process."
+                        },
+                        "vaporPressure": {
+                            "type": "number",
+                            "description": "Vapor pressure of the precursor in Torr."
+                        },
+                        "temperature": {
+                            "type": "number",
+                            "description": "Temperature of the precursor in Celsius."
+                        },
+                        "nonHalogenated": {
+                            "type": "boolean",
+                            "description": "Indicates if the precursor is non-halogenated."
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "carrierGas",
+                        "vaporPressure",
+                        "temperature",
+                        "nonHalogenated"
+                    ]
+                },
+                "coReactant": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name of the co-reactant."
+                        },
+                        "vaporPressure": {
+                            "type": "number",
+                            "description": "Vapor pressure of the co-reactant in Torr."
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "vaporPressure"
+                    ]
+                }
+            },
+            "required": [
+                "precursor",
+                "coReactant"
+            ]
+        },
+        "processConditions": {
+            "type": "object",
+            "properties": {
+                "temperatureRange": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "description": "Temperature range for the deposition process in Celsius, including low-temperature growth specifics."
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Pressure in the reactor during the ALD process in Pascals."
+                },
+                "cycleDetails": {
+                    "type": "object",
+                    "properties": {
+                        "numberOfCycles": {
+                            "type": "integer",
+                            "description": "Total number of ALD cycles to achieve the desired film thickness."
+                        },
+                        "growthPerCycle": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "number",
+                                    "description": "Growth per cycle in nanometers, influenced by temperature and precursor characteristics."
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "nm/cycle"
+                                    ],
+                                    "description": "Unit of measurement for growth per cycle."
+                                }
+                            },
+                            "required": [
+                                "value",
+                                "unit"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "numberOfCycles",
+                        "growthPerCycle"
+                    ]
+                },
+                "nucleationPeriod": {
+                    "type": "integer",
+                    "description": "Number of cycles for nucleation period."
+                },
+                "selfLimitingGrowth": {
+                    "type": "boolean",
+                    "description": "Indicates whether the growth is self-limiting."
+                },
+                "reactorDesign": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Description of the reactor design, including any special features for uniformity and efficiency."
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Type of reactor, e.g., hot-wall, viscous-flow."
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "type"
+                    ]
+                },
+                "pulseLength": {
+                    "type": "object",
+                    "properties": {
+                        "precursor": {
+                            "type": "number",
+                            "description": "Pulse length for the precursor in seconds."
+                        },
+                        "coReactant": {
+                            "type": "number",
+                            "description": "Pulse length for the co-reactant in seconds."
+                        }
+                    }
+                },
+                "purgeTime": {
+                    "type": "number",
+                    "description": "Purge time between precursor and co-reactant pulses in seconds."
+                },
+                "reactiveStickingCoefficient": {
+                    "type": "number",
+                    "description": "Reactive sticking coefficient of the precursor on the substrate."
+                }
+            },
+            "required": [
+                "temperatureRange",
+                "pressure",
+                "cycleDetails",
+                "reactorDesign"
+            ]
+        },
+        "filmProperties": {
+            "type": "object",
+            "properties": {
+                "composition": {
+                    "type": "string",
+                    "description": "Chemical composition of the deposited film. Note the expected metal-to-oxygen ratio for certain oxides."
+                },
+                "thickness": {
+                    "type": "number",
+                    "description": "Final thickness of the film in nanometers."
+                },
+                "uniformity": {
+                    "type": "boolean",
+                    "description": "Indicates whether the film is uniform across the substrate."
+                },
+                "conformality": {
+                    "type": "boolean",
+                    "description": "Indicates whether the film conforms to 3D structures."
+                },
+                "density": {
+                    "type": "number",
+                    "description": "Density of the film in g/cm\u00b3. Compare to bulk values for quality assessment and porosity evaluation."
+                },
+                "porosity": {
+                    "type": "number",
+                    "description": "Porosity of the film as a percentage."
+                },
+                "crystallinity": {
+                    "type": "string",
+                    "description": "Crystallinity of the film (e.g., amorphous, crystalline)."
+                },
+                "orientation": {
+                    "type": "string",
+                    "description": "Preferred orientation of the film (e.g., (111) orientation)."
+                },
+                "impurityContent": {
+                    "type": "object",
+                    "properties": {
+                        "hydrogen": {
+                            "type": "number",
+                            "description": "Hydrogen content in atomic percent."
+                        },
+                        "carbon": {
+                            "type": "number",
+                            "description": "Carbon content in atomic percent."
+                        },
+                        "oxygen": {
+                            "type": "number",
+                            "description": "Oxygen content in atomic percent."
+                        },
+                        "nitrogen": {
+                            "type": "number",
+                            "description": "Nitrogen content in atomic percent."
+                        }
+                    }
+                },
+                "stoichiometry": {
+                    "type": "string",
+                    "description": "Stoichiometry of the film, e.g., O/Hf ratio."
+                },
+                "adhesion": {
+                    "type": "string",
+                    "description": "Adhesion quality of the film to the substrate."
+                },
+                "opticalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "refractiveIndex": {
+                            "type": "number",
+                            "description": "Refractive index of the film."
+                        },
+                        "absorptionCoefficient": {
+                            "type": "number",
+                            "description": "Absorption coefficient of the film."
+                        },
+                        "bandgap": {
+                            "type": "number",
+                            "description": "Optical bandgap of the film in electron volts (eV)."
+                        }
+                    }
+                },
+                "electricalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "resistivity": {
+                            "type": "number",
+                            "description": "Electrical resistivity of the film in ohm-meter. Note its correlation with porosity and oxidation."
+                        },
+                        "carrierDensity": {
+                            "type": "number",
+                            "description": "Carrier density in the film."
+                        },
+                        "mobility": {
+                            "type": "number",
+                            "description": "Carrier mobility in the film."
+                        }
+                    }
+                },
+                "dielectricConstant": {
+                    "type": "number",
+                    "description": "Dielectric constant of the film."
+                },
+                "roughness": {
+                    "type": "number",
+                    "description": "Surface roughness of the film in nanometers."
+                },
+                "stepCoverage": {
+                    "type": "number",
+                    "description": "Step coverage percentage indicating the conformality of the film over high aspect ratio structures."
+                },
+                "annealingConditions": {
+                    "type": "object",
+                    "properties": {
+                        "temperature": {
+                            "type": "number",
+                            "description": "Annealing temperature in Celsius."
+                        },
+                        "atmosphere": {
+                            "type": "string",
+                            "description": "Atmosphere used during annealing, e.g., nitrogen."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "composition",
+                "thickness",
+                "uniformity",
+                "conformality",
+                "density",
+                "dielectricConstant",
+                "roughness",
+                "stepCoverage"
+            ]
+        },
+        "safetyAndStability": {
+            "type": "object",
+            "properties": {
+                "chemicalSafety": {
+                    "type": "string",
+                    "description": "Safety considerations for the chemicals used."
+                },
+                "filmStability": {
+                    "type": "string",
+                    "description": "Thermal stability of the film under various conditions."
+                },
+                "reproducibility": {
+                    "type": "boolean",
+                    "description": "Indicates whether the ALD process is reproducible."
+                }
+            },
+            "required": [
+                "chemicalSafety",
+                "filmStability",
+                "reproducibility"
+            ]
+        },
+        "additionalDetails": {
+            "type": "object",
+            "properties": {
+                "ALDMethod": {
+                    "type": "string",
+                    "description": "Method of ALD used (e.g., PEALD, Thermal ALD)."
+                },
+                "materialDeposited": {
+                    "type": "string",
+                    "description": "Material deposited during the ALD process."
+                },
+                "bubblerTemperatures": {
+                    "type": "object",
+                    "properties": {
+                        "precursor": {
+                            "type": "number",
+                            "description": "Bubbler temperature for the precursor in Celsius."
+                        },
+                        "coReactant": {
+                            "type": "number",
+                            "description": "Bubbler temperature for the co-reactant in Celsius."
+                        }
+                    }
+                },
+                "reactor": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the reactor."
+                        },
+                        "manufacturer": {
+                            "type": "string",
+                            "description": "Manufacturer of the reactor."
+                        }
+                    }
+                },
+                "substrate": {
+                    "type": "string",
+                    "description": "Type of substrate used in the ALD process."
+                },
+                "substrateType": {
+                    "type": "string",
+                    "description": "Specific type of substrate used, e.g., borosilicate glass, Si(100)."
+                }
+            }
+        },
+        "growthMechanism": {
+            "type": "object",
+            "properties": {
+                "surfaceIntermediates": {
+                    "type": "string",
+                    "description": "Description of surface intermediates formed during the ALD process."
+                },
+                "precursorPulseEffect": {
+                    "type": "string",
+                    "description": "Effect of precursor pulse times on growth rates and surface reactions."
+                },
+                "temperatureEffect": {
+                    "type": "string",
+                    "description": "Impact of temperature on growth rates and surface reactions."
+                }
+            }
+        }
+    },
+    "required": [
+        "reactants",
+        "processConditions",
+        "filmProperties",
+        "safetyAndStability",
+        "additionalDetails",
+        "growthMechanism"
+    ]
+}

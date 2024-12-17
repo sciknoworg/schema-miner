@@ -1,0 +1,1525 @@
+Citation: Yun, S.; Wang, H.; Tom, M.;
+Ou, F.; Orkoulas, G.; Christoﬁdes, P .D.
+Multiscale CFD Modeling of
+Area-Selective Atomic Layer
+Deposition: Application to Reactor
+Design and Operating Condition
+Calculation. Coatings 2023, 13, 558.
+https://doi.org/10.3390/
+coatings13030558
+Academic Editors: George Kokkoris
+and Nikolaos Cheimarios
+Received: 14 February 2023
+Revised: 28 February 2023
+Accepted: 3 March 2023
+Published: 5 March 2023
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+coatings
+Article
+Multiscale CFD Modeling of Area-Selective Atomic Layer
+Deposition: Application to Reactor Design and Operating
+Condition Calculation
+Sungil Yun 1
+ , Henrik Wang 1
+ , Matthew Tom 1
+ , Feiyang Ou 1
+ , Gerassimos Orkoulas 2
+and Panagiotis D. Christoﬁdes 1,3,*
+1 Department of Chemical and Biomolecular Engineering, University of California,
+Los Angeles, CA 90095, USA
+2 Department of Chemical Engineering, Widener University, Chester, PA 19013, USA
+3 Department of Electrical and Computer Engineering, University of California, Los Angeles, CA 90095, USA
+* Correspondence: pdc@seas.ucla.edu; Tel.: +1-(310)-794-1015
+Abstract: Area-selective atomic layer deposition (ASALD) as a bottom-up nanopatterning technique
+has gained recognition for its ability to address misalignment issues in semiconductor manufacturing.
+This in silico study investigates process operation conditions for ASALD of SiO2/Al2O3 and reactor
+optimization by using multiscale computational ﬂuid dynamics (CFD) modeling. Several reactor
+designs were modeled in Ansys Workbench and their results compared to ensure effective reagent
+separation and homogeneous exposure to reagents across the wafer. Annular reaction zones and
+asymmetrical inlets enhanced uniform exposure to reagents and minimized reagent intermixing,
+which allowed the reactor to tolerate higher rotational speeds. Additionally, low rotation speeds and
+high species mole fractions were required for complete deposition of a cycle of the ASALD process.
+This research provides insight into the ASALD process operation and contributes to further industrial
+versatility.
+Keywords: area-selective atomic layer deposition; spatial reactors; kinetic Monte Carlo; computational
+ﬂuid dynamics; semiconductor manufacturing
+1. Introduction
+The last decade has seen a rise in the performance and downscaling of technology due
+to the successful commercialization of 5-nm Fin-Field Effect Transistors (FinFETs), which is
+attributed to the newly developed, state-of-the-art extreme ultraviolet (EUV) lithography
+technology [1]. The semiconductor industry is now presumably on the verge of entering
+the 3-nm process era [ 2,3], thereby meeting the projections of Moore’s Law. To further
+miniaturize and improve nanochip performance, the stacking of transistors to assemble
+elaborate three-dimensional (3D) structures is being implemented in nanodevices [4], and
+the number of levels of stack is increasing signiﬁcantly [ 5]. However, chipmakers are
+facing a challenge where vertically stacked features are often displaced from their original
+positions as the feature sizes of electronic devices continue to shrink [ 6]. To maximize
+chip performance, device features on 3D structures must be positioned with extreme
+precision in the nanoscale, which poses an obstacle for transistor assemblage. If devices
+are not aligned properly and features are not placed in precise locations, it may lead to
+a misalignment or an edge placement error (EPE) [ 7]. The misalignment of features in
+3D semiconductor chip stacks needs to be resolved, as this issue also causes structures
+to be deformed [8,9]. Structure deformation disrupts the ﬂow of electric currents, further
+increasing the likelihood of chip failure [10]. It has been reported that these misalignment
+issues are associated with the conventional top-down fabrication methodology of using
+a series of deposition, lithography, and etching processes [11]. The top-down process is
+Coatings 2023, 13, 558. https://doi.org/10.3390/coatings13030558 https://www.mdpi.com/journal/coatings
+
+Coatings 2023, 13, 558 2 of 26
+deﬁned as the one that carves out large structures in the substrate to build a feature in a
+subtractive fashion. This top-down paradigm has deﬁnitely contributed to the existence of
+the modern 3D FinFET device. However, it has also limited the number of layers that can
+be vertically stacked due to the stacking displacement.
+As a compelling alternative that avoids the issue of misalignment, the bottom-up fab-
+rication technique has gained momentum in recent years [12]. In this bottom-up synthesis
+method, molecules are scaled up to build nanoscale features from reactive precursors in
+a self-aligned manner that requires energetically favorable operating conditions [13] and
+low surface defect densities [14] to yield anisotropic layering. However, the generation of
+self-aligned structures allows for greater control over the morphologies of the patterned
+surface and reduces EPEs while enabling smaller feature sizes for wafers [15]. Currently,
+self-assembled nanostructures are constructed using lithographic techniques [16] to gen-
+erate templates preceding thin-layer deposition to promote nanopatterning [ 17] in this
+bottom-up approach. Recently, researchers have focused on self-assembling nanostructures
+such as [18] who studied the chemoselective nature of a chemical inhibitor on chemically
+similar metal-oxides and [19] who proposed a new precursor passivation technique that
+was beneﬁcial for promoting higher controllable surface morphologies. In particular, a
+nanowire, as a high aspect-ratio component of a transistor [20,21] that is capable of being
+synthesized in one-dimensional (1D) structures [11], has been recognized for its potential to
+fabricate gate-all-around (GAA) transistors [22]. Apart from self-assembly, the bottom-up
+process is leveraged by a nonlithographic technique proposed in [23] and demonstrated
+in [24]. This emerging technology is conducive toward reducing manufacturing costs [25],
+eliminating lithography-related processes, and therefore, minimizing toxic reagents [26]
+that are used in nanoimprint lithographic methods [27]. Area-selective atomic layer deposi-
+tion (ASALD) is a promising candidate as a bottom-up fabrication process that addresses
+the challenges of limiting multilayer stacking [ 26]. ASALD is a technique that locally
+deposits materials on the growth area (GA), enabling self-aligned fabrication by reducing
+EPEs [28,29]. To achieve area-selective atomic layer deposition, it is essential to protect the
+top surface of the non-growth area (NGA) with surface modifying reagents or inhibitors.
+In this manner, inhibitors passivate the surface of the NGA by creating protective layers
+to hinder ALD growth on the NGA. Thus, ALD growth is permitted only on the GA in
+chemoselective and regioselective behaviors. Inhibitor selection obviously plays an essen-
+tial role to accomplish successful area-selective ALD, and several, long, aqueous polymeric
+chain inhibitors have been experimented, such as octadecyltrichlorosilane (ODTS) [28,30]
+and poly(methyl methacrylate) (PMMA) [ 31]. Additionally, gaseous small molecule in-
+hibitors (SMIs) have been explored as a promising method [ 9,32] since the degradation
+of protective coatings is insigniﬁcant, and SMI-based ASALD is readily integrated with
+various vapor-phase ALD reactions [33].
+However, it has been demanding to further commercialize and optimize ASALD
+technology due to the difﬁculty of gaining an in-depth understanding of the process [29].
+Even though experimental approaches are of value, not only are those experiments costly
+and time-consuming, but in situ monitoring is also restricted, resulting in a lack of spa-
+tiotemporal data. in silico studies using multiscale modeling addresses these issues by
+simultaneously analyzing the features of surface kinetics and ﬂuid ﬂow throughout reactors
+in a cost-effective manner. Therefore, in conjunction with experimental methods, the devel-
+opment of multiphysics models is needed to offer high-ﬁdelity ﬂuid dynamics data and
+robust guidelines for process operation and control. The study of multiscale modeling is
+separated into three parts: (1) atomistic-mesoscopic modeling that characterizes the surface
+reaction mechanism using kinetic Monte Carlo (kMC) simulations and ab initio Density
+Functional Theory (DFT) calculations, (2) computational ﬂuid dynamics (CFD) modeling
+that produces diverse data sets for multiphysics ﬂuid ﬂow, and (3) the design of optimal
+control systems that ensures high-quality output and stable operation. The ﬁrst step of
+developing an atomistic-mesoscopic model to delineate thin-ﬁlm surface kinetics with steric
+repulsion effects for area-selective ALD of SiO2/Al2O3 in which the SMI, acetylacetone
+
+Coatings 2023, 13, 558 3 of 26
+(Hacac), precursor, bis(diethylamino)silane (BDEAS), and oxidant, ozone, are utilized for
+Steps A through C, respectively, was successfully carried out [ 34]. In this paper, as the
+second step, a multiscale model which combines the atomistic-mesoscopic model and a
+macroscopic model is developed to offer insight for further industrialization.
+Recently, there has been growing interest in spatial atomic layer deposition, which is a
+potential substitute for conventional ALD processes in that it is capable of high-volume
+manufacturing [35]. This high throughput capability is made possible by the injection of
+reagents into separate reaction zones within the spatial reactor that are isolated with an
+inert gas curtain and vacuum zones. Figure 1 depicts the schematic diagram of a sheet-
+to-sheet spatial ALD reactor conﬁguration where the substrate is transferred between
+reaction zones that are isolated by inert gases (gas curtain) by a conveyor belt. Due to
+the spatially separated reaction zones, no lengthy purging steps are required to maintain
+the self-limiting nature of the reactions. In other words, spatial ALD is able to save a
+signiﬁcant amount of purging time, resulting in a high throughput ALD process. There
+have been various proposals of different spatial ALD reactor conﬁgurations. The original
+concept of a spatial reactor as a roll-to-roll reactor was ﬁrst proposed in 1977 [36], of which
+applications were limited to ﬂexible substrates. Afterward, a few sheet-to-sheet designs for
+solar photovoltaic technology and other applications have been developed and commer-
+cialized [37,38]. Recent in silico research into multiphysics simulations have focused on
+sheet-to-sheet designs to provide valuable insight into a route for further industrialization.
+For instance, several works have explored the effects of the gap distance, which is the
+separation distance between the dividers and surface of the substrate in Figure 1, on the
+ﬂow dynamics [39] as well as reactor operating conditions including pumping pressure and
+substrate velocity [40,41]. Furthermore, ref [42] examined how precursor ﬂow rates and
+other process operating parameters impact on transport phenomena and surface reactions.
+Additionally, prior works [43,44] investigated the effect of the substrate velocity on ﬁlm
+uniformity and surface kinetics using a three-dimensional multiscale computational ﬂuid
+dynamics model. Despite the potential of high-volume production, the sheet-to-sheet
+reactors weaken in terms of versatile applications since it is impossible to avoid neces-
+sitating larger equipment with longer substrates compared to standardized wafers. As
+another approach, rotary designs have been experimented on a laboratory scale, and they
+have demonstrated the operational capability to provide uniform ﬁlm growths [ 45,46].
+Furthermore, the dimensions of rotary designs are comparable to that of stationary ALD
+reactors. Nevertheless, a few studies have carried out experiments to evaluate the rotary
+design [46,47]. Moreover, aforementioned in silico studies have solitarily focused on the
+sheet-to-sheet type reactors, which are signiﬁcantly different from rotary type reactors in
+many aspects including transport phenomena, reactor conﬁguration optimization, and
+control strategies. At this stage, research studies aided by computational ﬂuid dynamics
+simulations are needed to thoroughly investigate the surface kinetics in conjunction with
+the ﬂuid dynamics of rotary designs.
+Therefore, in this study, a computational simulation method, the so-called multiscale
+model, is presented to qualitatively and quantitatively analyze the features of a rotary
+spatial ALD reactor design and the ABC-type ASALD process in an operable ALD window.
+The structure of this paper is as follows: Section 2.1 describes the methodology of integrating
+an atomistic-mesoscopic model and a macroscopic model, Section 2.2 illustrates atomistic-
+mesoscopic modeling with kinetic descriptions, Section 2.3 explains the methodology of
+macroscopic modeling, Section 3 discusses the results of the multiscale modeling work,
+and ﬁnally, Section 4 encapsulates the conclusion of this work.
+
+Coatings 2023, 13, 558 4 of 26
+Precursor 1 Purge Gas Precursor 2 
+Effluent Effluent 
+Purge Gas 
+Effluent 
+Purge Gas 
+Effluent 
+Precursor 1 
+Reaction Zone 
+Precursor 2 
+Reaction Zone 
+Purge Purge Purge 
+Substrate Sheet 
+Divider 
+Figure 1. Sheet to sheet type reactor design for a two-step, spatial atomic layer deposition process.
+Reagents are continuously introduced in separate reaction zones, and a plate-shaped substrate is
+transported via a conveyor belt through each zone.
+2. Multiscale Modeling
+2.1. Multiscale Modeling Framework
+It is desired to establish a quantitative relationship between the mesoscale surface
+kinetics on the substrate surface and the macroscopic ﬂuid dynamics of the reactor to
+provide an effective and reproducible method for accurately simulating the overall process
+through a multiscale modeling framework [48]. Additionally, multiscale models are capable
+of modeling through various time and length scales, as illustrated in Figure 2. In this work,
+a multiscale model is developed by integrating an atomistic-mesoscopic and a macroscopic
+simulation that are conjoined by a data-sharing programming methodology. This new
+model operates without requiring robust computational resources through appropriate pro-
+cess assumptions and simpliﬁcations, and provides an accurate representation of realistic
+phenomena encountered in industrial settings that have been incorporated into this work.
+The atomistic-mesoscopic model of the ABC-type ASALD of SiO 2/Al2O3 surfaces
+with a SMI was ﬁrst developed by [34], and it will be integrated into the multiscale model
+of this work. For the purposes of this work, the atomistic-mesoscopic model will be referred
+to as the mesoscopic model for simplicity. The mesoscopic model conjoins ﬁrst principles
+ab initio quantum mechanics (e.g., Density Functional Theory and Nudged Elastic Band)
+and statistical mechanics (e.g., Transition State Theory and Collision Theory) to evaluate
+reaction rate constants that will be integrated into a kinetic Monte Carlo algorithm to
+monitor the surface kinetics. While the mesoscopic simulation records the evolution of
+surface kinetics, a macroscopic model is needed to examine the continuum mechanics in
+the ambient ﬂuid conditions. A three-dimensional computational ﬂuid dynamics (CFD)
+simulation is employed to observe the spatiotemporal behavior of the species and ﬂuid
+dynamics in a reaction chamber through a rigorous process of reactor optimization, mesh
+discretization, and tailoring the macroscopic model to the ASALD reactor (e.g., boundary
+conditions, user-deﬁned functions, numerical solver methods, and operating conditions).
+From the development of the mesoscopic and macroscopic domains, the simulations are
+conjoined by linking the surface partial pressure data evaluated from the macroscopic
+CFD model to the kMC simulation, which successively evaluates the source accumulation
+rates of species for a time progression to be deﬁned to the macroscopic CFD model. Thus,
+a multiscale model is intimately constructed that enables the simultaneous modeling of
+surface kinetics and continuum mechanics in a spatiotemporal manner, which is depicted
+by the process diagram in Figure 3.
+
+Coatings 2023, 13, 558 5 of 26
+Figure 2. Diagram depicting the various length and time scales applicable for the multiscale modeling
+simulation, which is composed of mesoscopic and macroscopic modeling. Mesoscopic modeling is
+composed of ab initio quantum and statistical mechanics and the kinetic Monte Carlo method, and
+the macroscopic model consists of reactor modeling and computational ﬂuid dynamics simulations.
+Prior work [49] has utilized machine learning or regression methods to determine optimal operating
+conditions to achieve high synergy.
+Macroscopic 
+CFD Model 
+(ANSYS Fluent) 
+Mesoscopic 
+kMC Model 
+(Python Script) 
+Inputs 
+Outputs 
+Multiscale Model 
+(Linux Script) 
+UDF 
+Surface Pressure & 
+Temperature 
+Process Time & 
+Source Terms 
+UDM 
+Figure 3. Coding architecture of the multiscale simulation using various programming languages to
+conjoin the mesoscopic and macroscopic simulations. In a Linux Shell script as an interface between
+the macroscopic and mesoscopic models, two models are simulated while exchanging pressure,
+temperature, and source generation (or consumption) with each other.
+
+Coatings 2023, 13, 558 6 of 26
+2.2. Mesoscopic Model
+2.2.1. Surface kinetics
+The abundance of undetermined reaction pathways present a challenge for deﬁning
+the overall reaction mechanism for each step in the ASALD process. One methodology is to
+simplify the reaction mechanism to purely consist of rate determining reactions that are also
+elementary. Thus, the surface chemistries involved in ASALD of SiO2/Al2O3 are selected
+from experimental works [9,50]. Below, the proposed reaction pathways for each step in
+the ABC-ASALD process are summarized. There are three reactions that the mesoscopic
+model must simulate that together make up one ASALD cycle. The ﬁrst reaction, Step A, is
+where acetylacetone (Hacac) adsorbs to Al2O3 to act as an inhibitor on the non growth area.
+This reaction has the following steps:
+Al
+A1
+OH
+OH O
+Hacac
+Al
+Monodentate (A3)
+O O
++ H2O
+(Step A-1)
+Al
+Monodentate (A3)
+O O O
+Al
+Chelate (A4)
+O (Step A-2)
+In Step A-1, an acidic, keto-enol tautomerized Hacac molecule reacts with the basic
+hydroxyl group on the Al2O3 surface, which produces water vapor as a byproduct. Then,
+in the following step, the monodentate structure of the adsorbed Hacac undergoes a
+rearrangement mechanism to produce a more stable, chelate form.
+The second reaction, Step B, is composed of an adsorption step of bis(diethylamino)silane
+(BDEAS) onto SiO2 to propagate the growth of a monolayer of SiO2, which is referred to as
+the growth area. Analogously to Step A, this reaction also consists of two steps:
+Si
+OH
+Si
+V1
+OH
+H2
+Si
+NN
+BDEAS
+Si
+V3
+O
+SiH2
+N
+Si
+OH
++ HN
+DEA
+(Step B-1)
+
+Coatings 2023, 13, 558 7 of 26
+Si
+V3
+O
+SiH2
+N
+Si
+OH Si
+O
+Si
+V4
+H H
+O
+Si
++ HN
+DEA
+(Step B-2)
+In Step B-1, the bulky BDEAS molecule adsorbs to one hydroxyl site on SiO2, which
+produces one molecule of diethylamine (DEA) as a byproduct. In Step B-2, the BDEAS
+molecule binds to an adjacent hydroxyl site on SiO 2, which produces a second DEA
+molecule as a byproduct. After Step B is completed, a monolayer of silicon atoms will have
+been deposited on the original SiO2 surface.
+Finally, the third reaction, Step C, is where the monolayer of Si is oxidized with O3 to
+ﬁnish growing the layer of SiO2. Its reactions have the following form:
+Si
+O
+Si
+V4
+H H
+O
+Si
+O3
+Si
+O
+Si
+V6
+OH H
+O
+Si
++ O2 (Step C-1)
+Si
+O
+Si
+V6
+OH H
+O
+Si
+O3
+Si
+O
+Si
+V8
+OH OH
+O
+Si
++ O2 (Step C-2)
+Here, two ozone atoms are consumed per Si atom, leading to a homogeneous array
+of geminal hydroxylated ligands of SiO 2 with two O2 atoms as the byproduct. For the
+kMC algorithm, the kinetic rate constants of all reactions (above) including physisorption
+and desorption of the reagents must be evaluated as a function of temperature and partial
+pressures. Detailed descriptions of the reaction pathways and kinetic parameters can be
+found in [34].
+2.2.2. Quantiﬁcation of Surface Reactions
+Various ab initio quantum and statistical mechanics as well as ﬁrst-principles physical
+chemistry approaches were integrated into this work to evaluate the reaction rate constants
+for each reaction. This section discusses the theoretical approaches for computing the reac-
+tion rate constants for each reaction, which are categorized into two classes: nonadsorption
+or adsorption.
+For nonadsorption reactions, their reaction rate constants are calculated using the
+Arrhenius equation, which requires the activation energy and pre-exponential terms to
+be computed. The ﬁrst step towards the computing of these reaction rate constants is to
+generate an optimized crystalline and molecular structure of the reactants and products of
+the nonadsorption reactions. One underlying assumption of these optimized molecular
+
+Coatings 2023, 13, 558 8 of 26
+and crystalline structures is that the surface of the wafer, which is amorphous in nature,
+is simpliﬁed to a homogeneous crystalline structure [ 51,52] and is modeled without the
+presence of crystallographic defects. This procedure has been conducted in prior micro-
+scopic and mesoscopic modeling of atomic layer etching and area-selective atomic layer
+deposition processes to alleviate the computational burden of the simulation and to reduce
+the complexity of the coding architecture for the kMC simulation while maintaining some
+structural ﬁdelity [34,49]. The computations for structural optimization are achieved by
+employing the open-source molecular dynamics program, Quantum ESPRESSO [53], to
+perform a structural optimization of the lattice structure of the solid materials and the
+molecular structure of the gaseous species. This procedure is conducted by ﬁnding the
+minimum, total electronic energy of the species, Etotal, through tuning the independent
+parameters k, Eψ, and Eρ, which are the k-points (speciﬁed as automatic), the kinetic energy
+cut-off for wave functions (ecutwfc), and the kinetic energy cut-off for charge density and
+potential (ecutrho), respectively, in an iterative procedure until a convergence threshold
+speciﬁed to the program is satisﬁed. The parameters k, Eψ, and Eρ, are adjusted until the
+inﬁmum of the total electronic energy is obtained, which is described below:
+inf
+k∈R6,Eψ∈R,Eρ∈R
+Etotal
+(
+k, Eψ, Eρ
+)
+(1)
+Following the molecular optimization procedure, the nudged elastic band (NEB) method is
+employed to evaluate the activation energies for the nonadsorption reactions. The NEB
+approach is a transition-path sampling procedure that identiﬁes saddle points to determine
+the minimum energy path between the reactant(s) and product(s) by generating a user-
+deﬁned number of images of the conversion and atomic movement for each molecular
+structure [54]. Although a higher number of images (intermediate transition states with
+minimum energy path) is essential for computing molecular properties of high ﬁdelity,
+such a simulation will require greater computational resources to complete in ample time
+as well; therefore, a total of nine images were used in a prior work [34] with results that
+were veriﬁed to experimentally recorded data results observed by [9,33,50]. Once all the
+intermediate images are produced along with the saddle point, the maximum energy peak is
+determined, which is utilized to compute the activation energy for the forward and reverse
+reactions. With the activation energy, the reaction rate constant for each nonadsorption
+reaction is calculated with the Arrhenius equation, which is shown below:
+knonad = ν exp
+(
+−Eact
+RT
+)
+(2)
+where knonad is the reaction rate constant for a nonadsorption reaction, ν is the temperature
+dependent pre-exponential factor, Eact is the activation energy of the reaction, R is the
+universal gas constant, and T is the absolute temperature of the reaction. The calculation of
+the pre-exponential factor is simpliﬁed by assuming that the ratio between the transition
+state and reactant partition functions is unity [55]. This yields the following equation for
+the pre-exponential factor ν, which is dependent on the temperature, T, of the reaction:
+ν = kBT
+h (3)
+where kB is the Boltzmann constant and h is the Planck constant.
+For adsorption reactions, it is simpler to calculate their reaction rate constants, which
+are modeled as bimolecular reactions that follow Maxwell-Boltzmann statistics and Colli-
+sion Theory. The reaction rate constants for adsorbate species, s, are then characterized by
+the following equation:
+kads,s = Ps Asite σs
+Zs
+√2πmskBT (4)
+
+Coatings 2023, 13, 558 9 of 26
+where kads,s is the reaction rate constant for an adsorption reaction, Ps is the partial pressure
+of the gaseous reagent, s, Asite is the surface area of a single active site, σs is an experimen-
+tally determined sticking coefﬁcient unique to the reagent s, Zs is the coordination number
+of the gas s, ms is the atomic mass of the gaseous reagent s, kB is the Boltzmann constant,
+and T is the absolute temperature of the ambient environment. The sticking coefﬁcient was
+found for Hacac to be 1.0 ×10−4 [56], that of BDEAS to be 2.0 ×10−5 [57], and that of O3 to
+be 4.5 ×10−5 [58]. In [34], these sticking coefﬁcients were validated through comparison to
+experimental results from [33].
+2.2.3. kMC Algorithm
+After characterizing the various reaction parameters through ab initio quantum and
+statistical mechanics simulations as described above, the computationally efﬁcient kinetic
+Monte Carlo (kMC) algorithm is integrated into the mesoscopic model simulation. The kMC
+algorithm is an approach that uses randomly generated numbers to reﬂect the stochastic
+and chaotic behavior of reactions occurring on the atomic scale [59]. This practice is used to
+model the adsorption and interchanging of various species on the surface of the substrate
+in this study. The procedure involves the weighting of potential reactions occurring on
+active sites using a random number, which are discretized into a 300 ×300 array in the
+Python programming language, resulting in 90,000 reaction sites in total. Following the
+random selection of the reaction using the ﬁrst random number, the duration of the reaction
+progression is then evaluated through a secondary random number that is independent of
+the ﬁrst random number. A summary of the procedures from [55] are described below and
+illustrated in Figure 4:
+k1
+k2
+k3
+k4
+ද
+kN
+ktot 
+1
+0
+0
+0
+2
+0
+1
+0
+3
+4
+0
+0
+0
+2
+1
+3
+1
+1
+0
+0
+0
+1
+0
+0
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+1
+0
+3
+0
+0
+2
+0
+4
+1
+0
+3
+0
+0
+2
+0
+0
+0
+0
+3
+3
+0
+0
+0
+0
+0
+0
+0
+1
+2
+0
+4
+3
+3
+3
+1
+0
+1
+0
+0
+0
+0
+3
+0
+0
+0
+0
+2
+0
+0
+3
+0
+0
+1
+0
+0
+1
+0
+0
+0
+0
+4
+1
+0
+0
+3
+0
+2
+0
+1
+0
+3
+2
+3
+0
+2
+0
+0
+3
+0
+0
+2
+0
+1
+0
+0
+4
+3
+0
+1
+2
+0
+0
+2
+0
+0
+0
+0
+0
+0
+2
+0
+0
+0
+3
+0
+Ȗ1ktot 
+Figure 4. Kinetic Monte Carlo simulation on lattice diagram. For each reaction site, an identiﬁable
+number is allocated corresponding to a reaction if the selection condition of a certain reaction path is
+satisﬁed in Equation (6).
+ktot =
+N
+∑
+i−1
+ki (5)
+where ktot is the sum of all possible reaction rate constants, ki is the reaction rate constant
+for the ith potential reaction in the reaction mechanism, and N denotes the total number of
+possible reaction pathways for the lattice site.
+The kMC method establishes a stochastic procedure by randomly assigning a number,
+γ1 ∈(0, 1] to select one of the reaction rate constants that were weighted during the prior
+summation procedure [59]. Larger reaction rates will have a higher probability for selection
+due to the weighting procedure, which is also consistent with the nature of kinetics in
+favoring reaction processes with higher reaction rate constants or lower activation energies.
+j−1
+∑
+i=1
+ki ≤γ1ktot ≤
+j
+∑
+i=1
+ki (6)
+
+Coatings 2023, 13, 558 10 of 26
+Above, j represents the reaction index chosen from the N possible reactions. If the above
+equation is satisﬁed, the reaction j is selected for the reaction at the site. If the selection
+procedure for all reaction sites is complete, lastly, the time progression in which the site of
+reaction is undisturbed is evaluated using a secondary random number, γ2 ∈(0, 1].
+∆t = −ln(γ2)
+ktot
+(7)
+Although the kMC algorithm provides an efﬁcient procedure for predicting the oc-
+currence of a reaction, it alone is not enough to provide an accurate description of the
+overall kinetics. While activation energy barriers ultimately dictate the directionality of
+reactions, other factors such as steric hindrance affect the probability of a successful adsorp-
+tion reaction. The steric hindrance originates from the bulkiness of the Hacac and BDEAS
+molecules in Steps A and B as the molecules must adsorb to multiple active sites to fully
+adhere to the SiO2/Al2O3 surface. When these two molecules adsorb to an active site on
+their respective substrates, the adsorbates are bulky that they inhibit adjacent active sites
+from properly binding to other molecules, thereby generating atomic vacancies. Thus, the
+kMC algorithm must be modiﬁed to account for these physical limitations by exercising
+a novel methodology that simulates hindered sites. In a prior study, ref [ 34] performed
+this modiﬁcation to the kMC algorithm by modeling the adsorption of individual Hacac
+and BDEAS molecules by considering their orientations on the site of adsorption, which is
+integrated into the multiscale modeling framework in this work.
+The kinetic model described above was validated by comparing the in silico simulation re-
+sults of Hacac adsorption on Al2O3 to reported experimental results of the same reaction. The
+kinetic model simulated a chelate surface density of 1.45±0.02 molecules/nm2 [34] while ex-
+perimental results determined a chelate surface density of 1.7±0.1 molecules/nm2 [33]. This
+deviation is attributed to the longer atomic distances calculated with Quantum ESPRESSO
+compared to the shorter atomic distances observed by [ 33]. Additionally, the ratio of
+Hacac chelate to monodentates is also comparable with experimental ﬁndings. The kinetic
+model simulation computed a monodentate fraction of 19.37 ±1.40% [34] while the experi-
+mental value of monodentate fraction was found to be 20 ±5% [33] through infrared (IR)
+spectroscopy. Furthermore, the computed process time to achieve full coverage for the
+mesoscopic simulation was determined to be similar to results conducted in experimental
+laboratory settings [34]; thus, the kMC algorithm is incorporated into the multiscale model
+with conﬁdence.
+2.3. Macroscopic Model
+2.3.1. Macroscopic Modeling Logistics
+The macroscopic model consists of preprocessing and postprocessing procedures that
+are intended to simulate ﬂuid dynamics for the ASALD process. First, reactor conﬁgurations
+are assembled through computer aided design (CAD) software. The conﬁgurations are
+optimized computationally through a mesh of reasonable quality which ensures lower
+simulation times and higher substrate quality. Once the reactor model is fully developed,
+the simulation is tailored to the ASALD process environment by customizing various solver,
+physics, and personalized settings such as boundary conditions, numerical solver methods,
+convergence criteria, user-deﬁned functions, materials, ﬂuid dynamics conditions, and
+remeshing methods. This section will discuss the various settings that are integrated into
+the macroscopic computational ﬂuid dynamics (CFD) simulation.
+Ansys Workbench (2022R2), a simulation integration platform, is used to access various
+applications for constructing reactors through computer aided design (CAD) software,
+performing discretized meshing, and conducting computational ﬂuid dynamics (CFD)
+simulation. In Ansys Workbench, Ansys DesignModeler is used to build reactor geometries
+while the spatiotemporal ﬂuid dynamics of the gas-phase domain inside the designed
+reactor conﬁgurations are simulated using Ansys Fluent.
+
+Coatings 2023, 13, 558 11 of 26
+2.3.2. Reactor Geometry and Meshing
+Different rotary type reactor conﬁgurations are devised, which originate from indus-
+trial patents [60]. Figure 5 illustrates the schematic representation of the spatial reactor
+designs to investigate ﬂow proﬁles. R1 has a ring-shaped outlet for each reaction zone
+and 6 10-mm round inlets (3 for the reagents and 3 for nitrogen), as depicted in Figure 5a.
+Meanwhile, Figure 5b shows R2, and it is designed with three ring, sector-shaped outlets
+and 6 round inlets. R3 features asymmetrical round inlets compared to R2 as shown
+in Figure 5c. Figure 5d reveals that R4 is equipped with a ring, sector-shaped N2 inlet for
+each reaction zone, enclosing a ring, sector-shaped outlet and an asymmetrical annular,
+sector-shaped reagent inlet. Each reactor is designed with a diameter of 760 mm, in which
+three wafers with a diameter of 200 mm are mounted on the rotating plate at the bottom of
+the reactor. The rotating plate spins, causing the wafers to encounter the reaction zones
+A, B, and C sequentially. The gas distribution assembly consists of differently shaped
+inlets, outlets, and vacuum ports and is located on top of the reactor. With R1 through
+R4, the effects of the differences in geometry are qualitatively and quantitatively analyzed
+to propose an optimal reactor geometry. Finally, with the selected reactor design, process
+operation with different operating conditions is explored through multiscale simulations.
+(a) R1
+ (b) R2
+(c) R3
+ (d) R4
+Figure 5. Four types of spatial, rotary ASALD reactor models with various inlet and outlet geometries
+(ring or annular sector) and positioning (symmetric or asymmetric) of reagent inlets. Red and blue
+areas indicate the outlets and inlets, respectively. 3 wafers are placed at the bottom inside the reactors.
+In this study, the operating pressure of the reactor and the vacuum pressure of the
+outlets are set to 1330 Pa and −150 Pa, respectively, and the temperature is set to 523 K.
+These conditions are considered typical for silicon oxide deposition [9,50]. It is assumed
+that a PID (proportional-integral-derivative) controller regulates the operating temperature
+on each wafer surface so that the temperature of the wafers is maintained at a constant
+temperature of 523 K. The three reagents (Hacac, BDEAS, and ozone) are injected through
+separate inlet ports as a gas mixture with inert gas, N 2. It was reported that there is no
+signiﬁcant temperature dependence in the ASALD process [34,50]; therefore, multiscale
+
+Coatings 2023, 13, 558 12 of 26
+simulations are performed with a ﬁxed temperature of 523 K while rotation speed is varied
+in the range of 0.2 to 0.8 rad/s and the mole fractions of the reagents are varied in the range
+of 0.05 to 0.7 each in Section 3.2.
+The meshing package on Ansys Workbench is used to generate high-quality meshes.
+Mesh discretization is conducted to obtain numerical solutions by adopting the ﬁnite
+volume method, and has a signiﬁcant impact on the accuracy of the solution. Tetrahedral
+elements are chosen as they are recommended for 3D geometries by providing high mesh
+convergence. For mesh sizing, proximity, and curvature, reﬁnements are conducted to
+capture more accurate ﬂow proﬁles in thin reactor conﬁgurations. In addition, the face mesh
+of the outlets (i.e., vacuum ports) is enhanced through face meshing controls to determine
+the suitable divisions of the face mesh. To capture the motion of the rotating boundaries,
+the dynamic mesh model is necessary for modeling ﬂow dynamics spatiotemporally. This
+feature facilitates the process for updating the volume mesh while preserving the quality of
+the mesh. The mesh quality of the reactor conﬁgurations that are developed in this paper
+is summarized in Table 1. The constructed meshes are qualiﬁed for CFD simulations in
+accordance with the standardized ranges provided by [61].
+Table 1. Average values of mesh quality factors for various rotary reactor conﬁgurations.
+No. * Skewness ** Orthogonal Quality *** Element Quality **** Aspect Ratio
+R1 0.2536 0.7446 0.8194 1.9136
+R2 0.2471 0.7512 0.8244 1.8949
+R3 0.2469 0.7514 0.8246 1.8933
+† R4 0.2483 0.7499 0.8239 1.8971
+* Excellent (0–0.25), Very good (0.25–0.50), Good (0.5–0.80), Acceptable (0.80–0.94). ** Acceptable (0.15–0.20),
+Good (0.2–0.69), Very good (0.70–0.95), Excellent (0.95–1). *** A value of 1 represents a perfect regular element.
+**** Acceptable (<35) depending on mesh conﬁguration. † Optimized reactor design with a gap distance of 5 mm.
+2.3.3. Characterization of Materials and Macroscopic-Phase Reactions
+Ansys Fluent contains a database of material properties that were integrated into the
+simulation. The consumption (Hacac, BDEAS, and O 3) and generation (H2O, DEA, and
+O2) of various species require the speciﬁcation of thermodynamic properties to simulate
+the macroscopic behavior through computational ﬂuid dynamics. However, some thermo-
+dynamic properties of the reagents, including Hacac and BDEAS, are limited in literature
+and experimental data; thus, ab initio quantum mechanics simulations are performed to
+compute the thermophysical parameters (enthalpy of formation, entropy of formation,
+speciﬁc heat at constant pressure) for materials with insufﬁcient data. Quantum ESPRESSO
+contains programs dedicated to evaluating material properties using density functional
+theory (DFT) in conjunction with the Quasi Harmonic Approximation (QHA), which is
+integrated to evaluate the material properties. The computed thermophysical properties
+were cross-validated with literature results for some properties via the National Institute
+of Standards and Technology (NIST) database for Hacac and by comparison to similar
+molecules such as bis(dimethylamino)silane (BDMAS) for BDEAS. Additionally, properties
+including the thermal conductivity and the viscosities were also deﬁned to each gaseous
+species. The thermal conductivities of each gas-phase species were approximated to that
+of air, which is composed of nitrogen and oxygen gas, and is similar to the composition
+of the species in the reactor. The viscosities of each for species not available in the Ansys
+Fluent database were obtained through material safety data sheets (MSDS) available online.
+As summarized in Table 2, these thermophysical properties are then deﬁned into the
+macroscopic simulation on Ansys Fluent for a reference temperature of 273 K.
+
+Coatings 2023, 13, 558 13 of 26
+Table 2. Thermophysical material properties of species speciﬁed in the gas phase in Ansys Fluent.
+Thermophysical Parameter Hacac BDEAS DEA
+Standard Enthalpy of Formation [J/kmol] −3.844 ×108 −6.484 ×108 −7.25 ×107
+Standard Entropy of Formation [J/kmol·K] −3.502 ×105 5.338 ×103 −4.845 ×105
+Speciﬁc Heat [J/kg·K] 208.2 Polynomial † Polynomial †
+Thermal Conductivity † [W/m·K] 0.0100 0.0100 0.02
+Viscosity † [kg/(m·s)] 6.00 ×10−4 1.10 ×10−2 3.19 ×10−4
+† Obtained from NIST or MSDS references. Other parameters were calculated from Quantum ESPRESSO.
+In the reactor conﬁguration, highly pure ozone is generated from an ozone-enriched
+source, which is available in industry [62]. Therefore, it is assumed that ozone is obtained
+by liquid ozone from an ozone generator and fed to spatial reactors through the O3 injec-
+tion port. However, as an oxidizing agent, ozone is used in Step C, which is capable of
+decomposing in the ﬂuid phase at high operating temperatures in a mechanism that was
+ﬁrst proposed in 1957 [63]. Thus, it is important to account for this thermal decomposition
+of ozone, which is a highly unstable molecule, in the macroscopic CFD simulation.
+O3 ⇌ O2 + 2O
+O + O3 →O2
+Apart from the surface kinetics established by the mesoscopic model, the volumetric
+reactions from the ozone decomposition are directly deﬁned in the macroscopic model.
+All kinetic parameters for the decomposition of ozone were determined by [ 63]. The
+consumption of O3 and generation of O2 are calculated and included in the mass balance
+equation for ozone in Equation (8).
+2.3.4. Numerical Solution Methods
+The mass, momentum, and energy conservation equations are solved in the CFD
+simulation as described below:
+∂ρ
+∂t + ∇·(ρ− →v ) =Sm (8)
+∂
+(
+ρ− →v
+)
+∂t + ∇·
+(
+ρ− →v − →v
+)
+= −∇p + ∇·
+(
+τ
+)
++ ρ− →g + − →F (9)
+∂
+∂t (ρE) + ∇
+(− →v (ρE + p)
+)
+= −∇
+(
+Σhj Jj
+)
++ Sh (10)
+where ρ represents the density of the ﬂuid composition, − →v is the velocity of the ﬂuid
+mixture, Sm denotes the rate of species generation or consumption source term, p is the
+static pressure of the ﬂuid, τ corresponds to the symmetric rank-two stress tensor, − →g is the
+gravitational acceleration constant, − →F is the external body force, E is the internal energy
+of the system, hj symbolizes the sensible enthalpy of species j, Jj represents the diffusion
+ﬂux of species j, and Sh denotes the heat ﬂux source rate term. Spatiotemporal numeri-
+cal solutions for each node in the mesh are computed with the pressure-based coupled
+solver provided by Ansys Fluent, which simultaneously solves the mass and momentum
+continuity equations, Equations (8) and (9), with greater computational efﬁciency and
+convergence speed compared to the segregated pressure-based solver approach. To model
+the temporal dynamics, a transient solver method is proposed by adopting a ﬁrst-order
+implicit formulation with a ﬁxed 0.001 s time interval. Although higher order methods
+could have been employed to reduce the global error induced from the numerical method,
+the ﬁrst-order implicit method was chosen to lessen the overall computation time of the
+process while preserving convergence criteria. Lastly, the Gauss-Seidel iterative method is
+utilized to solve algebraic systems by default.
+
+Coatings 2023, 13, 558 14 of 26
+2.3.5. Simulation Modeling
+Several features are deﬁned to reduce the degrees of freedom by specifying boundary
+conditions and ﬂuid ﬂow conditions. No-slip and zero diffusion ﬂux boundary conditions
+are deﬁned to the reactor walls for simplicity and surface of the substrate to resemble the
+self-limiting behavior of the ASALD process. Various in silico modeling works [ 64–66]
+have assumed laminar ﬂow conditions, which are applicable in industry [67]. However,
+notable disadvantages [68] of laminar ﬂow conditions are irrelevant to this study due to
+the substrate being small in diameter (200 mm, in Section 2.3.2) and the reactor design is
+modeled to limit depleted reagents along the perimeter of the reaction zones.
+The most notable advantage of Ansys Fluent is its high versatility in the form of User-
+Deﬁned Functions (UDFs). A UDF is a function that is able to enhance CFD simulations
+by customizing boundary conditions, deﬁning material properties, and even initializing
+simulations, for instance. In this study, several UDFs are utilized to deﬁne mass ﬂow
+rates and reagent mole fractions, source terms for species generation and consumption,
+temperature, the motion of the wafers with respect to the reactor, and allocating indexes in
+User-Deﬁned Memories (UDMs). UDMs allow Ansys Fluent to ﬁnd the appropriate nodes
+for computing reagent consumption and byproduct generation. Additionally, wafers are
+radially sliced into 10 equiangular sections so that mesoscopic simulations are executed
+in parallel, as shown in Figure 6. Thus, 10 mesoscopic simulations are conducted on each
+wafer, and the coverage on the 10 sections of a wafer from the mesoscopic simulation is
+computed as an area-weighted average. Given that 3 wafers are equipped in a spatial
+reactor, 30 UDMs must be applied to specify the nodes in which the consumption and
+generation of species take place.
+Due to the versatility and advantages mentioned in Section 1 of numerical multi-
+physics modeling, computational ﬂuid dynamics studies are broadly applied for industrial
+processes under various operating conditions. However, the computation efﬁciency (e.g.,
+computational burden and time) heavily relies on computing resources. For example,
+to reduce numerical errors, high-order numerical methods with extremely ﬁne meshes
+increase computing costs. Therefore, appropriate size of the mesh elements and numerical
+methods should be employed. In this study, 36-core dual processors with 384 GB of RAM
+(Random-Access Memory) are utilized to simulate the multiscale CFD model.
+Figure 6. Three wafers on the rotating plate. Each wafer has 10 equiangular sections to evaluate 10
+surface area-averaged pressures to evaluate an averaged surface coverage, and source generation
+and consumption rates.
+3. Results and Discussion
+3.1. Reactor Optimization
+In the design of the reactors for ABC-ASALD processes, the most important criterion
+considered is the ﬁlm uniformity, as it is directly related to the quality of semiconductor
+chips. A reactor with high ﬁlm uniformity guarantees precise control over the thickness of
+
+Coatings 2023, 13, 558 15 of 26
+deposition ﬁlms when constructing 3D features on nanochips. When discussing ﬁlm uni-
+formity, there are several other factors that may be evaluated with a more rapid turnaround
+time than directly measuring ﬁlm uniformity, such as the reagent exposure time distribution
+of the substrate and whether there is any intermixing present.
+3.1.1. Exposure Time Distribution
+The exposure time is deﬁned as the amount of time that a section of the substrate is
+exposed to the reagents. Depending on reactor geometry and design, the exposure time may
+vary across the surface of the wafer. Thus, it is vital to examine the distribution of exposure
+times for various reactors and ensure a tight distribution of exposure times. For a spatial
+reactor, the exposure time for a speciﬁc point is determined not by the gas distribution
+device, but rather by the shape of the reaction zones where the substrate enters by the
+rotation of the bottom plate. To investigate the effect that reaction zone conﬁgurations
+have on the exposure time distribution, steady-state and dynamic simulations of R1, which
+has circular reaction zones, and R4, which has annular-sectioned reaction zones, were
+performed with a reactant mole fraction of 0.1 and with an angular velocity of 0.8 rad/s.
+The results are displayed in Figure 7.
+0 2 4 6 8
+Time (s)
+0
+20
+40
+60
+80Hacac pressure (Pa)
+Exposure time
+Figure 7. Hacac partial pressure over time on a node in the mesh. As the wafer rotates, the pressure
+rises around 0.8 s to reach the plateau and goes to 0 around 3.6 s. The length of the straight line in red
+is deﬁned as the exposure time.
+To evaluate the exposure time distribution for Hacac, the partial pressure of Hacac
+was recorded at every node of the meshed wafer surface as it traveled through the Hacac
+reaction zone. This data was then used to determine how long each wafer node spent
+saturated with Hacac, which is the exposure time. After being processed, all the nodal
+data was plotted in Figure 8c,d, and the wafer surface contours for all nodes are shown
+in Figure 8a,b. Results suggest that the geometry of the reaction zones for R1 and R4,
+which are presented in Figure 5a,d, respectively, directly affect the distribution of nodal
+exposure time.
+From a physical standpoint, the exposure time distribution is expected to exhibit low
+variance when all the nodes on the moving wafer experience the same amount of time
+in the reaction zone. However, the proposed circular spatial reactor differs from a linear
+sheet-to-sheet reactor in that the wafers are rotating in an angular fashion around the
+reactor, causing the edge of the wafer that is furthest from the center of the reactor to be
+traveling at a faster tangential velocity. Thus, to ensure that each point of the wafer spends
+the same amount of time in the reaction zone, the ideal reaction zone shape must consist of
+arc lengths that are solely dependent on their radial distance from the center of the reactor.
+This condition is best fulﬁlled by the annular-sectioned reaction zones of reactor R4. For
+reactor R1, however, the central region of the substrate is expected to have longer exposure
+times compared to that of the outer region of the substrate due to the round reaction zone,
+which is easily demonstrated by examining the point on the wafer that is the furthest from
+the center of the reactor. This point will only be present in the reaction zone for a short time
+
+Coatings 2023, 13, 558 16 of 26
+as the arc length of the reaction zone at that radius is small; thus, all sections of the wafer
+will not be exposed at the same time.
+As illustrated in Figure 8c, the bar chart for R1 shows that the reactor has a wide
+exposure time distribution, especially when compared to the tightly centered exposure
+time distribution of R4, whose bar chart is found in Figure 8d. While the average exposure
+time for both reactors is around 2.7 s, with R1 having an average exposure time of 2.717 s
+and R4 having an average exposure time of 2.701 s, the two vary greatly in terms of the
+standard deviation; the standard deviation of R1 and R4 were computed as 0.1925 and
+0.0079, respectively. This large difference in standard deviation between the two reactors
+aligns with the predicted result, and it demonstrates that the standard deviation of the
+exposure times on the wafer is directly correlated to the shape of the reaction zones. To
+produce ﬁlms with high uniformity, the reactor must have reaction zones shaped like
+annular sections as shown in R4.
+0.1 0.15 0.2 0.25 0.3
+x-coordinate
+-0.2
+-0.15
+-0.1
+-0.05y-coordinate
+0
+10
+20
+30
+40
+50
+60
+Hacac pressure (Pa)
+(a)
+0.05 0.1 0.15 0.2 0.25
+x-coordinate
+-0.25
+-0.2
+-0.15
+-0.1
+y-coordinate
+0
+10
+20
+30
+40
+50
+60
+Hacac pressure (Pa) (b)
+2.0 2.2 2.4 2.6 2.8 3.0 3.2
+Exposure time (s)
+0
+100
+200
+300Number of nodes
+(c)
+2.0 2.2 2.4 2.6 2.8 3.0
+Exposure time (s)
+0
+2000
+4000
+6000Number of nodes (d)
+Figure 8. Hacac pressure contours across the wafer in (a) R1 at 2 s and (b) R4 at 3 s. The red region
+in (a,b) indicates the area that is covered with the reagent, Hacac. Distribution of exposure time for
+all nodes in the wafer for (c) R1 and (d) R4. µ and σ represent the average and standard deviation,
+respectively. There are 10,410 nodes in R1 and 6737 nodes in R4.
+3.1.2. Intermixing
+The uniformity of the ﬁlm produced by a spatial reactor is not solely dependent on
+the exposure time distribution and the shape of the reactor zones. Another crucial factor is
+the gas distribution across the reaction and purge zones. A nonuniform gas distribution
+causes the residence time of the reagents across the wafer to vary, which prevents the
+reactor from achieving optimal surface coverage and high ﬁlm uniformity [ 67]. Inside
+spatial reactors, reagents are successfully separated from the reaction zone by the injection
+of N2 gas, thereby establishing a boundary layer that prevents the diffusion of the reagents
+into the purging region by convection. As the gas ﬂow inside the reactor is assumed to be
+
+Coatings 2023, 13, 558 17 of 26
+laminar in Section 2.3, nonuniform gas distribution mainly occurs when reactants cross
+into the purge zones. This phenomenon is named intermixing, and preventing it is vital
+to ensure uniform ﬁlm growth. Intermixing is mainly caused by the substrate physically
+dragging unreacted reactants into the purge zone, which means that it is correlated to
+three features of reactor design: the gap distance, the wafer velocity, and the vacuum
+pressure. As intermixing is a binary criterion in that it is either present or is not, it is best
+to ﬁrst determine the domain in which no intermixing is present before identifying other
+criteria such as fastest computational speed or fastest processing speed to select the optimal
+reactor design.
+The gap distance is deﬁned as the distance separating the wafer and the gas distri-
+bution assembly, and it is one of the most important factors in effectuating self-limiting
+behavior and minimizing reagent intermixing. In this work, the effects of gap distance on
+intermixing was studied with R2 at different gap distances of 10 mm, 5 mm, and 1 mm. As
+shown by N2 mole fraction contours in Figure 9, a lower gap distance inhibits reagent inter-
+mixing in the purging regions. This observation of how gap distance affects intermixing
+has been explored in several works for different spatial reactor conﬁgurations [40,41].
+10 mm
+Steady State
+ 0.2 (rad/s)
+ 0.6 (rad/s)
+ 0.8 (rad/s)
+0.7 (rad/s)
+5 mm
+0.5 (rad/s)Steady State
+ 1.0 (rad/s)
+ 1.1 (rad/s)
+ 1.2 (rad/s)
+1 mm
+Steady State
+ 1.0 (rad/s)
+ 2.0 (rad/s)
+ 2.5 (rad/s)
+2.3 (rad/s)
+Mole fraction of N2
+Gap
+1.000
+0.970
+0.940
+0.909
+0.879
+0.849
+0.819
+0.788
+0.758
+0.728
+0.698
+Figure 9. Contours of the mole fraction of nitrogen on the plate rotating clockwise in R2 with gap
+distances of 10 mm, 5 mm, and 1 mm in various angular velocities, which depict the invasion of N2
+into the reaction zones and reagent runoff into the purge zones at higher rotation speeds.
+However, despite lower gap distances reducing the intermixing of reagents, a higher
+number of discretized elements are needed to resolve boundary layers around separating
+chambers to ensure the accuracy of the numerical model, which carries greater computa-
+tional burden. Thus, this study will account for a balance in the computational efﬁciency of
+the multiscale simulation and effective reagent separation. For the aforementioned reasons,
+a 5-mm gap distance is integrated into the idealized reactor conﬁguration.
+The wafer velocity also affects the intermixing of reagents. Greater angular velocities
+were observed to increase intermixing in response to the push of reagents in the direction
+of the angular rotation of the wafer. Both Figures 9 and 10 show how the N2 mole fraction
+contours change with the angular wafer velocity. Figure 10 in particular, reveals that the
+invasion of the inert gas (denoted by the ring in orange) at the entry of the reaction zone
+and the reagent runoff (denoted by the ring in green) at the exit are both conveyed in the
+direction of the wafer rotation (counter-clockwise). Thus, these instances of intermixing
+are attributed to the motion of the wafer. As shown in Figure 9, with a 5-mm gap distance,
+the inert gas of N2 is observed to enter the reaction zone when the angular wafer velocity
+is above 1.0 rad/s. The reagent enters the purge zone when the angular wafer velocity
+
+Coatings 2023, 13, 558 18 of 26
+is above 1.2 rad/s. Thus, to maintain a self-limiting reaction with no intermixing, the
+rotation speed must be kept below 1.0 rad/s. Thus, it is imperative to construct a reactor
+conﬁguration that handles sufﬁciently high angular velocities to reduce process time while
+simultaneously producing uniform deposition and promoting effective reagent separation.
+To establish effective gas separation and an acceptable process time, it is essential
+to choose an appropriate rotation speed and gap distance to achieve precise thin ﬁlm
+thickness control and surface uniformity. While lower gap distances minimize the effects of
+reagent intermixing, several operating and reactor design conditions are also considered
+for minimizing the intermixing of reagents. Thus, an effective balance between the gap
+distance, (selected to be 5 mm), the vacuum pressure (chosen to be −150 Pa), and the
+orientation (symmetrical or asymmetrical) of the injection ports are methodically chosen to
+enable a higher range of substrate angular velocities to be used for the process. For instance,
+the reactor model R3 repositions the cylindrical injection ports closer to the substrate
+entry in the reaction zone as shown in Figure 5c, which establishes an asymmetrical inlet
+conﬁguration. The mole fraction contours of N2 for reactor model R3 in Figure 10 shows
+marginal improvement of intermixing, particularly in the reagent runoff from the reaction
+zone at 1.0 rad/s as opposed to that of R2, which was modeled with a symmetrical inlet
+arrangement. R4 (as shown in Figure 5d), with annular sector-shaped reagent inlets, was
+proposed to further mitigate intermixing as shown in Figure 10. To be speciﬁc, the invasion
+of the inert gas into the reaction zone disappears at both 0.8 and 1.0 rad/s in contrast with
+R2 and R3, which both still show signs of intermixing at those velocities. Therefore, R4 is
+selected as the desired reactor conﬁguration to explore the ASALD process to discuss the
+quantitative relationship between various operating conditions on the surface coverage
+in Section 3.2.
+Figure 10. Contours of the mole fraction of nitrogen on the plate rotating clockwise in R2, R3 and R4
+with a gap distance of 5 mm in the angular velocities of 0.8 and 1.0 rad/s. The legend for the contours
+is present in Figure 9. A ring in orange denotes a nitrogen invasion into the BDEAS reaction zone,
+and a ring in green denotes the BDEAS runoff from the reaction zone.
+3.2. Multiscale Simulation Results
+The reactor optimization study examines the impact that the gap distance, the injection
+and outlet port geometry, and the wafer angular velocity have on reagent separation,
+exposure time distribution, reagent distribution on the substrate surface, and computational
+efﬁciency. After considering all the above criteria, reactor model R4 was designed with a
+5-mm gap distance. The next component of this work will examine the effects that operating
+conditions such as wafer velocity and reagent mole fractions have on the surface coverage
+for Steps A, B, and C.
+The simulations were conducted with a range of rotation speeds, ω, (0.2 rad/s ≤ω ≤
+0.8 rad/s) and a range of reactant species mole fraction, x (0.05 ≤x ≤0.70) to determine
+optimal operating conditions to achieve complete surface coverage. For all steps, the surface
+coverage depends on the rotation speeds and the mole fractions of the reactant species, as
+illustrated in Figure 11. In general, the coverage for each step increases as the mole fraction
+of the reactant species increases and as the rotation speed decreases. An increase in the
+
+Coatings 2023, 13, 558 19 of 26
+mole fraction of the reactant species naturally leads to an increase in the partial pressure of
+the species, which accelerates the reaction rates for all adsorption reactions according to
+Collision Theory. Furthermore, a lower rotation speed allows the wafer to be exposed to
+the reagent for a longer period of time, thus increasing the surface coverage. Speciﬁcally,
+the Hacac step reaches full coverage at 0.2 rad/s with Hacac mole fractions of xHacac = 0.05,
+0.1, and 0.3. However, the coverage decreases with increasing rotation speed. At 0.6 rad/s,
+full coverage is only achieved with xHacac = 0.3; for lower Hacac mole fractions, surface
+coverages of 98.8% and 95.1% were observed. BDEAS and ozone coverage curves also
+reveal a similar trend. However, the curves for BDEAS appear discontinuous, which is
+attributed to its proposed kinetic mechanism. An observable limitation of the kMC method
+is that the algorithm requires a priori knowledge of a reaction mechanism [ 69] that, if
+exceedingly simpliﬁed, will reduce the accuracy of the kMC model when trying to predict
+realistic surface kinetics. Figure 11b exempliﬁes a noncompetitive BDEAS adsorption in
+which desorption and intermediate pathways are not immediately observed after the
+adsorption reaction takes place. This work utilized a kinetics mechanism determined
+by [33] with large activation energy differences that were evaluated using the nudged
+elastic band method by [34]. Such reaction mechanism introduces a spontaneous reaction
+path where the surface coverage is dictated by the large reaction rate constant differences
+that generate this noncompetitive kinetics mechanism, where one reaction path dominates.
+Additionally, the repulsive forces due to the steric effects reduced the versatility of pursuing
+intermediate or reverse reaction paths, therefore, producing steeper coverage curves.
+0.2 0.3 0.4 0.5 0.6 0.7 0.8
+Rotation speed (rad/s)
+88
+90
+92
+94
+96
+98
+100Hacac Coverage (%)
+xA = 0.05
+xA = 0.1
+xA = 0.3
+(a)
+0.2 0.3 0.4 0.5 0.6
+Rotation speed (rad/s)
+80
+85
+90
+95
+100BDEAS Coverage (%)
+xB  = 0.3
+xB  = 0.5
+xB  = 0.7 (b)
+0.2 0.3 0.4 0.5 0.6 0.7 0.8
+Rotation speed (rad/s)
+40
+60
+80
+100Ozone Coverage (%)
+xC  = 0.05
+xC  = 0.10
+xC  = 0.30
+(c)
+Figure 11. Coverage (%) versus rotation speed ( rad/s) for (a) Hacac step, ( b) BDEAS step, and ( c)
+ozone step. xA, xB, and xC represents the mole fraction of Hacac, BDEAS, and ozone, respectively.
+Noncompetitive kinetics offer insight to the discontinuous curves presented in Figure 11;
+however, the mole fraction gradient along the boundary between the purging and reaction
+zone presents a challenge for collecting pertinent surface pressure data that will capture
+
+Coatings 2023, 13, 558 20 of 26
+the initial adsorption step for smaller time and length scales. This concentration gradient
+is presented in Figure 12, which illustrates the lack of nodal data due to the small length
+scales required to collect additional pressure data. Additionally, at higher angular velocities,
+the collection of nodal data becomes more challenging due to this small boundary length
+scale (in µm), which is another reason for the discontinuous curves generated in Figure 11.
+Consequently, the smaller length scale in micrometers would require smaller time scales
+(milliseconds) to collect surface coverage data within this boundary layer, as illustrated
+in Figure 2. Thus, the spatiotemporal progression of coverage of the wafer surface would
+be more difﬁcult to simulate at the reaction zone entrances.
+Figure 12. Concentration gradient of N2 mole fraction for R4 illustrating the small length scales in
+micrometers for each contour along the reagent-purge boundary region, which limits the availability
+for studying the temporal progression of surface coverage as depicted in Figure 2.
+When comparing the multiscale CFD simulation process times to reach full coverage
+compared to that of the mesoscopic model from prior work [ 34], the multiscale CFD
+simulation process times were slower. The integration of the macroscopic model to the
+mesoscopic model introduced pressure depletion zones that diluted the surface exposure
+to reagents, thereby reducing the adsorption reaction rates for Hacac and BDEAS. For a
+constant temperature of 523 K and constant Hacac surface pressure of 130 Pa (Step A), a
+constant BDEAS surface pressure of 400 Pa (Step B), and a constant O3 pressure of 130 Pa
+(Step C), the mesoscopic simulation evaluated complete coverage times of 2.29 s, 2.28 s,
+and 3.81 s, respectively [34]. The multiscale CFD simulation results with similar reactor
+operating conditions require process times of 3.77 s, 6.99 s, and 3.72 s to achieve full
+coverage for Steps A, B, and C, respectively as illustrated in Figure 13. The integration of
+macroscopic ﬂuid behavior with the mesoscopic model indicates that the reagent depletion
+zones and repulsions generated by species intercollisions in the ﬂuid phase contribute to
+the substantial increase in the process times, which was observed from a prior multiscale
+modeling work [ 70]. However, the proposed model, which partitions the wafer into
+10 sections and performs 10 kMC simulations on each section, inaccurately characterizes
+the surface coverage progression as a function of time. Ideally, a kMC simulation for
+each node on the wafer surface would greatly improve the accuracy of the times to obtain
+complete surface coverage, but comes at a computational cost. However, the results are
+consistent with experimental ﬁndings where Hacac dosage times of 5 s in similar operating
+conditions were used to ensure complete surface coverage [9]. Additionally, BDEAS dosage
+times of 6 s were employed to maximize the deposition thickness of the SiO2 surface [33],
+
+Coatings 2023, 13, 558 21 of 26
+although, greater dosage times were observed to contribute to the nucleation of the oxide
+ﬁlm if BDEAS is oversaturated in the reactor. To prevent such a scenario, the rotary reactor
+design evacuates unreacted reagent through the purge streams, thereby maintaining the
+operating pressure of the reagent within the reaction zone. Lastly, O3 dosage times of 2.5 s
+to 20 s to achieve complete surface coverage [ 71], which is analogous to the multiscale
+computed time.
+0
+20
+40
+60
+80
+100
+0 1 2 3 4 5
+Hacac Coverage (%)
+Time (s)
+3.77 s
+(a)
+0
+20
+40
+60
+80
+100
+0 2 4 6 8
+BDEAS Coverage (%)
+Time (s)
+6.99 s (b)
+0
+20
+40
+60
+80
+100
+0 2 4
+O 3 Coverage (%)
+Time (s)
+3.72 s
+(c)
+Figure 13. Multiscale CFD plots illustrating the surface coverage (%) progression as a function of
+time for (a) 0.1 mole fraction Hacac adsorption, (b) 0.5 mole fraction BDEAS adsorption, (c) 0.1 mole
+fraction O3 adsorption. Evaluated multiscale process times to reach full surface coverage were longer
+than observed mesoscopic model process times conducted from prior work [34].
+Figure 14 illustrates the contours of species mole fractions simulated with a constant
+rotation speed of 0.4 rad/s and a mole fraction of 0.3 for Hacac, BDEAS, and ozone. Due
+to the ﬁxed rotation speed imposed to the three wafers, the equal areas of each wafer are
+exposed to each reagent as shown in Figure 14a. However, the reaction progression for each
+reaction, which is inspected by measuring the generation of byproducts from the wafer
+surface, is different as revealed in Figure 14b–d. As discussed above, BDEAS adsorption
+requires higher mole fraction and lower rotation speeds to achieve complete coverage
+compared with Hacac and ozone adsorption. Despite the fact that more than half of the
+wafer area is in the BDEAS-enriched reaction zone (in Figure 14c), the byproduct, DEA, is
+only observed in a small area, which is the area that ﬁrst encountered the reagent due to the
+BDEAS adsorption mechanism, and the steric effects discussed in Section 2.2. Meanwhile,
+H2O produced from Hacac adsorption and O 2 produced from O3 adsorption are being
+generated on the region closer to the boundary between the reagent and the inert gas. In
+other words, Step A and Step C are faster than Step B, which is in agreement with ab initio
+DFT calculation results [34,50,72] where the BDEAS adsorption undergoes multiple steps
+that have higher activation energies than Hacac and ozone. Therefore, the mole fractions
+
+Coatings 2023, 13, 558 22 of 26
+of reactants must be carefully selected to optimize the process. When selecting operating
+conditions, the BDEAS and Ozone steps can be ﬁrstly considered since Hacac is covered
+on the non-growth area at the ﬁrst cycle and afterward, only the deprived reaction sites
+are reﬁlled and reinforced. From the multiscale simulations, the mole fractions of 0.1, 0.5,
+and 0.1 for Hacac, BDEAS, and O3, respectively, and a rotation speed of 0.2 rad/s can be
+considered as an optimal operating condition for full coverage.
+(a)
+ (b)
+(c)
+ (d)
+Figure 14. Contours of (a) Nitrogen mole fraction, ( b) H2O mole fraction, ( c) DEA mole fraction,
+and (d) O2 mole fraction on the wafers at 2 s with 0.4 rad/s From bottom left counter-clockwise, the
+wafers in the Hacac, BDEAS, and ozone reaction zones, respectively.
+4. Conclusions
+An in silico multiscale computational ﬂuid dynamics model was developed for an
+area-selective atomic layer deposition (ASALD) process on the substrate of SiO2/Al2O3
+utilizing a spatial reactor design. Three reagents were used to deposit SiO2 thin ﬁlms on the
+growth area (SiO2) and to create protective layers on the nongrowth area (Al2O3): the in-
+hibitor (acetylacetone or Hacac), precursor (bis(diethylamino)silane or BDEAS), and oxidant
+(ozone) for Steps A through C, respectively. This model included an atomistic-mesoscopic
+model using kinetic Monte Carlo (kMC) and a macroscopic model using computational
+ﬂuid dynamics (CFD). Foremost, a spatial reactor conﬁguration was optimized to ensure
+uniform reagent exposure time distribution and effective reagent separation to ensure self-
+limiting behavior was maintained. The gap distance, rotation speed, and reactor geometries
+were observed to have great inﬂuence on transport behavior of gas species. Lower gap
+distances and rotational speeds are required to avoid reagent intermixing. In addition,
+a ring, sector-shaped outlet and N 2 inlet improved reagent separation by removing the
+reagent runoff and inert invasion; thus creating a low variance gas distribution, leading
+to uniform exposure to reagents. A more uniform ﬂow was observed with asymmetrical,
+annular, sector-shaped reagent inlets. After an optimal reactor conﬁguration was built, the
+
+Coatings 2023, 13, 558 23 of 26
+multiscale model was simulated within the operating range of 0.2 rad/s ≤ω ≤0.8 rad/s
+with different mole fractions of species for Hacac, BDEAS, and ozone. Sufﬁciently low
+angular speeds were required for complete surface deposition by providing longer expo-
+sure time to the reagents. A higher mole fraction of species also accelerated the adsorption
+reactions to reach complete coverage.
+It is essential to choose an appropriate mole fraction of each reagent, since all reaction
+zones rotate at the same velocity. Since the BDEAS reaction takes longer time, a higher mole
+fraction for BDEAS than the ones for Hacac and ozone is required to obtain full coverage
+at the same wafer rotation speed. Due to the advantage of this modeling study that can
+generate a broad set of data at varying operating conditions, this in silico work has the
+potential to expedite reaction scale-up in industry. Therefore, this modeling approach
+offers insights and data to process engineers to select proper operating conditions for
+further process development. On top of that, this study presents guidelines to design
+and optimize a rotary type spatial reactor in an industrial setting. Finally, as described
+in Section 1, further research is needed to design an optimal control system for robust
+process operation. Speciﬁcally, given the complexity of the reaction taking place inside these
+reactors, advanced control methods for ASALD (e.g., model predictive control, artiﬁcial
+neural network-based run-to-run control) can be developed in a future work to ensure
+robust process operation.
+Author Contributions: Conceptualization, S.Y., H.W., M.T., F.O., G.O. and P .D.C.; methodology, S.Y.,
+H.W., M.T., F.O., G.O. and P .D.C.; software, S. Y., H.W., M.T. and F.O.; validation, S. Y., H.W., M.T. and
+F.O.; formal analysis, S. Y., H.W., M.T. and F.O.; investigation, S. Y., H.W., M.T. and F.O.; resources,
+P .D.C.; data curation, S. Y., H.W., M.T. and F.O.; writing—original draft preparation, S. Y., M.T., H.W.
+and F.O.; writing—review and editing, S. Y., M.T., H.W., F.O., G.O. and P .D.C.; supervision, G.O. and
+P .D.C.; funding acquisition, P .D.C. All authors have read and agreed to the published version of the
+manuscript.
+Funding: Financial support from the National Science Foundation is gratefully acknowledged. This
+work used computational and storage services associated with the Hoffman2 Shared Cluster provided
+by UCLA Institute for Digital Research and Education’s Research Technology Group.
+Institutional Review Board Statement: Not applicable.
+Informed Consent Statement: Not applicable.
+Data Availability Statement: All data will be available upon written request to the corresponding
+author.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+Abbreviations
+The following abbreviations are used in this manuscript:
+ALD Atomic layer deposition
+ASALD Area-selective atomic layer deposition
+BDEAS bis(diethylamino)silane
+CFD Computational ﬂuid dynamics
+DEA diethylamine
+DFT Density functional theory
+EPE Edge placement error
+Hacac acetylacetone
+kMC Kinetic Monte Carlo
+NEB Nudged elastic band
+NGA Nongrowth area
+SMI Small-molecule inhibitor
+UDF User-deﬁned function
+UDM User-deﬁned memory
+
+Coatings 2023, 13, 558 24 of 26
+References
+1. Wang, C.P .; Tsai, Y.P .; Lin, B.J.; Liang, Z.Y.; Chiu, P .W.; Shih, J.R.; Lin, C.J.; King, Y.C. On-Wafer FinFET-Based EUV/eBeam
+Detector Arrays for Advanced Lithography Processes. IEEE Trans. Electron. Devices2020, 67, 2406–2413. [CrossRef]
+2. Chen, M.C.; Li, K.S.; Li, L.J.; Lu, A.Y.; Li, M.Y.; Chang, Y.H.; Lin, C.H.; Chen, Y.J.; Hou, Y.F.; Chen, C.C.; et al. TMD FinFET with 4
+nm thin body and back gate control for future low power technology. In Proceedings of the IEEE International Electron Devices
+Meeting, Washington, DC, USA, 7–9 December 2015; pp. 32.2.1–32.2.4.
+3. Huang, J. Research Progresses on Suppressing the Short-Channel Effects of Field-Effect Transistor. Highlights Sci. Eng. Technol.
+2022, 27, 361–367. [CrossRef]
+4. Angelov, G.V .; Nikolov, D.N.; Hristov, M.H. Technology and Modeling of Nonclassical Transistor Devices.J. Electr. Comput. Eng.
+2019, 2019, 4792461. [CrossRef]
+5. Barraud, S.; Previtali, B.; Vizioz, C.; Hartmann, J.M.; Sturm, J.; Lassarre, J.; Perrot, C.; Rodriguez, P .; Loup, V .; Magalhaes-Lucas,
+A.; et al. 7-Levels-Stacked Nanosheet GAA Transistors for High Performance Computing. In Proceedings of the 2020 IEEE
+Symposium on VLSI Technology, Hsinchu, Taiwan, 10–13 August 2020; pp. 1–2.
+6. Wang, S.; Liu, X.; Zhou, P . The Road for 2D Semiconductors in the Silicon Age. Adv. Mater.2022, 34, 2106886. [CrossRef]
+7. Bhattacharyya, K. Tough road ahead for device overlay and edge placement error. In Proceedings of the Metrology, Inspection, and
+Process Control for Microlithography XXXIII; Ukraintsev, V .A., Adan, O., Eds.; International Society for Optics and Photonics, SPIE:
+San Jose, CA, USA, 2019; Volume 10959, p. 1095902.
+8. Mulkens, J.; Hanna, M.; Wei, H.; Vaenkatesan, V .; Megens, H.; Slotboom, D. Overlay and edge placement control strategies for the
+7nm node using EUV and ArF lithography. In Proceedings of the Extreme Ultraviolet (EUV) Lithography VI, San Jose, CA, USA,
+22–26 February 2015; Volume 9422, p. 94221Q.
+9. Mameli, A.; Merkx, M.J.M.; Karasulu, B.; Roozeboom, F.; Kessels, W.E.M.M.; Mackus, A.J.M. Area-Selective Atomic Layer
+Deposition of SiO2 Using Acetylacetone as a Chemoselective Inhibitor in an ABC-Type Cycle. ACS Nano2017, 11, 9303–9311.
+[CrossRef]
+10. Sharma, R.K.; Gupta, R.; Gupta, M.; Gupta, R.S. Dual-Material Double-Gate SOI n-MOSFET: Gate Misalignment Analysis. IEEE
+Trans. Electron. Devices2009, 56, 1284–1291. [CrossRef]
+11. Hobbs, R.G.; Petkov, N.; Holmes, J.D. Semiconductor Nanowire Fabrication by Bottom-Up and Top-Down Paradigms. Chem.
+Mater. 2012, 24, 1975–1991. [CrossRef]
+12. Jasni, A.H. Chapter 5-Fabrication of nanostructures by physical techniques. In Nanoscale Processing; Thomas, S., Balakrishnan, P .,
+Eds.; Elsevier: Amsterdam, The Netherlands, 2021; pp. 131–162.
+13. Amadi, E.V .; Venkataraman, A.; Papadopoulos, C. Nanoscale self-assembly: Concepts, applications and challenges. Nanotechnol-
+ogy 2021, 33, 132001. [CrossRef]
+14. Brummer, A.C.; Mohabir, A.T.; Aziz, D.; Filler, M.A.; Vogel, E.M. Fabrication and characterization of a self-aligned gate stack for
+electronics applications. Appl. Phys. Lett.2021, 119, 142901. [CrossRef]
+15. Yasmeen, S.; Ryu, S.W.; Lee, S.H.; Lee, H.B.R. Atomic Layer Deposition Beyond Thin Film Deposition Technology.Adv. Mater.
+Technol. 2022, 8, 2200876. [CrossRef]
+16. Kinge, S.; Crego-Calama, M.; Reinhoudt, D.N. Self-Assembling Nanoparticles at Surfaces and Interfaces. ChemPhysChem 2008,
+9, 20–42. [CrossRef]
+17. Bae, C.; Shin, H.; Nielsch, K. Surface modiﬁcation and fabrication of 3D nanostructures by atomic layer deposition. MRS Bull.
+2011, 36, 887–897. [CrossRef]
+18. Liu, T.L.; Bent, S.F. Area-Selective Atomic Layer Deposition on Chemically Similar Materials: Achieving Selectivity on Ox-
+ide/Oxide Patterns. Chem. Mater.2021, 33, 513–523. [CrossRef]
+19. Okasha, S.; Harada, Y. Atomic layer deposition of self-assembled aluminum nanoparticles using dimethylethylamine alane as
+precursor and trimethylaluminum as an initiator. J. Nanoparticle Res.2022, 24, 242. [CrossRef]
+20. Hayden, O.; Agarwal, R.; Lu, W. Semiconductor nanowire devices. Nano Today2008, 3, 12–22. [CrossRef]
+21. Barth, S.; Hernandez-Ramirez, F.; Holmes, J.D.; Romano-Rodriguez, A. Synthesis and applications of one-dimensional semicon-
+ductors. Prog. Mater. Sci.2010, 55, 563–627. [CrossRef]
+22. Guerﬁ, Y.; Larrieu, G. Vertical Silicon Nanowire Field Effect Transistors with Nanoscale Gate-All-Around. Nanoscale Res. Lett.
+2016, 11, 210. [CrossRef]
+23. Yang, P .; Yan, R.; Fardy, M. Semiconductor Nanowire: What’s Next? Nano Lett.2010, 10, 1529–1536. [CrossRef]
+24. Fernández-Garrido, S.; Auzelle, T.; Lähnemann, J.; Wimmer, K.; Tahraoui, A.; Brandt, O. Top-down fabrication of ordered arrays
+of GaN nanowires by selective area sublimation. Nanoscale Adv.2019, 1, 1893–1900. [CrossRef]
+25. Seo, S.; Yeo, B.C.; Han, S.S.; Yoon, C.M.; Yang, J.Y.; Yoon, J.; Yoo, C.; Kim, H.-j.; Lee, Y.-b.; Lee, S.J.; et al. Reaction Mechanism of
+Area-Selective Atomic Layer Deposition for Al2O3 Nanopatterns. ACS Appl. Mater. Interfaces2017, 9, 41607–41617. [CrossRef]
+26. Fang, M.; Ho, J.C. Area-Selective Atomic Layer Deposition: Conformal Coating, Subnanometer Thickness Control, and Smart
+Positioning. ACS Nano2015, 9, 8651–8654. [CrossRef]
+27. Mullen, E.; Morris, M.A. Green Nanofabrication Opportunities in the Semiconductor Industry: A Life Cycle Perspective.
+Nanomaterials 2021, 11, 1085. [CrossRef]
+28. Chen, R.; Kim, H.; McIntyre, P .C.; Porter, D.W.; Bent, S.F. Achieving area-selective atomic layer deposition on patterned substrates
+by selective surface modiﬁcation. Appl. Phys. Lett.2005, 86, 191910. [CrossRef]
+
+Coatings 2023, 13, 558 25 of 26
+29. Mackus, A.J.M.; Merkx, M.J.M.; Kessels, W.M.M. From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with
+High Selectivity. Chem. Mater.2019, 31, 2–12. [CrossRef]
+30. Huang, J.; Lee, M.; Lucero, A.; Cheng, L.; Kim, J. Area-Selective ALD of TiO 2 Nanolines with Electron-Beam Lithography. J. Phys.
+Chem. C2014, 118, 23306–23312. [CrossRef]
+31. Sinha, A.; Hess, D.W.; Henderson, C.L. Area selective atomic layer deposition of titanium dioxide: Effect of precursor chemistry.
+J. Vac. Sci. Technol. B Microelectron. Nanometer Struct. Process. Meas. Phenom.2006, 24, 2523–2532. [CrossRef]
+32. Merkx, M.J.M.; Angelidis, A.; Mameli, A.; Li, J.; Lemaire, P .C.; Sharma, K.; Hausmann, D.M.; Kessels, W.M.M.; Sandoval, T.E.;
+Mackus, A.J.M. Relation between Reactive Surface Sites and Precursor Choice for Area-Selective Atomic Layer Deposition Using
+Small Molecule Inhibitors. J. Phys. Chem. C2022, 126, 4845–4853. [CrossRef]
+33. Merkx, M.J.M.; Sandoval, T.E.; Hausmann, D.M.; Kessels, W.M.M.; Mackus, A.J.M. Mechanism of Precursor Blocking by
+Acetylacetone Inhibitor Molecules during Area-Selective Atomic Layer Deposition of SiO2. Chem. Mater.2020, 32, 3335–3345.
+[CrossRef]
+34. Yun, S.; Ou, F.; Wang, H.; Tom, M.; Orkoulas, G.; Christoﬁdes, P .D. Atomistic-mesoscopic modeling of area-selective thermal
+atomic layer deposition. Chem. Eng. Res. Des.2022, 188, 271–286. [CrossRef]
+35. Poodt, P .; Cameron, D.C.; Dickey, E.; George, S.M.; Kuznetsov, V .; Parsons, G.N.; Roozeboom, F.; Sundaram, G.; Vermeer, A.
+Spatial atomic layer deposition: A route towards further industrialization of atomic layer deposition. J. Vac. Sci. Technol. A2012,
+30, 010802. [CrossRef]
+36. Suntola, T.; Antson, J. Method for Producing Compound Thin Films. Google Patents 4,058,430A, 15 November 1977.
+37. Freeman, D.C.; Levy, D.H.; Cowdery-Corvan, P .J. Process for depositing organic materials. Google Patents 7,858,144B2, 28
+December 2010.
+38. Sun, W.; Kim, Y.; Shin, J.; Yang, W. Shower head of Combinatorial Spatial Atomic Layer Deposition apparatus, Google Patents
+20,170,025,417A, 2017.
+39. Pan, D.; Jen, T.C.; Yuan, C. Effects of gap size, temperature and pumping pressure on the ﬂuid dynamics and chemical kinetics of
+in-line spatial atomic layer deposition of Al2O3. Int. J. Heat Mass Transf.2016, 96, 189–198. [CrossRef]
+40. Cong, W.; Li, Z.; Cao, K.; Feng, G.; Chen, R. Transient analysis and process optimization of the spatial atomic layer deposition
+using the dynamic mesh method. Chem. Eng. Sci.2020, 217, 115513. [CrossRef]
+41. Li, Z.; Cao, K.; Li, X.; Chen, R. Computational ﬂuid dynamics modeling of spatial atomic layer deposition on microgroove
+substrates. Int. J. Heat Mass Transf.2021, 181, 121854. [CrossRef]
+42. De la Huerta, C.M.; Nguyen, V .H.; Dedulle, J.M.; Bellet, D.; Jim´enez, C.; Mu ˜noz-Rojas, D. Inﬂuence of the Geometric Parameters
+on the Deposition Mode in Spatial Atomic Layer Deposition: A Novel approach to Area-Selective Deposition. Coatings 2018, 9, 5.
+[CrossRef]
+43. Yun, S.; Tom, M.; Orkoulas, G.; Christoﬁdes, P .D. Multiscale Computational Fluid Dynamics Modeling of Spatial Thermal Atomic
+Layer Etching. Comput. Chem. Eng.2022, 163, 107861. [CrossRef]
+44. Tom, M.; Yun, S.; Wang, H.; Ou, F.; Orkoulas, G.; Christoﬁdes, P .D. Machine learning-based run-to-run control of a spatial thermal
+atomic layer etching reactor. Comput. Chem. Eng.2022, 168, 108044. [CrossRef]
+45. Poodt, P .; Lankhorst, A.; Roozeboom, F.; Spee, K.; Maas, D.; Vermeer, A. High-Speed Spatial Atomic-Layer Deposition of
+Aluminum Oxide Layers for Solar Cell Passivation. Adv. Mater.2010, 22, 3564–3567. [CrossRef]
+46. Sharma, K.; Hall, R.A.; George, S.M. Spatial atomic layer deposition on ﬂexible substrates using a modular rotating cylinder
+reactor. J. Vac. Sci. Technol. A2015, 33, 01A132. [CrossRef]
+47. Poodt, P .; van Lieshout, J.; Illiberi, A.; Knaapen, R.; Roozeboom, F.; van Asten, A. On the kinetics of spatial atomic layer deposition.
+JOurnal Vac. Sci. Technol. A2013, 31, 01A108. [CrossRef]
+48. Maroudas, D. Multiscale modeling of hard materials: Challenges and opportunities for chemical engineering. AIChE J.2000,
+46, 878–882. [CrossRef]
+49. Yun, S.; Tom, M.; Luo, J.; Orkoulas, G.; Christoﬁdes, P .D. Microscopic and Data-Driven Modeling and Operation of Thermal
+Atomic Layer Etching of Aluminum Oxide Thin Films. Chem. Eng. Res. Des.2022, 177, 96–107. [CrossRef]
+50. Roh, H.; Kim, H.L.; Khumaini, K.; Son, H.; Shin, D.; Lee, W.J. Effect of deposition temperature and surface reactions in atomic
+layer deposition of silicon oxide using Bis(diethylamino)silane and ozone. Appl. Surf. Sci.2022, 571, 151231. [CrossRef]
+51. Broas, M.; Kanninen, O.; Vuorinen, V .; Tilli, M.; Paulasto-Kr¨ockel, M. Chemically stable atomic-layer-deposited Al2O3 ﬁlms for
+processability. ACS Omega2017, 2, 3390–3398. [CrossRef]
+52. Rahane, A.B.; Deshpande, M.D.; Kumar, V . Structural and electronic properties of (Al2O3)n clusters with n = 1–10 from ﬁrst
+principles calculations. J. Phys. Chem. C2011, 115, 18111–18121. [CrossRef]
+53. Scandolo, S.; Giannozzi, P .; Cavazzoni, C.; de Gironcoli, S.; Pasquarello, A.; Baroni, S. First-principles codes for computational
+crystallography in the Quantum-ESPRESSO package. Z. für Krist. -Cryst. Mater.2005, 220, 574–579. [CrossRef]
+54. Jónsson, H.; Mills, G.; Jacobsen, K.W. Nudged elastic band method for ﬁnding minimum energy paths of transitions. In Classical
+and Quantum Dynamics in Condensed Phase Simulations; Berne, B.J.; Ciccotti, G., Coker, D.F., Eds.; World Scientiﬁc: Singapore, 1998;
+pp. 385–404.
+55. Jansen, A.P .J. (Ed.)An Introduction to Kinetic Monte Carlo Simulations of Surface Reactions; Springer Berlin: Heidelberg, Germany,
+2012; Volume 1, pp. 38–119.
+56. George, S.M. Atomic Layer Deposition: An Overview. Chem. Rev.2010, 110, 111–131. [CrossRef]
+
+Coatings 2023, 13, 558 26 of 26
+57. Schwille, M.C.; Schössler, T.; Schön, F.; Oettel, M.; Bartha, J.W. Temperature dependence of the sticking coefﬁcients of bis-diethyl
+aminosilane and trimethylaluminum in atomic layer deposition. J. Vac. Sci. Technol. A2017, 35, 01B119. [CrossRef]
+58. Lee, G.; Lee, B.; Kim, J.; Cho, K. Ozone Adsorption on Graphene: Ab Initio Study and Experimental Validation. J. Phys. Chem. C
+2009, 113, 14225–14229. [CrossRef]
+59. Voter, A.F. Introduction to the Kinetic Monte Carlo Method. In Proceedings of the Radiation Effects in Solids, Erice, Sicily, Italy,
+17–29 July 2004; pp. 1–23.
+60. Li, N.; Marcus, S.D.; Ngo, T.T.; Grifﬁn, K. Gas Separation Control in Spatial Atomic Layer Deposition. Google Patents 11,230,763B2,
+25 January 2022.
+61. ANSYS. Ansys Fluent Theory Guide; ANSYS Inc.: Canonsburg, PA, USA, 2022.
+62. Nishiguchi, T.; Saitoh, S.; Kameda, N.; Morikawa, Y.; Kekura, M.; Nonaka, H.; Ichimura, S. Rapid Oxidation of Silicon Using
+UV-Light Irradiation in Low-Pressure, Highly Concentrated Ozone Gas below 300◦C. Jpn. J. Appl. Phys.2007, 46, 2835. [CrossRef]
+63. Benson, S.W.; Axworthy, A.E. Mechanism of the Gas Phase, Thermal Decomposition of Ozone. J. Chem. Phys.1957, 26, 1718–1726.
+[CrossRef]
+64. Pan, D.; Li, T.; Chien Jen, T.; Yuan, C. Numerical modeling of carrier gas ﬂow in atomic layer deposition vacuum reactor: A
+comparative study of lattice Boltzmann models. J. Vac. Sci. Technol. A2014, 32, 01A110. [CrossRef]
+65. Shaeri, M.R.; Jen, T.C.; Yuan, C.Y. Reactor scale simulation of an atomic layer deposition process. Chem. Eng. Res. Des.2015,
+94, 584–593. [CrossRef]
+66. Peltonen, P .; Vuorinen, V .; Marin, G.; Karttunen, A.J.; Karppinen, M. Numerical study on the ﬂuid dynamical aspects of atomic
+layer deposition process. J. Vac. Sci. Technol. A2018, 36, 021516. [CrossRef]
+67. Elers, K.E.; Blomberg, T.; Peussa, M.; Aitchison, B.; Haukka, S.; Marcus, S. Film uniformity in atomic layer deposition. Chem. Vap.
+Depos. 2006, 12, 13–24. [CrossRef]
+68. Kim, J.; Chakrabarti, K.; Lee, J.; Oh, K.Y.; Lee, C. Effects of ozone as an oxygen source on the properties of the Al2O3 thin ﬁlms
+prepared by atomic layer deposition. Mater. Chem. Phys.2003, 78, 733–738. [CrossRef]
+69. Andreoni, W.; Yip, S. Handbook of Materials Modeling: Methods: Theory and Modeling, 2nd ed.; Springer International Publishing:
+Cham, Switzerland, 2020.
+70. Yun, S.; Tom, M.; Ou, F.; Orkoulas, G.; Christoﬁdes, P .D. Multiscale Computational Fluid Dynamics Modeling of Thermal Atomic
+Layer Etching: Application to Chamber Conﬁguration Design. Comput. Chem. Eng.2022, 161, 107757. [CrossRef]
+71. Lee, J.M.; Lee, J.; Oh, H.; Kim, J.; Shong, B.; Park, T.J.; Kim, W.H. Inhibitor-free area-selective atomic layer deposition of SiO2
+through chemoselective adsorption of an aminodisilane precursor on oxide versus nitride substrates. Appl. Surf. Sci. 2022,
+589, 152939. [CrossRef]
+72. Fang, G.; Xu, L.; Ma, J.; Li, A. Theoretical Understanding of the Reaction Mechanism of SiO2 Atomic Layer Deposition. Chem.
+Mater. 2016, 28, 1247–1255. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

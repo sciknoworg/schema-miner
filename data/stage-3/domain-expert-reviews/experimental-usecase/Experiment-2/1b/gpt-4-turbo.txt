@@ -1,0 +1,24 @@
+Property Grouping:
+1. Remove the processControl and make it ThicknessControl property group
+2. Remove the otherAspects property outside of the materialProperties group. It refers to the general ALD method, not the material itself.
+
+Missing Properties:
+1. ALD method
+2. MaterialDeposited
+3. Deposition temperature and pressure
+4. Crystallinity, Roughness
+
+Adequacy of Descriptions:
+1. Description of schema: instead of verifying write characterizing. Also remove this "for various metal nitrides and oxides using metal amide precursors" because it refers to a specific ALD process.
+2. Description of co-reactant: It can also be plasma apart from a chemical.
+3. Description of delivery method: It can also refer to the co-reactant in the case of thermal ALD.
+4. Purging Time: this time refers to both coreactant and precursor. It should have two input values.
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> ReactantSelection(Precursor,Co-Reactant, DeliveryMethod, CarrierGas)
+-> ThicknessControl(Thickness, GPC,DosingTimes, Purging Times, Saturation, NucleationPeriod, ALDWindow)
+-> MaterialProperties(Crystallinity, Roughness, Uniformity,Conformality, ChemComposition, OpticalProperties,ElectricalProperties)
+-> OtherAspects

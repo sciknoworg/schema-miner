@@ -1,0 +1,38 @@
+Property Merging:
+1. Merge temperature range with substrate temperature under the name: Temperature range. The substrate temperature is different sometimes from the applied temperature in the reactor.
+
+Property Grouping:
+1. Place dielectric constant in the electrical properties group
+2. Group crystallinity and film orientation in one group: "Film crystallinity"
+3. Place the gas flow rate in the process conditions group. Also mention if applicable for both reactants in the case it is thermal ald. Otherwise it's just the precursor (e.g. PEALD)
+
+Missing Properties:
+1. Name and manufacturer of the reactor
+2. ALD process
+3. Material Deposited
+4. Carrier Gas
+5. Nucleation behavior (whether there is nucleation period or if there is self-limiting growth)
+6. BubblerTemperature
+
+Adequacy of Descriptions
+1. In the precursor property box: remove the reactivity property and vaporization temperature
+2. In the co-reactant property box: remove the reactivity property and add vapor pressure and delivery method if thermal ald. If Plasma ALD add plasma properties like plasma power 
+3. Remove counter reactant property; you already have the co-Reactant
+4. Remove the precursor vaporization temperature from the temperature range property
+5. Rename exposure time to Dosing time. It should have two entries one for precursor and one for co-reactant. Same two entries for purge time, one for precursor and one for co-reactant.
+6. Remove the reactive sticking coefficient parameter. It's not something you can measure and it’s not usually found in papers.
+7. Description of porosity: remove the "affecting film properties like resistivity and stability" part.
+8. Description of density: remove the "affecting film properties like resistivity and stability" part.
+9. Remove the hydrogenconcentration parameter, it's mentioned already down in the impurities parameter.
+10. Rename reactor design property box to Reactor
+11. Rename pressure in the process conditions to ChamberPressure
+
+Domain expert edited schema of the initial generated version:
+
+-> ALD Method
+-> Material Deposited
+-> Reactants (Precursor[Name, DeliveryMethod, BubblerTemperature VaporPressure], CoReactant[Name,DeliveryMethod,BubblerTemperature, VaporPressure,PlasmaProperties], Carrier Gas)
+-> Reactor[ReactorType,Name, Manufacturer, Dimensions]
+-> ProcessConditions(TemperatureRange, ChamberPressure, ReactantsFlowRateCycleDetails[NumberofCycles,GPC,DosingTimes[Precursor,CoReactant]],PurgingTimes[Precursor,CoReactant],NeacleationBehavior)
+-> FilmProperties(Composition, Thickness,Uniformity, Conformality, Density, Porosity, OpticalProperties[abdorptioncoeff, refractiveindex], electricalproperties[resistivity, carrier density, mobility, dielectric constant], gaspermeability, crystallinity[filmorientation, crystallinity], adhesion, impurity content[hydrogen, carbon, nitrogen, oxygen], annealing conditions [temperature, atmosphere])
+-> SafetyandStability[ChemicalSafety, FilmStability,Reproducibility]

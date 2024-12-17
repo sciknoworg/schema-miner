@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ALD Process Schema",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "materialType": {
+          "type": "string",
+          "description": "The type of material being deposited, e.g., Al2O3, TiO2."
+        },
+        "methodologyUsed": {
+          "type": "array",
+          "items": [
+            { "type": "string" }
+          ],
+          "description": "List of methodologies used in the ALD process, such as DFT, kMC, MD, CFD, etc."
+        },
+        "exampleMaterials": {
+          "type": "array",
+          "items": [
+            { "type": "string" }
+          ],
+          "description": "Examples of materials that can be deposited using this methodology."
+        }
+      },
+      "required": ["materialType", "methodologyUsed", "exampleMaterials"]
+    },
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "decompositionAndBindingMechanisms": {
+          "type": "object",
+          "properties": {
+            "kineticsAndThermodynamics": {
+              "type": "string",
+              "description": "Description of the kinetics and thermodynamics involved in decomposition and binding mechanisms."
+            }
+          },
+          "required": ["kineticsAndThermodynamics"]
+        },
+        "growthRate": {
+          "type": "object",
+          "properties": {
+            "temperatureDependence": {
+              "type": "string",
+              "description": "Description of the temperature dependence on growth rate."
+            }
+          },
+          "required": ["temperatureDependence"]
+        },
+        "surfaceDesorptionDiffusionAndReactionRates": {
+          "type": "object",
+          "properties": {
+            "rates": {
+              "type": "string",
+              "description": "Description of the surface desorption, diffusion, and reaction rates."
+            }
+          },
+          "required": ["rates"]
+        },
+        "bindingAffinityAndStickingCoefficients": {
+          "type": "object",
+          "properties": {
+            "adsorbateProperties": {
+              "type": "string",
+              "description": "Description of the binding affinity and sticking coefficients for adsorbates."
+            }
+          },
+          "required": ["adsorbateProperties"]
+        },
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformityRoughnessDensity": {
+              "type": "string",
+              "description": "Description of the film properties such as uniformity, roughness, and density."
+            },
+            "temperatureProfile": {
+              "type": "string",
+              "description": "Temperature profile during the ALD process."
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Chemical composition of the film after deposition."
+            }
+          },
+          "required": ["uniformityRoughnessDensity", "temperatureProfile", "chemicalComposition"]
+        },
+        "precursorDesignScreening": {
+          "type": "object",
+          "properties": {
+            "newPrecursorsALEEtchantsOrASInhibitors": {
+              "type": "string",
+              "description": "Description of the design or screening process for new precursors, etchants, or AS inhibitors."
+            }
+          },
+          "required": ["newPrecursorsALEEtchantsOrASInhibitors"]
+        },
+        "morphologyEvolution": {
+          "type": "object",
+          "properties": {
+            "evolutionModeling": {
+              "type": "string",
+              "description": "Description of the modeling approach for morphology evolution."
+            }
+          },
+          "required": ["evolutionModeling"]
+        }
+      },
+      "required": [
+        "decompositionAndBindingMechanisms",
+        "growthRate",
+        "surfaceDesorptionDiffusionAndReactionRates",
+        "bindingAffinityAndStickingCoefficients",
+        "filmProperties",
+        "precursorDesignScreening",
+        "morphologyEvolution"
+      ]
+    },
+    "carrierGasFlowTemperatureProfile": {
+      "type": "object",
+      "properties": {
+        "gasFlow": {
+          "type": "string",
+          "description": "Description of the carrier gas flow during the ALD process."
+        },
+        "temperatureProfile": {
+          "type": "string",
+          "description": "Temperature profile during the ALD process."
+        }
+      },
+      "required": ["gasFlow", "temperatureProfile"]
+    }
+  },
+  "required": [
+    "processDetails",
+    "simulationParameters",
+    "carrierGasFlowTemperatureProfile"
+  ]
+}

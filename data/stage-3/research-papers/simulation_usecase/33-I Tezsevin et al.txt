@@ -1,0 +1,1057 @@
+Computational Investigation of Precursor Blocking during Area-
+Selective Atomic Layer Deposition Using Aniline as a Small-Molecule
+Inhibitor
+I. Tezsevin, J. F. W. Maas, M. J. M. Merkx, R. Lengers, W. M. M. Kessels, T. E. Sandoval,
+and A. J. M. Mackus*
+Cite This: Langmuir 2023, 39, 4265−4273
+ Read Online
+ACCESS
+Metrics & More
+ Article Recommendations *
+sı Supporting Information
+ABSTRACT: Area-selective atomic layer deposition using small-molecule
+inhibitors (SMIs) involves vapor-phase dosing of inhibitor molecules,
+resulting in an industry-compatible approach. However, the identification of
+suitable SMIs that yield a high selectivity remains a challenging task.
+Recently, aniline (C
+6
+H
+5
+NH
+2
+) was shown to be an effective SMI during the
+area-selective deposition (ASD) of TiN, giving 6 nm of selective growth on
+SiO
+2
+in the presence of Ru and Co non-growth areas. In this work, using
+density functional theory (DFT) and random sequential adsorption (RSA)
+simulations, we investigated how aniline can effectively block precursor
+adsorption on specific areas. Our DFT calculations confirmed that aniline
+selectively adsorbs on Ru and Co non-growth areas, whereas its adsorption
+on the SiO
+2
+growth area is limited to physisorption. DFT reveals two stable
+adsorption configurations of aniline on the metal surfaces. Further
+calculations on the aniline-functionalized surfaces show that the aniline inhibitor significantly reduces the interaction of Ti
+precursor, tetrakis(dimethylamino)titanium, with the non-growth area. In addition, RSA simulations showed that the co-presence of
+two stable adsorption configurations allows for a high surface inhibitor coverage on both Co and Ru surfaces. As the surface
+saturates, there is a transition from the thermodynamically most favorable adsorption configuration to the sterically most favorable
+adsorption configuration, which results in a sufficiently dense inhibition layer, such that an incoming precursor molecule cannot fit in
+between the adsorbed precursor molecules. We also found that, as a result of the catalytic activity of the metallic non-growth area,
+further reactions of inhibitor molecules, such as hydrogenolysis, can play a role in precursor blocking.
+■
+INTRODUCTION
+The continued downscaling of feature sizes in integrated
+circuits leads to new challenges in the semiconductor
+industry.
+1
+Most of the conventional fabrication processes are
+designed on the basis of the top-down approach, comprising
+numerous deposition, lithography, and etching steps.
+2,3
+At
+small feature sizes, traditional top-down approaches suffer from
+alignment issues between the patterning steps.
+4
+Therefore,
+processes exploiting the properties of the underlying pattern
+instead of purely relying on metrology and patterning precision
+are needed.
+5,6
+During the past decade, area-selective deposition
+(ASD), a bottom-up alternative enabling self-aligned fabrica-
+tion schemes, has gained considerable attention in academia
+and industry.
+7−9
+ASD refers to processes that deposit the target
+material on the areas where the growth is desired (i.e., growth
+areas), while deposition is avoided on the neighboring areas
+where the growth is not desired (non-growth areas). The
+selectivity of deposition on the growth areas can be achieved
+by exploiting differences in the chemical or physical properties,
+such as different material compositions, surface terminations,
+or lattice properties.
+6,7,10,11
+In some specific cases, an inherent selectivity may be
+observed as a result of the nature of the growth and non-
+growth areas.
+8,12
+However, typically, selectivity is achieved via
+the deactivation of the non-growth area using inhibitors, for
+example, using self-assembled monolayers (SAMs) or small-
+molecule inhibitors (SMIs).
+6,11−18
+SAMs, containing long-
+chain hydrocarbons, have conventionally been used as
+inhibitors to achieve area-selective atomic layer deposition
+(ALD).
+19,20
+However, as a result of the low vapor pressure of
+these large molecules, application of SAMs typically relies on
+wet chemistry and requires long reaction times to achieve close
+packing.
+21−24
+These properties limit the compatibility of SAMs
+with high-volume applications in the industry.
+16
+As an
+Received: November 25, 2022
+Revised: February 28, 2023
+Published: March 15, 2023
+Articlepubs.acs.org/Langmuir
+© 2023 The Authors. Published by
+American Chemical Society
+4265
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 13:08:56 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+alternative, the use of SMIs recently showed promising results
+for area-selective ALD.
+3,15,25−27
+SMIs can be supplied into the
+vacuum reactor during the deposition via vapor-phase
+dosing.
+28
+As a result, inhibitors can be applied in much
+shorter time scales in the same vacuum vessel as used for the
+ALD process and can therefore more easily be integrated in
+industrial fabrication schemes.
+22
+The area-selective ALD
+approach relying on vapor-phase reapplication of SMIs at the
+start of every ALD cycle can be employed using both thermal
+or plasma-enhanced conditions.
+22
+To successfully block the interaction of the incoming
+precursor molecules with the non-growth area during ASD,
+candidate SMIs should fulfill the following requirements: (i)
+SMIs should strongly and selectively bind to the non-growth
+area, and (ii) the SMIs should have a sufficiently high surface
+coverage on the non-growth area. The selective adsorption of
+the candidate SMI molecules can be investigated using density
+functional theory (DFT) calculations on the target growth and
+non-growth areas. Thus, important information on the
+adsorption energetics and the adsorption configurations of
+the SMIs can be obtained. Random sequential adsorption
+(RSA) simulations
+29,30
+can be used to estimate the coverage
+and packing of inhibitor molecules as extensively discussed in
+our earlier work.
+31
+As a consequence of vapor-phase dosing,
+SMIs arrive one by one on random surface sites such that close
+packing of inhibitor molecules cannot be achieved.
+9
+This could
+be compensated by the selection of inhibitor molecules with
+high enough surface coverage and dense packing to block the
+incoming precursor molecules. In addition, the precursor
+blocking performance of the inhibitor can be assessed using
+RSA simulations as discussed in the Results and Discussion of
+this manuscript.
+Although the use of SMIs for area-selective ALD is a very
+promising approach, finding suitable SMIs remains a
+challenging task. In our previous works, acetylacetone
+(Hacac, C
+5
+H
+8
+O
+2
+) was demonstrated as an inhibitor during
+the area-selective deposition of SiO
+2
+using bis(diethylamino)-
+silane (BDEAS) as the precursor.
+26,32
+It was found that the use
+of the Hacac inhibitor can delay SiO
+2
+growth on Al
+2
+O
+3
+non-
+growth areas up to 20 cycles, corresponding to about 1.5 Å
+selective SiO
+2
+deposition on SiO
+2
+growth areas.
+26
+Both
+experiments and DFT calculations showed that Hacac
+molecules adsorb on an Al
+2
+O
+3
+non-growth area in a mixture
+of two bonding configurations (i.e., chelate and monodentate),
+whereas they cannot adsorb to the SiO
+2
+growth area. Among
+these two adsorption configurations, the chelate configuration
+was found to block BDEAS molecules successfully. However,
+Hacac molecules adsorbed in monodentate configuration can
+desorb during the purging step of the experiments or were
+displaced during the precursor dose and caused the loss of
+selectivity.
+32
+According to these findings, it is needed to
+investigate all possible adsorption configurations of inhibitor
+molecules and their effect on the inhibition layer stability. In
+our recent experimental work, aniline showed promising
+performance as an inhibitor during the area-selective
+deposition of TiN on dielectrics as the growth area with
+respect to metals as the non-growth area. Using aniline as an
+inhibitor and tetrakis(dimethylamino)titanium (TDMAT) as a
+Ti precursor, TiN growth was delayed for up to 100 cycles on
+Co and for more than 200 cycles on Ru non-growth areas. As a
+result, about 6 nm of selective TiN deposition on SiO
+2
+and
+Al
+2
+O
+3
+was achieved.
+28
+In the production of nanoelectronics, various stages involve
+a substrate that has been patterned with metal and dielectric
+materials. In this work, the general case of having a metal as the
+non-growth area is considered. We performed DFT calcu-
+lations and RSA simulations to investigate the key properties
+making aniline an effective SMI on metal substrates. DFT
+calculations were carried out to study the adsorption
+configurations and stability of aniline molecules on SiO
+2
+representing the dielectric growth area and on Ru and Co
+surfaces representing the metal non-growth areas of a
+patterned substrate. Considering the catalytic nature of the
+Ru and Co surfaces, possible hydrogenolysis of aniline on these
+surfaces was also included in the study. In addition, the DFT
+results were used as input for the RSA simulations, as
+illustrated in Figure 1, by modeling the two-dimensional (2D)
+substrate and the footprint of the adsorbate molecules. Using
+RSA simulations, we investigated the surface coverage and
+packing of the inhibitor molecules on the non-growth areas.
+The outcomes of the DFT calculations and RSA simulations
+were combined to unveil how aniline effectively blocks
+precursor adsorption on the non-growth area. Our results
+reveal that aniline molecules adsorb on the non-growth area in
+a mixture of strongly bonded configurations. This mixture
+Figure 1. Example of a DFT-calculated adsorption configuration of an
+aniline molecule shown in the (a) side view and (b and c) top view
+(gray, surface metal atoms; yellow, carbon; white, hydrogen; and blue,
+nitrogen). (c) Top layer metal atoms have been used to form the
+surface model. (d) Disks representing N, C, and H atoms have been
+placed on the corresponding coordinates for aniline based on their
+van der Waals radius. (e) Final 2D aniline footprint as input for the
+RSA simulations has been created as the combination of the disks into
+a single shape (a union). (f) Section of the substrate with adsorbed
+molecules as output of the RSA simulation.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4266
+
+
+helps aniline achieve a high surface coverage, resulting in
+effective precursor blocking.
+■
+COMPUTATIONAL METHODS
+DFT. The Vienna Ab Initio Simulation Package (VASP) was used
+to perform all DFT calculations reported in this study.
+33−35
+The
+projector augmented wave (PAW) method was employed to describe
+electron−ion interactions.
+36,37
+A kinetic energy cutoff of 400 eV was
+used for the plane-wave basis set. Calculations were performed on the
+basis of the Perdew−Burke−Ernzerhof (PBE) exchange−correlation
+functional of the generalized gradient approximation (GGA), with the
+dispersion correction D3 and the Becke−Johnson (BJ) damping
+function.
+38−40
+The convergence criteria for structural optimizations
+were set such that the total forces acting on each atom must be
+smaller than 0.01 eV/Å. The convergence criterion for the self-
+consistent field cycle was set to 10
+−5
+eV. The Brillouin zone of
+crystalline Ru and Co metal bulk was integrated using an
+automatically generated Γ-centered 11 × 11 × 11 k-point mesh (11
+× 11 × 9 for SiO
+2
+), whereas a Γ-centered 2 × 2 × 1 mesh was used
+for the surface calculations.
+41
+Gaussian smearing of 0.01 eV was used
+throughout the study. Using these parameters, optimized lattice
+parameters of the Ru bulk with P63/mmc space group (space group
+number = 194) were found to be a = 2.70 Å and c = 4.27 Å, which are
+in a good aggreement with the experimental vaues of 2.71 and 4.28 Å,
+respectively.
+42
+Optimized lattice parameters of the Co bulk with the
+same space group number were calculated as a = 2.46 Å and c = 3.99
+Å and were also in a good aggreement with the experimental values of
+2.50 and 4.06 Å, respectively.
+43
+The lattice parameters of the α-quartz
+phase of SiO
+2
+with P3121 space group (space group number = 152)
+were calculated as a = 4.80 Å and c = 5.32 Å, which were also in line
+with the experimental values of a = 4.91 Å and c = 5.40 Å.
+44
+Ru(0001) and Co(0001) surface slabs used for the surface
+calculations were modeled using a four-layer 4 × 4 supercell of the
+cleaved optimized bulk structure. The metal atoms in the bottom two
+layers of the surface slab were kept frozen at their bulk positions
+during adsorption studies. Also, for the SiO
+2
+(0001) surface, a four-
+layer (SiO
+2
+layers) surface was modeled as a 3 × 3 supercell of the
+cleaved optimized SiO
+2
+bulk structure. As in metal surfaces, the
+bottom two (SiO
+2
+) layers were kept frozen at their bulk positions. In
+line with the previous ALD studies, the top layer of the SiO
+2
+(0001)
+surface is fully hydroxylated.
+26,45,46
+Periodicity of the slab in the
+direction perpendicular to the metal surface was avoided by adding a
+vacuum spacing of 17 Å. At least 10 different starting configurations
+were studied for the aniline adsorption on metal surfaces. In addition,
+by keeping the x and y coordinates the same, the effect of the starting
+distance of the aniline molecule to the surface was also tested for 2
+and 3 Å, to locate possible physisorbed geometries. All of the
+adsorption configurations reported for aniline were found to proceed
+directly from the gas phase. In other words, no local maximas or
+activated pathways were observed in the optimization calculations for
+aniline adsorption on the metal surfaces. This can be attributed to the
+reactive nature of metal surfaces. All resulting unique configurations
+are reported here. The aniline adsorption energies were calculated
+using
+= + + E E E E( ) ads slab an iline slab aniline
+(1)
+where E
+slab+aniline
+is the total energy of the Ru(0001) or Co(0001) slab
+with adsorbed aniline at its lowest energy position on the metal
+surface, E
+slab
+is the total energy of a clean slab, and E
+aniline
+is the total
+energy of the aniline molecule. The same procedure is followed for
+the adsorption of the TDMAT precursor. The energies of the aniline
+and TDMAT molecules were computed via spin-relaxed calculations
+in 20 Å cubic cells at the gamma point.
+The hydrogenolysis energy was also calculated using a formula
+similar to eq 1. In this case, the total energy before the hydrogenolysis
+reaction was subtracted from the total energy of the end products as
+shown in
+= + + + + E E E E( )
+rxn
+ slab NH ben zene slab a niline H 3 2
+(2)
+where E
+slab+NH d
+3
++benzene
+is the total energy of formed ammonia and
+benzene on Ru(0001) or Co(0001) slab, E
+slab+aniline
+is the total energy
+of Ru(0001) or Co(0001) slab with adsorbed aniline, and E
+H d
+2
+is the
+energy of a gas-phase H
+2
+molecule. Unlike the adsorption process
+explained above, the hydrogenolysis reaction is not expected to
+proceed spontaneously as a result of the bond cleavage and formation
+of the new bonds. The kinetic analysis of this process is left for future
+mechanistic studies.
+RSA. A lattice RSA algorithm (see Figure S1 of the Supporting
+Information) developed on the basis of our earlier work has been
+adopted in this study.
+31
+This RSA algorithm simulates one-by-one
+adsorption of inhibitor molecules on randomly selected sites on a
+substrate representing the non-growth area during area-selective ALD.
+The DFT-optimized lattice dimensions of Ru(0001) and Co(0001)
+surfaces were used to model the substrates with periodic boundary
+conditions. Both model substrates were prepared to include 5000
+adsorption sites, resulting in surface areas of 318 and 273 nm
+2
+for the
+Ru and Co surfaces, respectively. The top-down 2D projections, i.e.,
+2D footprints, of aniline and benzene molecules were modeled on the
+basis of the DFT-optimized adsorption configurations of molecules on
+the metal non-growth areas (see Figure 1 for the procedure and
+Figure S2 of the Supporting Information for other 2D footprint
+models). The horizontal aniline configuration is strongly adsorbed to
+the surface via the interactions of its multiple atoms with the surface,
+preventing free rotation. Therefore, rotation attempts for the footprint
+representing the horizontal configuration were considered on the
+basis of the 6-fold symmetry of the lattice (rotational attempts of
+60°). On the other hand, the vertical aniline configuration is attached
+to the surface via a single bond between N and the surface metal.
+Hence, it is assumed to be able to rotate freely around the M−N
+bond. During the RSA iterations, the vertical aniline model was first
+tested on the basis of the 6-fold symmetry (60° rotation) in random
+order. Then, if it still did not fit, 1° rotation steps were tested to cover
+a larger range of possible rotations. A reactive adsorption mode is also
+included in the algorithm to be able to simulate aniline adsorption
+with hydrogenolysis upon adsorption. When using the reactive
+adsorption mode, aniline molecules adsorbed in horizontal config-
+uration were converted to benzene. All RSA results reported in this
+study were averaged over 20 simulations.
+The RSA simulations were used to analyze the inhibitor coverage
+and surface density. In addition, the gaps in the inhibitor layer (i.e.,
+space not sterically covered by aniline) can be analyzed in terms of
+their density and size. The effective size of these gaps has been
+calculated by determining the radius of the largest circular molecule
+that can be adsorbed on the unoccupied adsorption sites without an
+overlap with the adsorbed inhibitor molecules (see Figure S3 of the
+Supporting Information). Please also see ref 31 for more detailed
+information about the RSA methodology.
+■
+RESULTS AND DISCUSSION
+Selective adsorption of the inhibitor molecules on the non-
+growth area is an essential step to achieve area-selective ALD
+using SMIs. Therefore, we first investigated the adsorption
+mechanism of aniline on the Ru(0001) and Co(0001) surfaces
+representing the non-growth areas and on the SiO
+2
+(0001)
+surface representing the growth area. The aniline molecule
+strongly adsorbs with adsorption energies of −3.59 eV on Ru
+and −2.17 eV on Co. Three unique thermodynamically
+favorable adsorption configurations for aniline on Ru and Co
+were found from DFT, as shown in Figure 2. The aniline
+configuration with the most favorable adsorption energy on the
+metal surfaces involves the interaction of the carbon atoms of
+the aniline aromatic ring and the surface metal atoms, resulting
+in a “horizontal” adsorption mode. Moreover, there is also a
+“vertical” configuration for which aniline adsorbs on the
+surface only through interaction between nitrogen of the amine
+group and the surface metal, resulting in weaker adsorption
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4267
+
+
+than the horizontal configuration. On the basis of these results,
+it is expected that aniline adsorbs on the metal surfaces
+through a combination of these horizontal and vertical
+adsorption configurations while maximizing the horizontal
+configuration, i.e., the most exothermic adsorption config-
+uration.
+47−49
+On the SiO
+2
+(0001) surface representing the growth area,
+two unique adsorption configurations with considerably
+weaker adsorption energies were found. Aniline molecules
+adsorb on the SiO
+2
+(0001) surface only via physical interactions
+between the molecule and the surface. Even in the most
+favorable adsorption configuration on SiO
+2
+, the adsorption
+energy is only −0.57 eV. Molecules adsorbed in these two
+weak physisorbed adsorption configurations are likely to
+desorb in the experimental conditions and, thereby, not take
+part in precursor blocking. The difference between adsorption
+energetics across surfaces indicates that aniline can selectively
+adsorb on the metallic non-growth areas, Co and Ru, but not
+on the SiO
+2
+growth area, which is also in agreement with
+previous experimental results.
+28
+These DFT analyses reveal a potential reason for why aniline
+results in better precursor inhibition performance compared to,
+for example, Hacac,
+32
+for which the presence of the mixture of
+different adsorption configurations is causing selectivity loss.
+For the case of aniline, both the horizontal and vertical
+adsorption configurations bind strongly on the non-growth
+area and are not expected to desorb during the purging step. In
+addition, while the weaker (monodentate) configuration of
+Hacac could provide a pathway for precursor adsorption as a
+result of its exposed OH group, the phenyl group of the vertical
+aniline molecules does not have an affinity toward the
+precursor molecules. The phenyl group can also shield the
+interaction of the (relatively more reactive) amine group of
+aniline with the precursor molecules.
+In addition to the selective adsorption of aniline, its ability to
+block TDMAT (Ti precursor in ALD of TiN) was studied
+using DFT. To this end, the adsorption of TDMAT was
+studied on bare and aniline-functionalized Ru and Co surfaces
+(see Figure 3). On bare surfaces, we found TDMAT
+adsorption energies of −2.23 and −1.86 eV, on Ru and Co,
+respectively. To study the interaction of the precursor with the
+adsorbed aniline molecule, TDMAT is placed above the aniline
+adsorbate optimized in previous steps (which were shown in
+Figure 2). The interaction of TDMAT with the vertical aniline
+configuration resulted in the transformation to the horizontal
+configuration. This change of the aniline adsorption config-
+uration mainly occurs as a result of repulsion interactions
+between the inhibitor and precursor molecules and shows that
+TDMAT is not likely to adsorb on vertical aniline. This
+transition was possible because only one aniline molecule was
+present on the surface in the DFT calculation. Note that such a
+transition is sterically hindered on a surface saturated with
+aniline molecules in both configurations. We calculated the
+adsorption energy of TDMAT on surfaces with aniline in the
+horizontal configuration as −0.87 and −0.90 eV on Ru and Co,
+respectively. In both cases, TDMAT is physisorbed on aniline
+at a distance of 2.6 Å. The lower adsorption energy of TDMAT
+on the aniline-functionalized surface compared to the bare
+surface confirms that the aniline inhibitor significantly reduces
+the interaction of TDMAT with the non-growth area.
+In our previous work, introduction of the Si precursor
+bis(diethylamino)silane (BDEAS) on the Hacac-functionalized
+Al
+2
+O
+3
+surface resulted in an adsorption energy of −0.81 eV on
+Hacac in monodentate configuration.
+32
+In that case, we
+observed the formation of a H bond between the free OH
+group from adsorbed Hacac and the amino ligand in BDEAS,
+for some orientations of the BDEAS molecule. This interaction
+was described as the starting point for the displacement of the
+Hacac inhibitor from the surface by the precursor, which was
+experimentally observed. Interestingly, in the current analysis,
+the TDMAT adsorption energy on aniline is similar to that of
+BDEAS on Hacac. However, unlike the previous case, we do
+not observe such a H bond that could serve as a pathway for
+displacement. Although the thermodynamics of the aniline−
+Figure 2. DFT-optimized aniline adsorption configurations and
+energies on (a) Ru(0001) and (b) Co(0001) surfaces representing
+the non-growth areas and (c) SiO
+2
+(0001) surface representing the
+growth area. The top layer metals are represented in a different color
+for better top view visualization.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4268
+
+
+TDMAT interaction resembles the Hacac−BDEAS case, the
+displacement kinetics are expected to be different for these two
+cases, considering the significantly higher selectivity observed
+for aniline in our experimental work.
+28
+An effective small-molecule inhibitor should have a high
+enough surface coverage to be able to block the adsorption of
+precursor molecules. DFT-optimized aniline geometries on Ru
+and Co surface slabs, shown in panels a and b of Figure 2, were
+used to determine the 2D footprints (see Figure S2 of the
+Supporting Information) of the aniline molecule on a
+hexagonal grid representing the Ru and Co non-growth
+areas. Sample RSA outputs showing the packing of aniline
+molecules on zoomed in views of the Ru and Co non-growth
+area models are given in panels a and d of Figure 4. Our RSA
+algorithm starts with the selection of a random surface site and
+tests the adsorption of the energetically most favorable,
+horizontal, configurations of aniline for each iteration of the
+RSA simulations. When the horizontal configuration could not
+fit, adsorption of the vertical configuration was tested on the
+same adsorption site. Therefore, the aniline adsorption on both
+surfaces is initially dominated by the most stable horizontal
+aniline configurations. With increasing aniline exposure, we see
+a transition from the thermodynamically most favorable
+configuration to the sterically most favorable (i.e. the vertical)
+configuration. The change of the surface density of the specific
+adsorption configurations as a function of total aniline density
+on the surface is plotted in panels b and e of Figure 4. At
+saturation represented by black dashed lines (1.72 molecules/
+nm
+2
+) in Figure 4b, 69 ± 1% of the aniline molecules are
+present in the horizontal configuration on the Ru surface. The
+same analysis on the Co surface (Figure 4e) showed that 57 ±
+1% of adsorbed aniline molecules are in the horizontal
+configuration, whereas the saturation surface density is 1.79
+molecules/nm
+2
+. With the contribution of both adsorption
+configurations, 60 ± 1 and 59 ± 1% of the surface area is
+covered with aniline molecules on Ru and Co, respectively.
+Considering that both horizontal and vertical configurations
+are present on the surface in considerable quantities, both
+adsorption configurations should play a significant role in the
+precursor blocking observed in our experimental work.
+28
+The RSA simulation results were also analyzed in terms of
+the sizes of the gaps in between adsorbed inhibitor molecules
+after surface functionalization with aniline. The distribution of
+the effective gap sizes on the non-growth area can be used to
+estimate whether a precursor molecule can potentially adsorb,
+as a measure for the selectivity.
+31
+Gap size distribution analysis
+for the Ru and Co surfaces functionalized with aniline
+molecules indicates that the gaps on both surfaces are mainly
+concentrated below 0.35 nm, as reported in panels c and f of
+Figure 4. Considering the size of a 2D-projected TDMAT
+precursor molecule (∼0.49 nm, also shown as a blue dashed
+line in panels c and f of Figure 4), our results suggest that the
+inhibition layer is sufficiently densely packed such that there
+are no surface sites available that can accommodate the
+adsorption of precursor molecules. These results support that
+aniline can effectively shield the adsorption sites on Ru and Co
+non-growth areas and block the adsorption of the incoming
+precursor molecules.
+Literature on Pt, Ni, and Mo surfaces shows that, when
+hydrogen is present, aniline can undergo hydrogenolysis and
+dissociate into benzene and ammonia on the surface.
+50−52
+Given that the co-reactant in the area-selective TiN ALD
+processes is an Ar−H
+2
+plasma,
+28
+it is reasonable to assume that
+hydrogen is also available during the aniline dose. Because Ru
+and Co are well-known catalysts, such a reaction can occur on
+the non-growth areas used in this work. Thus, we also consider
+the effect of hydrogenolysis on the inhibition process. Our
+DFT results show that the hydrogenolysis of adsorbed aniline
+is thermodynamically favorable on both metal surfaces. As
+Figure 3. DFT-optimized TDMAT adsorption configurations and
+energies on (a) bare Ru(0001), (b) Ru(0001) functionalized with
+aniline, (c) bare Co(0001), and (d) Co(0001) functionalized with
+aniline (the light blue spheres represent Ti atoms, and the top layer
+metals are represented in a different color for better top view
+visualization).
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4269
+
+
+represented in Figure 5a, this process has reaction energies of
+−0.89 and −0.94 eV on Ru and Co surfaces, respectively.
+Ammonia and benzene are formed on the metal surfaces as a
+result of the hydrogenolysis reaction. The formed ammonia
+species has low adsorption energy (−1.01 eV on Ru and −0.65
+eV on Co) and can potentially desorb from the surface under
+the experimental conditions. Similar to aniline, the formed
+benzene molecules have strong adsorption energies of −2.88
+and −1.87 eV on Ru and Co, respectively, and, therefore, do
+not easily desorb from the non-growth area.
+A new set of RSA simulations was performed by assuming
+the hydrogenolysis of all incoming aniline molecules that
+adsorb in the horizontal configuration. According to these
+simulations, the density of adsorbed inhibitor molecules is
+increased on Ru from 1.72 to 1.99 nm
+−2
+and on Co from 1.79
+to 1.86 nm
+−2
+. At saturation, 68% of the adsorbed molecules are
+present as benzene on the Ru surface, while the rest of the
+adsorbates were aniline in vertical configuration. For the Co
+surface, the benzene fraction was calculated as 57%. As a result,
+the fraction of the surface area covered is increased on the Ru
+non-growth area from 60 ± 1 to 63 ± 1% and non-significantly
+changed from 59 ± 1 to 57 ± 1% on the Co non-growth area.
+The improvement in the surface saturation density can be
+explained by the adsorption of more inhibitor molecules on the
+newly available surface sites after ammonia byproduct
+molecules leave the surface. As seen from panels b and c of
+Figure 5, the density of the large gaps on the aniline-
+functionalized surface decreases after hydrogenolysis. RSA
+results, thereby, imply that hydrogenolysis is beneficial for
+precursor blocking. Furthermore, the elimination of the amine
+Figure 4. RSA simulation results for aniline adsorption on (a−c) Ru(0001) and (d−f) Co(0001) surfaces: (a and d) visual simulation output, (b
+and e) surface aniline configuration densities as a function of the total aniline density on the surface, and (c and f) distribution of effective gap sizes
+after aniline adsorption. The blue dashed line at 0.49 nm represents the size of the TDMAT precursor. The inset in panel c shows the procedure of
+determining the gap sizes by measuring the minimum distance between an unoccupied site and the nearest adsorbed inhibitor molecules (i.e., the
+radius of the largest circular molecule that can adsorb on the unoccupied site).
+Figure 5. (a) Aniline hydrogenolysis on metal (Ru and Co) surfaces and (b and c) effective gap distributions on Ru and Co model surfaces after
+hydrogenolysis. The blue dashed line at 0.49 nm represents the size the TDMAT precursor. Insets show sample sections from the visual RSA
+outputs.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4270
+
+
+groups by hydrogenolysis of aniline can further help the
+precursor blocking by making the inhibitor layer more
+chemically inert. Hence, hydrogenolysis of adsorbed aniline
+molecules can contribute to the precursor blocking on both
+non-growth areas.
+■
+CONCLUSION
+In this work, on the basis of experimental results for the small-
+molecule inhibitor aniline, we computationally investigated
+how SMIs can effectively block precursor adsorption on the
+non-growth area during area-selective ALD. As the first
+requirement for ASD, aniline strongly adsorbs on the non-
+growth area, whereas its adsorption on the growth area is weak.
+From our DFT calculations for aniline and prior results for
+Hacac, it is concluded that all adsorption configurations of the
+inhibitor molecule should strongly adsorb on the non-growth
+area to obtain a stable inhibition layer. The case of aniline
+demonstrates that the presence of multiple stable binding
+configurations also results in a dense inhibitor packing, which
+helps the blocking of precursor adsorption on the non-growth
+area. As the surface starts to saturate, the energetically most
+favorable aniline configuration cannot adsorb on the remaining
+unoccupied sites. In that case, the sterically more favorable
+configuration can still adsorb to the surface and enhance the
+surface inhibitor density. The catalytic properties of the non-
+growth area can also contribute to precursor blocking
+performance. The hydrogenolysis of the adsorbed aniline
+molecule is found to be thermodynamically favorable on the
+studied metallic non-growth areas. Such catalytic reactions on
+the non-growth area can enhance the inhibitor blocking on the
+non-growth area by increasing the fraction of the surface area
+covered and/or decreasing the number of available gaps on the
+surface. In addition, the removal of the reactive amine groups
+can eliminate the possible interactions with the precursors.
+Taken together, to effectively block precursor adsorption, an
+inhibitor should satisfy three main requirements: (i) all
+possible adsorption configurations of an inhibitor molecule
+should strongly and selectively adsorb on the non-growth area,
+(ii) precursor molecules should not be able to adsorb on or
+react with inhibitor molecules, and (iii) the (mixture of)
+adsorption configuration(s) of the inhibitor should result in a
+sufficiently high surface coverage with no gaps available for
+adsorption of the incoming precursor. In addition to these, if
+the inhibitor molecule reacts on the surface, the products
+should satisfy these requirements to achieve effective blocking
+of an incoming precursor molecule.
+■
+ASSOCIATED CONTENT
+*
+sı
+Supporting Information
+The Supporting Information is available free of charge at
+https://pubs.acs.org/doi/10.1021/acs.langmuir.2c03214.
+RSA algorithm (Figure S1), determination of 2D
+footprints of inhibitor molecules on the substrate
+model (Figure S2), and illustration showing how the
+effective gap size is determined (Figure S3) (PDF)
+■
+AUTHOR INFORMATION
+Corresponding Author
+A. J. M. Mackus − Department of Applied Physics, Eindhoven
+University of Technology, 5600 MB Eindhoven, Netherlands;
+orcid.org/0000-0001-6944-9867; Email: a.j.m.mackus@
+tue.nl
+Authors
+I. Tezsevin − Department of Applied Physics, Eindhoven
+University of Technology, 5600 MB Eindhoven, Netherlands;
+orcid.org/0000-0001-5648-3943
+J. F. W. Maas − Department of Applied Physics, Eindhoven
+University of Technology, 5600 MB Eindhoven, Netherlands;
+orcid.org/0000-0002-1707-1126
+M. J. M. Merkx − Department of Applied Physics, Eindhoven
+University of Technology, 5600 MB Eindhoven, Netherlands;
+orcid.org/0000-0002-3886-0220
+R. Lengers − Department of Applied Physics, Eindhoven
+University of Technology, 5600 MB Eindhoven, Netherlands
+W. M. M. Kessels − Department of Applied Physics,
+Eindhoven University of Technology, 5600 MB Eindhoven,
+Netherlands;
+ orcid.org/0000-0002-7630-8226
+T. E. Sandoval − Department of Chemical and Environmental
+Engineering, Universidad Técnica Federico Santa Mariá,
+Santiago 2340000, Chile;
+ orcid.org/0000-0001-9418-
+5031
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/acs.langmuir.2c03214
+Notes
+The authors declare no competing financial interest.
+■
+ACKNOWLEDGMENTS
+This publication is based on the work supported by the
+European Research Council (ERC) under the European
+Union’s Horizon 2020 Research and Innovation Programme
+(Grant Agreement 949202). In addition, this work was
+supported by the Intel Corporation. M. J. M. Merkx and A.
+J. M. Mackus acknowledge support from Vidi Project 18363,
+which is financed by the Dutch Research Council (NWO), and
+T. E. Sandoval acknowledges support from ANID/
+ACT210059. The simulations were partially conducted on
+the Dutch national e-infrastructure with the support of the
+SURF Cooperative. The authors thank Dr. Jiun-Ruey Chen
+and Dr. Christopher Jezewski from the Intel Corporation for
+valuable discussions.
+■
+REFERENCES
+(1) Liu, T.-L.; Zeng, L.; Nardi, K. L.; Hausmann, D. M.; Bent, S. F.
+Characterizing Self-Assembled Monolayer Breakdown in Area-
+Selective Atomic Layer Deposition. Langmuir 2021, 37 (39),
+11637−11645.
+(2) Geissler, M.; Xia, Y. Patterning: Principles and Some New
+Developments. Adv. Mater. 2004, 16 (15), 1249−1269.
+(3) Chen, R.; Li, Y.-C.; Cai, J.-M.; Cao, K.; Lee, H.-B.-R. Atomic
+Level Deposition to Extend Moore’s Law and beyond. Int. J. Extreme
+Manuf. 2020, 2 (2), 022002.
+(4) Parsons, G. N. Functional Model for Analysis of ALD
+Nucleation and Quantification of Area-Selective Deposition. J. Vac.
+Sci. Technol., A 2019, 37 (2), 020911.
+(5) Clark, R.; Tapily, K.; Yu, K.-H.; Hakamata, T.; Consiglio, S.;
+O’Meara, D.; Wajda, C.; Smith, J.; Leusink, G. Perspective: New
+Process Technologies Required for Future Devices and Scaling. APL
+Mater. 2018, 6 (5), 058203.
+(6) Mackus, A. J. M. M.; Bol, A. A.; Kessels, W. M. M. M. The Use
+of Atomic Layer Deposition in Advanced Nanopatterning. Nanoscale
+2014, 6 (19), 10941−10960.
+(7) Mackus, A. J. M.; Merkx, M. J. M.; Kessels, W. M. M. From the
+Bottom-Up: Toward Area-Selective Atomic Layer Deposition with
+High Selectivity †. Chem. Mater. 2019, 31 (1), 2−12.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4271
+
+
+(8) Lee, J.-M.; Lee, J.; Oh, H.; Kim, J.; Shong, B.; Park, T. J.; Kim,
+W.-H. Inhibitor-Free Area-Selective Atomic Layer Deposition of SiO
+2
+through Chemoselective Adsorption of an Aminodisilane Precursor
+on Oxide versus Nitride Substrates. Appl. Surf. Sci. 2022, 589, 152939.
+(9) Merkx, M. J. M.; Angelidis, A.; Mameli, A.; Li, J.; Lemaire, P. C.;
+Sharma, K.; Hausmann, D. M.; Kessels, W. M. M.; Sandoval, T. E.;
+Mackus, A. J. M. Relation between Reactive Surface Sites and
+Precursor Choice for Area-Selective Atomic Layer Deposition Using
+Small Molecule Inhibitors. J. Phys. Chem. C 2022, 126, 4845.
+(10) Parsons, G. N.; Clark, R. D. Area-Selective Deposition:
+Fundamentals, Applications, and Future Outlook. Chem. Mater. 2020,
+32 (12), 4920−4953.
+(11) Lee, H.-B.-R.; Bent, S. F. Nanopatterning by Area-Selective
+Atomic Layer Deposition. In Atomic Layer Deposition of Nano-
+structured Materials; Pinna, N., Knez, M., Eds.; Wiley: Hoboken, NJ,
+2011; Chapter 9, pp 193−225, DOI: 10.1002/9783527639915.ch9.
+(12) Cao, K.; Cai, J.; Chen, R. Inherently Selective Atomic Layer
+Deposition and Applications. Chem. Mater. 2020, 32 (6), 2195−2207.
+(13) Xu, W.; Haeve, M. G. N.; Lemaire, P. C.; Sharma, K.;
+Hausmann, D. M.; Agarwal, S. Functionalization of the SiO
+2
+Surface
+with Aminosilanes to Enable Area-Selective Atomic Layer Deposition
+of Al
+2
+O
+3
+. Langmuir 2022, 38 (2), 652−660.
+(14) Choi, J. Y.; Ahles, C. F.; Wong, K. T.; Nemani, S.; Yieh, E.;
+Kummel, A. C. Highly Selective Atomic Layer Deposition of MoSiO
+x
+Using Inherently Substrate-Dependent Processes. Appl. Surf. Sci.
+2020, 512, 144307.
+(15) Yanguas-Gil, A.; Libera, J. A.; Elam, J. W. Modulation of the
+Growth per Cycle in Atomic Layer Deposition Using Reversible
+Surface Functionalization. Chem. Mater. 2013, 25 (24), 4849−4860.
+(16) Yarbrough, J.; Shearer, A. B.; Bent, S. F. Next Generation
+Nanopatterning Using Small Molecule Inhibitors for Area-Selective
+Atomic Layer Deposition. J. Vac. Sci. Technol., A 2021, 39 (2),
+021002.
+(17) Zheng, L.; He, W.; Spampinato, V.; Franquet, A.; Sergeant, S.;
+Gendt, S. De; Armini, S. Area-Selective Atomic Layer Deposition of
+TiN Using Trimethoxy(Octadecyl)Silane as a Passivation Layer.
+Langmuir 2020, 36 (44), 13144−13154.
+(18) Gasvoda, R. J.; Xu, W.; Zhang, Z.; Wang, S.; Hudson, E. A.;
+Agarwal, S. Selective Gas-Phase Functionalization of SiO
+2
+and SiN
+x
+Surfaces with Hydrocarbons. Langmuir 2021, 37 (13), 3960−3969.
+(19) Leskelä, M.; Ritala, M. Atomic Layer Deposition Chemistry:
+Recent Developments and Future Challenges. Angew. Chem., Int. Ed.
+2003, 42 (45), 5548−5554.
+(20) Lee, J.-M.; Lee, J.; Han, J. W.; Park, H.; Kyung, S.; Kim, I. W.;
+Lee, J. M.; Park, T. J.; Kim, W.-H. Enhanced Selectivity of Atomic
+Layer Deposited Ru Thin Films through the Discrete Feeding of
+Aminosilane Inhibitor Molecules. Appl. Surf. Sci. 2021, 539, 148247.
+(21) Lecordier, L.; Herregods, S.; Armini, S. Vapor-Deposited
+Octadecanethiol Masking Layer on Copper to Enable Area Selective
+Hf 3 N 4 Atomic Layer Deposition on Dielectrics Studied by in Situ
+Spectroscopic Ellipsometry. J. Vac. Sci. Technol., A 2018, 36 (3),
+031605.
+(22) Merkx, M. J. M.; Jongen, R. G. J.; Mameli, A.; Lemaire, P. C.;
+Sharma, K.; Hausmann, D. M.; Kessels, W. M. M.; Mackus, A. J. M.
+Insight into the Removal and Reapplication of Small Inhibitor
+Molecules during Area-Selective Atomic Layer Deposition of SiO
+2
+. J.
+Vac. Sci. Technol., A 2021, 39 (1), 012402.
+(23) Khan, R.; Shong, B.; Ko, B. G.; Lee, J. K.; Lee, H. B. R. H.;
+Park, J. Y.; Oh, I. K.; Raya, S. S.; Hong, H. M.; Chung, K. B.; Luber, E.
+J.; Kim, Y. S.; Lee, C. H.; Kim, W. H.; Lee, H. B. R. H. Area-Selective
+Atomic Layer Deposition Using Si Precursors as Inhibitors. Chem.
+Mater. 2018, 30 (21), 7603−7610.
+(24) Hong, J.; Porter, D. W.; Sreenivasan, R.; McIntyre, P. C.; Bent,
+S. F. ALD Resist Formed by Vapor-Deposited Self-Assembled
+Monolayers. Langmuir 2007, 23 (3), 1160−1165.
+(25) Caroca, E.; Sandoval, T. Role of Organic Molecules in Enabling
+Modern Technology. J. Vac. Sci. Technol., A 2020, 38 (4), 043201.
+(26) Mameli, A.; Merkx, M. J. M.; Karasulu, B.; Roozeboom, F.;
+Kessels, W. M. M.; Mackus, A. J. M. Area-Selective Atomic Layer
+Deposition of SiO
+2
+Using Acetylacetone as a Chemoselective
+Inhibitor in an ABC-Type Cycle. ACS Nano 2017, 11 (9), 9303−
+9311.
+(27) Mackus, A. J. M.; Schneider, J. R.; Macisaac, C.; Baker, J. G.;
+Bent, S. F. Synthesis of Doped, Ternary, and Quaternary Materials by
+Atomic Layer Deposition: A Review. Chem. Mater. 2019, 31 (4),
+1142−1183.
+(28) Merkx, M. J. M.; Vlaanderen, S.; Faraz, T.; Verheijen, M. A.;
+Kessels, W. M. M.; MacKus, A. J. M. Area-Selective Atomic Layer
+Deposition of TiN Using Aromatic Inhibitor Molecules for Metal/
+Dielectric Selectivity. Chem. Mater. 2020, 32 (18), 7788−7795.
+(29) Swendsen, R. H. Dynamics of Random Sequential Adsorption.
+Phys. Rev. A 1981, 24 (1), 504−508.
+(30) Feder, J. Random Sequential Adsorption. J. Theor. Biol. 1980,
+87 (2), 237−254.
+(31) Li, J.; Tezsevin, I.; Merkx, M. J. M.; Maas, J. F. W.; Kessels, W.
+M. M.; Sandoval, T. E.; Mackus, A. J. M. Packing of Inhibitor
+Molecules during Area-Selective Atomic Layer Deposition Studied
+Using Random Sequential Adsorption Simulations. J. Vac. Sci.
+Technol., A 2022, 40 (6), 062409.
+(32) Merkx, M. J. M.; Sandoval, T. E.; Hausmann, D. M.; Kessels,
+W. M. M.; Mackus, A. J. M. Mechanism of Precursor Blocking by
+Acetylacetone Inhibitor Molecules during Area-Selective Atomic
+Layer Deposition of SiO
+2
+. Chem. Mater. 2020, 32 (8), 3335−3345.
+(33) Kresse, G.; Furthmu ̈ ller, J. Efficiency of Ab-Initio Total Energy
+Calculations for Metals and Semiconductors Using a Plane-Wave
+Basis Set. Comput. Mater. Sci. 1996, 6 (1), 15−50.
+(34) Kresse, G.; Furthmu ̈ ller, J. Efficient Iterative Schemes for Ab
+Initio Total-Energy Calculations Using a Plane-Wave Basis Set. Phys.
+Rev. B: Condens. Matter Mater. Phys. 1996, 54 (16), 11169−11186.
+(35) Kresse, G.; Hafner, J. Ab Initio Molecular Dynamics for Open-
+Shell Transition Metals. Phys. Rev. B 1993, 48 (17), 13115−13118.
+(36) Blöchl, P. E. Projector Augmented-Wave Method. Phys. Rev. B
+1994, 50 (24), 17953−17979.
+(37) Kresse, G.; Joubert, D. From Ultrasoft Pseudopotentials to the
+Projector Augmented-Wave Method. Phys. Rev. B: Condens. Matter
+Mater. Phys. 1999, 59 (3), 1758−1775.
+(38) Perdew, J. P.; Burke, K.; Ernzerhof, M. Generalized Gradient
+Approximation Made Simple. Phys. Rev. Lett. 1996, 77 (18), 3865−
+3868.
+(39) Grimme, S.; Antony, J.; Ehrlich, S.; Krieg, H. A Consistent and
+Accurate Ab Initio Parametrization of Density Functional Dispersion
+Correction (DFT-D) for the 94 Elements H-Pu. J. Chem. Phys. 2010,
+132 (15), 154104.
+(40) Grimme, S.; Ehrlich, S.; Goerigk, L. Effect of the Damping
+Function in Dispersion Corrected Density Functional Theory. J.
+Comput. Chem. 2011, 32 (7), 1456−1465.
+(41) Monkhorst, H. J.; Pack, J. D. Special Points for Brillouin-Zone
+Integrations. Phys. Rev. B 1976, 13 (12), 5188−5192.
+(42) Hall, E. O.; Crangle, J. An X-ray Investigation of the Reported
+High-Temperature Allotropy of Ruthenium. Acta Crystallogr. 1957, 10
+(3), 240−241.
+(43) Ono, F.; Maeta, H. Determination of Lattice Parameters in hcp
+Cobalt by Using X-ray Bond’s Method. J. Phys. Colloques 1988, 49
+(C8), C8-63−C8-64.
+(44) Hammond, C. R. Properties of the Elements and Inorganic
+Compounds. In CRC Handbook of Chemistry and Physics; Haynes, W.
+M., Lide, D. R., Bruno, T. J., Eds.; CRC Press: Boca Raton, FL, 2014;
+pp 4−150.
+(45) Huang, L.; Han, B.; Han, B.; Derecskei-Kovacs, A.; Xiao, M.;
+Lei, X.; O’Neill, M. L.; Pearlstein, R. M.; Chandra, H.; Cheng, H.
+First-Principles Study of a Full Cycle of Atomic Layer Deposition of
+SiO
+2
+Thin Films with Di(sec-butylamino)silane and Ozone. J. Phys.
+Chem. C 2013, 117 (38), 19454−19463.
+(46) Li, J.; Wu, J.; Zhou, C.; Han, B.; Karwacki, E. J.; Xiao, M.; Lei,
+X.; Cheng, H. On the Dissociative Chemisorption of Tris-
+(dimethylamino)silane on Hydroxylated SiO
+2
+(001) Surface. J. Phys.
+Chem. C 2009, 113 (22), 9731−9736.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4272
+
+
+(47) Shong, B.; Brogaard, R. Y.; Sandoval, T. E.; Bent, S. F.
+Coverage-Dependent Adsorption of Bifunctional Molecules: Detailed
+Insights into Interactions between Adsorbates. J. Phys. Chem. C 2014,
+118 (41), 23811−23820.
+(48) Sandoval, T. E.; Bent, S. F. Adsorption of Homotrifunctional
+1,2,3-Benzenetriol on a Ge(100)-2 × 1 Surface. Langmuir 2017, 33
+(35), 8716−8723.
+(49) Sandoval, T. E.; Bent, S. F. Adsorption of Multifunctional Organic
+Molecules at a Surface: First Step in Molecular Layer Deposition;
+Elsevier: Amsterdam, Netherlands, 2018; pp 523−537,
+DOI: 10.1016/B978-0-12-409547-2.13139-7.
+(50) Huang, S. X.; Fischer, D. A.; Gland, J. L. Aniline Hydro-
+genolysis on Nickel: Effects of Surface Hydrogen and Surface
+Structure. Catal. Lett. 1995, 34 (3−4), 365−374.
+(51) Huang, S. X.; Fischer, D. A.; Gland, J. L. Aniline Adsorption,
+Hydrogenation, and Hydrogenolysis on the Ni(100) Surface. J. Phys.
+Chem. 1996, 100 (24), 10223−10234.
+(52) Huang, S. X.; Fischer, D. A.; Gland, J. L. Correlation between
+the Surface Configurations and Hydrogenolysis: Aniline on the
+Pt(111) Surface. J. Vac. Sci. Technol., A 1994, 12 (4), 2164−2169.
+Langmuir pubs.acs.org/Langmuir Article
+https://doi.org/10.1021/acs.langmuir.2c03214
+Langmuir 2023, 39, 4265−4273
+4273
+  Recommended by ACS
+Enhancing Performance and Function of Polymethacrylate
+Extreme Ultraviolet Resists Using Area-Selective Deposition
+Rachel A. Nye, Annelies Delabie, et al.
+FEBRUARY 23, 2023
+CHEMISTRY OF MATERIALS
+ READ 
+Area-Selective Deposition of AlOx and Al-Silicate for Fully
+Self-Aligned Via Integration
+Mattia Pasquali, Silvia Armini, et al.
+JANUARY 17, 2023
+ACS APPLIED MATERIALS & INTERFACES
+ READ 
+Amidoxime-Containing Ti Precursors for Atomic Layer
+Deposition of TiN Thin Films with Suppressed Columnar
+Microstructure
+Ga Yeon Lee, Taek-Mo Chung, et al.
+MARCH 08, 2023
+INORGANIC CHEMISTRY
+ READ 
+Ionic Liquid-Mediated Route to Atomic Layer Deposition of
+Tin(II) Oxide via a C–C Bond Cleavage Ligand Modification
+Mechanism
+Jingwei Shi, Stacey F. Bent, et al.
+NOVEMBER 15, 2022
+JOURNAL OF THE AMERICAN CHEMICAL SOCIETY
+ READ 
+Get More Suggestions >

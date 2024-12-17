@@ -1,0 +1,753 @@
+Simulation of Gas- and Liquid-Phase Layer-By-Layer Deposition of
+Metal Oxides by Coarse-Grained Modeling
+Kristopher S. Brown,† Chiara Saggese,‡ Benjamin P. Le Monnier, Florent Héroguel,
+and Jeremy S. Luterbacher*
+Laboratory of Sustainable and Catalytic Processing, Institute of Chemical Sciences and Engineering, École Polytechnique Fédérale de
+Lausanne (EPFL), CH-1015 Lausanne, Switzerland
+*S Supporting Information
+ABSTRACT: Atomic layer deposition (ALD) and chemical layer
+deposition (CLD) are techniques to produce conformal, atomically
+precise overcoats for materials in gas and liquid phases, respectively.
+Although it is a challenge to explicitly model ALD/CLD dynamics
+because of the large timescales involved, a combination of rule-
+based deposition actions, followed by molecular dynamics
+relaxations, can capture the net eﬀect of one cycle. For ALD, we
+developed deposition rules for the trimethylaluminum (TMA)/H2O
+system over Al2O3 and SiO2 substrates. We also explore the CLD
+system of Al(O-sec-Bu)3/H2O solvated in 2-butanol over an Al2O3
+substrate. In contrast to previous studies focusing on ligand
+exchange reactions, the gas-phase simulations predict that a TMA
+dissociation mechanism is the dominant growth mode, whereas the CLD simulations show a primary growth mode of deposition
+through precipitation of species that have already undergone reactions in solution. Together, these modeling results constitute a
+reﬁnement of preexisting ALD models, leading to more accurate growth rate predictions, as well as aﬁrst step toward modeling
+more challenging liquid-phase processes.
+1. INTRODUCTION
+Atomic layer deposition (ALD) is a technique for depositing
+thin ﬁlms, capable of producing uniform and conformal
+overcoats with atomically precise control over the ﬁlm
+thickness and composition. 1−3 The ﬁlm growth proceeds
+through alternating self-terminating heterogeneous reactions
+above a solid substrate. These characteristics make ALD useful
+for several applications in the ﬁelds of microelectronics,
+catalysis, and energy conversion, storage, and utilization.2,4−6
+Catalyst overcoating by deposition of a metal oxide layer is a
+promising method to curtail irreversible deactivation. Several
+overcoating methods have been shown to protect metal
+nanoparticles against sintering and leaching. These methods
+include the use of ALD of alumina7,8 and silica deposition by
+sol−gel.9,10
+ALD processes consist of sequential alternating gas-phase
+pulses of chemical precursors that react with the substrate. Each
+sequential gas-surface reactions is referred to as a“half cycle”,
+during which excess precursor is pulsed into a chamber under
+reduced pressure for enough time to allow saturation of the
+substrate surface through a self-limiting process. Subsequently,
+unreacted precursor or reaction byproducts are eliminated by
+purging with an inert carrier. Because of the self-limiting nature
+of the reaction, the two half cycles leave no more than one
+monolayer of the material at the surface. This process is then
+cycled until the appropriateﬁlm thickness is achieved.11
+Among several ALD processes, the deposition of aluminum
+oxide, Al2O3, using trimethylaluminum (TMA) and water as
+precursors, is the most studied ALD process to date and is
+considered as a model process for ALD.1 This is mainly due to
+the ideally self-terminating nature of the adsorption process and
+the inertness of methanethe reaction’s by-product. More-
+over, ALD’s production of aluminum oxide, which is a high-k
+dielectric material, is also of great interest for micro-
+electronics.12
+Common gas-phase deposition techniques have limitations
+which can be addressed by carrying out ALD chemistry in the
+liquid phase. These limitations include the restricted types of
+precursors and their byproducts that must be gaseous at feasible
+temperatures and the requirement of near-vacuum conditions.12
+Furthermore, in the case of coating 3D substrates, a specialized
+equipment is required, such asﬂuidized bed reactors to ensure
+diﬀusion of precursors into substrate pores. Liquid-phase
+synthesis techniques can mimic the gas-phase process at near
+room temperatures using a simple wet chemistry equipment by
+sequentially exposing a substrate to stoichiometric amounts of
+the metal and liquid precursors or by using an excess of
+precursors with the washing/drying step in between each
+cycle.13−17
+Received: January 7, 2018
+Published: February 26, 2018
+Article
+pubs.acs.org/JPCCCite This: J. Phys. Chem. C2018, 122, 6713−6720
+© 2018 American Chemical Society 6713 DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 12:46:48 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+1.1. ALD Gas-Phase Technique.Al2O3 ALD growth using
+TMA and H2O can be represented by the following two half
+reactions (eqs 1 and 2)
++→ − − +AlOH Al(CH ) Al O Al(CH ) CH33 32 4 (1)
+−− + → −− +AlOA l ( C H ) 2 H O A lOA l ( O H ) 2 C H32 2 2 4
+(2)
+The network of elementary reactions is far more complex,
+and numerous studies have examined the reaction details.1,18−20
+Despite the widespread use of ALD, the details of its physical
+and chemical processes are not yet well-understood and
+continue to be the focus of both experimental and numerical
+studies.21 Experimentally researchers improve the deposited
+ﬁlms by adjusting operating conditions, such as process
+pressure, temperature, and dosage.22−25 Recently, advances in
+computing technologies have allowed studying physical
+interactions and chemical kinetics of ALD by numerical
+approaches.
+ALD is intrinsically a multiscale process because it is manifest
+across many length and time scales, 21,26 and the primary
+challenge to model ALD is to eﬀectively combine diﬀerent
+scales according to the property of interest. Indeed, the pulsed
+ﬂow of gases into meter-scale reactors, around millimeter-scaled
+geometries, leads to chemical reactions between atoms, which
+aggregate into nanometer-thickﬁlms and coat micrometer-
+scaled pores or particles. The problem of timescale in ALD is
+perhaps even more acute than that of length scale because a
+combination of fast (picoseconds−nanoseconds) and slow
+reactions (microseconds−milliseconds) contributes to theﬁlm
+growth, and the pressure changes as gases are pulsed and
+purged over second-long timescales.
+On the molecular scale, most numerical investigations adopt
+ﬁrst-principles methods, such as density functional theory
+(DFT), to explore surface reaction mechanisms and chemical
+reaction pathways.20,27 These atomic-level models reveal certain
+microscopic details of the surface reaction mechanisms and
+chemical kinetics but fail to account for the multiscale nature of
+ALD and are not directly applicable to engineering applications.
+Other researchers take the macroscopic transport processes
+into consideration, using Monte Carlo methods, lattice
+Boltzmann methods, and molecular dynamics (MD). Kinetic
+Monte Carlo (KMC) is an approach that combines reaction
+events with diﬀerent timescales to reveal the evolution of the
+overall process in time. The lattice KMC (LKMC) method was
+successfully applied to the modeling of Hf(N(CH3)2)4/H2O
+ALD.28 The LKMC method requires the complete knowledge
+of reaction pathways, as well as their rate constants, which can
+be calculated ab initio from transition-state theory and DFT.
+The KMC algorithm uses this information to simulate the
+system evolution by randomly executing events at all timescales,
+with event probabilities proportional to their rate constants. Hu
+et al.29 presented an alternative strategy that employs classical
+MD. MD alone cannot model entire ALD cycles because of the
+limited simulation timescales for large systems, so Hu et al.
+bypassed this timescale limitation by coupling MD with a set of
+deposition rules.
+Deposition rules can be described as a function that accepts
+an uncoated surface as input and returns an approximated
+coated surface as output. MD relaxation steps correct these
+approximations to produce a realistic surface structure, which
+serves as the input into the deposition rules of the next cycle.
+An inherent advantage of the MD method is found in its lack of
+lattice constraints, allowing it to better represent amorphous
+structures. Overall, the combination of MD with rule-based
+deposition makes a favorable compromise between the
+computationally intensive explicit modeling of the deposition
+process with the overly simpliﬁed modeling of ALD at a
+macroscopic scale. We extend the previous work by Hu et al.29
+in this direction by adding more complexity to the rule-based
+process, allowing us to explore most of the possible chemical
+mechanisms and modes of growth.
+1.2. Liquid-Phase Technique.Motivated by the challenge
+to develop a practical synthesis technique for creating catalysts
+resistant to sintering, poisoning, and leaching, we recently
+developed a deposition process involving Al(O-sec-Bu)/H2O
+solvated in 2-butanol, which has a chemistry similar to the
+traditional TMA/H2O process.30 Here, as an initial attempt to
+model the liquid-phase chemistry, our simulations will focus on
+modeling this particular system. Because of the absence of a
+purging step in this batch liquid-phase process, stoichiometric
+amounts of precursor are added to each half cycle to achieve
+monolayer coverage and to prevent unwanted side reactions
+and uncontrolled growth. Experimentally, there is a large
+parameter space to explore, including the quantities of
+precursor injected per cycle, temperature, and the choice of
+precursors, substrate, and solvent. There are multiple outputs of
+interest that may vary nonmonotonically with respect to these
+inputs, including growth rate, roughness, andﬁlm density. To
+completely explore this space through experiments is
+challenging, thus we wanted toﬁrst identify interesting regimes
+via modeling the liquid-phase chemical layer deposition (CLD)
+process. This is also, to our knowledge, theﬁrst attempt of
+modeling liquid-phase deposition and as such could have many
+implications beyond our system of interest.
+The aim of this work is to both improve our understanding
+of the mechanism of the traditional gas-phase alumina ALD
+process and further extend the model to analyze a liquid-phase
+layer-by-layer overcoating process relevant to heterogeneous
+catalysis. In this work, we identify the importance of a
+dissociation mechanism for TMA deposition on alumina in gas-
+phase ALD and the importance of the precipitation deposition
+mechanism in the case of liquid-phase overcoating.
+2. COMPUTATIONAL DETAILS
+2.1. Rule-Based Appr oximation Phase. All major
+reaction pathways considered in this work for the TMA/H2O
+process are presented in Figure 1. The deposition rules are
+informed by mechanistic studies of the TMA/H 2O proc-
+ess.1,20,31−34 These works show common pathways, despite
+often studying diﬀerent surface models with diﬀerent methods.
+There is a general agreement about the favorability of the ligand
+exchange reaction (LER) R1 on hydroxylated surfaces (Figure
+1), and R2 was found to directly follow in most studies. Shirazi
+and Elliott33 found that the subsequent LER, R3, was made
+favorable through a cooperative eﬀect from the neighboring
+Me2 or Me1 surface species. Other studies did not include any
+cooperative eﬀect, although there is a disagreement about
+whether the precursor passes through the planar intermediate
+Me1,34 in contrast to directly forming the tetrahedral product of
+R4, Me 1″.20 R5 was found to be approximately neutral
+energetically, with a high activation energy, ranging from 1.0
+to 1.6 eV, leaving Me1 as the kinetically favored product of
+LERs.31−33 R6 and R7 are alternatives to R2 and R4, in the case
+where no hydroxyl groups are nearby.20,32 Many studies that
+consider bare or partially hydroxylated surfaces acknowledge
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6714
+
+
+that TMA can adsorb to oxygen bridges.20,32−34 From here, the
+precursor can irreversibly dissociate into three methyl frag-
+ments via R7. Other pathways have been proposed, such as
+those that model adsorbed H2O and TMA coordinated with
+bridge oxygens,32 but these were not explicitly treated in this
+study.
+In contrast to studies that use ﬁxed surfaces, any set of
+deposition rules, including ours, must accept arbitrary surface
+atom coordinates and deﬁne rules that describe which reactions
+can happen. However, simple information on particular
+interatomic distances and angles is not suﬃcient to generally
+establish in which range of distances and angles the reactions
+are favored. In the absence of these additional data, a bridging
+distance parameter was introduced so that hydroxyl groups
+within this distance are deemed eligible for a LER (R2 + R3 or
+R4 + R5). This distance parameter was selected to be 3.5 Å,
+based on a transition-state structure for R2 identiﬁed by
+Weckman and Laasonen31 (see calculation in section S1 of the
+Supporting Information).
+The deposition rules attempt to produce a plausible ﬁnal
+state, rather than depict a rigorous sequence of events that lead
+to theﬁnal state. Thus, the stable bridged species Me 2′ is
+directly formed when a precursor is deposited onto an
+unhindered hydroxyl with a neighbor within the bridging
+distance, rather than passing through intermediate states.
+Because of uncertainty in the relative reaction rates of the
+dissociation and LERs, the rules alternate attempts at the two
+types of reaction. Miniature MD relaxations are performed
+when a surface is apparently saturated, and a surface is deemed
+saturated if the miniature MD relaxation does not lead to any
+further addition. The system is represented by a list of species
+in the gas phase or in solution and a list of surface atoms (Si, Al,
+O, H, and ligand) with their coordinates. Precursor ligands are
+approximated as large single pseudo-atoms. The precursor
+addition rules and their sequence are shown inFigure 2.
+Precursor addition involves evenly sampling from potential
+structures that maintain the structure’s geometry (Figure 1). A
+precursor addition is deemed successful if there exists a
+structure with no hard sphere overlap. If multiple successful
+structures are found, the structure closest to their average is
+chosen. Dissociation reactions target bare alumina and bridge
+oxygen sites.
+The hydrolysis half cycle is assumed to behave ideally,
+resulting in the hydrolysis of every ligand present on the
+Figure 1. TMA reaction pathways (adapted from Travis and
+Adomaitis34).
+Figure 2. Surface saturation ﬂowchart. −OH neighbors are hydroxyls within the bridging distance of 3.5 Å.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6715
+
+
+surface, with no dissociation of water onto bare alumina.
+Experimentally, this is validated by C impurities detected at
+molar concentrations on the order of 1%.35 After the second
+half cycle, a 200 ps MD relaxation is performed before
+beginning the subsequent cycle.
+2.2. MD Relaxation Phase.MD relaxations are invoked to
+produce a realistic equilibrium surface after an approximate
+surface has been generated from the deposition rules (Figure
+2). The MD relaxation phase is governed by a Buckingham-
+type pair potential (eq 3), originally developed to treat crystals
+and melts of alumina and silica.36
+=+ +
++−
++ +
+⎛
+⎝
+⎜⎜
+⎞
+⎠
+⎟⎟U
+qq
+r DB B
+AAr
+BB
+CC
+r
+() e x pij
+ij
+ij
+ij
+ij i j
+ij
+ij
+ij
+6
+(3)
+This potential was expanded to treat hydroxylated surfaces of
+alumina and silica.37 Stiﬀ harmonic bonds were used to keep
+ligands at a ﬁxed distance while allowing them freedom of
+motion. An interaction potential for the ligand pseudo-atoms
+was developed such that they would not overlap with other
+atoms. This is accomplished with a purely repulsive Lennard-
+Jones potential with a cutoﬀ at its minimum value. The
+parameters for these potential functions are found in Tables S1
+and S2 in the section S2 of theSupporting Information.
+Simulations were carried out using an NVT ensemble in a
+simulation box with periodic boundaries along x and y
+directions.38 Full relaxations lasted 200 ps with a 0.5 fs
+timestep and sampling taken over a 100 ps period. A two-
+dimensional correction was applied to the Ewald summation of
+Coulombic forces. A Nosé−Hoover thermostat was imple-
+mented, maintaining a temperature of 450 K. The cutoﬀ for
+Buckingham interactions was 8 Å, and the cutoﬀ for Coulombic
+interactions was 13 Å. An artiﬁcial force beginning 5 Å above
+the surface repelled any molecules that might break free from
+the surface and attempt to escape the simulation box. This force
+was modeled as a harmonic spring acting purely in the vertical
+dimension. Simulations were performed using the MD package,
+LAMMPS, and results were visualized using OVITO.38,39
+The initial alumina surface model was prepared by annealing
+an alumina model after replacing random Al atoms with H
+atoms, as described in Hu et al.29 The surface had 2265 atoms,
+6% H, a surface −OH density of 2.1 OH nm −2, and the
+simulation box had dimensionsa = b = 36.8964 Å andc = 70.0
+Å, including a vacuum space of 50 Å above the surface. A
+hydroxylated silica model prepared by Sandupatla et al.40 with 5
+OH nm−2 was relaxed for 300 ps under the Matsui potential
+before being used in MD simulations.
+2.3. Liquid-Phase Implementation.The consequences of
+possibly adding insuﬃcient or excess precursors due to the
+batch conﬁguration of the liquid-phase experiments required
+additions to the gas-phase model. In particular, a list had to be
+used to keep track of the species in solution. The equilibration
+routine had to analyze the list of species in the solution and the
+surface and terminated only when no reactions were possible.
+The species and reactions that were considered are presented in
+Tables 1and 2.
+The gas-phase ALD model contains four classes of species:
+*L, *OH, H2O, and AlL3 (where L =−CH3 in the gas-phase
+model and−O-sec-Bu in the liquid-phase model). In the liquid-
+phase CLD case, the possibility of excess precursor reacting
+with H2O in solution leads to a partially hydrolyzed precursor,
+which could further react to form oligomers. Thus, the partially
+hydrolyzed precursor and the oligomerized precursor were new
+species for the liquid-phase model, with the former allowed to
+participate in surface ligand exchange. Although the oligomers
+could form separate particles, it was assumed that they could
+precipitate onto the surface of the growingﬁlm. This was
+modeled by a precipitation parameter. This ﬁnal assumption
+was supported by experiments, where no free alumina was
+observed at the end of the synthesis.30
+The possibility of multiple reactions being possible at once
+raises important questions of kinetics and mass transfer. In the
+absence of this information, we treated all reactions as equally
+likely, with the equilibration process consisting of random
+selection of pairs of reactive species, reacting when the rules
+permitted it, until no more reactions were possible.
+As mentioned, the precipitate could deposit onto the surface.
+This was done by constructing a plausible molecule, giving an
+atomic composition, and orienting it in a random direction at a
+random point on the surface. In reality, the rate of this process
+is a function of many unknown concentrations, reaction rates,
+and mass-transfer coeﬃcients. We approximated this process
+using a single unknown factor, expressed as a probability of
+precipitation per cycle (referred to above as the precipitation
+parameter).
+The last addition to the liquid-phase model was a
+representation of solvent molecules during the MD relaxation.
+After a half reaction had reached equilibrium, the MD
+relaxation phase was preceded byﬁlling the simulation box
+with randomly oriented solvent molecules (sec-butanol) up to
+the experimental density (Figure 3). A repulsive-only harmonic
+spring wall was placed 15 Å above the surface to bound the
+motion of solvent molecules. Forceﬁelds for both the solvent
+interactions and the interface interactions were taken from
+Jorgensen et al.41 and Johnston et al., 42 respectively. An
+example of diﬀerent phases of CLD simulation is presented in
+Figure 3.
+Table 1. Modeled Species and Their Possible Reactionsa
+species name reactions
+AlL3 precursor 1, 3, 4
+H2O water 2, 3
+*OH surface hydroxyl 1, 2
+*L surface ligand 1, 2
+AlLx(OH)y partially hydrolyzed precursor 1, 3, 4
+AlxOyLz(OH)n precipitate (oligomerized precursor) 3, 4
+aReaction numbers refer toTable 2.
+Table 2. Modeled Reactionsa
+# stoichiometry name
+1 AlL x(OH)y + *OH → *AlLx−1(OH)y surface ligand exchange (R1,
+R2)
+2 AlL x(OH)y +2 *OH → *AlLx−2(OH)y surface ligand exchange (R3,
+R4)
+3 AlL 3 +3 *OH → *Al surface ligand exchange (R5)
+4 AlL x(OH)y + *OH → *AlLx(OH)y surface dissociation (R8)
+5H 2O+ *L → *OH surface hydrolysis
+6A l xOyLz(OH)n +H 2O →
+AlxOyLz−1(OH)n+1
+precursor hydrolysis/
+precipitate hydrolysis
+7A l aObLc(OH)d +A lxOyLz(OH)n →
+Ala+xOb+y+1Lc+z−1(OH)d+n−1
+precursor agglomeration
+precipitate agglomeration
+aThe L −H byproduct for each reaction is omitted from the
+stoichiometry column, as it is an inert species which is not modeled.
+R1−R8 refer to the pathways described inFigure 1. The symbol *
+designates a surface bond.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6716
+
+
+3. RESULTS AND DISCUSSION
+3.1. Atomistic Simulation of the TMA/H 2OA L D
+Process. The ﬁrst case study we modeled was the growth of
+TMA/H2O over a hydroxylated alumina surface at room
+temperature. Predicted growth and roughness per cycle are
+plotted inFigure 4as a function of the ALD cycle. The results
+are compared to those of Hu et al., which studied the same
+physical system,29 and to the experimentally observed growth
+rate, that is, between 0.9 and 1.1 Å/cycle 43 (yellow zone)
+(Figure 4A). The increased growth per cycle that we predict
+relative to Hu et al.29 was largely a consequence of introducing
+the dissociation reaction and more closely matched exper-
+imental values, suggesting that the dissociation reaction may be
+an important inclusion to correctly predict experimental results.
+Our trend for surface roughness is similar to that of Hu et al.29
+as it increased with the number of cycles, which was suggestive
+of the island-growth mode (Figure 4B).
+Similarly to Hu et al.,29 our initial surface has a lower surface
+OH density than typical ALD conditions. 44 However, over
+multiple cycles, this value increases until it reached a stable
+value of 4.5 OH nm−2. By monitoring how the deposition
+changes over multiple cycles, it was possible to reproduce
+several experimental trends, including the number of aluminum
+atoms added (Figure 5A) or the ratio of aluminum atoms
+Figure 3.CLD simulation box snapshots. (A) Precursor injection, (B) water injection, (C) solvent addition and surface relaxation, and (D) surface
+after relaxation. Color code: red = aluminum, blue = oxygen, yellow = hydrogen, and white = O-sec-Bu ligand. Solvent atoms in panel C are shown
+with a reduced size.
+Figure 4.ALD simulations. (A) Height ofﬁlm growth per cycle and (B) roughness per cycle. Present results compared to Hu et al.29 The range of
+growth per cycle commonly observed experimentally is highlighted in yellow.43
+Figure 5. Growth properties as a function of surface hydroxyl density. (a) Al atoms added vs OH density. (b) Ligand/Al ratio vs surface OH
+concentration. Present results compared to data from Puurunen.45,46
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6717
+
+
+added to ligands added for a given surface OH density (Figure
+5B).
+Figure 6 shows predicted Al2O3 coating growth on alumina
+and silica represented as the number of Al atoms added to the
+substrate. The simulations over silica are compared to the
+experimental silica ALD results of Delabie et al. 47 The
+predicted growth over alumina is compared to the expected
+cycle-by-cycle growth data of alumina that was obtained by
+using the surface OH density with the empirical relation given
+by Puurunen45,46 (see Figure 5A). A characteristic diﬀerence in
+coating a silica substrate compared to alumina was the initial
+decrease in deposited aluminum, followed by a gradual increase.
+This trend is explained by Delabie et al.47 as a consequence of
+the inability for Si−CH3 bonds to be hydrolyzed, creating an
+inert surface area after the ﬁrst half cycle. As the ratio of
+aluminum to silicon atoms on the surface gradually increases
+after further ALD cycles, the inert fraction of the surface
+decreases and the growth rate increases. However, our inclusion
+of a silica surface model that forbade the hydrolysis of Si−CH3
+bonds led to a very limited decrease over theﬁrst two cycles
+that was not as pronounced as the experimental trend measured
+by Delabie et al.,47 suggesting that other eﬀects are perhaps at
+play.
+Ligand size was found to have a large impact on the growth
+rate. Increasing the ligand radius from 2.0 to 2.4 Å, consistent
+with using a triethylaluminum precursor, led to a decrease in
+the growth rate from approximately 1.0 to 0.6 Å/cycle, with no
+signiﬁcant diﬀerence in the surface roughness.
+Sensitivity to the bridging distance parameter was also
+investigated; however, no signiﬁcant deviations in any model
+outputs were observed between tests at 2.5, 3.5, and 4.5 Å. This
+speaks to the relative dominance of the dissociation reaction,
+which is not impacted by the bridging parameter, at the low
+surface OH concentrations tested in this study. This is in
+agreement with previous reports as the dominance of
+dissociation at low and moderate surface OH concentrations
+has been predicted by Travis and Adomaitis34 and exper-
+imentally suggested by Guerra-Nuñez et al.48
+3.2. Atomistic Simulation of the Liquid-Phase CLD.As
+mentioned above, the case study developed for liquid-phase
+simulation was the Al(O-sec-Bu)3/H2O process solvated insec-
+butanol, recently developed by Héroguel et al.30
+A signiﬁcant portion of the CLD was found to come from the
+precipitation mechanism, rather than the traditional ALD
+pathway. This is evidenced by a lack of sensitivity to the ligand
+size, which the gas-phase model is very sensitive to. This
+growth mode leads to rough surfaceﬁlms with high porosity
+(Figure 3 ), relative to the analogous ALD case (see
+comparisons in Figure 7).
+The model revealed that growth rates are sensitive to the
+input stoichiometry (Figure 8). In particular, the growth and
+roughness can be multiplied by 10 by decreasing the amount of
+water injected per cycle. This is understood as using a
+“nonideal” ratio of precursors to encourage the precipitate
+deposition growth mode, evidenced by the signiﬁcant increase
+in roughness. The CLD overcoat obtained experimentally30
+shows much greater porosity than ALD overcoats, which is also
+qualitatively captured by the model. Given the very limited
+number of studies using simulations to predict liquid-phase
+sol−gel chemistry, these results that predict similar trends to
+those observed experimentally demonstrate that such eﬀorts
+could serve as a tool to guide experimentalists during thin-ﬁlm
+synthesis in solution.
+4. CONCLUSIONS
+We have successfully expanded a simulation method for
+modeling ALD involving the combination of an empirical,
+rule-based deposition approach with a MD relaxation step. This
+method is a simpler alternative to the LKMC strategy, which
+requires an intensive DFT investigation to fully characterize all
+types of possible changes in atomic coordinates. By
+incorporating several recently reported mechanistic features
+for the TMA/H2O process into our ALD modeling algorithm,
+we improved the ability of the model to predict several
+Figure 6.Predicted and measured alumina ALD coating growths on an
+alumina (blue) and silica (red) surface. Predictions are depicted by
+squares and dotted lines. Measurements of Al added on silica47 are
+depicted by red circles and solid lines. Experimental values for Al
+added over alumina (blue circles and solid lines) inferred from
+Puurunen’s empirical model,45,46 which related the number of Al
+atoms added to surface OH coverage.
+Figure 7. CLD simulations. (A) Cumulative height growth and (B) roughness per cycle.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6718
+
+
+variables. Importantly, a stable growth rate on alumina of
+approximately 1.0 Å/cycle at 450 K was predicted, successfully
+reproducing experimental results. Furthermore, we expanded
+our approach to modeling liquid-phase thin-ﬁlm deposition,
+which is of growing importance in the sol −gel chemistry
+research. Our ability to qualitatively predict trends between
+input variables (e.g., stoichiometry) andﬁlm growth or
+roughness suggests that this model can help guide future
+experimental design.
+■ ASSOCIATED CONTENT
+*S Supporting Information
+The Supporting Information is available free of charge on the
+ACS Publications websiteat DOI: 10.1021/acs.jpcc.8b00197.
+Calculation of the bridging distance parameter between
+two hydroxyl groups and description of the potential
+functions parameters (PDF)
+■ AUTHOR INFORMATION
+Corresponding Author
+*E-mail: jeremy.luterbacher@epﬂ.ch.
+ORCID
+Chiara Saggese: 0000-0002-5481-0442
+Jeremy S. Luterbacher: 0000-0002-0967-0583
+Present Addresses
+†Chemical Engineering Department, Stanford University,
+Stanford, California-94305, USA.
+‡Mechanical Engineering Department, Stanford University,
+Stanford, California-94305, USA.
+Notes
+The authors declare no competingﬁnancial interest.
+■ ACKNOWLEDGMENTS
+We acknowledge funding from the Swiss National Science
+Foundation through grant PYAPP2_154281 and from EPFL.
+K.S.B. acknowledges the support from Dartmouth College’s
+James B. Reynolds Scholarship. Dr. C.S. acknowledges the
+support from Swiss Government Excellence Scholarship.
+■ REFERENCES
+(1) Puurunen, R. L. Surface Chemistry of Atomic Layer Deposition:
+A Case Study for the Trimethylaluminum/Water Process.J. Appl. Phys.
+2005, 97, 121301.
+(2) Pinna, N.; Knez, M.Atomic Layer Deposition of Nanostructured
+Materials; John Wiley & Sons, 2012.
+(3) George, S. M. Atomic Layer Deposition: An Overview.Chem.
+Rev. 2010, 110, 111−131.
+(4) Sherman, A. Atomic Layer Deposition for Nanotechnology: An
+Enabling Process for Nanotechnology Fabrication; Ivoryton Press, 2008.
+(5) Kääriäinen, T.; Cameron, D.; Kääriäinen, M.-L.; Sherman, A.
+Atomic Layer Deposition: Principles, Characteristics, and Nanotechnology
+Applications; John Wiley & Sons, 2013.
+(6) Hwang, C. S. Atomic Layer Deposition for Semiconductors ;
+Springer, 2014.
+(7) Lu, J.; Fu, B.; Kung, M. C.; Xiao, G.; Elam, J. W.; Kung, H. H.;
+Stair, P. C. Coking-and Sintering-Resistant Palladium Catalysts
+Achieved through Atomic Layer Deposition. Science 2012, 335,
+1205−1208.
+(8) O’Neill, B. J.; Jackson, D. H. K.; Crisci, A. J.; Farberow, C. A.; Shi,
+F.; Alba-Rubio, A. C.; Lu, J.; Dietrich, P. J.; Gu, X.; Marshall, C. L.;
+Stair, P. C.; Elam, J. W.; Miller, J. T.; Ribeiro, F. H.; Voyles, P. M.;
+Greeley, J.; Mavrikakis, M.; Scott, S. L.; Kuech, T. F.; Dumesic, J. A.
+Stabilization of Copper Catalysts for Liquid-Phase Reactions by
+Atomic Layer Deposition.Angew. Chem. 2013, 125, 14053−14057.
+(9) Lee, I.; Zhang, Q.; Ge, J.; Yin, Y.; Zaera, F. Encapsulation of
+Supported Pt Nanoparticles with Mesoporous Silica for Increased
+Catalyst Stability. Nano Res. 2011, 4, 115−123.
+(10) Bo, Z.; Eaton, T. R.; Gallagher, J. R.; Canlas, C. P.; Miller, J. T.;
+Notestein, J. M. Size-Selective Synthesis and Stabilization of Small
+Silver Nanoparticles on TiO2 Partially Masked by SiO2.Chem. Mater.
+2015, 27, 1269−1277.
+(11) Johnson, R. W.; Hultqvist, A.; Bent, S. F. A Brief Review of
+Atomic Layer Deposition: From Fundamentals to Applications.Mater.
+Today 2014, 17, 236−246.
+(12) Ritala, M.; Niinistö, J. Industrial Applications of Atomic Layer
+Deposition. ECS Trans. 2009, 25, 641−652.
+(13) Zhang, F.; Carrier, X.; Krafft, J.-M.; Yoshimura, Y.; Blanchard, J.
+Insight into the Structure and Localization of the Titania Overlayer in
+TiO2-Coated SBA-15 Materials.New J. Chem.2010, 34, 508−516.
+(14) Santacesaria, E.; Cozzolino, M.; Di Serio, M.; Venezia, A. M.;
+Tesser, R. Vanadium Based Catalysts Prepared by Grafting:
+Preparation, Properties and Performances in the ODH of Butane.
+Appl. Catal., A2004, 270, 177−192.
+( 1 5 )Y a n ,W . ;M a h u r i n ,S .M . ;O v e r b u r y ,S .H . ;D a i ,S .
+Nanoengineering Catalyst Suppo rts Via Layer-by-Layer Surface
+Functionalization. Top. Catal. 2006, 39, 199−212.
+(16) Baca, M.; de la Rochefoucauld, E.; Ambroise, E.; Krafft, J.-M.;
+Hajjar, R.; Man, P. P.; Carrier, X.; Blanchard, J. Characterization of
+Mesoporous Alumina Prepared by Surface Alumination of SBA-15.
+Microporous Mesoporous Mater. 2008, 110, 232−241.
+(17) Iengo, P.; Di Serio, M.; Sorrentino, A.; Solinas, V.; Santacesaria,
+E. Preparation and Properties of New Acid Catalysts Obtained by
+Grafting Alkoxides and Derivatives on the Most Common Supports
+Note IGrafting Aluminium and Zirconium Alkoxides and Related
+Sulphates on Silica.Appl. Catal., A1998, 167,8 5−101.
+(18) Widjaja, Y.; Musgrave, C. B. Quantum Chemical Study of the
+Mechanism of Aluminum Oxide Atomic Layer Deposition.Appl. Phys.
+Lett. 2002, 80, 3304−3306.
+Figure 8.Eﬀect of diﬀerent injection stoichiometries. (A) Cumulative height growth per cycle and (B) roughness per cycle. Blue: base case. Red: half
+amount of water injected per cycle.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6719
+
+
+(19) Dillon, A. C.; Ott, A. W.; Way, J. D.; George, S. M. Surface
+Chemistry of Al2O3 Deposition Using Al(CH3)3 and H2O in a
+Binary Reaction Sequence.Surf. Sci. 1995, 322, 230−242.
+(20) Elliott, S. D.; Greer, J. C. Simulating the Atomic Layer
+Deposition of Alumina from First Principles.J. Mater. Chem.2004, 14,
+3246−3250.
+(21) Pan, D.; Ma, L.; Xie, Y.; Jen, T. C.; Yuan, C. On the Physical and
+Chemical Details of Alumina Atomic Layer Deposition: A Combined
+Experimental and Numerical Approach.J. Vac. Sci. Technol., A2015,
+33, 021511.
+(22) King, P. J.; Werner, M.; Chalker, P. R.; Jones, A. C.; Aspinall, H.
+C.; Basca, J.; Wrench, J. S.; Black, K.; Davies, H. O.; Heys, P. N. Effect
+of Deposition Temperature on the Properties of CeO2 Films Grown
+by Atomic Layer Deposition.Thin Solid Films2011, 519, 4192−4195.
+(23) Rai, V. R.; Vandalon, V.; Agarwal, S. Influence of Surface
+Temperature on the Mechanism of Atomic Layer Deposition of
+Aluminum Oxide Using an Oxygen Plasma and Ozone.Langmuir
+2011, 28, 350−357.
+(24) Wind, R. A.; George, S. M. Quartz Crystal Microbalance Studies
+of Al2O3 Atomic Layer Deposition Using Trimethylaluminum and
+Water at 125°C. J. Phys. Chem. A2010, 114, 1281−1289.
+(25) Krajewski, T.; Guziewicz, E.; Godlewski, M.; Wachnicki, L.;
+Kowalik, I. A.; Wojcik-Glodowska, A.; Lukasiewicz, M.; Kopalko, K.;
+Osinniy, V.; Guziewicz, M. The Influence of Growth Temperature and
+Precursors’ Doses on Electrical Parameters of Zno Thin Films Grown
+by Atomic Layer Deposition Technique. Microelectron. J. 2009, 40,
+293−295.
+(26) Elliott, S. D.; Dey, G.; Maimaiti, Y.; Ablat, H.; Filatova, E. A.;
+Fomengia, G. N. Modeling Mechanism and Growth Reactions for
+New Nanofabrication Processes by Atomic Layer Deposition. Adv.
+Mater. 2015, 28, 5367−5380.
+(27) Afshar, A.; Cadien, K. C. Growth Mechanism of Atomic Layer
+Deposition of Zinc Oxide: A Density Functional Theory Approach.
+Appl. Phys. Lett.2013, 103, 251906.
+(28) Shirazi, M.; Elliott, S. D. Atomistic Kinetic Monte Carlo Study
+of Atomic Layer Deposition Derived from Density Functional Theory.
+J. Comput. Chem.2014, 35, 244−259.
+(29) Hu, Z.; Shi, J.; Turner, C. H. Molecular Dynamics Simulation of
+the Al2O3 Film Structure During Atomic Layer Deposition. Mol.
+Simul. 2009, 35, 270−279.
+(30) Héroguel, F.; Le Monnier, B. P.; Brown, K. S.; Siu, J. C.;
+Luterbacher, J. S. Catalyst Stabilization by Stoichiometrically Limited
+Layer-by-Layer Overcoating in Liquid Media. Appl. Catal., B 2017,
+218, 643−649.
+(31) Weckman, T.; Laasonen, K. First Principles Study of the Atomic
+Layer Deposition of Alumina by TMA−H2O-Process. Phys. Chem.
+Chem. Phys. 2015, 17, 17322−17334.
+(32) Sandupatla, A. S.; Alexopoulos, K.; Reyniers, M.-F.; Marin, G. B.
+Ab Initio Investigation of Surface Chemistry of Alumina ALD on
+Hydroxylated Γ-Alumina Surface.J. Phys. Chem. C2015, 119, 13050−
+13061.
+(33) Shirazi, M.; Elliott, S. D. Cooperation between Adsorbates
+Accounts for the Activation of Atomic Layer Deposition Reactions.
+Nanoscale 2015, 7, 6311−6318.
+(34) Travis, C. D.; Adomaitis, R. A. Modeling Alumina Atomic Layer
+Deposition Reaction Kinetics D uring the Trimethylaluminum
+Exposure. Theor. Chem. Acc.2014, 133, 1414.
+(35) Rahtu, A.; Alaranta, T.; Ritala, M. In Situ Quartz Crystal
+Microbalance and Quadrupole Mass Spectrometry Studies of Atomic
+Layer Deposition of Aluminum Oxide from Trimethylaluminum and
+Water. Langmuir 2001, 17, 6506−6509.
+(36) Matsui, M. A Transferable Interatomic Potential Model for
+Crystals and Melts in the System CaO-MgO-Al2O3-SiO2. Mineral.
+Mag. 1994, 58A, 571−572.
+(37) Adiga, S. P.; Zapol, P.; Curtiss, L. A. Structure and Morphology
+of Hydroxylated Amorphous Alumina Surfaces.J. Phys. Chem. C2007,
+111, 7422−7429.
+(38) Plimpton, S. Fast Parallel Algorithms for Short-Range Molecular
+Dynamics. J. Comput. Phys.1995, 117,1 −19.
+(39) Stukowski, A. Visualization and Analysis of Atomistic Simulation
+Data with Ovito−the Open Visualization Tool.Modell. Simul. Mater.
+Sci. Eng. 2009, 18, 015012.
+(40) Sandupatla, A. S.; Alexopoulos, K.; Reyniers, M.-F.; Marin, G. B.
+Dft Investigation into Alumina Ald Growth Inhibition on Hydroxy-
+lated Amorphous Silica Surface.J. Phys. Chem. C2015, 119, 18380−
+18388.
+(41) Jorgensen, W. L.; Maxwell, D. S.; Tirado-Rives, J. Development
+and Testing of the Opls All-Atom Force Field on Conformational
+Energetics and Properties of Organic Liquids.J. Am. Chem. Soc.1996,
+118, 11225−11236.
+(42) Johnston, K.; Herbers, C. R.; van der Vegt, N. F. A.
+Development of Classical Molecule −Surface Interaction Potentials
+Based on Density Functional Theory Calculations: Investigation of
+Force Field Representability. J. Phys. Chem. C 2012, 116, 19781−
+19788.
+(43) Puurunen, R. L. Growth Per Cycle in Atomic Layer Deposition:
+Real Application Examples of a Theoretical Model. Chem. Vap.
+Deposition 2003, 9, 327−332.
+(44) Zhuravlev, L. T. The Surface Chemistry of Amorphous Silica.
+Zhuravlev Model. Colloids Surf., A2000, 173,1 −38.
+(45) Puurunen, R. L.; Lindblad, M.; Root, A.; Krause, A. O. I.
+Successive Reactions of Gaseous Trimethylaluminium and Ammonia
+on Porous Alumina.Phys. Chem. Chem. Phys.2001, 3, 1093−1102.
+(46) Puurunen, R. L. Correlation between the Growth-Per-Cycle and
+the Surface Hydroxyl Group Concentration in the Atomic Layer
+Deposition of Aluminum Oxide from Trimethylaluminum and Water.
+Appl. Surf. Sci.2005, 245,6 −10.
+(47) Delabie, A.; Sioncke, S.; Rip, J.; Van Elshocht, S.; Pourtois, G.;
+Mueller, M.; Beckhoff, B.; Pierloot, K. Reaction Mechanisms for
+Atomic Layer Deposition of Aluminum Oxide on Semiconductor
+Substrates. J. Vac. Sci. Technol., A2012, 30, 01A127.
+(48) Guerra-Nuñez, C.; Döebeli, M.; Michler, J.; Utke, I. Reaction
+and Growth Mechanisms in Al2O3 Deposited Via Atomic Layer
+Deposition: Elucidating the Hydrogen Source.Chem. Mater.2017, 29,
+8690−8703.
+The Journal of Physical Chemistry C Article
+DOI: 10.1021/acs.jpcc.8b00197
+J. Phys. Chem. C2018, 122, 6713−6720
+6720

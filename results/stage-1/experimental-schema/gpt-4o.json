@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "type": "object",
+  "properties": {
+    "reactants": {
+      "type": "object",
+      "properties": {
+        "precursor": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The chemical name of the precursor."
+            },
+            "deliveryMethod": {
+              "type": "string",
+              "enum": ["vaporDrawn", "carrierGasAssisted", "bubbling"],
+              "description": "The method of precursor delivery to the chamber."
+            },
+            "reactivity": {
+              "type": "string",
+              "description": "Reactivity description of the precursor with surface groups."
+            }
+          },
+          "required": ["name", "deliveryMethod"]
+        },
+        "coReactant": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The chemical name of the co-reactant."
+            },
+            "reactivity": {
+              "type": "string",
+              "description": "Reactivity description of the co-reactant with surface groups."
+            }
+          },
+          "required": ["name"]
+        }
+      },
+      "required": ["precursor", "coReactant"]
+    },
+    "processConditions": {
+      "type": "object",
+      "properties": {
+        "temperatureRange": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Temperature range for the deposition process in Celsius.",
+          "default": [50, 350]
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure in the reactor during the ALD process in Pascals."
+        },
+        "cycleDetails": {
+          "type": "object",
+          "properties": {
+            "numberOfCycles": {
+              "type": "integer",
+              "description": "Total number of ALD cycles to achieve the desired film thickness."
+            },
+            "growthPerCycle": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "number",
+                  "description": "Growth per cycle in nanometers or atoms per unit area."
+                },
+                "unit": {
+                  "type": "string",
+                  "enum": ["nm", "atoms/unit area"],
+                  "description": "Unit of measurement for growth per cycle."
+                }
+              },
+              "required": ["value", "unit"]
+            }
+          },
+          "required": ["numberOfCycles", "growthPerCycle"]
+        }
+      },
+      "required": ["temperatureRange", "pressure", "cycleDetails"]
+    },
+    "filmProperties": {
+      "type": "object",
+      "properties": {
+        "composition": {
+          "type": "string",
+          "description": "Chemical composition of the deposited film."
+        },
+        "thickness": {
+          "type": "number",
+          "description": "Final thickness of the film in nanometers."
+        },
+        "uniformity": {
+          "type": "boolean",
+          "description": "Indicates whether the film is uniform across the substrate."
+        },
+        "conformality": {
+          "type": "boolean",
+          "description": "Indicates whether the film conforms to 3D structures."
+        },
+        "opticalProperties": {
+          "type": "object",
+          "properties": {
+            "refractiveIndex": {
+              "type": "number",
+              "description": "Refractive index of the film."
+            },
+            "absorptionCoefficient": {
+              "type": "number",
+              "description": "Absorption coefficient of the film."
+            }
+          }
+        },
+        "electricalProperties": {
+          "type": "object",
+          "properties": {
+            "resistivity": {
+              "type": "number",
+              "description": "Electrical resistivity of the film in ohm-meter."
+            },
+            "carrierDensity": {
+              "type": "number",
+              "description": "Carrier density in the film."
+            },
+            "mobility": {
+              "type": "number",
+              "description": "Carrier mobility in the film."
+            }
+          }
+        }
+      },
+      "required": ["composition", "thickness", "uniformity", "conformality"]
+    },
+    "safetyAndStability": {
+      "type": "object",
+      "properties": {
+        "chemicalSafety": {
+          "type": "string",
+          "description": "Safety considerations for the chemicals used."
+        },
+        "filmStability": {
+          "type": "string",
+          "description": "Stability of the film under various conditions."
+        },
+        "reproducibility": {
+          "type": "boolean",
+          "description": "Indicates whether the ALD process is reproducible."
+        }
+      },
+      "required": ["chemicalSafety", "filmStability", "reproducibility"]
+    }
+  },
+  "required": ["reactants", "processConditions", "filmProperties", "safetyAndStability"]
+}

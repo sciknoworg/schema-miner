@@ -1,0 +1,406 @@
+Introducing densiﬁcation mechanisms into the modelling of HfO2 atomic
+layer deposition
+C. Mastaila,b,c,⁎, C. Lanthonya,b, S. Oliviera,b, J.-M. Ducéréa,b, G. Landaa,b, A. Estèvea,b,
+M. Djafari Rouhania,b, N. Richardc, A. Dkhissia,b,d
+a CNRS, LAAS, 7 avenue du Colonel Roche, F-31077 Toulouse, France
+b Université de Toulouse, UPS, INSA, INP, ISAE, LAAS; F-31077 Toulouse, France
+c CEA, DAM, DIF, F-91680 Arpajon, France
+d LCT, Gent University Faculty of Engineering, Krijgslaan 281 S5-9000 Gent, Belgium
+abstractarticle info
+Available online 29 October 2011
+Keywords:
+Kinetic Monte Carlo simulation
+DFT
+Densiﬁcation
+High-k
+HfO2
+ALD
+Multi-scale simulation
+Process simulation
+Density functional theory calculations are used to highlight some basics of the densiﬁcation mechanisms arising
+during atomic layer deposition of HfO2 onto silicon dioxide. The obtained results are discussed at the light of a
+multi-model approach that enables process simulation at the atomic scale via Kinetic Monte Carlo simulations.
+The impact of the proposed densiﬁcation mechanisms on the growth is demonstrated. We show that a complete
+coverage is possible thanks to these mechanisms at a slow rate after that all surface reactive sites (OH sites) have
+been consumed by precursor molecules.
+© 2011 Elsevier B.V. All rights reserved.
+1. Introduction
+Nowadays, chemical vapor deposition processes are well-established
+techniques in which Atomic Layer Deposition (ALD) is found to be
+suitable for the slow and controlled growth of ultrathin, conformal
+ﬁlms for the microelectronics industry [1,2]. Leaving the detailed
+processing conditions aside, a general but fundamental question that
+arises during growth is the necessary phase transition of the interesting
+materials from their molecular structure in the gas phase to their solid
+state structure in the depositedﬁlm. This is particularly true for metallic
+compounds such as metallic oxides. Indeed, in these cases, the metal
+has a covalent bonding structure, with a small coordination number
+when considered as a precursor in the gas phase, while at in its end
+deposited ionic structure, it exhibits a large coordination number.
+The origin of theseﬁndings, which has been referred to as densiﬁcation
+in the study by Dkhissi et al.[3] lies in the above structural phase
+transition. The case of HfO2 layers, intended to be used in theﬁrst
+generation of high-k-based gate oxides in the future generation of
+MOS (Metal Oxide Semiconductor) transistors, constitutes a relevant
+example. It is worth noting that while an abundant literature is dedicated
+to precursor/surface physico-chemistry, particularly in the frame of
+ALD deposition techniques [4–12], the detailed understanding of
+the densiﬁcation mechanisms remains elusive and poorly treated
+[13]. The present paper aims at giving insight into the densiﬁcation
+processes based on gas phase DFT calculations. The ALD process
+consists in trying to atomically control the growth by separating each
+of its steps. Theﬁlm growth proceeds through self-terminating reactions
+on surfaces. The ALD process can be separated into two half-reactions;
+the ﬁrst half-cycle reaction concerns the precursor gas exposure and
+the second half cycle is the oxidant precursor exposure. In the case of
+the ALD of HfO2, the precursor molecules considered in the present
+study are HfCl4 and water molecules respectively for the metallic
+and oxidant precursors. As compared to CVD, this technique prevents
+from gas phase reaction/densiﬁcation since there is no contact between
+water and precursor molecules. So the densiﬁcation is expected only in
+the speciﬁc context of each ALD cycle. Each exposure phase is separated
+by a purge phase using an inert gas to remove the remaining unreacted
+precursor molecules and unwanted reaction products. Actually, it has
+been experimentally observed that under usual ALD growth conditions,
+approximately ten cycles are needed to obtain the complete coverage of
+the initial substrate, suggesting a partial monolayer growth per cycle.
+Moreover, the density and the coordination number of the deposited
+o x i d en e a rt h es u b s t r a t es u r f a c ea r em u c hl o w e rt h a nt h o s ei nt h eb u l k
+oxide, but increase with increasing theﬁlm thickness. In more general
+terms, growth of such an oxide on silicon is still not well understood
+for two main reasons: ALD growth is associated with complex physico-
+chemical mechanisms and it is strongly dependent on the deposition
+procedure, temperature conditions or preparation conditions of the
+substrate. In principle, a multiscale modelling strategy can provide
+Thin Solid Films 520 (2012) 4559–4563
+⁎ Corresponding author at: CNRS, LAAS, 7 avenue du Colonel Roche, F-31077 Toulouse,
+France. Tel.: +33 5 61 33 62 47.
+E-mail address:cmastail@laas.fr (C. Mastail).
+0040-6090/$ – see front matter © 2011 Elsevier B.V. All rights reserved.
+doi:10.1016/j.tsf.2011.10.125
+Contents lists available atSciVerse ScienceDirect
+Thin Solid Films
+journal homepage: www.elsevier.com/locate/tsf
+
+the necessary link for answering questions associating local physico-
+chemical investigations and the deposition process. In this spirit, we
+have recently developed an approach combining DFT calculations
+for depicting local physico-chemical mechanisms, with a kinetic
+Monte-Carlo algorithm to simulate at the mesoscale the ALD experi-
+mental process of the growth of HfO2 on silicon. To date, DFT inves-
+tigations have been limited to simple precursor decomposition onto
+surfaces without any speciﬁc consideration of densiﬁcation mechanisms.
+An empirical attempt to introduce such mechanisms have been pro-
+posed leading to some bottlenecks[14], notably in predicting the
+coordination increase during growth and the coverage versus ALD
+deposition cycles (resulting in a saturation of the coverage limited
+to 73% and the crystallinity limited to 62% after 10 ALD cycles). In
+the following, we perform gas phase DFT calculations to open a pre-
+liminary window into densiﬁcation mechanisms. From these results,
+densiﬁcation mechanisms are implemented, discussed at the KMC
+level and their impact is evaluated on the coverage versus ALD cycles
+results. We demonstrate that densiﬁcation mechanisms allow to
+predict basic experimental observations.
+2. Computational details
+All the calculations are performed using the Gaussian03 package
+[15] within the frame of the density functional theory, using the gradient
+corrected PBE functional[16]. Oxygen, hydrogen and silicon are de-
+scribed with the triple zeta augmented with a polarization function,
+respectively d and p, TZVP basis set[17].H a f n i u m[ K r ] ,4 d 1 0 , 4 f 1 4
+core is replaced with a pseudo-potential[18] and valence electrons
+were described with a (8s, 7p, 6d)/[6s, 5p, 3d] basis set[19].A l lt h e
+stationary points are checked to be real minima thanks to the deter-
+mination of the vibration frequencies; this allows us to correct the
+binding energies of the zero point vibrational energy. Finally, the Basis
+Set Superposition Error (BSSE) is corrected by the Boys and Bernardi
+counterpoise scheme [20]. All Kinetic Monte Carlo calculations are
+performed with the HIKAD code developed in our team[3,21].B a s i c
+KMC simulations here presented are performed on 20×20 atoms for
+the substrate modelling with periodic boundary conditions in order to
+mimic an inﬁnite substrate.
+3. Results and discussion
+3.1. DFT investigation
+In order to get further insights into the densiﬁcation mechanisms,
+we propose a preliminary approach in which surface densiﬁcation
+mechanisms are extrapolated from gas phase reactions. The idea is
+to extract the local chemical part of these mechanisms from their
+intrinsic collective behavior. Such an approximation has already
+been proposed and validated for more conventional mechanisms
+of the ALD. Hydroxylated metal M(OH)x has been used to study the
+chemical reactions within deposition of metal oxide and the energetic
+oscillations induced by the size effect. For the deposition of Al(CH3)3
+on Al(OH) site, an oscillation of around ~0.1 eV with the cluster size
+has been observed by Widjaja[23] and Heyman [24].I na d d i t i o n ,
+many studies for the deposition of molecules on silicon oxide have
+examined the size effect of the cluster and showed that oscillations
+are negligible[25–28].
+In this frame, M(OH)3–OH cluster is seen as a surface model after
+hydrolysis. Two reacting species are considered on this model surface:
+HfCl4 and Hf(OH)4. These two systems allow us to address densiﬁcation
+in each ALD cycle, respectively during precursor and oxidant exposures.
+The energy diagrams along the reaction path are presented inFig. 1.
+Nevertheless, once validated through the complete multi-scale meth-
+odology, a more precise view of these mechanisms will be reassessed
+using more advanced DFT calculations. In this spirit, we have studied
+for a future publication, the adsorption mechanism of HfCl4 on HfOH
+substrate by using a bigger cluster (Si9O6H12Hf(OH)2). These initial cal-
+culations conﬁrm an oscillation for the adsorption energy of 0.1 eV (cal-
+culations not shown). We can then, consider M(OH)3–OH acceptable in
+a ﬁrst approximation.
+First of all, we consider a typical precursor surface interaction
+through HfCl4/Hf(OH)4 as pictured inFig. 1a. The initial deposition
+step is endothermic and leads to the formation of a strand or tree like
+complex on the surface (see black curve) as already known from the lit-
+erature. Then, densifying this complex can be operated in two different
+ways. The red curve indicates an exothermic path in which a Cl atom is
+exchanged between the precursor molecule and the model surface. This
+almost barrierless exothermic path can be seen as a source for Chlorine
+contamination of the substrate. However, the endothermic path indi-
+cated in blue where a hydroxyl group of the surface can be bonded to
+the precursor leading to a double bridging oxygen of the deposited
+Hafnium atom. This process is characterized by two activation barriers
+(0.24 and 0.99 eV) to arrive at the de-hydrogenation of the bridging
+oxygen.
+Along the same line, we now investigate the interaction of Hf(OH)4
+(Fig. 1b). Our calculation that demonstrates a barrierless pathways is
+responsible for a spontaneous dimerization (b0.05 eV activation)
+giving rise to two bridging oxygen atoms having both one hydrogen
+atom. This process is exothermic (−1.07 eV), similarly to the case of
+the dimerisation reaction of HfCl4 and Hf(OH)4 (−1.01 eV). In these
+two dimerization cases, we observe 2 ligands bridging the 2Hf atoms
+leading to pentacoordinated metal centers. This can be viewed as a
+ﬁrst step toward the cubic HfO2 crystalline structure since the same
+symmetries can be found in crystalline oxide as previously deﬁned
+as a densiﬁcation process [22]. This observation is of technological
+Fig. 1.Precursor dimerization, including H transfer from OH bridges. Black curve is 1st
+H transfer, blue curve is 2nd H transfer with HCl physisorbed and red curve is 2nd H
+transfer without HCl physisorbed. Hf is yellow balls, Chlorine green balls, oxygen red
+balls and hydrogen white balls.
+4560 C. Mastail et al. / Thin Solid Films 520 (2012) 4559–4563
+
+importance as it demonstrates that a proper ALD process can severely
+be altered by CVD like reactions in case of a hydroxylated precursors
+(emanating from gas traces of impure precursors, or through exchange
+processes of pure precursors in contact to the surface); the deposition of
+clusters will then compete with precursor deposition.
+A second step to go towards a more crystal-like structure and to
+complete densiﬁcation is to take out H from the bridges of the dimers.
+Fig. 1shows its chemical pathway andTable 1resumes energy gain
+and barriers. For both dimerization reactions, theﬁrst H transfer is
+followed by two mechanisms in competition. Theﬁrst is desorption
+of the hydrogenate molecule formed. The second is the direct 2nd
+deprotonation whereas the hydrogenate molecule formed is still
+physisorbed. We see that deprotonation reactions are endothermic,
+subject to backreactions, in the limit of the hydrogenated product
+desorption. But the overall energy of this two molecule formation
+is in the same order as intermolecular reactions. Therefore, at the
+processing temperature, H migrations will occur and appear to move
+freely at the cluster surfaces, jumping from O bridging sites, to OH
+groups, and vice versa.
+3.2. KMC investigation
+In order to investigate the ALD process, two densiﬁcation reactions
+suggested by the previous DFT study have been implemented into the
+KMC simulation in addition to the mechanisms resulting from the sim-
+ple decomposition of the precursors on the surface. A third densiﬁcation
+mechanism is also considered that is extrapolated from the literature.
+These densiﬁcation mechanisms are shown to impact drastically the
+growth evolution.
+The ﬁrst densiﬁcation mechanism considered in our KMC study
+occurs when one strand Hf(OH)3 makes a 2nd oxygen bridge with a
+neighboring Si-OH leading to a Hf in a crystalline position doubly
+bonded to the substrate with two oxygen atoms. These two oxygen
+atoms and the two ligands form a tetrahedral structure. This reaction
+is called nucleation and expressed in Eq.(1).
+jjSi\O\HfL3 þj jSi\O\H→Si\O\HfL2\O\Si þ H2O: ð1Þ
+Even if this mechanism is predicted by Willis et al.[8] a complete
+ab initio investigation of this mechanism, including activation energy
+determination, is still lacking. For the closely related ZrCl 4(g)
+chemistry on a SiO2 substrate, the activation energies of the nucle-
+ation mechanism for Zr calculated by Han[9] will be taken asﬁrst
+approximation for Hf nucleation mechanism. From the above DFT
+investigation, we deﬁne a second densiﬁcation mechanism which
+we named “inter-site” reaction. It expresses the possibility of having
+two dissociated precursor molecules on two SiOH neighboring sites
+dimerized. For this reaction, we consider one of the four hydroxyl func-
+tions as a sufﬁcient approximation of the substrate. We then obtain two
+vicinal strands Hf(OH)3 linked to the substrate via one oxygen atom.
+The activation barrier considered to drive the kinetics of this reac-
+tion is the addition of the two activations calculated at the DFT
+level (seeFig. 1ba n dTable 1, ﬁrst and second H transfer, respectively
+0 . 6 2a n d0 . 3 8e V :1e V ) .T h er e s u l t i n gd e n s iﬁcation is expressed here
+Eq. (2).
+2jjSiO2\O\HfL2OH→jjSiO2\O\HfL\O2\HfL\O\O2Sijj þ2HL:
+ð2Þ
+The third densiﬁcation reaction, called“on site” reaction, comes if
+we consider one Hf(OH)3 as aﬁrst Hf deposited layer and the second
+as an on top dissociated precursor (i.e. in the second layer). The silicon
+substrate is in this case reduced to two hydroxyl functions.
+jjSiO2\O\HfOHL\O\HfL3→jjSiO2\O\HfL\O2\HfL2 þ 2HL ð3Þ
+where L represents Cl or OH terminal ligands. The relative activation of
+this process corresponds to the addition of the two activations calculated
+at the DFT level, 0.24+0.99 eV=1.23 eV (seeFig. 1aa n dTable 1). The
+KMC conﬁguration of these three densiﬁcation reactions is shown in
+Fig. 2.
+Concerning the Kinetic Monte Carlo, the basic ingredients needed
+to develop a lattice-based KMC model are as follows: (i) weﬁrst deﬁne a
+lattice framework able to operate the desired transition between the
+silicon crystal and the oxide structure, (ii) we then characterize each
+conﬁguration by associating to each lattice site, the chemical nature
+of the species occupying this site, (iii) we introduce the concept of
+events that must describe correctly the chemistry of the basic mech-
+anisms (seeTable 2), (iv) weﬁnally indicate how to deal with the time
+Table 1
+Energy difference and activation barrier ofﬁrst and second H transfers from a bridge
+forming HCl and H2O ligand.
+ΔE (eV) Barrier (eV)
+Hf(OH)4 Hf Cl4 dimerization −1.01 /
+1st H transfer +0.70 +0.78
+2nd Chlorine transfer with HCl−1.22 +0.06
+2nd H transfer without HCl +0.21/+0.99 +0.24/+0.99
+2 Hf(OH)4 dimerization −1.07 /
+1st H transfer +0.31 +0.62
+2nd H transfer with H2O +0.32 +0.38
+2nd H transfer without H2O +0.48 +0.53
+a)
+c)
+b)
+Fig. 2.The KMC conﬁguration of the three densiﬁcation reactions implemented in the KMC simulator. a) Nucleation, b) inter-site, and c) on-site mechanisms.
+4561C. Mastail et al. / Thin Solid Films 520 (2012) 4559–4563
+
+evolution, namely, the temporal dynamics of the KMC. By implementing
+all previous gas surface mechanisms obtained in our DFT calculations,
+l i t e r a t u r ea n dt h e s et w od e n s iﬁcation reactions, we performedﬁlm
+growth simulations on (20 ×20) atoms substrates. All KMC details, gas
+surface mechanisms, and hydrolysis mechanisms, are published in our
+papers [3]. The list of all the implemented mechanisms is summarized
+in the following table. We simulate the growth during 10 ALD cycles,
+under standard conditions: at 300 °C and 1.33 mbar pressure for the
+two precursors. The small size of the substrate does not constitute a lim-
+itation in these simulations, where atomic migrations in the growing
+layer are not taken into account. The injection phases last 50 ms. for
+metal precursor molecules, and 100 ms for water, as in experiments,
+and are each followed by 3.5 s of purge.
+Fig. 3represents the coverage of the substrate surface during the
+ﬁrst ten deposition cycles. Results of simulations with and without
+densiﬁcation mechanisms are compared with experimental observa-
+tions take in same conditions.Fig. 1c l e a r l ys h o w st h er o l eo fd e n s iﬁca-
+tion during the growth of HfO2. It is the only condition that allows an
+agreement with experiments. The importance of this result is related to
+the experimental observation that ten ALD cycles are necessary in
+order to reach the full coverage of the silicon substrate (LEIS measure-
+ments). After theﬁrst ten ALD cycles, growth proceeds via homoepitaxial
+HfO2/HfO2 deposition only.
+Besides, several modes of growth are successively observed ex-
+perimentally. After aﬁrst cycle, consuming a great number of metal
+precursors, a slow transient state is established to complete the cov-
+erage of the substrate. Theﬁrst cycle behavior is well reproduced
+with our simulations, whether densiﬁcation mechanisms are taken
+into account or not. Indeed, after theﬁrst cycle, without and with
+densiﬁcation, our simulations predict the same coverage because in
+the end of this cycle the growth is essentially governed by precursor
+adsorption and decomposition reactions as resumed inTable 2.A t
+the end of thisﬁrst cycle, only 35% of the substrate is covered by HfO2.
+According to our simulations, the deposited layer mainly consists in a
+grid of nuclei consuming all the initial reactive SiOH groups. Theﬁrst
+cycle coverage is then directly related to the hydroxyl function of
+the silicon surface and then the substrate preparation method.
+After thisﬁrst cycle, the growth continues on top of theﬁrst deposited
+layer, ﬁlling up the successive layers. But this mode of growth does not
+contribute to the coverage of the initial substrate due to the lack of reac-
+tive sites on the silicon substrate. The coverage will though continue to
+increase slowly thanks to theﬁrst deposited layer as a result of on-site
+densiﬁcations. The experimental observation of a slowing down of the
+coverage rate is explained, by our simulations, as a transition from the
+nucleation to the densiﬁcation mechanism. The inter-site densiﬁcation
+mechanisms, little by little, authorize bridging of the non reactive
+surface zones. This is clearly seen inFig. 3where the simulation taking
+densiﬁcation mechanisms into account follows perfectly the experi-
+mental results. On the other hand, the coverage remains constant in
+simulations which do not take densiﬁcation mechanisms into account
+and where tree lie structures are observed.
+4. Conclusion
+We present a multi-scale study making it possible to simulate the
+ALD of Hafnia onto SiO2 substrates. An attempt to calculate densiﬁcation
+mechanisms is established and preliminary gas phase calculations allow
+determining densiﬁcation activation barriers. The introduction of these
+densiﬁcation mechanisms and associated calculated barriers is shown
+to reproduce well experimental results on the coverage versus ALD de-
+position cycles. Theﬁrst two regimes of growth are observed: the initial
+regime at theﬁrst cycle, driven by the reactions of precursor adsorption
+and further decomposition on the silicon substrate and the transitional
+regime, which thanks to the action of densiﬁcation mechanisms leads to
+full coverage of the substrate once all adhesion sites of the silicon sur-
+face are consumed.
+Acknowledgments
+We thank A.N.R.-05-CIGC-0003-02 LN3M for the funding and
+Groupement Scientiﬁq u eC A L M I Pa n dI D R I Sf o rt h ec o m p u t a t i o n a l
+resources. We thank the Conseil Regional de Martinique for their
+help.
+References
+[1] M. Leskela, M. Ritala, Thin Solid Films 409 (2002) 138.
+[2] G.D. Wilk, R.M. Wallace, J.M. Anthony, J. Appl. Phys. 89 (2001) 5243.
+[3] A. Dkhissi, A. Esteve, C. Mastail, S. Olivier, G. Mazaleyrat, L. Jeloaica, M. Djafari
+Rouhani, J. Chem. Theory Comput. 4 (2008) 1915.
+[4] Y. Widjaja, C.B. Musgrave, J. Chem. Phys. 117 (2002) 1931.
+[5] J. Aarik, A. Aidla, V. Sammelselg, H. Siimon, T. Uustare, J. Cryst. Growth 169 (1996)
+496.
+[6] R.L. Puurunen, Chem. Vap. Deposition 11 (2005) 79.
+[7] A.B. Mukhopadhyay, C.B. Musgrave, Chem. Phys. Lett. 421 (2006) 215.
+[8] B.G. Willis, A. Mathew, L.S. Wielunski, R.L. Opila, J. Phys. Chem. C 112 (2008)
+1994.
+[9] J.H. Han, G. Gao, Y. Widjaja, E. Garfunkel, C.B. Musgrave, Surf. Sci. 550 (2004)
+199.
+[10] L. Jeloaica, A. Estève, M. Djafari Rouhani, D. Estève, Appl. Phys. Lett. 83 (2003)
+542.
+[11] A. Estève, M. Djafari Rouhani, L. Jeloaica, D. Estève, E-MRS 2002 Spring Meeting,
+Strasbourg, France, Jun 18 21, Comp Mat Sci., 27, 2003, p. 75.
+[12] G. Mazaleyrat, A. Estève, L. Jeloaica, M. Djafari Rouhani, Comput. Mater. Sci. 33
+(2005) 74.
+[13] A. Estève, L. Jeloaica, G. Mazaleyrat, A. Dkhissi, M. Djafari Rouhani, A. Ali Messaoud, N.
+Fazouan, in: C.R. Albernathy, E.P. Gusev, D. Schlom, S. Stemmer (Eds.), December 01
+04, 2003 Boston MA USA, Fundamentals of Novel Oxide/Semiconductor Interfaces
+Proceedings 786, 2004, p. 35.
+[14] A. Dkhissi, G. Mazaleyrat, A. Estève, M. Djafari Rouhani, Phys. Chem. Chem. Phys.
+11 (2009) 3701.
+[15] Gaussian 03, Revision B.05, Gaussian, Inc, Pittsburgh PA, 2003.
+Table 2
+list of mechanisms implemented in the KMC software HIKAD. The new mechanisms
+implemented are in bold and those already implemented in theﬁrst version of the soft-
+ware are in italics. * indicates activation energy extrapolated from Zr calculations.
+Elementary mechanisms Activation energy
+On SiOH On HfOH
+HfCl4 chemisorption: 1st H transfer 0.88 eV 0.78 eV
+Chemisorption back reaction of HCl in HfCl3 0.62 eV 0.08 eV
+HfCl4 desorption 0.48 eV 1e V
+HCl desorption 0.12 eV 0.05 eV
+Cl ligand hydrolysis 0.916 eV
+H2O desorption 0.619 eV
+*Nucleation 0.7 eV
+Inter-site densiﬁcation mechanism 1e V
+On-site densiﬁcation mechanism 1.2 eV
+Fig. 3.Coverage of the substrate surface during theﬁrst 10 ALD cycles. Simulations with
+and without densiﬁcation mechanisms are compared to experimental results. The
+starting surface used was a chemical SiO2 oxide surface prepared with DDC3 method
+of SMS machine (representing an experimental OH surface density of 50%). The ALD
+reactor used was Pulsar™ 2000.
+4562 C. Mastail et al. / Thin Solid Films 520 (2012) 4559–4563
+
+[16] J.P. Perdew, K. Burke, M. Ernzerhof, Phys. Rev. Lett. 77 (1996) 3865.
+[17] A. Schäfer, C. Huber, R. Ahlrichs, J. Chem. Phys. 100 (1994) 5829.
+[18] D. Andrae, U. Haeussermann, M. Dolg, H. Stoll, H. Preuss, Theor. Chim. Acta 77
+(1990) 123.
+[19] F. Weigend, R. Ahlrichs, Phys. Chem. Chem. Phys. 7 (2005) 3297.
+[20] S.F. Boys, F. Bernardi, Mol. Phys. 19 (1970) 553.
+[21] L. Jeloaica, A. Estève, A. Dkhissi, D. Estève, M. Djafari Rouhani, Comput. Mater. Sci.
+33 (2005) 59.
+[22] S. Olivier, J.M. Ducéré, C. Mastail, G. Landa, A. Estève, M. Djafari Rouhani, Chem.
+Mat. 20 (2008) 1555.
+[23] Y. Widjaja, C.B. Musgrave, Appl. Phys. Lett. 80 (2002) 18.
+[24] A. Heyman, C.B. Musgrave, J. Phys. Chem. B 108 (2004) 18.
+[25] A.B. Mukhopadhyay, C.B. Musgrave, Chem. Phys. Lett. 421 (2006) 215.
+[26] Z. Hu, C. Heath Turner, J. Phys. Chem. B 110 (2006) 16.
+[27] J.H. Han, G. Gao, Y. Widjaja, E. Garfunkel, C.B. Musgrave, Surf Sci. 550 (2004)
+199.
+[28] A. Dkhissi, A. Esteve, L. Jeloaica, M. Djafari Rouhani, G. Landa, Chem. Phys. 323
+(2006) 179.
+4563C. Mastail et al. / Thin Solid Films 520 (2012) 4559–4563

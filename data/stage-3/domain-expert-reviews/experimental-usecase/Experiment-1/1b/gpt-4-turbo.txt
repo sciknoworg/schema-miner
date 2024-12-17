@@ -1,0 +1,23 @@
+Property Grouping:
+1. Dosing and Purging time properties: should be for both the precursor and the co-reactant, therefore corresponding to two entries per property.
+2. Remove the temperaturerange from the thicknesscontrol. This is more of a processparameter.
+3. Place the crystallinity and film density properties from the processconditions box to the materialproperties box
+
+Missing Properties:
+1. Name and manufacturer of the reactor in the reactor property.
+
+Adequacy of Descriptions:
+1. Description of the schema: "..verifying an ALD process", it's not "verifying" more of: characterizing an ALD process and deposited film
+2. Description of DeliveryMethod: it should also mention the co-reactant apart from the precursor delivery.
+3. Description of the materialproperties box: remove the "…including uniformity and conformality."
+4. Description of the refractive index: remove the "…typically between 2.08 and 2.10." the range is different, do not specify any value.
+5. Description of the resistivity: remove the "e.g., 12 \u00b5\u03a9-cm for a 110-nm thick platinum film."
+6. Rename ProcessConditions to ProcessParameters
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDSystem(ALDMethod,MaterialDeposited)
+-> ReactantSelection (Precursor, Co-reactant, CarrierGas)
+-> ProcessParameters (Reactor, DeliveryMethod, Temperature, PressureThicknessControl(GPC, DosingTime(Precursor,Co-reactant),PurgeTime(Precursor,Co-reactant)))
+-> MaterialProperties (OpticalProperties, ElectricalProperties, Uniformity, Conformality, ChemicalComposition, Crystallinity,FilmDensity)
+-> OtherAspects(Safety,FilmStability,Reproducibility)

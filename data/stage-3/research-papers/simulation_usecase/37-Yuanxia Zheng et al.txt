@@ -1,0 +1,893 @@
+Modeling and in Situ Probing of Surface Reactions in Atomic Layer
+Deposition
+Yuanxia Zheng,†,⊥ Sungwook Hong,‡,⊥,# George Psofogiannakis,‡ G. Bruce Rayner, Jr.,§ Suman Datta,∥
+Adri C.T. van Duin,*,‡ and Roman Engel-Herbert*,¶
+†Department of Physics,‡Department of Mechanical and Nuclear Engineering,¶Department of Materials Science and Engineering,
+Pennsylvania State University, State College, Pennsylvania 16802, United States
+§Kurt J. Lesker Company, Pittsburgh, Pennsylvania 15025, United States
+∥Department of Electrical Engineering, University of Notre Dame, Notre Dame, Indiana 46556, United States
+*S Supporting Information
+ABSTRACT: Atomic layer deposition (ALD) has matured
+into a preeminent thinﬁlm deposition technique by oﬀering a
+highly scalable and economic route to integrate chemically
+dissimilar materials with excellent thickness control down to
+the subnanometer regime. Contrary to its extensive
+applications, a quantitative and comprehensive understanding
+of the reaction processes seems intangible. Complex and
+manifold reaction pathways are possible, which are strongly
+aﬀected by the surface chemical state. Here, we report a
+combined modeling and experimental approach utilizing ReaxFF reactive forceﬁeld simulation and in situ real-time spectroscopic
+ellipsometry to gain insights into the ALD process of Al2O3 from trimethylaluminum and water on hydrogenated and oxidized
+Ge(100) surfaces. We deciphered the origin for the diﬀerent peculiarities during initial ALD cycles for the deposition on both
+surfaces. While the simulations predicted a nucleation delay for hydrogenated Ge(100), a self-cleaning eﬀect was discovered on
+oxidized Ge(100) surfaces and resulted in an intermixed Al2O3/GeOx layer that eﬀectively suppressed oxygen diﬀusion into Ge.
+In situ spectroscopic ellipsometry in combination with ex situ atomic force microscopy and X-ray photoelectron spectroscopy
+conﬁrmed these simulation results. Electrical impedance characterizations evidenced the critical role of the intermixed Al2O3/
+GeOx layer to achieve electrically well-behaved dielectric/Ge interfaces with low interface trap density. The combined approach
+can be generalized to comprehend the deposition and reaction kinetics of other ALD precursors and surface chemistry, which
+oﬀers a path toward a theory-aided rational design of ALD processes at a molecular level.
+KEYWORDS: ReaxFF, ALD, germanium, self-cleaning, nucleation, spectroscopic ellipsometry
+■ INTRODUCTION
+Atomic layer deposition (ALD) has become an important
+synthesis technique in various ﬁelds of nanotechnology, e.g.
+semiconductor processing and microelectronics,1−6 biomedical
+applications,7−9 and protective coatings. 10−19 Compared to
+other thinﬁlm deposition techniques, ALD has a unique set of
+advantages: (i) atomic scale control ofﬁlm thickness, (ii) high
+conformity on structures with high aspect ratios, (iii)
+deposition of continuous and pinhole-free layers, (iv) low
+process temperatures, and (v) excellent scalability due to low
+cost and large area deposition. 2,10 Considering the large
+application space in diverse technological areas, it seems
+surprising that relatively little is known quantitatively about the
+kinetic processes in ALD at an atomic level. Optimizing
+deposition conditions is simple, inexpensive, fast, and
+straightforward. A qualitative understanding of the processes
+at play is suﬃcient for rapid process development. On the other
+hand, it has proven challenging to obtain a theoretical
+description with suﬃcient details at reasonable computational
+costs to realistically model the processes occurring at the
+surface during deposition such as adsorption/desorption,
+diﬀusion, and chemical reactions of molecular species.
+Rapid advances in semiconductor processing technology
+require a better comprehension of ALD processes to advance
+the technology, master the increasing complexity level, and
+therefore accelerate optimization cycles. The currently
+employed strategy toward ever eﬃcient computing hardware
+is continuing miniaturization along with functional diversiﬁca-
+tion, which requires the integration of more materials at the
+nanoscale with potentially dissimilar and incompatible chem-
+istries. Achieving this will require the capability of predicting
+experimental outcomes and a quantitative understanding of
+ALD processes beyond simple trial and error optimization.
+Even simple changes of materials in complex processﬂows are
+becoming a challenging task such as replacing Si with high
+mobility semiconductors like germanium (Ge) or III −V
+Received: February 2, 2017
+Accepted: April 5, 2017
+Published: April 5, 2017
+Research Article
+www.acsami.org
+© 2017 American Chemical Society 15848 DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+Downloaded via LEIBNIZ UNIVERSITAET HANNOVER on December 6, 2024 at 13:10:23 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+compounds as the channel materials in complementary metal-
+oxide-semiconductor (CMOS) transistor technology. Here,
+ALD is used to integrate an ultrathin dielectricﬁlm as a gate
+dielectric to electrically modulate the channel conductivity in a
+ﬁeld eﬀect transistor by an electric potential applied to the gate.
+The resultant device charact eristics are governed by a
+combination of the quality of the dielectric and the electrical
+properties of the dielectric/semiconductor interface. However,
+due to the lack of atomic scale understanding of ALD growth
+kinetics on the semiconductor surface, the roadmap to obtain
+highly scaled and electrically reliable gate stacks is not
+straightforward.2 In the case of Ge, it has been found that a
+direct ALD of high permittivity (high k) dielectric on a Ge
+surface results in poor electrical characteristics dominated by
+the trap response formed at the dielectric/semiconductor
+interface.20−25 To address this challenge, the introduction of an
+ultrathin interlayer that forms an electrically well-behaved
+interface with Ge was proposed. This layer is thin enough to
+still allow competitive capacitance density scaling and yet thick
+enough to avoid trap formation through chemical reaction
+mechanisms between the highk and Ge.26−28 Various materials
+and deposition conditions were applied and resulted in
+noticeable improvements, but details of the dominant
+mechanisms for the ALD processes at the atomic scale and
+how they can be utilized to improveﬁlm nucleation and surface
+passivation still remain unclear.
+In this work, we report a co mbined theoretical and
+experimental approach to gain insights into the complex ALD
+process using ReaxFF reactive forceﬁeld simulations29 and in
+situ real-time spectroscopic ellipsometry (SE). The ALD
+deposition kinetics of Al2O3 on hydrogenated and oxidized
+Ge surfaces were investigated to quantify the inﬂuence of initial
+surface chemical states on the reaction kinetics and relate it to
+the trap formation during ALD nucleation. ReaxFF nudged
+elastic band (NEB) and molecular dynamics (MD) simulations
+were performed to directly model the deposition process; in
+particular, the adsorption and decomposition of ALD
+precursors along with desorption and di ﬀusion of products
+formed. The simulations were correlated with in situ SE
+measurements taken in real time during ALD growth along
+with ex situ X-ray photoelectron spectroscopy (XPS) and
+atomic force microscopy (AFM). Metal-oxide-semiconductor
+capacitor (MOSCap) devices were fabricated to quantify the
+electrical characteristics of dielectric/Ge interfaces using
+impedance spectroscopy and were correlated to the surface
+chemistry and nucleation mechanism.
+■ MATERIALS AND METHODS
+Materials. P−Ge(100) substrates (Ga-doping, resistivity = 1.0−5.0
+Ω·cm) were supplied by Umicore Electrooptic Materials. Tetrakis
+(dimethylamino) hafnium (TDMAH, 99%) and trimethylaluminum
+(TMA, 98%) precursors were purchased from Strem Chemicals, Inc.
+High purity water (H2O) precursor was purchased from Sigma-
+Aldrich.
+Preparation of Ni/HfO2/Al2O3/GeOx/Ge MOSCap Devices.P−
+Ge(100) substrates were precleaned by acetone, isopropyl alcohol, and
+deionized water rinses. The precleaned substrates were immediately
+transferred into the load-lock of the ALD system (ALD-150LX, Kurt J.
+Lesker Co.) for vacuum transfer. In situ surface treatment and ALD
+deposition processes were performed in the ALD reactor at 270°C
+with a background Ar pressure of 1.2−1.5 Torr controlled by in situ
+spectroscopic ellipsometry. The hydrogenated Ge surface (Ge:H) was
+prepared by exposing the precleaned Ge surface to a RF H2/Ar plasma
+(30 s, 100 W, H2:Ar = 3:117 sccm). The GeO x/Ge surface was
+prepared by exposing the Ge:H surface to O2/Ar plasma pulses (1.75
+s/pulse, 125 W, O2:Ar = 3:117 sccm). Al2O3 was grown by ALD using
+TMA and H 2O as precursors. HfO 2 was grown by ALD using
+TDMAH and H2O as precursors. After ALD depositions, all samples
+were completely cooled to room temperature under vacuum before
+transferring to any other processing or measurements. Sixty nanome-
+ters of Ni was deposited by thermal evaporation as the gate electrode
+with a pattern deﬁned by a shadow mask. All MOSCap devices were
+postannealed in forming gas (pH2:pAr ≈ 20:1200 mTorr) at 330°C for
+10 min.
+Characterizations. ALD processes were monitored in real time by
+in situ M-2000U spectroscopic ellipsometer (λ = 240−1000 nm, J.A.
+Woollam Co.). The incident angle of light beam was 71° with respect
+to the sample surface. AFM images were obtained using Bruker
+Dimension Icon. XPS results were measured using Kratos Analytical
+Axis Ultra with an Al Kα source. AFM and XPS measurements were
+performed immediately after transferring samples out of the ALD
+chamber to minimize the air exposure. Electrical impedance
+measurements were carried out on a Cascade probe station (Summit
+11000). An LCR meter (Hewlett-Packard 4285A) was used for
+measuring capacitance−voltage (C−V) characteristics; a combination
+of DC and AC voltage was used with an AC amplitude of 50 mV and a
+frequency f = 75 kHz to 1.5 MHz. A parameter analyzer (Keithley
+4200-SCS) was used for measuring leakage−voltage (JG−V) character-
+istics.
+■ THEORETICAL BASIS
+The ReaxFF reactive force ﬁelds were optimized against
+quantum mechanics-based training sets.30 A LAMMPS code
+(version 28, June 2014,http://lammps.sandia.gov) was used31
+in ReaxFF-MD simulations. A time step of 0.25 fs was used to
+ensure the chemical reactions at given temperatures (300−1000
+K in MD simulations), while the system temperatures were
+controlled by the NVT ensemble using the Nose-Hoover
+thermostat with a damping constant of 25 fs. All of the reaction
+proﬁles were evaluated by ReaxFF-NEB calculations32 using
+standalone ReaxFF code; the initial andﬁnal structures of each
+NEB calculation were fully relaxed, and then 4−6 intermediate
+structures were generated. All of the system conﬁgurations were
+displayed by the Molden (version 5.0)33 and VMD (version
+1.9.2)34 software.
+A ReaxFF reactive forceﬁeld for Ge/Al/C/H/O interactions
+was used in the simulation of TMA/H2O ALD process on the
+Ge(100):H and GeO x/Ge(100) surfaces (see Supporting
+Information for more details about the forceﬁeld development
+and validation). The starting surfaces were described by the
+following slab models: (a) 40× 40 × 11 Å for the Ge(100):H
+slab and (b) 40× 40 × 20 Å for the GeOx/Ge(100) slab (see
+Supporting Information for more details about the system
+description). The ReaxFF-MD simulations were performed
+inside orthogonal simulation boxes of 40× 40 × 50 Å for
+Ge(100):H and 40× 40 × 80 Å for GeOx/Ge(100). Relatively
+high temperatures [500 K for Ge(100):H and 1000 K for
+GeOx/Ge(100)] were used in the ReaxFF-MD simulations to
+accelerate reaction speed within the limited time scale (∼ ns)
+due to the computational costs.35 TMA or H2O dose was
+realized by randomly distributing 80 TMA or H2O molecules
+into the system; after a suﬃcient relaxation (500 ps), a removal
+of all gas phase molecules mimicked the purge step in ALD.
+Particularly in the case of GeOx/Ge(100), double TMA doses
+were used prior to H2O dose in the simulation to ensure a
+saturated reaction.
+The ReaxFF-MD simulations of oxygen di ﬀusion from
+GeOx/Ge(100) and (Al2O3/GeOx)/Ge(100) interfaces were
+performed inside an orthogonal simulation box of 20× 20 × 60
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15849
+
+
+Å (see Supporting Information for more details about the
+system description). The system temperature was kept at 300
+K, while a higher temperature (800 K) was assigned to O atoms
+to accelerate the O diﬀusion within the limited time frame (2.0
+ns).
+■ RESULTS AND DISCUSSION
+Al2O3 ALD on Hydrogenated Ge Surface. A ReaxFF
+model for Ge/Al/C/H/O interactions was developed to
+simulate the reactions of trimethyl-aluminum [Al(CH3)3,
+TMA] and water (H 2O) with hydrogenated Ge surfaces
+(Ge:H). Details for the calculation and validation of the
+employed ReaxFF forceﬁelds are available in theSupporting
+Information.
+The reaction proﬁles for TMA and H2O adsorption with a
+hydrogenated Ge(100) [Ge(100):H] surface were determined
+from ReaxFF-NEB calculations (Figures 1 a and b). Both
+proﬁles indicate that a fully hydrogenated Ge surface is
+chemically inert when exposed to TMA or H2O. In Figure 1a,
+the TMA molecule approaches a H-termination surface site
+(physisorption) and then forms a chemical bond (chemisorp-
+tion) that is accompanied by a H atom transfer from the surface
+to a methyl (−CH3) group of TMA. An Al−Ge bond is formed,
+and a methane (CH4) molecule is liberated from TMA as
+byproduct. The reaction is overall exothermic (energy gainΔE
+= −1.09 eV) but hampered by the large barrier (Ea = 1.41 eV)
+at the physisorption stage.
+In contrast, H 2O adsorption on the Ge:H surface is
+endothermic ( Figure 1 b). H 2O physisorption is likely to
+occur on Ge:H surfaces due to the strong polar characteristic of
+H2O, but the energy gain ofΔE = −0.58 eV is comparable to
+the evaporation energy of H2O (0.42 eV), so the physisorption
+is limited by the thermal desorption at elevated temperatures
+used in real ALD processes (T = 270 °C in our experiments).
+Moreover, the subsequent hydroxylation of the Ge:H surface to
+form Ge−OH* is strongly inhibited by the high reaction barrier
+(2.32 eV); therefore, a pronounced nucleation delay of ALD
+Al2O3 on Ge:H is expected.
+The TMA nucleation process on Ge:H is dramatically
+accelerated if a partially hydrogenated Ge surface, i.e. a high
+density of dangling bond sites (Ge−*), is present (Figure 1c).
+The chemisorption of TMA on a local Ge −* site is
+energetically favored (ΔE = −0.82 eV), and a Ge−Al bond is
+formed. The chemisorbed TMA molecule now favorably aﬀects
+the dehydrogenation of an adjacent Ge−H* site through the
+formation of a dimethyl-aluminum group [-Al(CH3)2*, DMA]
+and release of a methane (CH4) molecule. Overall the reaction
+is highly exothermic (−1.74 eV) and preserves the number of
+dangling bond sites available for the subsequent TMA
+adsorption (see ReaxFF-MD simulations at an elevated
+temperature T = 500 K in the Supporting Information ).
+Thus, the nucleation dynamics are governed by the density of
+Ge−* sites. Additional ReaxFF simulations on Ge:H surfaces
+were performed to explore the origin of dangling bond sites.
+Details for parametrizing initial structures are given in the
+Supporting Information. The simulations showed that rather
+than surface H-dissociation, Ge−* sites originate from surface
+Hd iﬀusion into the subsurface interstitial sites. This diﬀusion
+shows a moderate activation energy (Ea = 0.68 eV) and a small
+overall energy ( ΔE = 0.39 eV), which can be partially
+compensated by the increased entropy contribution to the
+free energy at elevated temperatures in a real ALD environ-
+ment. The ReaxFF-MD simulation of annealing a Ge:H surface
+at 800 K revealed up to 0.3/nm2 of Ge−* site formation,
+corresponding to ∼4% of all surface sites.
+T h ep r e s e n c eo fs u r f a c eD M As i t e s[ G e−Al(CH3)2*]
+enabled the adsorption of H2O and resulted in a typical two-
+step oxidation reaction,36 shown inFigures 2a and b. An Al−O
+bond (−1.71 eV) is initially formed, and a H atom is transferred
+to a−CH3 ligand, thus liberating a CH4 molecule and leaving a
+partially hydroxylated surface site Ge−Al(CH3)(OH)*. A fully
+hydroxylated surface site Ge−Al(OH)2* is formed upon further
+exposure to H2O. The ReaxFF-MD simulation atT = 500 K
+conﬁrmed the preferential H2O adsorption on DMA surface
+sites (seeSupporting Information). An oversupply of H2O does
+not result in additional reactions, reﬂecting the self-limiting
+nature of ALD.
+Subsequently supplied TMA molecules are either chem-
+isorbed at the new Ge−* dangling bond site formed in close
+proximity, resulting in lateral growth, or directly at Ge −
+Al(OH)2*, resulting in vertical growth.36 In Figure 2c, a slightly
+higher reaction barrier (0.18 eV) is found for the exothermic
+TMA adsorption on Ge−Al(OH)2* compared to that found on
+the Ge−* site (0.079 eV). However, both reaction barriers are
+small enough so that both lateral and vertical growths will occur
+by oversupplying TMA.
+Three major consequences of Al2O3 ALD on Ge:H can be
+derived from the ReaxFF results. First, a pronounced ALD
+nucleation delay is expected along with an island growth mode
+due to the chemical inertness of Ge:H. Second, Al−Ge bonds
+Figure 1. Reaction proﬁles obtained by the ReaxFF-NEB calculations
+for Al2O3 ALD on the Ge(100):H surface. Adsorption of (a) TMA and
+(b) H2O at H-terminated Ge surface site. (c) TMA adsorption on a
+Ge−* dangling bond site. The insets in each proﬁle are the spatial
+arrangement of molecule and atomic structures at the corresponding
+reaction stages.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15850
+
+
+are formed during TMA adsorption which give rise to a high
+interface trap density (Dit) inside the Ge band gap.37 Third, the
+nonconformity of the nucleation process and the associated
+island formation cause nonuniform regions in theﬁlm where
+Al2O3 islands merge at the coalescence layer thickness.2 These
+nonuniform regions can act as leakage paths when theﬁlm is
+used as a gate dielectric.38 It is therefore expected that a direct
+Al2O3 deposition on Ge:H will result in inferior electrical
+characteristics of dielectric/Ge interface in the application in
+ﬁeld eﬀect transistors.39
+To experimentally conﬁrm the ReaxFF predictions, in situ SE
+experiments were performed during the Al 2O3 ALD on
+Ge(100):H (Figure 3a). The Al 2O3 thickness during ALD
+was extracted in real time by ﬁtting the SE spectra using a
+layered model of Al2O3/Ge. Details about SE modeling are
+given in the Supporting Information. The inset of Figure 3a
+shows the SE response to sequential doses of TMA and H2O
+separated by purge cycles. Each ALD cycle starts with a TMA
+pulse (blue arrow), and the resultant change in surface optical
+properties is reﬂected as a nominal increase of Al2O3 thickness.
+The TMA adsorption on the surface saturates due to the self-
+limiting nature of ALD. The amplitude of the nominal
+thickness increase corresponds to the amount of TMA
+adsorption. After purging, an H2O dose (red arrow inFigure
+3a inset) removes the surface methyl (−CH3) groups10 and is
+reﬂected as a nominal thickness decrease. The net thickness
+change at the end of each ALD cycle provides the growth per
+cycle (GPC).
+The experiments were in excellent agreement with the
+predicted nucleation delay on Ge:H surfaces, as revealed by the
+nonlinearity of ALD growth. InFigure 3b, the trends of TMA
+adsorption (red circles) and GPC (blue squares) are compared
+to the Al2O3 ALD baseline (deposition on Al2O3 surface; see
+Supporting Information). The TMA adsorption on Ge:H is low
+in the ﬁrst cycle, ∼17% of the baseline, corresponding to a
+coverage density of∼0.5/nm2 (see Supporting Informationfor
+calculation details). Assuming TMA adsorption occurs only at
+Ge−* sites, this density is comparable to the above-mentioned
+ReaxFF result of ∼0.3/nm2. In subsequent cycles, the TMA
+adsorption is still well below the baseline. This suggests that the
+creation of new Ge−* sites driven either by H diﬀusion or
+TMA adsorption is a slow process. The adsorption level
+gradually approaches the baseline within 25−27 cycles. The
+nucleation is strongly inhibited for theﬁrst few cycles but then
+improved due to an increased Al2O3 surface coverage through
+lateral expansion from initial nucleation sites as implied by
+ReaxFF simulations. Consequently, the growth rate or GPC
+(blue squares inFigure 3b) is proportional to the TMA
+adsorption and also lower than the baseline of 0.86 Å (see
+Supporting Information). The island growth mode was
+conﬁrmed by ex situ AFM measurements (Figure 3c). The
+surface roughness, indicated by the root-mean-square (RMS)
+and maximum surface corrugation, signiﬁcantly increases with
+the number of ALD cycles during the nucleation delay.
+Al2O3 ALD on GeO x/Ge(100) Surface. ReaxFF simu-
+lations for Al2O3 ALD (TMA + H2O) were performed on
+oxidized Ge surfaces to further explore the inﬂuence of surface
+chemistry on the ALD nucleation behavior. A slab of Ge(100)
+terminated by 5 Å of amorphous GeOx was used as the starting
+surface (see Supporting Information for constructing the
+model).
+Figure 4a shows the snapshots of ReaxFF MD simulations
+for the ﬁrst and second TMA doses and a subsequent H2O
+dose. In contrast to the Ge:H surface, a pronounced TMA
+absorption occurs on GeOx/Ge in the ﬁrst TMA dose,
+consumes most of TMA molecules (80 in total), and results
+in a conformal overlayer. The Al atom in the TMA molecule
+Figure 2. Reaction proﬁles obtained by the ReaxFF-NEB calculations
+for: (a) H2O hydroxylates one −CH3 group on the Ge−Al(CH3)2*
+site, (b) H2O hydroxylates −CH3 group on the Ge−Al(CH3)(OH)*
+site, and (c) TMA adsorption on the Ge−Al(OH)2* site. The insets in
+each proﬁle are the spatial arrangement of molecule and atomic
+structures at the corresponding reaction stages.
+Figure 3. (a) In situ SE monitoring of Al2O3 ALD on the Ge:H
+surface; the inset enlarges the segment in the green box. (b) TMA
+adsorption and growth per cycle as a function of ALD cycles; the TMA
+adsorption baseline (red dash line) is∼2.2 Å, and the GPC baseline
+(blue dash line) is∼0.86 Å. (c) AFM images at diﬀerent Al2O3 ALD
+stages.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15851
+
+
+directly attaches to the surface O sites and forms Al−O bonds
+so only Ge−O and Al−O bonds are present. ReaxFF NEB
+calculation (Figure 4b) reveals that TMA chemisorption onto
+GeOx surfaces is highly reactive with no reaction barrier and
+strongly exothermic ( −3.02 eV). Upon the ﬁrst TMA
+adsorption, abundant volatile byproducts like methane (CH4)
+and ethane (C2H6) are formed despite any H2O. This implies
+that TMA is highly oxidized during the chemisorption. The
+oxidant was found to be GeOx through an analysis of chemical
+states of GeOx during TMA adsorption (Figure 4c). While Ge4+
+is the dominant oxidation state of the initial GeOx surface layer,
+the exposure to TMA reduces the average oxygen coordination,
+rendering Ge3+ the dominant oxidation state. This strong redox
+reaction in the absence of any H2O “cleans” the Ge surface
+from GeOx.40 Note that the TMA cleaning mechanism on Ge is
+diﬀerent from the ligand-exchange mechanism on III −V
+surfaces.41−44 On III−V, the O atoms in native oxides directly
+exchange with the−CH3 groups in TMA, which results in the
+methylation of the native oxides and forms volatile byproducts.
+On Ge, a similar ligand-exchange mechanism was also observed
+in our simulation but in a much lower degree and resulted only
+in a small amount of nonvolatile−Ge(CH3)x* surface species
+with x <4 .
+After the ﬁrst TMA dose, fewer GeOx surface adsorption
+sites are available, i.e. the surface tends to saturate. In the
+second TMA dose, fewer TMA molecules adsorb (Figure 4a),
+and the change in the Ge oxidation state is smaller (Figure 4c).
+Note that in the second TMA dose snapshot ofFigure 4a, Al
+atoms more deeply di ﬀuse into the GeO x, resulting in an
+intermixed amorphous (Al2O3/GeOx) layer. The driving force
+of intermixing is attributed to the aforementioned self-cleaning
+eﬀect. In the subsequent snapshot, the H 2Od o s e( 8 0
+molecules) hydroxylates−CH4 groups located at the outermost
+surface and forms volatile CH4 molecules. At this point, the
+fully oxidized Al atoms have less driving force to diﬀuse into the
+GeOx sublayer. By tracking the O atoms during the ReaxFF
+MD simulations, it was found that over 90% of O atoms
+bonded to Al originated from GeOx, with the rest contributed
+by H2O. This O atom tracking con ﬁrms the direct redox
+reaction between TMA and GeOx.
+The formation of an (Al2O3/GeOx) intermixed layer was
+found beneﬁcial to limit oxygen diﬀusion from the oxide into
+the underlying Ge crystal, as revealed by the ReaxFF MD
+simulations inFigure 5. A GeOx/Ge(100) structure capped
+with an Al2O3 layer was annealed atT = 800 K for 2 ns (Figure
+5a), and the same process was performed on a simple GeOx/
+Ge(100) structure for comparison ( Figure 5 b). Position
+tracking of O atoms during annealing ( Figure 5c) showed
+that ∼20% of O atoms diﬀused into the Ge sublayer for the
+GeOx/Ge case (red squares), but only ∼10% for (Al2O3/
+GeOx)/Ge(blue circles). While the GeO x/Ge interface is
+known to be thermodynamically unstable,45 as also observed
+in our simulation, the incorporation of Al atoms into GeOx
+signiﬁcantly suppresses oxygen out-diﬀusion. The thermody-
+Figure 4. (a) Snapshots of ReaxFF-MD simulations for Al2O3 ALD
+using TMA/H2O sequential doses on a GeOx(5 Å)/Ge(100) slab at
+1000 K. Duration of each dose was 500 ps. In the snapshot of theﬁrst
+TMA dose, the highlighted molecules (1 and 2) are byproducts of
+CH4 and H 3C−CH3. (b) ReaxFF-NEB calculation for TMA
+adsorption on the GeO x/Ge surface. (c) Number of O atoms
+coordinated to Ge during the ReaxFF-MD simulation of Al2O3 ALD
+on GeOx/Ge.
+Figure 5. ReaxFF-MD simulations for oxygen diﬀusion from GeOx
+into underlying Ge subsurface for GeOx/Ge(100) (red) and (Al2O3/
+GeOx)/Ge(100) (blue) interfaces. Calculations were performed at 800
+K to accelerate the oxygen diﬀusion eﬀect within 2 ns. The portion of
+oxygen diﬀusion was normalized by the total number of oxygen atoms
+in the GeOx layer.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15852
+
+
+namic origin of this stabilization eﬀect is attributed to an Al−O
+bond much stronger compared to that of Ge−O (see Ellingham
+diagram analysis in theSupporting Information). The driving
+force for O-diﬀusion is hampered by the presence of Al−O
+bonds and therefore O remains better con ﬁned. Similar
+stabilization eﬀects have also been observed by incorporating
+other metal elements or nitrogen into GeOx.46
+Three major consequences of Al2O3 ALD on GeOx/Ge can
+be derived from the ReaxFF simulations. First, a pronounced
+TMA adsorption is expected along with a conformal growth
+mode. Second, an (Al2O3/GeOx) intermixing layer is formed,
+and only Al−O and Ge−O bonds are present at the interface.
+Third, the intermixing layer suppresses oxygen diﬀusion into
+Ge. All three contribute to a reduction of trap state density at
+the dielectric/Ge interface.
+In situ SE monitoring experiments were performed to
+validate the ReaxFF predictions of Al2O3 ALD on GeOx/Ge. A
+nominally 5 Å-thick GeOx overlayer was formed prior to ALD
+deposition by exposing the hydrogenated Ge surface to a
+remote oxygen plasma.39 The ALD nucleation behavior (Figure
+6a) is also nonlinear but with distinctively diﬀerent character-
+istics of TMA adsorption and GPC compared to those of Ge:H
+surfaces. The nucleation can be categorized into four regions
+(Figure 6b). During the ﬁrst ALD cycle (region I), TMA
+adsorption is pronounced at ∼45% higher than the baseline;
+this is attributed to the high density of TMA chemisorption
+sites on GeOx, as predicted in ReaxFF simulations. The high
+conformity growth mode revealed by the simulation was also
+veriﬁed using postdeposition AFM measurements (see
+Supporting Information). The resultant GPC/TMA-adsorption
+ratio is signi ﬁcantly higher than the baseline ( Figure 6c),
+indicating that H 2O is not the only oxidizing agent. This
+signature is in agreement with the ReaxFF predicted self-
+cleaning eﬀect where TMA is directly oxidized by GeOx in the
+absence of H2O.
+In the followingﬁve cycles (region II inFigure 6b), the TMA
+adsorption level is moderate and relatively constant (∼60% of
+the baseline), but the GPC is close to zero, resulting in a large
+deviation of the GPC/TMA-adsorption ratio from the baseline
+(Figure 6c). Even with a sizable TMA adsorption, a small Al2O3
+overlayer is formed due to intermixing, whereby the Al atoms
+penetrate into GeOx, densifying the oxide, as predicted by
+ReaxFF. In region III, TMA adsorption level and growth rate
+gradually approach the baseline; the self-cleaning and
+intermixing eﬀects are still present but to a smaller degree.
+After ALD cycle n = 9 in region IV, all parameters remain
+relatively constant with values similar to the baseline. At this
+point, the Al2O3 overlayer coalesces, and the conventional ALD
+Al2O3 process becomes the dominant reaction mechanism.
+Ex situ high resolution XPS measurements were performed
+to determine the chemical bonding state of Ge after Al2O3 ALD
+on GeOx/Ge surfaces (Figure 7). Three samples with diﬀerent
+starting surfaces were evaluated: Ge:H, GeOx(3 Å)/Ge, and
+GeOx(5 Å)/Ge. An Al2O3 cap layer of∼1 nm was deposited to
+ensure a coalescedﬁlm and avoid Ge valence state changes by
+air exposure during sample transfer to the XPS system; this
+thickness also allowed suﬃcient signal from the GeO x/Ge
+interface. The Ge:H sample is a control sample that shows a
+minimal amount of GeOx, with +3 and +4 oxidation states
+absent and only a small signal from +1 and +2 states. The lower
+oxidation states can be ascribed to the transition region of a
+suboxide layer separating the Ge bulk from the Al2O3
+overlayer.37 For the GeO x/Ge samples, peak intensities of
+lower Ge oxidation states are similar to those measured from
+the Ge:H sample and also attributed to the suboxide transition
+layer. Higher oxidation states (+3 and +4) that were expected
+to occur for GeOx/Ge47 are barely above the detection limit for
+GeOx (3 Å)/Ge and give rise to only weak signals for the GeOx
+(5 Å)/Ge sample. This experimentally con ﬁrms the self-
+cleaning eﬀect where oxygen is scavenged from GeOx.40,48
+Properties of the (Al2O3/GeOx)/Ge(100) Interface. The
+electrical properties of (Al2O3/GeOx)/Ge(100) interfaces were
+tested by fabricating MOSCap with a device structure shown in
+Figure 8a. The starting surface was GeOx(5 Å)/p-Ge(100) on
+which Al2O3 was deposited by ALD forn cycles, followed by 24
+Å of HfO2 to limit the gate leakage current (JG) and enable
+impedance measurements. A 60 nm-thick Ni gate contact was
+used. More details on the fabrication process are given in the
+Supporting Information. Four MOSCap devices were evaluated
+using n = 0, 4, 9, and 15 cycles of Al2O3 ALD, corresponding to
+the following four nucleation stages on GeOx/Ge surface: (1)
+no Al 2O3, (2) partially intermixed Al 2O3/GeOx, (3) fully
+intermixed Al 2O3/GeOx capped with a coalesced Al 2O3
+overlayer, and (4) overgrowing Al2O3 after coalescence.Figures
+Figure 6. Al2O3 ALD (T = 270 °C) on GeOx(5 Å)/Ge(100). (a) In
+situ SE monitoring of Al2O3 thickness. (b) TMA adsorption and
+growth per cycle (GPC) as a function of ALD cycles extracted from SE
+measurement; the TMA adsorption baseline (red dash line) is∼2.2 Å,
+and the GPC baseline (blue dash line) is∼0.86 Å. (c) GPC/TMA-
+adsorption ratio extracted from SE; the ratio baseline (green dash line)
+is∼0.4.
+Figure 7.XPS measurements of Ge 3d at (a) 90° and (b) 15° takeoﬀ
+angles for samples with 1 nm ALD grown Al2O3 capping on Ge:H
+(black), GeOx(3 Å)/Ge (red), and GeOx(5 Å)/Ge (blue) surfaces.
+The chemical shifts for di ﬀerent oxidation states are indicated
+underneath.51 Inset of panel a is the numerical deconvolution in
+percentage for the areas of oxidation state peaks [normalized by Ge0
+(3d3/2+3 d5/2) peak area] at 90°, while the deconvolution of 15°
+measurement is limited by its low signal-to-noise ratio. The numerical
+deconvolution is based on ref52 with a Tougaard background proﬁle.
+Binding energy shift for Ge 3d3/2 with respect to Ge 3d5/2 is 0.58 eV,
+and the core level shifts for +1, + 2, + 3, and +4 are 0.8, 1.8, 2.7, and
+3.3 eV with respect to Ge 3d5/2, respectively.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15853
+
+
+8b and c exemplarily show results forC−V and JG−V curves for
+the n = 9 device.
+The MOSCap device performances were evaluated by the
+following electrical parameters: capacitance density at accumu-
+lation (Cmax), C−V hysteresis (ΔVFB), JG at 1 V overdrive, and
+Dit at valence band top (Ev) (seeFigures 8d−g). Trends in the
+electrical characteristics correlate well with the four-stage
+nucleation scenario of Al2O3 ALD on GeOx/Ge. Cmax directly
+reﬂects the capacitance density of the gate oxide and is
+determined asCmax = εox/tox, whereεox and tox are the dielectric
+constant and thickness of the gate oxide layer, respectively.
+Instead ofn = 0 (no Al2O3), Cmax is the highest in then =9
+device. An insuﬃcient Al2O3 ALD (n = 0 and 4) will result in a
+direct contact between the subsequently deposited HfO2 and
+the unstable GeOx/Ge interface, which has been reported to
+form volatile GeO di ﬀusing into HfO2 and to oxidize Ge
+sublayers via a two-step reaction mechanism.46 The additional
+GeOx formed increases the overalltox and lowers the eﬀective
+εox of the gate oxide due to a lower εox of GeOx (∼4.5)
+compared to those of Al2O3 (∼9) and HfO2 (∼18), leading to
+Cmax reduction. Forn = 9 cycles, intermixing of (Al2O3/GeOx)
+is maximized, and the Al2O3 overlayer is coalesced, preventing a
+direct contact between GeO x/Ge and HfO 2. Due to the
+intermixing, Al2O3 ALD results in a smalltox increase, and the
+resultant densiﬁcation of the dielectric slightly increases the
+eﬀective εox;49 both factors contribute to a higherCmax for n =9
+compared to those of n = 0 and 4. An overgrowth of Al2O3
+ALD (n = 15) only causes additional Al2O3 thickness to the
+overall tox, which leads to a decreasedCmax compared to that of
+n =9 .
+The systematic changes in other parameters are in agreement
+with the trends inCmax.I nFigure 8e, the high leakage current in
+n = 0 and 4 samples can be attributed to the conductive defects
+formed by GeO diﬀusion into HfO2. This diﬀusion also creates
+slow trap states and causes largeC−V hysteresis,28 as shown in
+Figure 8f. With the dielectric/Ge interface stabilized with
+suﬃcient Al2O3 (n = 9), overgrowing Al2O3 (n = 15) does not
+further reduce the hysteresis but lowers the leakage current due
+to an increased thickness of the gate oxide. The absence of any
+Al2O3 results in a high interface trap density (Figure 8g) due to
+the formation of Ge dangling 50 and Hf−Ge bonds.37 The
+device performances bene ﬁt from the self-cleaning and
+intermixing eﬀect as well as the formation of a coalesced
+Al2O3 cap to avoid direct physical contact between GeOx and
+HfO2.
+■ CONCLUSIONS
+A strategy to rationalize how surface chemistry a ﬀects the
+nucleation kinetics in an ALD process was demonstrated by
+combining ReaxFF simulations with in situ spectroscopic
+ellipsometry of ALD Al2O3 (TMA + H2O) on hydrogenated
+and oxidized Ge surfaces. The nucleation characteristics
+predicted by simulations were in excellent agreement with
+experiments. While the Al2O3 ALD on hydrogenated Ge
+surface showed an island growth mode resulting in defective
+dielectric/semiconductor interface, a TMA self-cleaning eﬀect
+of GeOx was observed during the Al2O3 ALD on GeOx/Ge.
+Tandem simulations and experiments revealed that the self-
+cleaning eﬀect was accompanied by the formation of an
+(Al2O3/GeOx) intermixing layer which was found thermody-
+namically stable on Ge by limiting the O diﬀusion from the
+GeOx to Ge sublayer. The impact of surface chemistries on the
+nucleation behavior was correlated with the electrical character-
+istics of the dielectric/semiconductor interface. Optimum
+electrical performance of high gate oxide capacitance density,
+low gate leakage, smallC−V hysteresis, and low interface trap
+density was found for the sample with an intermixed layer and a
+completely coalesced Al2O3 overlayer, thus clarifying the origin
+of the high quality Al2O3/GeOx/Ge interface and the intimate
+connection to the nucleation kinetics and surface reactions at
+play. This work clariﬁes the atomic scale mechanism of Al2O3
+ALD nucleation on chemically dissimilar Ge surfaces and more
+generally demonstrates the potential of a combined simulation
+and experimental approach to quantify the ALD processes at a
+molecular level duringﬁlm nucleation, which can be expanded
+to other precursor and surface chemistries as well.
+Figure 8.Electrical characterization of p-Ge(100) MOSCap devices. (a) Schematic of the MOSCap structure using Ni/HfO2(24 Å)/[Al2O3(n ALD
+cycles)/GeOx(5 Å)]/p-Ge(100). (b)C−V and (c)JG−V for MOSCaps withn = 9 cycles of Al2O3 ALD. Trends of (d)Cmax for C−V at f = 1.5 MHz.
+(e) JG at 1 V overdrive with respect toﬂatband voltage (VFB) V = VFB − 1 V. (f)C−V hysteresis (ΔVFB)a tﬂatband voltage, and (g)Dit at valence
+band top (E = EV). Dit was obtained by analyzing frequency-dependentC−V characteristics based on the Castagne−Vapaille method.53
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15854
+
+
+■ ASSOCIATED CONTENT
+*S Supporting Information
+The Supporting Information is available free of charge on the
+ACS Publications websiteat DOI: 10.1021/acsami.7b01618.
+Details for ReaxFF reactive force ﬁeld development,
+ReaxFF reactive forceﬁeld validation, system description
+for ReaxFF calculations, Ge dangling bond formation on
+the hydrogenated Ge surface, TMA and H2O adsorption
+on the hydrogenated Ge surface, spectroscopic ellipsom-
+etry, Ellingham diagram, atomic force microscopy,
+electrical characterization, and ReaxFF reactive fore
+ﬁeld for Ge/Al/C/H/O interactions (PDF)
+(PDF)
+■ AUTHOR INFORMATION
+Corresponding Authors
+*E-mail: acv13@psu.edu.
+*E-mail: rue2@psu.edu.
+ORCID
+Yuanxia Zheng: 0000-0003-1314-7717
+Present Address
+#S.H.: University of Southern California, Los Angeles,
+California 90089-0242, United States.
+Author Contributions
+⊥Y.Z. and S.H. contributed equally.
+Notes
+The authors declare no competingﬁnancial interest.
+■ ACKNOWLEDGMENTS
+This work was supported by Intermolecular Inc. The authors
+also acknowledge the support from Penn State College of
+Engineering Innovation Grant.
+■ ABBREVIATIONS
+ALD, atomic layer deposition
+SE, spectroscopic ellipsometry
+MOSCap, metal-oxide-semiconductor capacitor
+MD, molecular dynamics
+NEB, nudged elastic band
+AFM, atomic force microscopy
+XPS, X-ray photoelectron spectroscopy
+GPC, growth per cycle
+TMA, trimethyl-aluminum
+DMA, dimethyl-aluminum
+RMS, root-mean-square
+■ REFERENCES
+(1) ITRS.International Technology Roadmap for Semiconductors; 2007.
+(2) Sneh, O.; Clark-Phelps, R. B.; Londergan, A. R.; Winkler, J.;
+Seidel, T. E. Thin Film Atomic Layer Deposition Equipment for
+Semiconductor Processing. Thin Solid Films2002, 402 (1), 248−261.
+(3) Paranjpe, A.; Gopinath, S.; Omstead, T.; Bubber, R. Atomic Layer
+Deposition of AlO x for Thin Film Head Gap Applications. J.
+Electrochem. Soc. 2001, 148 (9), G465−G471.
+(4) Elers, K.-E.; Saanila, V.; Soininen, P. J.; Li, W.-M.; Kostamo, J. T.;
+Haukka, S.; Juhanoja, J.; Besling, W. F. a. Diffusion Barrier Deposition
+on a Copper Surface by Atomic Layer Deposition. Chem. Vap.
+Deposition 2002, 8 (4), 149.
+(5) Niinisto, L. Advanced Thin Films for Electronics and
+Optoelectronics by Atomic Layer Epitaxy. Proc. CAS Int. Semicond.
+Conf. 2000,3 3−42.
+(6) Ahmed, K.; Schuegraf, K. Transistor Wars: Rival Architecture
+Face off in a Bid to Keep Moore’s Law Alive.IEEE Spectrum2011, 48,
+50.
+(7) Pang, C.; Lee, C.; Suh, K. Recent Advances in Flexible Sensors
+for Wearable and Implantable Devices.J. Appl. Polym. Sci.2013, 130
+(3), 1429−1441.
+(8) Purniawan, a.; French, P. J.; Pandraud, G.; Sarro, P. M. TiO2 ALD
+Nanolayer as Evanescent Waveguide for Biomedical Sensor
+Applications. Procedia Eng. 2010, 5, 1131−1135.
+(9) Adiga, S. P.; Curtiss, L. a; Elam, J. W.; Pellin, M. J.; Shih, C.; Shih,
+C.; Lin, S.; Su, Y.; Gittard, S. D.; Zhang, J.; Narayan, R. J. Nanoporous
+Materials for Biomedical Devices.JOM 2008, 60 (3), 26−32.
+(10) George, S. M. Atomic Layer Deposition: An Overview.Chem.
+Rev. 2010, 110 (1), 111−131.
+(11) Knez, M.; Nielsch, K.; Niinisto ̈, L. Synthesis and Surface
+Engineering of Complex Nanostructures by Atomic Layer Deposition.
+Adv. Mater. 2007, 19 (21), 3425−3438.
+(12) Leskelä, M.; Ritala, M. Atomic Layer Deposition Chemistry:
+Recent Developments and Future Challenges.Angew. Chem., Int. Ed.
+2003, 42 (45), 5548−5554.
+(13) Puurunen, R. L. Surface Chemistry of Atomic Layer Deposition:
+A Case Study for the Trimethylaluminum/water Process.J. Appl. Phys.
+2005, 97 (12), 121301.
+(14) Miikkulainen, V.; Leskela ̈, M.; Ritala, M.; Puurunen, R. L.
+Crystallinity of Inorganic Films Grown by Atomic Layer Deposition:
+Overview and General Trends.J. Appl. Phys.2013, 113 (2), 21301.
+(15) Kim, H. Atomic Layer Deposition of Metal and Nitride Thin
+Films: Current Research Efforts and Applications for Semiconductor
+Device Processing. J. Vac. Sci. Technol., B: Microelectron. Process.
+Phenom. 2003, 21 (6), 2231−2261.
+(16) Leskelä, M.; Ritala, M. Atomic Layer Deposition (ALD): From
+Precursors to Thin Film Structures.Thin Solid Films 2002, 409 (1),
+138−146.
+(17) Van Delft, J. A.; Garcia-Alonso, D.; Kessels, W. M. M. Atomic
+Layer Deposition for Photovoltaics: Applications and Prospects for
+Solar Cell Manufacturing.Semicond. Sci. Technol.2012, 27 (7), 74002.
+(18) Knisley, T. J.; Kalutarage, L. C.; Winter, C. H. Precursors and
+Chemistry for the Atomic Layer Deposition of Metallic First Row
+Transition Metal Films. Coord. Chem. Rev. 2013, 257 (23), 3222−
+3231.
+(19) Bakke, J. R.; Pickrahn, K. L.; Brennan, T. P.; Bent, S. F.
+Nanoengineering and Interfacial Engineering of Photovoltaics by
+Atomic Layer Deposition.Nanoscale 2011, 3 (9), 3482−3508.
+(20) Abermann, S.; Bethge, O.; Henkel, C.; Bertagnolli, E. Atomic
+Layer Deposition of ZrO2/La2O3 High-K Dielectrics on Germanium
+Reaching 0.5 Nm Equivalent Oxide Thickness.Appl. Phys. Lett.2009,
+94 (26), 262904.
+(21) Swaminathan, S.; Shandalov, M.; Oshima, Y.; McIntyre, P. C.
+Bilayer Metal Oxide Gate Insulators for Scaled Ge-Channel Metal-
+Oxide-Semiconductor Devices. Appl. Phys. Lett.2010, 96 (8), 82904.
+(22) Afanas’ev, V. V.; Fedorenko, Y. G.; Stesmans, A. Interface Traps
+and Dangling-Bond Defects in (100)Ge/HfO2. Appl. Phys. Lett.2005,
+87 (3), 32107.
+(23) Delabie, A.; Bellenger, F.; Houssa, M.; Conard, T.; Van
+Elshocht, S.; Caymax, M.; Heyns, M.; Meuris, M. Effective Electrical
+Passivation of Ge(100) for High-K Gate Dielectric Layers Using
+Germanium Oxide. Appl. Phys. Lett.2007, 91 (8), 82904.
+(24) Bellenger, F.; Houssa, M.; Delabie, A.; Afanasiev, V.; Conard, T.;
+Caymax, M.; Meuris, M.; De Meyer, K.; Heyns, M. M. Passivation of
+Ge(100)/GeO2/high-κ Gate Stacks Using Thermal Oxide Treatments.
+J. Electrochem. Soc.2008, 155 (2), G33.
+(25) Iwauchi, S.; Tanaka, T. Interface Properties of Al 2O3 Ge
+Structure and Characteristics of Al2O3 Ge MOS Transistors. Jpn. J.
+Appl. Phys. 1971, 10, 260−265.
+(26) Caymax, M.; Eneman, G.; Bellenger, F.; Merckling, C.; Delabie,
+A.; Wang, G.; Loo, R.; Simoen, E.; Mitard, J.; De Jaeger, B.; Hellings,
+G.; De Meyer, K.; Meuris, M.; Heyns, M. Germanium for Advanced
+CMOS Anno 2009: A SWOT Analysis.Technol. Dig. - Int. Electron
+Devices Meet. IEDM2009, 461−464.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15855
+
+
+(27) Simoen, E.; Mitard, J.; Hellings, G.; Eneman, G.; De Jaeger, B.;
+Witters, L.; Vincent, B.; Loo, R.; Delabie, A.; Sioncke, S.; Caymax, M.;
+Claeys, C. Challenges and Opportunities in Advanced Ge pMOSFETs.
+Mater. Sci. Semicond. Process.2012, 15 (6), 588−600.
+(28) Xie, Q.; Deng, S.; Schaekers, M.; Lin, D.; Caymax, M.; Delabie,
+A.; Qu, X.-P.; Jiang, Y.-L.; Deduytsche, D.; Detavernier, C. Germanium
+Surface Passivation and Atomic Layer Deposition of High-K
+Dielectrics-a Tutorial Review on Ge-Based MOS Capacitors.Semicond.
+Sci. Technol. 2012, 27 (7), 74012.
+(29) Newsome, D. A.; Sengupta, D.; Foroutan, H.; Russo, M. F.; van
+Duin, A. C. T. Oxidation of Silicon Carbide by O2 and H2O: A ReaxFF
+Reactive Molecular Dynamics Study, Part I.J. Phys. Chem. C2012, 116
+(30), 16111−16121.
+(30) Van Duin, A. C. T.; Dasgupta, S.; Lorant, F.; Goddard, W. A.
+ReaxFF: A Reactive Force Field for Hydrocarbons.J. Phys. Chem. A
+2001, 105, 9396−9409.
+(31) Plimpton, S. Fast Parallel Algorithms for Short-Range Molecular
+Dynamics. J. Comput. Phys.1995, 117 (1), 1−19.
+(32) Henkelman, G.; Uberuaga, B. P.; Jónsson, H. A Climbing Image
+Nudged Elastic Band Method for Finding Saddle Points and Minimum
+Energy Paths.J. Chem. Phys.2000, 113 (22), 9901−9904.
+(33) Schaftenaar, G.; Noordik, J. H. olden: A Pre-and Post-
+Processing Program for Molecular and Electronic Structures *. J.
+Comput.-Aided Mol. Des.2000, 14 (2), 123−134.
+(34) Humphrey, W.; Dalke, A.; Schulten, K. VMD: Visual Molecular
+Dynamics. J. Mol. Graphics1996, 14 (1), 33−38.
+(35) Klepeis, J. L.; Lindorff-Larsen, K.; Dror, R. O.; Shaw, D. E.
+Long-Timescale Molecular Dynamics Simulations of Protein Structure
+and Function. Curr. Opin. Struct. Biol.2009, 19 (2), 120−127.
+(36) Widjaja, Y.; Musgrave, C. B. Quantum Chemical Study of the
+Mechanism of Aluminum Oxide Atomic Layer Deposition.Appl. Phys.
+Lett. 2002, 80 (18), 3304−3306.
+(37) Houssa, M.; Pourtois, G.; Caymax, M.; Meuris, M.; Heyns, M.
+M. First-Principles Study of the Structural and Electronic Properties of
+(100)Ge/Ge(M)O2 Interfaces (M = Al, La, or Hf).Appl. Phys. Lett.
+2008, 92 (24), 242101.
+(38) Wilk, G. D.; Wallace, R. M.; Anthony, J. M. High-K Gate
+Dielectrics: Current Status and Materials Properties Considerations.J.
+Appl. Phys. 2001, 89 (2001), 5243−5275.
+(39) Zheng, Y.; Agrawal, A.; Rayner, G. B.; Barth, M. J.; Ahmed, K.;
+Datta, S.; Engel-Herbert, R. In-Situ Process Control of Trilayer Gate
+Stacks on P-Germanium with 0.85 Nm EOT.IEEE Electron Device Lett.
+2015, 36 (9), 881−883.
+(40) Milojevic, M.; Contreras-Guerrero, R.; Lopez-Lopez, M.; Kim,
+J.; Wallace, R. M. Characterization of The“Clean-Up” of the Oxidized
+Ge (100) Surface by Atomic Layer Deposition.Appl. Phys. Lett.2009,
+95 (21), 212902.
+(41) Hinkle, C. L.; Sonnet, a. M.; Vogel, E. M.; McDonnell, S.;
+Hughes, G. J.; Milojevic, M.; Lee, B.; Aguirre-Tostado, F. S.; Choi, K.
+J.; Kim, H. C.; Kim, J.; Wallace, R. M. GaAs Interfacial Self-Cleaning
+by Atomic Layer Deposition.Appl. Phys. Lett.2008, 92 (7), 71901.
+(42) Chang, C. H.; Chiou, Y. K.; Chang, Y. C.; Lee, K. Y.; Lin, T. D.;
+Wu, T. B.; Hong, M.; Kwo, J. Interfacial Self-Cleaning in Atomic Layer
+Deposition of HfO2 Gate Dielectric on In0.15Ga0.85As. Appl. Phys. Lett.
+2006, 89 (24), 242911.
+(43) Hou, C. H.; Chen, M. C.; Chang, C. H.; Wu, T. B.; Chiang, C.
+D.; Luo, J. J. Effects of Surface Treatments on Interfacial Self-Cleaning
+in Atomic Layer Deposition of Al2O3 on InSb. J. Electrochem. Soc.
+2008, 155 (9), G180−G183.
+(44) Milojevic, M.; Aguirre-Tostado, F. S.; Hinkle, C. L.; Kim, H. C.;
+Vogel, E. M.; Kim, J.; Wallace, R. M. Half-Cycle Atomic Layer
+Deposition Reaction Studies of Al2O3 on In0.2Ga0.8As (100) Surfaces.
+Appl. Phys. Lett.2008, 93 (20), 202902.
+(45) Wang, S. K.; Kita, K.; Lee, C. H.; Tabata, T.; Nishimura, T.;
+Nagashio, K.; Toriumi, A. Desorption Kinetics of GeO from GeO2/Ge
+Structure. J. Appl. Phys.2010, 108 (5), 54104.
+(46) Kamata, Y. High-k/Ge MOSFETs for Future Nanoelectronics.
+Mater. Today 2008, 11 (1), 30−38.
+(47) Caymax, M.; Van Elshocht, S.; Houssa, M.; Delabie, A.; Conard,
+T.; Meuris, M.; Heyns, M. M.; Dimoulas, A.; Spiga, S.; Fanciulli, M.;
+Seo, J. W.; Goncharova, L. V. HfO 2 as Gate Dielectric on Ge:
+Interfaces and Deposition Techniques.Mater. Sci. Eng., B 2006, 135
+(3), 256−260.
+(48) Delabie, A.; Alian, A.; Bellenger, F.; Caymax, M.; Conard, T.;
+Franquet, A.; Sioncke, S.; Van Elshocht, S.; Heyns, M. M.; Meuris, M.
+H2O- and O3-Based Atomic Layer Deposition of High-κ Dielectric
+Films on GeO2 Passivation Layers.J. Electrochem. Soc.2009, 156 (10),
+G163−G167.
+(49) Pollock, C. R.Fundamentals of Optoelectronics; Irwin: Chicago,
+1995.
+(50) Takagi, S.; Maeda, T.; Taoka, N.; Nishizawa, M.; Morita, Y.;
+Ikeda, K.; Yamashita, Y.; Nishikawa, M.; Kumagai, H.; Nakane, R.;
+Sugahara, S.; Sugiyama, N. Gate Dielectric Formation and MIS
+Interface Characterization on Ge.Microelectron. Eng.2007, 84 (9−10),
+2314−2319.
+(51) Adhikari, H.; Sun, S.; Pianetta, P.; Chidsey, C. E. D.; McIntyre,
+P. C. Surface Passivation of Germanium Nanowires; Stanford Linear
+Accelerator Center, United States Department of Energy: United
+States, 2005.
+(52) Knapp, D. Chemical Passivation of Ge(111) Surfaces., Ph.D.
+Thesis, California Institute of Technology, 2011.
+(53) Engel-Herbert, R.; Hwang, Y.; Stemmer, S. Comparison of
+Methods to Quantify Interface Trap Densities at dielectric/III-V
+Semiconductor Interfaces. J. Appl. Phys.2010, 108 (12), 124101.
+ACS Applied Materials & Interfaces Research Article
+DOI: 10.1021/acsami.7b01618
+ACS Appl. Mater. Interfaces2017, 9, 15848−15856
+15856

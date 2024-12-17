@@ -1,0 +1,87 @@
+Based on the research paper and the current JSON schema, the following refinements are proposed to enhance the schema's comprehensiveness and accuracy, particularly focusing on the aspects of Spatial ALD (SALD) and the impact of precursor exposure on process efficiency and film properties:
+
+1. **Addition of New Properties:**
+   - **Substrate Velocity:** The research paper emphasizes the importance of substrate velocity in SALD, affecting the precursor exposure and film growth rate. This property is not currently in the schema.
+   - **Precursor Concentration in Carrier Gas:** This is another critical parameter affecting the growth rate and film properties, as detailed in the paper.
+   - **Injection Head Gap:** The gap between the substrate and the injection head influences the deposition process, especially in SALD.
+
+2. **Modification of Existing Properties:**
+   - **Precursors:** Extend the `precursors` object to include properties like `exposureTime` and `concentration`, which are crucial for understanding the saturation state and optimizing precursor usage.
+   - **Process Details:** Include properties like `method` to distinguish between conventional ALD and SALD, and `atmosphericPressure` to specify if the process operates under atmospheric conditions.
+
+3. **Refinement Based on Expert Feedback:**
+   - **Documentation and Clarity:** Enhance descriptions for each property to include why they are important and how they affect the ALD process, ensuring clarity and utility for users unfamiliar with the domain.
+   - **Organizing Properties:** Group related properties like `substrateVelocity`, `injectionHeadGap`, and `precursorExposure` under a new object `spatialALDSettings` to keep the schema organized and focused.
+
+Here is the refined JSON schema incorporating these changes:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Operating temperature of the ALD process in degrees Celsius."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Operating pressure of the ALD process in Torr."
+        },
+        "method": {
+          "type": "string",
+          "description": "Method of deposition, e.g., conventional ALD, SALD."
+        },
+        "atmosphericPressure": {
+          "type": "boolean",
+          "description": "True if the process operates under atmospheric pressure."
+        }
+      },
+      "description": "Basic operating conditions for the ALD process."
+    },
+    "precursors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "chemicalName": {
+            "type": "string"
+          },
+          "reactivity": {
+            "type": "string"
+          },
+          "exposureTime": {
+            "type": "number",
+            "description": "Time during which the precursor is exposed to the substrate surface."
+          },
+          "concentration": {
+            "type": "number",
+            "description": "Concentration of the precursor in the carrier gas."
+          }
+        }
+      },
+      "description": "Details of precursors used including their interactions with different surfaces."
+    },
+    "spatialALDSettings": {
+      "type": "object",
+      "properties": {
+        "substrateVelocity": {
+          "type": "number",
+          "description": "Velocity of the substrate in cm/s, relevant for SALD processes."
+        },
+        "injectionHeadGap": {
+          "type": "number",
+          "description": "Gap between the substrate and the injection head in micrometers."
+        }
+      },
+      "description": "Settings specific to Spatial ALD processes."
+    }
+  }
+}
+```
+
+This schema now better reflects the complexities and specificities of the ALD process, particularly SALD, as discussed in the research paper and suggested by expert feedback.

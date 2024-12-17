@@ -1,0 +1,425 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "type": "object",
+    "properties": {
+        "ALDMethod": {
+            "type": "string",
+            "description": "The method of ALD used, e.g., PEALD, Thermal ALD."
+        },
+        "materialDeposited": {
+            "type": "string",
+            "description": "The material that is deposited during the ALD process."
+        },
+        "reactants": {
+            "type": "object",
+            "properties": {
+                "precursor": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name of the precursor."
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Description of the precursor."
+                        },
+                        "bubblerTemperature": {
+                            "type": "number",
+                            "description": "Temperature of the precursor bubbler in Celsius."
+                        },
+                        "carrierGas": {
+                            "type": "string",
+                            "description": "Type of carrier gas used with the precursor."
+                        },
+                        "vaporPressure": {
+                            "type": "number",
+                            "description": "Vapor pressure of the precursor in Torr."
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "carrierGas"
+                    ]
+                },
+                "coReactant": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name of the co-reactant."
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Description of the co-reactant."
+                        },
+                        "bubblerTemperature": {
+                            "type": "number",
+                            "description": "Temperature of the co-reactant bubbler in Celsius, if applicable."
+                        },
+                        "plasmaProperties": {
+                            "type": "string",
+                            "description": "Plasma properties if PEALD is used."
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ]
+                }
+            },
+            "required": [
+                "precursor",
+                "coReactant"
+            ]
+        },
+        "processConditions": {
+            "type": "object",
+            "properties": {
+                "reactor": {
+                    "type": "string",
+                    "description": "Name and manufacturer of the reactor used."
+                },
+                "reactorDesign": {
+                    "type": "string",
+                    "description": "Specific design features of the reactor, such as static mixers."
+                },
+                "temperatureRange": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "description": "Temperature range for the deposition process in Celsius, emphasizing low-temperature capabilities."
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Pressure in the reactor during the ALD process in mbar."
+                },
+                "numberOfCycles": {
+                    "type": "integer",
+                    "description": "Total number of ALD cycles to achieve the desired film thickness."
+                },
+                "growthPerCycle": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "number",
+                            "description": "Growth per cycle in nanometers."
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "nm/cycle"
+                            ],
+                            "description": "Unit of measurement for growth per cycle."
+                        }
+                    },
+                    "required": [
+                        "value",
+                        "unit"
+                    ]
+                },
+                "nucleationPeriod": {
+                    "type": "integer",
+                    "description": "Number of cycles for the nucleation period."
+                },
+                "selfLimitingGrowth": {
+                    "type": "boolean",
+                    "description": "Indicates whether the growth is self-limiting."
+                },
+                "substrate": {
+                    "type": "string",
+                    "description": "Type of substrate used in the ALD process."
+                },
+                "pulseTimes": {
+                    "type": "object",
+                    "properties": {
+                        "precursorPulseTime": {
+                            "type": "number",
+                            "description": "Pulse time for the precursor in seconds."
+                        },
+                        "coReactantPulseTime": {
+                            "type": "number",
+                            "description": "Pulse time for the co-reactant in seconds."
+                        }
+                    },
+                    "description": "Pulse times for precursors and co-reactants."
+                },
+                "purgeTimes": {
+                    "type": "object",
+                    "properties": {
+                        "firstPurgeTime": {
+                            "type": "number",
+                            "description": "Time for the first purge in seconds."
+                        },
+                        "secondPurgeTime": {
+                            "type": "number",
+                            "description": "Time for the second purge in seconds."
+                        }
+                    },
+                    "description": "Purge times between precursor and co-reactant pulses."
+                },
+                "bufferLayer": {
+                    "type": "string",
+                    "description": "Description of the buffer layer used in experiments, if any."
+                }
+            },
+            "required": [
+                "reactor",
+                "temperatureRange",
+                "pressure",
+                "numberOfCycles",
+                "growthPerCycle",
+                "substrate"
+            ]
+        },
+        "filmProperties": {
+            "type": "object",
+            "properties": {
+                "chemicalComposition": {
+                    "type": "string",
+                    "description": "Chemical composition of the deposited film."
+                },
+                "stoichiometry": {
+                    "type": "string",
+                    "description": "Stoichiometry of the film, e.g., O/Hf ratio."
+                },
+                "structuralProperties": {
+                    "type": "object",
+                    "properties": {
+                        "thickness": {
+                            "type": "number",
+                            "description": "Final thickness of the film in nanometers."
+                        },
+                        "crystallinity": {
+                            "type": "string",
+                            "description": "Crystallinity of the film."
+                        },
+                        "uniformity": {
+                            "type": "boolean",
+                            "description": "Indicates whether the film is uniform across the substrate."
+                        },
+                        "conformality": {
+                            "type": "boolean",
+                            "description": "Indicates whether the film conforms to 3D structures, achieving 100% step coverage."
+                        },
+                        "roughness": {
+                            "type": "number",
+                            "description": "Surface roughness of the film in nanometers."
+                        },
+                        "density": {
+                            "type": "number",
+                            "description": "Density of the film in g/cm\u00b3."
+                        },
+                        "orientation": {
+                            "type": "string",
+                            "description": "Crystallographic orientation of the film, e.g., (111)."
+                        },
+                        "crystallinePhase": {
+                            "type": "string",
+                            "description": "Crystalline phase of the film, e.g., anatase, rutile."
+                        },
+                        "preferentialOrientation": {
+                            "type": "string",
+                            "description": "Preferential orientation of crystallites in the film."
+                        }
+                    },
+                    "required": [
+                        "thickness",
+                        "uniformity",
+                        "conformality",
+                        "density"
+                    ]
+                },
+                "opticalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "refractiveIndex": {
+                            "type": "number",
+                            "description": "Refractive index of the film."
+                        },
+                        "absorptionCoefficient": {
+                            "type": "number",
+                            "description": "Absorption coefficient of the film."
+                        },
+                        "opticalBandgap": {
+                            "type": "number",
+                            "description": "Optical bandgap of the film in eV."
+                        }
+                    }
+                },
+                "electricalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "resistivity": {
+                            "type": "number",
+                            "description": "Electrical resistivity of the film in ohm-meter."
+                        },
+                        "carrierDensity": {
+                            "type": "number",
+                            "description": "Carrier density in the film."
+                        },
+                        "mobility": {
+                            "type": "number",
+                            "description": "Carrier mobility in the film."
+                        }
+                    }
+                },
+                "dielectricProperties": {
+                    "type": "object",
+                    "properties": {
+                        "dielectricConstant": {
+                            "type": "number",
+                            "description": "Dielectric constant of the film, relevant for materials like hafnium and zirconium oxides."
+                        }
+                    }
+                },
+                "impurityContent": {
+                    "type": "object",
+                    "properties": {
+                        "hydrogen": {
+                            "type": "number",
+                            "description": "Hydrogen impurity content in atomic percent."
+                        },
+                        "carbon": {
+                            "type": "number",
+                            "description": "Carbon impurity content in atomic percent."
+                        },
+                        "oxygen": {
+                            "type": "number",
+                            "description": "Oxygen impurity content in atomic percent."
+                        },
+                        "nitrogen": {
+                            "type": "number",
+                            "description": "Nitrogen impurity content in atomic percent."
+                        },
+                        "chlorine": {
+                            "type": "number",
+                            "description": "Chlorine impurity content in atomic percent."
+                        }
+                    },
+                    "description": "Impurity contents in the film."
+                }
+            },
+            "required": [
+                "chemicalComposition",
+                "structuralProperties"
+            ]
+        },
+        "safetyAndStability": {
+            "type": "object",
+            "properties": {
+                "chemicalSafety": {
+                    "type": "string",
+                    "description": "Safety considerations for the chemicals used."
+                },
+                "filmStability": {
+                    "type": "string",
+                    "description": "Stability of the film under various conditions."
+                },
+                "reproducibility": {
+                    "type": "boolean",
+                    "description": "Indicates whether the ALD process is reproducible."
+                }
+            },
+            "required": [
+                "chemicalSafety",
+                "filmStability",
+                "reproducibility"
+            ]
+        },
+        "monitoringTechniques": {
+            "type": "object",
+            "properties": {
+                "FTIR": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Description of FTIR technique used."
+                        },
+                        "observations": {
+                            "type": "string",
+                            "description": "Key observations from FTIR analysis."
+                        }
+                    }
+                },
+                "QCM": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Description of QCM technique used."
+                        },
+                        "massChange": {
+                            "type": "number",
+                            "description": "Mass change observed during QCM analysis in ng/cm\u00b2."
+                        }
+                    }
+                }
+            },
+            "description": "Techniques used to monitor the ALD process and their observations."
+        },
+        "annealingConditions": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "description": "Annealing temperature in Celsius."
+                },
+                "atmosphere": {
+                    "type": "string",
+                    "description": "Atmosphere used during annealing, e.g., nitrogen."
+                },
+                "duration": {
+                    "type": "number",
+                    "description": "Duration of the annealing process in minutes."
+                }
+            },
+            "description": "Conditions under which the film is annealed post-deposition."
+        },
+        "surfaceIntermediates": {
+            "type": "object",
+            "properties": {
+                "species": {
+                    "type": "string",
+                    "description": "Type of surface intermediate species formed during the ALD process."
+                },
+                "stability": {
+                    "type": "string",
+                    "description": "Stability of the surface intermediates."
+                },
+                "bondingStrength": {
+                    "type": "string",
+                    "description": "Strength of bonding of the surface intermediates to the substrate."
+                }
+            },
+            "description": "Details about surface intermediates formed during the ALD process."
+        },
+        "adsorptionSites": {
+            "type": "object",
+            "properties": {
+                "number": {
+                    "type": "integer",
+                    "description": "Number of adsorption sites available on the substrate."
+                },
+                "effectOnGrowth": {
+                    "type": "string",
+                    "description": "Effect of adsorption sites on the growth rate and film properties."
+                }
+            },
+            "description": "Information about adsorption sites on the substrate."
+        }
+    },
+    "required": [
+        "ALDMethod",
+        "materialDeposited",
+        "reactants",
+        "processConditions",
+        "filmProperties",
+        "safetyAndStability",
+        "monitoringTechniques"
+    ]
+}

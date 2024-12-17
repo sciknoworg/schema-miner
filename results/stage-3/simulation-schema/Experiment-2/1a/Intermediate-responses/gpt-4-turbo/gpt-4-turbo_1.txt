@@ -1,0 +1,172 @@
+Based on the research paper content and domain expert feedback, the JSON schema for the ALD process needs to be refined to include additional properties and reorganize existing ones for better clarity and relevance. Here is the refined JSON schema incorporating the necessary changes:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition Process",
+    "type": "object",
+    "properties": {
+        "precursor": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the precursor used in the ALD process."
+                },
+                "formula": {
+                    "type": "string",
+                    "description": "Chemical formula of the precursor."
+                },
+                "reactionMechanism": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "step": {
+                                "type": "string",
+                                "description": "Step description in the reaction mechanism."
+                            },
+                            "products": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "description": "Products formed in this step."
+                            }
+                        }
+                    },
+                    "description": "Detailed reaction mechanism of the precursor with the surface."
+                },
+                "selectivity": {
+                    "type": "string",
+                    "description": "Description of the precursor's selectivity towards specific sites on the substrate."
+                },
+                "chemisorption": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Type of chemisorption (e.g., dissociative)."
+                        },
+                        "reactions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "with": {
+                                        "type": "string",
+                                        "description": "Substance the precursor reacts with during chemisorption."
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Products formed during the chemisorption."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Details of the chemisorption behavior of the precursor."
+                },
+                "ligandGeometry": {
+                    "type": "string",
+                    "description": "Description of the ligand geometry affecting steric hindrance."
+                }
+            }
+        },
+        "coReactants": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the co-reactant."
+                    },
+                    "reactions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "with": {
+                                    "type": "string",
+                                    "description": "Substance the co-reactant reacts with."
+                                },
+                                "products": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Products formed during the reaction."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "List of co-reactants and their specific reactions in the ALD process."
+        },
+        "processConditions": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "string",
+                    "description": "Temperature range for the ALD process."
+                },
+                "pressure": {
+                    "type": "string",
+                    "description": "Pressure conditions during the ALD process."
+                },
+                "cycleParameters": {
+                    "type": "object",
+                    "properties": {
+                        "numberOfCycles": {
+                            "type": "integer",
+                            "description": "Number of cycles in the ALD process."
+                        },
+                        "cycleTime": {
+                            "type": "string",
+                            "description": "Duration of each cycle in the ALD process."
+                        }
+                    },
+                    "description": "Parameters defining the cycles in the ALD process."
+                },
+                "reactorType": {
+                    "type": "string",
+                    "description": "Type of reactor used for the ALD process."
+                },
+                "substrateDetails": {
+                    "type": "string",
+                    "description": "Details about the substrate used in the ALD process."
+                },
+                "sequenceTimings": {
+                    "type": "object",
+                    "properties": {
+                        "precursorFeeding": {
+                            "type": "integer",
+                            "description": "Time for precursor feeding in seconds."
+                        },
+                        "purge": {
+                            "type": "integer",
+                            "description": "Time for purging in seconds."
+                        },
+                        "coReactantFeeding": {
+                            "type": "integer",
+                            "description": "Time for co-reactant feeding in seconds."
+                        }
+                    },
+                    "description": "Specific timings for each sequence step in the ALD process."
+                }
+            }
+        },
+        "growthPerCycle": {
+            "type": "number",
+            "description": "Growth per cycle (GPC) measurement indicating the thickness of film deposited per cycle."
+        }
+    }
+}
+```
+
+This schema now includes a more organized structure based on the feedback, ensuring that the properties are grouped logically and that the descriptions are adequate and not overly specific. The schema remains general enough to be applicable across various ALD processes while being detailed enough to provide comprehensive information about each aspect of the process.

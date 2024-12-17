@@ -1,0 +1,29 @@
+Property Grouping:
+1. The temperature and pressure properties from the reactor box can be moved inside the ALD method box and the reactor property box can be removed completely.
+2. Place the reactant concentration, reactant temperature, vapor pressure inside each reactant (precursor and co-reactant). Since these describe the reactants it is better if this information is merged inside the reactant property box.
+
+Missing Properties:
+1. Reactor name, manufacturer, dimensions
+2. ALD method used
+
+Adequacy of Descriptions:
+1. coReactor: change the name to coReactant
+2. Description of Temperature: change it to "Temperature of the Reactants". Should have two input values, in the case the process is Thermal ALD.
+3. Same for the VaporPressure description
+4. Rename pulseLength to Dosing Time. It should have two entries: one for precursor and one for co-reactant
+5. Remove the "TDMATReaction" and "NHReaction". These are referring to a specific ALD process, while the main point of the schema is to be adapted to many different ALD systems. Maybe it can be respectively renamed to : "PrecursorReaction", "Co-reactantReaction" to have more universal character. Inside these property boxes there will be Dosing Time and Purging time. In that case the previously mentioned PulseLength property should be removed.
+6. Remove the reactantSelection. It's repeating the previous data about precursor and co-reactant
+7. Remove the precursordosingtime and coreactantexposuretime, and purg time from the reactor property box. These properties are repeated again within the same schema.
+8. Remove the stoichiometry property box
+9. Rename optical to OpticalProperties
+10. Rename electrical to ElectricalProperties
+11. Remove the uniformity property inside the bigger uniformity property. The thickness variation property is enough to describe the uniformity.
+12. Remove the conformality value property. The AspectVCheRatio is enough for this
+13. Description of crystallinity: "Film crystallinity"
+
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod(MethodUsed, MaterialDeposited, Precursor (Compound, Temperature,VaporPressure,Reaction(Dosing,Purging)),Co-reactant(Compound, Temperature,VaporPressure,Reaction(Dosing,Purging)), Reactor(Name,Manufacturer, Dimensions), DepositionTemperature, Pressure)
+-> ThicknessControl(GPC, FilmThickness,NucleationBehavior)
+-> MaterialProperties(StructuralProperties(ChemicalCompsition, Uniformity, Conformality, Crystallinity,FilmDensity), OpticalProperties(refrIndex,absorptionCoef), ElectricalProperties(Resistivity, CarrierDensity,Mobility))

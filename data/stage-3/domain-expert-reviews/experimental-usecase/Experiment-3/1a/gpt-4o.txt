@@ -1,0 +1,32 @@
+Property Grouping:
+1. Place opticalBandgap to electrical properties and rename it to Bandgap. Description: "Electronic bandgap of the film in eV"
+2. Place the dielectric constant parameter in the electrical properties parameter box.
+3. Combine: GPC, NucleationPeriod, SelfLimiting Growth in one property box named: "GrowthBheaviour". In this box can also be included graphs related such as nucleation curve (thickness to the number of cycles) and also saturation curve (GPC to deposition time), if these graphs are provided by the paper.
+4. Combine all the crystallinity properties (crystallinity, orientation, crystalline phase, preferential orientation) in one information unit under the structural properties box.
+
+Adequacy of Descriptions:
+1. Carrier Gas: applicable for both reactants
+2. Include VaporPressure for coReactant if applicable (Thermal ALD)
+3. Description of reactorDesign: "…such as static mixers.", remove this. Add a component more relevant to ALD reactors like: "… a capacitively coupled plasma source".
+4. Description of temperature range: Remove "emphasizing low-temperature capabilities." This is not always the case for all processes.
+5. Unit of reactor pressure: Pascal (Pa). You can also name the parameter: ChamberPressure
+6. Rename pulse times to Dosing Times
+7. Rename First Purge time to Precursor Purge Time and Second Purge Time to coReactant Purge Time.
+8. Remove the buffer layer
+9. In the descriptions of carrier density and mobility insert also the preferred units of measurement.
+10. Description of dielectric constant: remove the part: "…relevant for materials like hafnium and zirconium oxides".
+11. Rename monitoring techniques to "characterization techniques".
+12. Insert other examples of characterization techniques like: XRD, SEM, XRF, OES, Spectroscopic Ellipsometry etc. These will be different from paper to paper but it’s important to by able to recognize them. Also what would be nice is to place the characterization techniques after the process conditions of the ALD process and prior to mentioning the properties of the deposited film.
+13. Remove the surface intermediates and adsorptionsites parameter boxes.
+
+Domain expert edited schema of the initial generated version:
+
+-> ALDMethod
+-> MaterialDeposited
+-> Reactants(Precursor,Co-Reactant,CarrierGas)
+-> ProcessConditions(Reactor,ReactorDesign,TemperatureRange,ChamberPressure,Number of Cycles,Substrate,DosingTimes, PurgeTimes)
+-> CharacterizationTechniques(FTIR, QCM, XRD, SE, TEM, XRF)
+-> AnnealingConditions(temperature, duration, atmosphere) 
+-> GrowthBehavior(GPC, NucleationPeriod,SelfLimitingGrowth,graphs if any)
+-> FilmProperties(ChemicalComposition,Stoichiometry,Impurities, StructuralProperties[thickness, crystallinity[crystallinephsa,preferentialorientation, orientation], uniformity, conformality, roughness, density], ElectricalProperties [resistivity, carrierdensity, mobility, dielectric constant, bandgap], OpticalProperties [refractiveindex,absorptioncoefficient])
+-> StabilityandSafety(chemicalSafety, filmStability, Reproducibility)

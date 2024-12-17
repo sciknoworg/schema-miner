@@ -1,0 +1,659 @@
+materials
+Article
+Atomistic Simulations of Plasma-Enhanced Atomic
+Layer Deposition
+Martin Becker and Marek Sierka *
+Otto Schott Institute of Materials Research, Friedrich Schiller University Jena, 07743 Jena, Germany
+* Correspondence: marek.sierka@uni-jena.de
+Received: 25 July 2019; Accepted: 12 August 2019; Published: 15 August 2019
+/gid00030/gid00035/gid00032/gid00030/gid00038/gid00001/gid00033/gid00042/gid00045/gid00001
+/gid00048/gid00043/gid00031/gid00028/gid00047/gid00032/gid00046
+Abstract: Plasma-enhanced atomic layer deposition (PEALD) is a widely used, powerful layer-by-layer
+coating technology. Here, we present an atomistic simulation scheme for PEALD processes, combining
+the Monte Carlo deposition algorithm and structure relaxation using molecular dynamics. In contrast
+to previous implementations, our approach employs a real, atomistic model of the precursor. This
+allows us to account for steric hindrance and overlap restrictions at the surface corresponding to the
+real precursor deposition step. In addition, our scheme takes various process parameters into account,
+employing predeﬁned probabilities for precursor products at each Monte Carlo deposition step. The
+new simulation protocol was applied to investigate PEALD synthesis of SiO2 thin ﬁlms using the
+bis-diethylaminosilane precursor. It revealed that increasing the probability for precursor binding to
+one surface oxygen atom favors amorphous layer growth, a large number of –OH impurities, and the
+formation of voids. In contrast, a higher probability for precursor binding to two surface oxygen
+atoms leads to dense SiO2 ﬁlm growth and a reduction of –OH impurities. Increasing the probability
+for the formation of doubly bonded precursor sites is therefore the key factor for the formation of
+dense SiO2 PEALD thin ﬁlms with reduced amounts of voids and –OH impurities.
+Keywords: plasma-enhanced atomic layer deposition; Monte Carlo simulation; molecular dynamics
+simulations; density functional theory; ReaxFF reactive force ﬁeld
+1. Introduction
+Atomic layer deposition (ALD) is a coating technology based on self-terminating reactions of
+gaseous precursor molecules with surface functional groups of the substrate. As shown in Figure 1,
+a precursor vapor (usually an organometallic compound) is introduced in the chemical reactor. It reacts
+with the functional groups at the surface of the substrate, until the surface is saturated (ﬁrst half-cycle).
+Excess precursor and reaction byproducts are purged by inert gases. Next, a second precursor is pulsed
+in the reactor, such as an oxidizing agent like H2O, ozone, O2, or O2 plasma, which reacts with the
+remaining ligands of the precursor material (second half-cycle). The reactor is purged again. The
+ALD process is continued by repeating the above pulsing and purging steps, which constitute the
+ALD cycle, until the desired ﬁlm thickness is reached. These reactions depend only on the abundancy
+and variety of the surface functional groups for a speciﬁc precursor, and not on the shape of the
+substrate. Hence, the ALD technology leads to extremely conformal coatings on highly curved [1–5] or
+nanostructured substrates. Additionally, the composition of the thin ﬁlms can be controlled with atomic
+precision by alternating the organometallic compound for binary or more complex mixtures [ 1,5].
+Plasma-enhanced ALD (PEALD), which utilizes oxygen plasma, is applied in order to increase the
+reactivity of the oxidizing agent [6]. This enables, for example, room temperature deposition of SiO2
+thin ﬁlms, which is possible only at 200 ◦C in typical thermal processes using O3 [7]. However, recently
+developed highly reactive precursors allow for thermal ALD processes at temperatures approaching
+room temperature [8,9]. The O radical species present in the plasma allow for additional tailoring of
+Materials 2019, 12, 2605; doi:10.3390/ma12162605 www.mdpi.com /journal/materials
+
+Materials 2019, 12, 2605 2 of 11
+material properties [10,11]. For example, in the case of TiO 2 coatings, PEALD ﬁlms are denser and
+have a higher refractive index [12].
+Atomistic simulations of PEALD processes are of particular interest for the fundamental
+understanding of the growth processes, mechanisms of material densiﬁcation and crystallization, void
+formation, intermixing, and mechanical properties of the coatings at an atomic level [13]. However, such
+simulations are very challenging due to the usually signiﬁcant number of competing chemical reactions
+and the thickness-dependent structure relaxation of the growing surface [ 13–15]. For mechanistic
+questions, such as reaction paths, reaction energies and barriers electronic structure approaches are the
+methods of choice [13]. In particular, the advent of modern density functional theory (DFT) based on
+accurate gradient-corrected and hybrid functionals allowed for the identiﬁcation and understanding of
+elementary chemical reactions of a number of ALD processes [13]. For example, the understanding
+of SiO2 ALD mechanisms has proceeded through a number of computational studies employing
+DFT [16]. The reactivities have been investigated for a number of aminosilane precursors [ 17–23],
+which display low activation energies for reactions with surface hydroxyl groups. Despite the progress
+in the applications and development of electronic structure methods, their computational cost is still too
+high to reliably simulate the overall ALD growth [13,15]. This task can only be achieved by employing
+more approximate methods capable of extending the spatiotemporal scale accessible for simulations.
+The two such approaches applied for studies of ALD growth dynamics are the atomistic kinetic Monte
+Carlo (KMC) model and molecular dynamics (MD) [24].
+KMC is a stochastic method intended to simulate the time evolution of processes that occur with
+priori known transition rates among states. The main advantage of the KMC method is its ability
+to model a broad range of time scales [ 24]. However, it relies on an accurate knowledge of rate
+constants for all elementary reaction steps. Such information is diﬃcult to obtain by employing DFT
+due to the deﬁciencies of existing exchange–correlation functionals and requires more accurate and
+computationally much more demanding electronic structure methods. Another disadvantage of the
+KMC approach is its inability to simulate the morphology of the growing ALD ﬁlm, i.e., crystalline
+vs. amorphous growth. Atomistic KMC simulations using DFT-derived reaction mechanisms and
+activation energies have been used, e.g., to investigate ALD growth of HfO2 [14,25].
+In MD simulations, the time evolution of interacting atoms is described directly by solutions of
+the corresponding equations of motion [24]. Therefore, the MD method, in combination with carefully
+parameterized potential functions or reactive force ﬁelds, is able to describe relaxation phenomena
+and defects in ALD-generated ﬁlms. However, the temporal scale of MD simulations (ps to ns) is
+very small compared to the duration of ALD pulses. This problem has been addressed by Hu et al. in
+MD simulations of Al2O3 ALD by separating the large time scale of surface reactions (ns to s) from
+the small time scale of structural relaxation (ps) [15]. Their deposition algorithm assumes that ALD
+reactions occur only on the active –OH groups on the growing surface and that the products of the
+metal precursor pulses can be fully hydroxylated, i.e., –Al(CH3)2 is fully converted to –Al(OH)2. The
+direct (large time scale) simulations of surface reactions are replaced by a deposition algorithm. This
+starts with a hydroxylated surface and randomly picks one of the available surface –OH groups for
+the deposition of the ALD product (–Al(OH) 2). Approximate steric and overlap restrictions with
+neighboring atoms are checked and, if satisﬁed, an H atom in the selected –OH group is replaced by
+–Al(OH)2. After each deposition step, the structure is relaxed using MD simulation. Unlike KMC,
+this MD-based approach enables us to study the thickness-dependent evolution of the microscopic
+structures of ALD layers. In addition, the inﬂuences of operating parameters, such as precursor
+type, temperature, external ﬁelds, initial surface structure (crystalline vs. amorphous), number and
+distribution of –OH, etc. on the ALD process can be investigated at the atomic level.
+Due to a high computational cost, MD simulations of large systems are rarely performed using
+electronic structure methods. Instead, more approximate approaches, such as interatomic potential
+functions or force ﬁelds, are used. However, the applicability of many interatomic potentials is
+restricted to one element oxidation state and a small number of polymorphs [26]. A relatively new and
+
+Materials 2019, 12, 2605 3 of 11
+promising trend in the development of simulation methods for nanomaterials is the use of so-called
+reactive force ﬁelds, such as the ReaxFF approach of van Duin and co-workers [ 27]. This has been
+applied to a wide range of materials including amorphous and crystalline SiO2 [28,29] and Al2O3 [30],
+yielding very good agreement with experimental data. Although parameterization of ReaxFF is
+relatively complex, it is very powerful since it allows for an accurate description of the chemistry of
+nanostructures with a computational cost far below that of quantum mechanical methods. In our
+recent study, we demonstrated that the structure of amorphous SiO2 could be accurately described at
+the ReaxFF level by employing relatively small semi-amorphous periodic models [31]. A simulation
+cell containing only 64 SiO2 units yielded a structure that properly reproduced experimental structural
+parameters, mechanical properties, and IR spectra of bulk silica, using subsequent reﬁnement at the
+DFT level.
+In this article, we present an atomistic simulation scheme for a PEALD process that combines the
+Monte Carlo (MC) deposition algorithm and structure relaxation using MD. Our scheme is based on
+the one proposed by Hu et al. [15]. However, in contrast to their implementation that directly deposits
+hydroxylated products of the second ALD half-cycle, we use a real, atomistic model of the precursor
+deposited in the ﬁrst half-cycle. In addition, for the MC deposition step, our approach introduces site
+occupation probabilities for precursor reaction products. The performance of our simulation scheme
+is demonstrated for PEALD synthesis of SiO 2 thin ﬁlms, using a bis-diethylaminosilane (BDEAS)
+precursor with the structural formula H2Si(NEt2)2, Et = C2H5. We show that the resulting structure of
+the SiO2 coating strongly depends on the occupation probabilities for precursor products. Densiﬁcation
+of the SiO2 ﬁlm and reduction of –OH impurities are observed for increasing occupation probability of
+doubly coordinated surface sites.
+Materials 2019, 12, 2605 3 of 11 
+ 
+and promising trend in the development of simulation methods for nanomaterials is the use of  
+so-called reactive force fields, such as the ReaxFF approach of van Duin and co -workers [27]. This 
+has been applied to a wide range of materials including amorphous and crystalline SiO 2 [28,29] and 
+Al2O3 [30], yielding very good agreement with experimental data. Although parameterization of 
+ReaxFF is relatively complex , it is very powerful since it allows for an accurate description of the 
+chemistry of nanostructures with a computational cost far below that of quantum mechanical 
+methods. In our recent study , we demonstrated that the structure  of amorphous SiO 2 could be 
+accurately described at the ReaxFF level by employing relatively small semi -amorphous periodic 
+models [31]. A s imulation cell containing only 64 SiO 2 units yield ed a structure that properly 
+reproduced experimental structural parameters, mechanical properties, and IR spectra of bulk silica, 
+using subsequent refinement at the DFT level. 
+In this article, we present an atomistic simulation scheme for a PEALD process that combines  
+the Monte Carlo (MC) deposition algorithm and structure relaxation using MD. Our scheme is based 
+on the one proposed by Hu et al. [15]. However, in contrast to their implementation that directly 
+deposits hydroxylated products of the second ALD half -cycle, we use a real, atomistic model of the 
+precursor deposited in the first half -cycle. In addition, for the MC deposition step, our approach 
+introduces site occupation probabilities for pr ecursor reaction products. The performance of our 
+simulation scheme  is demonstrated for PEALD synthesis  of SiO 2 thin films , using a 
+bis-diethylaminosilane (BDEAS) precursor with the structural formula H 2Si(NEt2)2, Et = C 2H5. We 
+show that the resulting structure of the SiO2 coating strongly depend s on the occupation 
+probabilities for precursor products. Densification of the SiO2 film and reduction of –OH impurities 
+are observed for increasing occupation probability of doubly coordinated surface sites. 
+ 
+Figure 1. Schematic representation of a surface using plasma-enhanced atomic layer deposition (PEALD). 
+2. Method and Implementation 
+2.1. PEALD Simulation Procedure 
+Figure 2 shows the implemented protocol for simulation of the first PEALD deposition 
+half-cycle. In contrast to the original scheme of Hu et al. [15], it used the MC method to simulate the 
+full precursor deposition process. In the first step of each precursor deposition half-cycle, the surface 
+–OH groups were enumerated. Then, during each MC step, a free surface –OH group was randomly 
+selected. The surface was scanned for neighboring free –OH groups and, depending on their number 
+and precursor type, a MC move was performed that creates one of possible precursor products. This 
+Figure 1. Schematic representation of a surface using plasma-enhanced atomic layer deposition
+(PEALD).
+2. Method and Implementation
+2.1. PEALD Simulation Procedure
+Figure 2 shows the implemented protocol for simulation of the ﬁrst PEALD deposition half-cycle.
+In contrast to the original scheme of Hu et al. [15], it used the MC method to simulate the full precursor
+deposition process. In the ﬁrst step of each precursor deposition half-cycle, the surface –OH groups
+were enumerated. Then, during each MC step, a free surface –OH group was randomly selected.
+The surface was scanned for neighboring free –OH groups and, depending on their number and
+precursor type, a MC move was performed that creates one of possible precursor products. This part
+
+Materials 2019, 12, 2605 4 of 11
+is also diﬀerent than in the original scheme of Hu et al. [15], where direct deposition of the product
+of the second half-cycle (i.e., –Al(OH) 2) was performed. Steric hindrance and overlap restrictions
+at the surface corresponding to the real precursor deposition step were accounted for only in an
+approximate way, by deﬁning an exclusion zone around each successfully deposited –Al(OH)2 group.
+In contrast, our approach employs a real, atomistic model of the precursor. After each attachment step,
+the structure was relaxed, either by local structure optimization or by short simulated annealing using
+molecular dynamics (MD). The energy of the chemisorption was calculated and used to calculate the
+acceptance criterion employing the usual Metropolis–Hastings rule [32]. The procedure was repeated
+until all enumerated surface –OH groups were either reacted or excluded from MC moves due to
+steric hindrance and overlap with chemisorbed precursor molecules. Alternatively, a predeﬁned
+concentration of surface –OH groups can be left unreacted. The ﬁnal precursor monolayer structure
+was relaxed and equilibrated using MD. The second ALD half-cycle was modeled by simply replacing
+all organic surface groups with –OH groups, followed by relaxation and equilibration using MD. This
+corresponds to full conversion of the products of the precursor pulse to surface hydroxyl species. Such
+an approach is particularly well suited for simulating ALD growth of systems with primary reactions
+that have relatively low activation energies [14]. It has been shown that, unlike thermal ALD, PEALD
+can be eﬃciently performed even at room temperature [6,7], justifying the assumption of low activation
+energies. It has also been shown by calculations that oxygen plasma can quantitatively oxidize organic
+surface precursor species [17].
+The selection of created chemisorbed precursor products depends on predeﬁned occupation
+probabilities which remain constant during the simulated thin ﬁlm growth. For example, considering a
+precursor yielding two possible chemisorbed precursor products P1 or P2 requires the corresponding
+occupation probabilities {pP1, pP2 ∈[0, 1]}, with
+pP1 + pP2 = 1 (1)
+This approach can be easily generalized to a set of N products {P1, P2, ... , PN} with occupation
+probabilities {pP1, pP2, ... , pPN ∈[0, 1]} fulﬁlling the condition
+pP1 + pP2 + ... + pPN = 1 (2)
+Materials 2019, 12, 2605 4 of 11 
+ 
+part is also different than in the original scheme  of Hu et al. [15], where direct deposition of the 
+product of the second half -cycle (i.e. , –Al(OH)2) was performed. Steric hindrance and overlap 
+restrictions at the surface cor responding to the real precursor deposition step were accounted for 
+only in an approximate way , by defining an exclusion zone around each successfully deposited –
+Al(OH)2 group. In contrast, our approach employs a real, atomistic model of the precursor. Aft er 
+each attachment step , the structure was relaxed, either by local structure optimization or by short 
+simulated annealing using molecular dynamics (MD). The energy of the chemisorption was 
+calculated and used to calculate the acceptance criterion employin g the usual Metropolis –Hastings 
+rule [32]. The procedure was repeated until all enumerated surface –OH groups were either reacted 
+or excluded from MC moves due to steric hindrance and overlap with chemisorbed precursor 
+molecules. Alternatively, a predefined concentration of surface –OH groups can be left unreacted. 
+The final precursor monolayer structure was relaxed and equilibrated using MD. The second ALD 
+half-cycle was modeled by simply replacing all organic surface groups with –OH groups, followed 
+by relaxation and equilibration using MD. This corresponds to full conversion of the products of the 
+precursor pulse to surface hydroxyl species.  Such an approach is particularly well suited for 
+simulating ALD growth of systems with primary reactions that have relatively low activation 
+energies [14]. It has been shown that, unlike thermal ALD, PEALD can be efficiently performed even 
+at room temperature  [6,7], justifying the assumption of low activation energies. It has also been 
+shown by calculations that oxygen plasma can quantitatively oxidize organic surface precursor 
+species [17]. 
+The selection of created chemisorbed precursor products depends on predefined occupation 
+probabilities which remain constant during the simulated thin film growth . For example, 
+considering a precursor yielding two possible chemisorbed precursor products P1 or P2 requires the 
+corresponding occupation probabilities {𝑝𝐏𝟏, 𝑝𝐏𝟐 ∈ [0,1]}, with 
+𝑝𝐏𝟏 + 𝑝𝐏𝟐 = 1 (1) 
+This approach can be easily generalized to a set of 𝑁 products {P1, P2, …, PN} with occupation 
+probabilities {𝑝𝐏𝟏, 𝑝𝐏𝟐, … , 𝑝𝐏𝑵 ∈ [0,1]} fulfilling the condition 
+𝑝𝐏𝟏 + 𝑝𝐏𝟐 + ⋯ + 𝑝𝐏𝑵 = 1 (2) 
+ 
+Figure 2. Monte Carlo (MC) simulation protocol for growth of PEALD thin films. 
+2.2. Implementation 
+Figure 2. Monte Carlo (MC) simulation protocol for growth of PEALD thin ﬁlms.
+
+Materials 2019, 12, 2605 5 of 11
+2.2. Implementation
+The implementation of our PEALD simulation protocol used the Python programming language.
+It was designed in a modular way employing the Atomic Simulation Environment (ASE) [33], which
+was used for storing and manipulating structure models as well as for the reading and writing
+of all necessary input and output ﬁles. Structure relaxation and simulated annealing steps were
+accomplished employing the General Utility Lattice Program (GULP) [34]. The Python library ASE
+provided a built-in GULP interface which enabled single-energy calculations, structure optimizations,
+and MD simulations.
+3. Test Application—PEALD of SiO 2
+As a test, the PEALD simulation protocol was applied to investigate the synthesis of SiO2 thin
+ﬁlms using a bis-diethylaminosilane (BDEAS) precursor with the structural formula H 2Si(NEt2)2,
+Et = C2H5. BDEAS belongs to the class of aminosilanes widely used in ALD, and it has been successfully
+applied for improving surface characteristics in PEALD of SiO 2 [10,35]. It has been shown in [ 17]
+that Si precursors with amino ligands can dramatically lower the activation energies for reactions of
+aminosilane with surface hydroxyl groups, making BDEAS-based PEALD a very good case for testing
+our simulation protocol.
+3.1. Computational Details
+3.1.1. Model Systems
+Hydroxylated SiO2 substrate and deposited precursor products are modeled using two types
+of cluster models of two neighboring –OH groups and a two-dimensional (2D) periodic surface.
+Figure 3a,b shows both cluster models. The smaller, ﬂexible cluster model has the composition Si2O7H6,
+while the bigger and more rigid cage cluster model has the composition Si8O14H8. The 2D periodic
+substrate model shown in Figure 3c is a hydroxylated α-quartz (0001) surface containing 216 atoms,
+with the unit cell composition Si48O120H48 and lattice parameters a = 14.778 Å, b = 17.077 Å, γ= 90.081◦.
+Materials 2019, 12, 2605 5 of 11 
+ 
+The implementation of o ur PEALD simulation protocol used the Python programming 
+language. It was designed in a modular way employing the Atomic Simulation Environment (ASE) 
+[33], which was used for storing and manipulating structure models as well as for the reading and 
+writing of all necessary input and output files. Structur e relaxation and simulated annealing steps 
+were accomplished employing the General Utility Lattice Program (GULP)  [34]. The Python library 
+ASE provide d a built -in GULP interface which enable d single-energy calculations , structure 
+optimizations, and MD simulations. 
+3. Test Application—PEALD of SiO2 
+As a test, t he PEALD simulation protocol was applied to investigate the synthesis of SiO2 thin 
+films using a bis-diethylaminosilane (BDEAS) precursor with the structural formula H2Si(NEt2)2, Et = 
+C2H5. BDEAS belongs to the class of aminosilanes widely used in ALD, and it has been successfully 
+applied for improving surface characteristics in PEALD of SiO2 [10,35]. It has been shown in [17] that 
+Si precursors with amino l igands can dramatically lower the  activation energies  for reactions of 
+aminosilane with surface hydroxyl groups , making BDEAS-based PEALD  a very good case for 
+testing our simulation protocol.  
+3.1. Computational Details 
+3.1.1. Model Systems 
+Hydroxylated SiO2 substrate and deposited precursor products are modeled using two types of 
+cluster models of two neighboring –OH groups and a two-dimensional (2D) periodic surface. Figure 
+3a,b shows both cluster models. T he smaller, flexible  cluster model has the composition Si2O7H6, 
+while the bigger and more rigid cage cluster model has the composition Si8O14H8. The 2D periodic  
+substrate model shown in Figure 3c is a hydroxylated -quartz (0001) surface containing 216 atoms, 
+with the unit cell composition Si 48O120H48 and lattice parameters 𝑎 = 14.778 Å , 𝑏 = 17.077 Å , 𝛾 = 
+90.081° . 
+ 
+Figure 3. (a,b) Two cluster models of two neighboring –OH groups on a hydroxylated SiO 2 surface. 
+The shaded lower part indicates the “surface” part of the cluste rs. (c) 2D periodic model of  a 
+hydroxylated -quartz (0001) surface. 
+3.1.2. Methods 
+All DFT calculations employ ed our implementation of Kohn –Sham DFT for molecular and 
+periodic systems [36–40] within the TURBOMOLE program package [41,42]. The Perdew –Burke–
+Ernzerhof (PBE) exchange –correlation functional [43], triple zeta valence plus polarization 
+(def2-TZVP) [44] basis sets, and Grimme dispersion correction (DFT-D3) [45,46] were used. MD and 
+MC simulations employed the ReaxFF reactive force field [27] using GULP-provided combined force 
+field parameters [27,47,48]. 
+3.2. Surface Reactions and Plasma Pulse Model 
+Figure 4 shows the possible elementary surface reactions for PEALD synthesis of SiO2 thin films 
+using a BDEAS precursor . The first half -cycle starts with the deposition of BDEAS on the 
+hydroxylated SiO2 surface and its reaction with –OH groups. There are two possible reactions (1 and 
+2a in Figure 4) that yield the organic precursor bonded to one or two surface oxygen atoms, denoted 
+Figure 3. (a,b) Two cluster models of two neighboring –OH groups on a hydroxylated SiO2 surface. The
+shaded lower part indicates the “surface” part of the clusters. (c) 2D periodic model of a hydroxylated
+α-quartz (0001) surface.
+3.1.2. Methods
+All DFT calculations employed our implementation of Kohn–Sham DFT for molecular and periodic
+systems [36–40] within the TURBOMOLE program package [41,42]. The Perdew–Burke–Ernzerhof
+(PBE) exchange–correlation functional [43], triple zeta valence plus polarization (def2-TZVP) [44] basis
+sets, and Grimme dispersion correction (DFT-D3) [45,46] were used. MD and MC simulations employed
+the ReaxFF reactive force ﬁeld [27] using GULP-provided combined force ﬁeld parameters [27,47,48].
+3.2. Surface Reactions and Plasma Pulse Model
+Figure 4 shows the possible elementary surface reactions for PEALD synthesis of SiO2 thin ﬁlms
+using a BDEAS precursor. The ﬁrst half-cycle starts with the deposition of BDEAS on the hydroxylated
+SiO2 surface and its reaction with –OH groups. There are two possible reactions (1 and 2a in Figure 4)
+
+Materials 2019, 12, 2605 6 of 11
+that yield the organic precursor bonded to one or two surface oxygen atoms, denoted as P1 and P2,
+respectively. Reaction 2b converts P1 to P2. After the plasma pulse, P1 and P2 lead to a surface Si atom
+with three or two –OH groups, denoted as S1 and S2, respectively. Alternatively,S1 can be converted
+to site S2 by reaction 3, which releases H2O. We have concentrated on reactions 1, 2a, 2b, and 3, since
+calculations indicate that oxidation of the organic precursor by oxygen radical species does not alter
+bonds between the precursor Si atom and the surface [17].
+Materials 2019, 12, 2605 6 of 11 
+ 
+as P1 and P2, respectively. Reaction 2b converts P1 to P2. After the plasma pulse, P1 and P2 lead to a 
+surface Si atom with three or two –OH groups, denoted as S1 and S2, respectively. Alternatively, S1 
+can be converted to site S2 by reaction 3, which releases H2O. We have concentrated on reactions 1, 
+2a, 2b, and 3, since calculations indicate that oxidation of the organic precursor by oxygen  radical 
+species does not alter bonds between the precursor Si atom and the surface [17]. 
+ 
+Figure 4.  Elementary surface reactions during PEALD deposition of SiO 2 film usi ng a 
+bis-diethylaminosilane (BDEAS) precursor. P1 and P2 are products of the precursor deposition.  S1 
+and S2 are products of the plasma pulse. 
+3.3. Reaction Energies 
+As the first step, we investigated the energetics of the elementary reactions using DFT and the 
+cluster models of two neighboring OH groups on a hydroxylated SiO2 surface, shown in Figure 3a,b. 
+The aim of the cluster studies was to obtain insights into the intrinsic energetics of the reactions 
+without the spatial and steric constraints present at silica surfaces. All three reactions (1, 2a, and 2b) 
+of the precursor with the cluster model in Figure 3a are exothermic, with reaction energies ∆𝐸r of 
+−58.3, −64.3, −6.0 kJ/mol, respectively. Reaction 3, converting S1 to S2, is slightly endothermic, with 
+an ∆𝐸r of 37.5 kJ/mol. For the bigger cluster model in Figure 3b, the calculated reaction energies ∆𝐸r 
+of reactions 1, 2a, 2b, and 3 are –67.0, –30.5, +36.5, and +63.0 kJ/mol, respectively. In the next step, we 
+investigated the energetics of the same reactions on a hydroxylated -quartz (0001) surface (Figure 
+3c). The calculated reaction energies ∆𝐸r were −63.0, −18.4, +44.6, and +60.9 kJ/mol for reactions 1, 2a, 
+2b, and 3, respectively. The value for exothermic reaction 1, involving only one surface OH group 
+and yielding site P1, is very similar for all three models  shown in Figure 3. Reaction energies for  
+reaction 2a increase with increasing rigidity of the structure, while remaining exothermic. In contrast, 
+reaction 2b is slightly exothermic for the small, flexible cluster model, but becomes endothermic for 
+the structurally rigid models of  the bigger cluster and surface. Reaction 3 is endothermic for all 
+models, but reaction energies increase with increasing rigidity of the structure. Thus, reactions 1 and 
+2a are always energetically favorable. In contrast, reactions 2b and 3, transforming P1 to P2 and S1 to 
+S2, respectively, are energetically unfavorable in a rigid atomic environment. This can be attributed 
+to constraints of the surface on the one hand, since bringing two surface oxygen atoms close enough 
+to create sites P2 and S2 is connected with energy penalty. On the other hand, this demonstrates the 
+high stability of the Si–O bonds, especially in the case of S1.  
+3.4. PEALD Simulations 
+The cluster and periodic calculations demonstrate that t he actual  amount of precursor 
+deposition products P1 and P2 as well as the plasma products S1 and S2 formed at each PEALD  
+cycle will be  influenced by the actual surface structure and the availability of neighboring –OH 
+Figure 4. Elementary surface reactions during PEALD deposition of SiO 2 ﬁlm using a
+bis-diethylaminosilane (BDEAS) precursor. P1 and P2 are products of the precursor deposition.
+S1 and S2 are products of the plasma pulse.
+3.3. Reaction Energies
+As the ﬁrst step, we investigated the energetics of the elementary reactions using DFT and the
+cluster models of two neighboring OH groups on a hydroxylated SiO2 surface, shown in Figure 3a,b.
+The aim of the cluster studies was to obtain insights into the intrinsic energetics of the reactions without
+the spatial and steric constraints present at silica surfaces. All three reactions (1, 2a, and 2b) of the
+precursor with the cluster model in Figure 3a are exothermic, with reaction energies ∆Er of −58.3,
+−64.3, −6.0 kJ/mol, respectively. Reaction 3, converting S1 to S2, is slightly endothermic, with an
+∆Er of 37.5 kJ/mol. For the bigger cluster model in Figure 3b, the calculated reaction energies ∆Er of
+reactions 1, 2a, 2b, and 3 are –67.0, –30.5, +36.5, and +63.0 kJ/mol, respectively. In the next step, we
+investigated the energetics of the same reactions on a hydroxylated α-quartz (0001) surface (Figure 3c).
+The calculated reaction energies ∆Er were −63.0, −18.4, +44.6, and +60.9 kJ/mol for reactions 1, 2a,
+2b, and 3, respectively. The value for exothermic reaction 1, involving only one surface OH group
+and yielding site P1, is very similar for all three models shown in Figure 3. Reaction energies for
+reaction 2a increase with increasing rigidity of the structure, while remaining exothermic. In contrast,
+reaction 2b is slightly exothermic for the small, ﬂexible cluster model, but becomes endothermic for the
+structurally rigid models of the bigger cluster and surface. Reaction 3 is endothermic for all models,
+but reaction energies increase with increasing rigidity of the structure. Thus, reactions 1 and 2a are
+always energetically favorable. In contrast, reactions 2b and 3, transforming P1 to P2 and S1 to S2,
+respectively, are energetically unfavorable in a rigid atomic environment. This can be attributed to
+constraints of the surface on the one hand, since bringing two surface oxygen atoms close enough to
+create sites P2 and S2 is connected with energy penalty. On the other hand, this demonstrates the high
+stability of the Si–O bonds, especially in the case of S1.
+
+Materials 2019, 12, 2605 7 of 11
+3.4. PEALD Simulations
+The cluster and periodic calculations demonstrate that the actual amount of precursor deposition
+products P1 and P2 as well as the plasma products S1 and S2 formed at each PEALD cycle will be
+inﬂuenced by the actual surface structure and the availability of neighboring –OH groups. In addition,
+temperature, pressure, and concentration of precursor species, and plasma energy are expected to
+play an important role. Accurate simulations including all these parameters would be a very complex
+task. As described earlier, our scheme takes the process parameters into account in a simpliﬁed way,
+employing predeﬁned occupation probabilities at each deposition MC step. The probabilities for the
+creation of P1 (precursor bonded to one surface O atom) and P2 (precursor bonded to two surface
+O atoms) are pP1 and pP2 = 1 −pP1, respectively. The value pP2 = 1 means that each Monte Carlo
+step attempts to create P2, and P1 is created only if P2 cannot be formed due to missing neighboring
+surface –OH groups or steric constraints. In contrast, pP2 = 0 means that no P2 is directly created
+during MC moves. As shown in Figure 5, these probabilities have signiﬁcant impacts on the structures
+of PEALD layers. The simulated structures of SiO 2 deposited for probabilities pP2 = 0 (pP1 = 1),
+pP2 = 0.5 (pP1 = 0.5), and pP2 = 1 (pP1 = 0) clearly demonstrate the densiﬁcation of the growing SiO2
+layer with increasingpP2. For pP2 = 0, each precursor molecule is allowed to react with only one surface
+–OH group, yielding P1. The plasma pulse converts P1 to S1, with three hydroxyl groups connected to
+the deposited silicon atom. This increases the number of hydroxyl groups compared to the initial state,
+thus favoring the creation of voids, –OH impurities, and amorphous growth of deposited ﬁlms. In
+contrast, for pP2 = 1, after the ﬁrst ALD half-cycle, the maximum possible number of P2 precursor sites
+is created. The plasma pulse converts P2 to S2, with two hydroxyl groups connected to the deposited
+silicon atom. In this case, the number of hydroxyl groups remains unchanged after the deposition
+step compared to the initial surface state, and, in combination with compact Si–O–Si bridges, it results
+in a dense ﬁlm growth. Figure 6 shows the average growth per cycle (GPC) and mass densities of
+deposited SiO2 thin ﬁlms obtained by 30 simulations of seven PEALD cycles for each of pP2 = 0.0, 0.25,
+0.5, 1.0. Virtually identical results were obtained for MD simulations at temperatures ranging from 300
+to 1000 K at a time scale of up to 10 ps. GPC and mass densities were basically converged after seven
+simulated PEALD cycles. Decreasing GPC and increasing density were observed for increasing pP2,
+conﬁrming the observed densiﬁcation of thin ﬁlms shown in Figure 5. The very low values for GPC
+and density in the case ofpP2 = 0 are mainly due to the strong steric eﬀects when only creation of singly
+coordinated P1 and S1 is allowed and creation of P2 and S2 is completely excluded. This conﬁrms
+again the key role of doubly coordinated surface sites for the densiﬁcation of SiO2 PEALD thin ﬁlms.
+Materials 2019, 12, 2605 7 of 11 
+ 
+groups. In addition, temperature, pressure , and concentration of precursor species , and plasma 
+energy are expected to play an important role. Accurate simulations including all these parameters 
+would be a very complex task. As described earlier, our scheme takes the process parameters  into 
+account in a simplified way , employing predefined occupation probabilities at each deposition MC 
+step. The probabilit ies for the creation of P1 (precursor bonded to one surface O atom) and P2 
+(precursor bonded to two surface O atoms) are 𝑝𝐏𝟏 and 𝑝𝐏𝟐 = 1 − 𝑝𝐏𝟏, respectively . The value 
+𝑝𝐏𝟐 = 1 means that each Monte Carlo step attempts to create P2, and P1 is created only if P2 cannot 
+be formed due to missing neighboring surface –OH groups or steric constraints. In contrast, 𝑝𝐏𝟐 = 0 
+means that no P2 is directly created during MC moves. As shown in Fig ure 5, these probabilities 
+have significant impact s on the structure s of PEALD layers . The simulated structures of SiO 2 
+deposited for probabilities 𝑝𝐏𝟐 = 0 ( 𝑝𝐏𝟏 = 1), 𝑝𝐏𝟐 = 0.5 ( 𝑝𝐏𝟏 = 0.5), and 𝑝𝐏𝟐 = 1 (𝑝𝐏𝟏 = 0) clearly 
+demonstrate the densification of the growing SiO 2 layer with increasing 𝑝𝐏𝟐. For 𝑝𝐏𝟐 = 0, each 
+precursor molecule is allowed to react with only one surface –OH group, yielding P1. The plasma 
+pulse converts P1 to S1, with three hydroxyl groups connected to the deposited silicon atom. This 
+increases the number of hydroxyl groups compared to the initial state, thus favoring the creation of 
+voids, –OH impurities, and amorphous growth of deposited films. In contrast,  for 𝑝𝐏𝟐 = 1, after the 
+first ALD half -cycle, the maximum possible number of P2 precursor sites is created. The plasma 
+pulse converts P2 to S2, with two hydroxyl groups connected to the deposited silicon atom. In this 
+case, the number of hydroxyl groups remains unchanged after the deposition step  compared to the 
+initial surface state, and , in combination with compact Si–O–Si bridges, it results in a dense film 
+growth. Figure 6 shows the average growth per cycle (GPC) and mass densities of deposited SiO 2 
+thin films obtained by 30 simulations of seven PEALD cycles for each of 𝑝𝐏𝟐 = 0.0, 0.25, 0.5, 1 .0. 
+Virtually identical results were obtained for MD simulations at temperatures ranging from 300 to 
+1000 K at a time scale of up to 10 ps.  GPC and mass densities were basically converged after seven 
+simulated PEALD cycles. Decreasing GPC and increasing density were observed for increasing 𝑝𝐏𝟐, 
+confirming the observed densification of thin films shown in Figure 5. The very low values for GPC 
+and density in the case of 𝑝𝐏𝟐 = 0 are mainly due to the strong steric effects when only creation of 
+singly coordinated P1 and S1 is allowed  and creation of P2 and S2 is completely excluded. This 
+confirms again the key role of doubly coordinated surface sites for the densification of SiO2 PEALD 
+thin films.  
+ 
+Figure 5. Simulated structures of PEALD-deposited SiO2 with different occupation probabilities 𝑝𝐏𝟏 
+and 𝑝𝐏𝟐. 
+Figure 5. Simulated structures of PEALD-deposited SiO2 with diﬀerent occupation probabilities pP1
+and pP2.
+
+Materials 2019, 12, 2605 8 of 11
+Materials 2019, 12, 2605 8 of 11 
+ 
+ 
+Figure 6. Simulated (a) growth per cycle and (b) mass density of deposited SiO2 films as a function of 
+the probability 𝑝𝐏𝟐. 
+The actual reaction conditions  were accounted for only in an approximate way  in our 
+occupation probability model . For instance, possible precursor desorption due to the substrate 
+heating was not directly simulated. Possible influences from precursor temperature  and 
+concentration were not directly simulated, since our MC scheme deposits one precursor molecule 
+after t he other, disregarding the actual reaction path. However, we expect that our model can 
+describe plasma energy effects, since the presence of plasma ions in the second half-cycle may affect 
+reactions 2b and 3 (Fig ure 4), and therefore the occupation probabi lities of doubly coordinated 
+products P2 and S2. 
+Our simulation scheme  has been tested for BDEAS as a bis-aminosilane precursor containing 
+two amino ligands. For mono-aminosilane precursors, we expect simulated structures resembling 
+the case of 𝑝𝐏𝟏 = 1 in Figure 5, but with denser films and less steric hindrance effects , since in this 
+case there are no remaining precursor amino ligands after the first deposition half -cycle. 
+Aminosilane precursors with three or four amino ligands can lead, in principle, t o even higher 
+surface densification, since they can increase the number of compact Si –O–Si bridges. However, the 
+higher number of amino ligands favors steric hindrance effects, and triply and quadruply occupied 
+surface sites strongly reduce the availabilit y of surface –OH groups, thus inhibiting the overall film 
+growth. In summary, the size and number of precursor amino ligands are expected to be 
+determining factors for the steric effects and availability of –OH groups in our MC simulation 
+scheme. 
+4. Conclusions 
+In this study , we presented an atomistic simulation scheme for PEALD that combines the 
+Monte Carlo deposition algorithm and structure relaxation using molecular dynamics. In contrast to 
+previous implementations, our approach employ ed a real, atomistic model of the precursor. This 
+allowed us to account for steric hindrance and overlap restrictions at the surface corresponding to 
+the real precursor deposition step. In addition, our scheme took various process parameters into 
+account in a simplified way, employing predefined occupation probabilities for precursor products 
+at each Monte Carlo deposition step. The new simulation protocol was applied to investigate the 
+PEALD synthesis of SiO2 thin films using a bis-diethylaminosilane precursor. Initial analysis of the 
+precursor products with hydroxylated SiO 2 surfaces employing DFT calculations demonstrated a 
+strong dependence of reaction energies on the surface structure, in particular for the precursor 
+bonded to two surface oxygen atoms. PEALD simulations employing our new method revealed that 
+precursor binding to one surface oxygen atom favors amorphous layer growth, a large number of –
+OH impurities, and the formation of voids. In contrast, precursor binding to two surface oxygen 
+atoms leads to dense SiO 2 film growth and reduction of –OH impurities. Increasing the probability 
+for the formation of doubly bonded precursor sites is therefore the  key factor for the formation of 
+dense SiO2 PEALD thin films with reduced amounts of voids and –OH impurities.  
+Figure 6. Simulated (a) growth per cycle and (b) mass density of deposited SiO2 ﬁlms as a function of
+the probability pP2.
+The actual reaction conditions were accounted for only in an approximate way in our occupation
+probability model. For instance, possible precursor desorption due to the substrate heating was not
+directly simulated. Possible inﬂuences from precursor temperature and concentration were not directly
+simulated, since our MC scheme deposits one precursor molecule after the other, disregarding the
+actual reaction path. However, we expect that our model can describe plasma energy eﬀects, since the
+presence of plasma ions in the second half-cycle may aﬀect reactions 2b and 3 (Figure 4), and therefore
+the occupation probabilities of doubly coordinated products P2 and S2.
+Our simulation scheme has been tested for BDEAS as a bis-aminosilane precursor containing two
+amino ligands. For mono-aminosilane precursors, we expect simulated structures resembling the case
+of pP1 = 1 in Figure 5, but with denser ﬁlms and less steric hindrance eﬀects, since in this case there are
+no remaining precursor amino ligands after the ﬁrst deposition half-cycle. Aminosilane precursors
+with three or four amino ligands can lead, in principle, to even higher surface densiﬁcation, since they
+can increase the number of compact Si–O–Si bridges. However, the higher number of amino ligands
+favors steric hindrance eﬀects, and triply and quadruply occupied surface sites strongly reduce the
+availability of surface –OH groups, thus inhibiting the overall ﬁlm growth. In summary, the size and
+number of precursor amino ligands are expected to be determining factors for the steric eﬀects and
+availability of –OH groups in our MC simulation scheme.
+4. Conclusions
+In this study, we presented an atomistic simulation scheme for PEALD that combines the Monte
+Carlo deposition algorithm and structure relaxation using molecular dynamics. In contrast to previous
+implementations, our approach employed a real, atomistic model of the precursor. This allowed
+us to account for steric hindrance and overlap restrictions at the surface corresponding to the real
+precursor deposition step. In addition, our scheme took various process parameters into account in a
+simpliﬁed way, employing predeﬁned occupation probabilities for precursor products at each Monte
+Carlo deposition step. The new simulation protocol was applied to investigate the PEALD synthesis of
+SiO2 thin ﬁlms using a bis-diethylaminosilane precursor. Initial analysis of the precursor products
+with hydroxylated SiO2 surfaces employing DFT calculations demonstrated a strong dependence of
+reaction energies on the surface structure, in particular for the precursor bonded to two surface oxygen
+atoms. PEALD simulations employing our new method revealed that precursor binding to one surface
+oxygen atom favors amorphous layer growth, a large number of –OH impurities, and the formation of
+voids. In contrast, precursor binding to two surface oxygen atoms leads to dense SiO2 ﬁlm growth and
+reduction of –OH impurities. Increasing the probability for the formation of doubly bonded precursor
+sites is therefore the key factor for the formation of dense SiO2 PEALD thin ﬁlms with reduced amounts
+of voids and –OH impurities.
+
+Materials 2019, 12, 2605 9 of 11
+Author Contributions: Conceptualization, M.B. and M.S.; methodology, M.B. and M.S.; software, M.B. and M.S.;
+validation, M.B.; formal analysis, M.B. and M.S.; investigation, M.B. and M.S.; resources, M.S.; data curation,
+M.B. and M.S.; writing—original draft preparation, M.B.; writing—review and editing, M.S.; visualization, M.B.;
+supervision, M.S.; project administration, M.S.; funding acquisition, M.S.
+Funding: This research was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)
+in the framework of the Priority Programme 1959 “Manipulation of matter controlled by electric and magnetic
+ﬁeld: Towards novel synthesis and processing routes of inorganic materials” within the project SI 938/8-1.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1. Ghazaryan, L.; Kley, E.B.; Tünnermann, A.; Szeghalmi, A. Nanoporous SiO2 thin ﬁlms made by atomic layer
+deposition and atomic etching. Nanotechnology 2016, 27, 255603. [CrossRef] [PubMed]
+2. Pfeiﬀer, K.; Schulz, U.; Tünnermann, A.; Szeghalmi, A. Antireﬂection Coatings for Strongly Curved Glass
+Lenses by Atomic Layer Deposition. Coatings 2017, 7, 118. [CrossRef]
+3. Pfeiﬀer, K.; Dewald, W.; Szeghalmi, A. Antireﬂection coating with consistent near-neutral color on
+complex-shaped substrates prepared by ALD. Opt. Lett. 2019, 44, 3270–3273. [CrossRef] [PubMed]
+4. Pfeiﬀer, K.; Ghazaryan, L.; Schulz, U.; Szeghalmi, A. Wide-Angle Broadband Antireﬂection Coatings Prepared
+by Atomic Layer Deposition. ACS Appl. Mater. Interfaces2019, 11, 21887–21894. [CrossRef] [PubMed]
+5. Ghazaryan, L.; Sekman, Y.; Schröder, S.; Mühlig, C.; Stevanovic, I.; Botha, R.; Aghaee, M.; Creatore, M.;
+Tünnermann, A.; Szeghalmi, A. On the Properties of Nanoporous SiO2 Films for Single Layer Antireﬂection
+Coating. Adv. Eng. Mater.2019, 21, 1801229. [CrossRef]
+6. Proﬁjt, H.B.; Potts, S.E.; van de Sanden, M.C.M.; Kessels, W.M.M. Plasma-Assisted Atomic Layer Deposition:
+Basics, Opportunities, and Challenges. J. Vac. Sci. Technol. A2011, 29, 050801. [CrossRef]
+7. Potts, S.E.; Proﬁjt, H.B.; Roelofs, R.; Kessels, W.M.M. Room-Temperature ALD of Metal Oxide Thin Films by
+Energy-Enhanced ALD. Chem. Vap. Depos.2013, 19, 125–133. [CrossRef]
+8. Kim, D.H.; Lee, H.J.; Jeong, H.; Shong, B.; Kim, W.H.; Park, T.J. Thermal atomic layer deposition of
+device-quality SiO2 thin ﬁlms under 100 ◦C using an aminodisilane precursor. Chem. Mater.2019. [CrossRef]
+9. Lee, Y.S.; Choi, D.W.; Shong, B.; Oh, S.; Park, J.S. Low temperature atomic layer deposition of SiO2 thin ﬁlms
+using di-isopropylaminosilane and ozone. Ceram. Int. 2017, 43, 2095–2099. [CrossRef]
+10. Faraz, T.; Knoops, H.C.M.; Verheijen, M.A.; van Helvoirt, C.A.A.; Karwal, S.; Sharma, A.; Beladiya, V .;
+Szeghalmi, A.; Hausmann, D.M.; Henri, J.; et al. Tuning Material Properties of Oxides and Nitrides
+by Substrate Biasing during Plasma-Enhanced Atomic Layer Deposition on Planar and 3D Substrate
+Topographies. ACS Appl. Mater. Interfaces2018, 10, 13158–13180. [CrossRef]
+11. Faraz, T.; Arts, K.; Karwal, S.; Knoops, H.C.M.; Kessels, W.M.M. Energetic ions during plasma-enhanced
+atomic layer deposition and their role in tailoring material properties. Plasma Sources Sci. Technol.2019, 28,
+024002. [CrossRef]
+12. Ratzsch, S.; Kley, E.B.; Tünnermann, A.; Szeghalmi, A. Inﬂuence of the oxygen plasma parameters on the
+atomic layer deposition of titanium dioxide. Nanotechnology 2015, 26, 024003. [CrossRef] [PubMed]
+13. Elliott, S.D. Atomic-scale simulation of ALD chemistry. Semicond. Sci. Technol.2012, 27, 074008. [CrossRef]
+14. Shirazi, M.; Elliott, S.D. Atomistic Kinetic Monte Carlo Study of Atomic Layer Deposition Derived from
+Density Functional Theory. J. Comput. Chem.2014, 35, 244–259. [CrossRef] [PubMed]
+15. Hu, Z.; Shi, J.X.; Heath Turner, C. Molecular dynamics simulation of the Al2O3 ﬁlm structure during atomic
+layer deposition. Mol. Simulat. 2009, 35, 270–279. [CrossRef]
+16. Fang, G.Y.; Xu, L.N.; Ma, J.; Li, A.D. Theoretical Understanding of the Reaction Mechanism of SiO2 Atomic
+Layer Deposition. Chem. Mater.2016, 28, 1247–1255. [CrossRef]
+17. Fang, G.Y.; Xu, L.N.; Cao, Y.Q.; Wang, L.G.; Wu, D.; Li, A.D. Self-catalysis by aminosilanes and strong surface
+oxidation by O-2 plasma in plasma-enhanced atomic layer deposition of high-quality SiO2. Chem. Commun.
+2015, 51, 1341–1344. [CrossRef] [PubMed]
+18. Han, B.; Zhang, Q.; Wu, J.; Han, B.; Karwacki, E.J.; Derecskei, A.; Xiao, M.; Lei, X.; O’Neill, M.L.;
+Cheng, H. On the Mechanisms of SiO 2 Thin-Film Growth by the Full Atomic Layer Deposition Process
+Using Bis(t-butylamino)silane on the Hydroxylated SiO2(001) Surface. J. Phys. Chem. C2012, 116, 947–952.
+[CrossRef]
+
+Materials 2019, 12, 2605 10 of 11
+19. Huang, L.; Han, B.; Han, B.; Derecskei-Kovacs, A.; Xiao, M.; Lei, X.; O’Neill, M.L.; Pearlstein, R.M.;
+Chandra, H.; Cheng, H. First-Principles Study of a Full Cycle of Atomic Layer Deposition of SiO2 Thin Films
+with Di(sec-butylamino)silane and Ozone. J. Phys. Chem. C2013, 117, 19454–19463.
+20. Baek, S.B.; Kim, D.H.; Kim, Y.C. Adsorption and surface reaction of bis-diethylaminosilane as a Si precursor
+on an OH-terminated Si (0 0 1) surface. Appl. Surf. Sci.2012, 258, 6341–6344. [CrossRef]
+21. Jeong, Y.C.; Baek, S.B.; Kim, D.H.; Kim, J.S.; Kim, Y.C. Initial reaction of silicon precursors with a varying
+number of dimethylamino ligands on a hydroxyl-terminated silicon (0 0 1) surface. Appl. Surf. Sci.2013, 280,
+207–211. [CrossRef]
+22. Li, J.Y.; Wu, J.P .; Zhou, C.G.; Han, B.; Karwacki, E.J.; Xiao, M.C.; Lei, X.J.; Cheng, H.S. On the Dissociative
+Chemisorption of Tris(dimethylamino)silane on Hydroxylated SiO2(001) Surface. J. Phys. Chem. C.2009, 113,
+9731–9736. [CrossRef]
+23. Murray, C.A.; Elliott, S.D.; Hausmann, D.; Henri, J.; LaVoie, A. Eﬀect of Reaction Mechanism on Precursor
+Exposure Time in Atomic Layer Deposition of Silicon Oxide and Silicon Nitride. ACS Appl. Mater. Interfaces
+2014, 6, 10534–10541. [CrossRef] [PubMed]
+24. Karakasidis, T.E.; Charitidis, C.A. Multiscale modeling in nanomaterials science. Mater. Sci. Eng. C2007, 27,
+1082–1089. [CrossRef]
+25. Dkhissi, A.; Estève, A.; Mastail, C.; Olivier, S.; Mazaleyrat, G.; Jeloaica, L.; Rouhani, M.D. Multiscale Modeling
+of the Atomic Layer Deposition of HfO2 Thin Film Grown on Silicon: How to Deal with a Kinetic Monte
+Carlo Procedure. J. Chem. Theory Comput.2008, 4, 1915–1927. [CrossRef]
+26. Spagnoli, D.; Gale, J.D. Atomistic theory and simulation of the morphology and structure of ionic nanoparticles.
+Nanoscale 2012, 4, 1051–1067. [CrossRef] [PubMed]
+27. van Duin, A.C.T.; Dasgupta, S.; Lorant, F.; Goddard, W.A. ReaxFF: A reactive force ﬁeld for hydrocarbons.
+J. Phys. Chem. A2001, 105, 9396–9409. [CrossRef]
+28. Deetz, J.D.; Faller, R. Parallel Optimization of a Reactive Force Field for Polycondensation of Alkoxysilanes.
+J. Phys. Chem. B2014, 118, 10966–10978. [CrossRef] [PubMed]
+29. Norman, P .; Schwartzentruber, T.E.; Leverentz, H.; Luo, S.J.; Meana-Paneda, R.; Paukku, Y.; Truhlar, D.G. The
+Structure of Silica Surfaces Exposed to Atomic Oxygen. J. Phys. Chem. C.2013, 117, 9311–9321. [CrossRef]
+30. Gubbels-Elzas, A.; Thijsse, B.J. Ionic motion during ﬁeld-assisted oxidation of aluminium studied by
+molecular dynamics simulations. Comput. Mater. Sci.2014, 90, 196–202. [CrossRef]
+31. Hühn, C.; Wondraczek, L.; Sierka, M. Dynamics of ultrathin gold layers on vitreous silica probed by density
+functional theory. PCCP 2015, 17, 27488–27495. [CrossRef] [PubMed]
+32. Amar, J.G. The Monte Carlo method in science and engineering. Comput. Sci. Eng.2006, 8, 9–19. [CrossRef]
+33. Larsen, A.H.; Mortensen, J.J.; Blomqvist, J.; Castelli, I.E.; Christensen, R.; Dulak, M.; Friis, J.; Groves, M.N.;
+Hammer, B.; Hargus, C.; et al. The atomic simulation environment-a Python library for working with atoms.
+J. Phys. Condens. Matter2017, 29, 273002. [CrossRef] [PubMed]
+34. Gale, J.D.; Rohl, A.L. The General Utility Lattice Program (GULP).Mol. Simulat. 2003, 29, 291–341. [CrossRef]
+35. Kim, H.; Chung, I.; Kim, S.; Shin, S.; Jung, W.; Hwang, R.; Jeong, C.; Hwang, H. Improved ﬁlm quality of
+plasma enhanced atomic layer deposition SiO2 using plasma treatment cycle. J. Vac. Sci. Technol. A2015, 33,
+01A146. [CrossRef]
+36. Burow, A.M.; Sierka, M.; Mohamed, F. Resolution of identity approximation for the Coulomb term in
+molecular and periodic systems. J. Chem. Phys.2009, 131, 214101. [CrossRef] [PubMed]
+37. Burow, A.M.; Sierka, M. Linear Scaling Hierarchical Integration Scheme for the Exchange-Correlation Term
+in Molecular and Periodic Systems. J. Chem. Theory Comput.2011, 7, 3097–3104. [CrossRef] [PubMed]
+38. Lazarski, R.; Burow, A.M.; Sierka, M. Density Functional Theory for Molecular and Periodic Systems Using
+Density Fitting and Continuous Fast Multipole Methods. J. Chem. Theory Comput.2015, 11, 3029–3041.
+[CrossRef] [PubMed]
+39. Lazarski, R.; Burow, A.M.; Grajciar, L.; Sierka, M. Density Functional Theory for Molecular and Periodic
+Systems Using Density Fitting and Continuous Fast Multipole Method: Analytical Gradients. J. Comput.
+Chem. 2016, 37, 2518–2526. [CrossRef]
+40. Becker, M.; Sierka, M. Density Functional Theory for Molecular and Periodic Systems Using Density Fitting
+and Continuous Fast Multipole Method: Stress Tensor. J. Comput. Chem.2019. [CrossRef]
+41. Ahlrichs, R.; Bär, M.; Häser, M.; Horn, H.; Kölmel, C. Electronic-Structure Calculations on Workstation
+Computers—The Program System Turbomole. Chem. Phys. Lett.1989, 162, 165–169. [CrossRef]
+
+Materials 2019, 12, 2605 11 of 11
+42. Furche, F.; Ahlrichs, R.; Hättig, C.; Klopper, W.; Sierka, M.; Weigend, F. Turbomole.WIREs Comput. Mol. Sci.
+2014, 4, 91–100. [CrossRef]
+43. Perdew, J.P .; Burke, K.; Ernzerhof, M. Generalized gradient approximation made simple.Phys. Rev. Lett.
+1996, 77, 3865–3868. [CrossRef] [PubMed]
+44. Weigend, F.; Ahlrichs, R. Balanced basis sets of split valence, triple zeta valence and quadruple zeta valence
+quality for H to Rn: Design and assessment of accuracy. PCCP 2005, 7, 3297–3305. [CrossRef] [PubMed]
+45. Grimme, S.; Antony, J.; Ehrlich, S.; Krieg, H. A consistent and accurate ab initio parametrization of density
+functional dispersion correction (DFT-D) for the 94 elements H-Pu. J. Chem. Phys. 2010, 132, 154104.
+[CrossRef] [PubMed]
+46. Grimme, S.; Ehrlich, S.; Goerigk, L. E ﬀect of the Damping Function in Dispersion Corrected Density
+Functional Theory. J. Comput. Chem.2011, 32, 1456–1465. [CrossRef]
+47. Abolfath, R.M.; van Duin, A.C.T.; Brabec, T. Reactive Molecular Dynamics Study on the First Steps of DNA
+Damage by Free Hydroxyl Radicals. J. Phys. Chem. A2011, 115, 11045–11049. [CrossRef]
+48. Rahaman, O.; van Duin, A.C.T.; Goddard, W.A.; Doren, D.J. Development of a ReaxFF Reactive Force Field
+for Glycine and Application to Solvent E ﬀect and Tautomerization. J. Phys. Chem. B2011, 115, 249–261.
+[CrossRef]
+© 2019 by the authors. Licensee MDPI, Basel, Switzerland. This article is an open access
+article distributed under the terms and conditions of the Creative Commons Attribution
+(CC BY) license (http://creativecommons.org/licenses/by/4.0/).

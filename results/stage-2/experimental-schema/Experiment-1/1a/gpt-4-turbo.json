@@ -1,0 +1,243 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "description": "A schema representing the steps and parameters involved in setting up and verifying an Atomic Layer Deposition process for various materials, including platinum, hafnium, zirconium oxides, titanium nitride, and tin oxide.",
+    "type": "object",
+    "properties": {
+        "reactantSelection": {
+            "type": "object",
+            "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+            "properties": {
+                "precursor": {
+                    "type": "array",
+                    "description": "Chemicals used as precursors in the ALD process, e.g., TiCl4, (methylcyclopentadienyl)trimethylplatinum (MeCpPtMe3)."
+                },
+                "coReactant": {
+                    "type": "string",
+                    "description": "Chemical used as a co-reactant in the ALD process, e.g., water (H2O), ammonia (NH3)."
+                },
+                "deliveryMethod": {
+                    "type": "string",
+                    "description": "Method of delivering the precursor to the reaction chamber, e.g., evaporated from an open boat."
+                }
+            },
+            "required": [
+                "precursor",
+                "coReactant",
+                "deliveryMethod"
+            ]
+        },
+        "processParameters": {
+            "type": "object",
+            "description": "Parameters that define the conditions and settings of the ALD process.",
+            "properties": {
+                "ALDMethod": {
+                    "type": "string",
+                    "description": "The specific ALD technique used, e.g., thermal ALD, plasma-enhanced ALD."
+                },
+                "materialDeposited": {
+                    "type": "string",
+                    "description": "The material being deposited, e.g., Titanium Dioxide (TiO2), Platinum, Hafnium Oxide."
+                },
+                "depositionTemperature": {
+                    "type": "string",
+                    "description": "The temperature range at which deposition is performed, significantly affects growth rates and film properties."
+                },
+                "pressure": {
+                    "type": "string",
+                    "description": "Pressure conditions within the reactor during deposition, e.g., 250 Pa."
+                },
+                "reactor": {
+                    "type": "string",
+                    "description": "Type of reactor used for the ALD process, e.g., flow-type F-120 ALD reactor."
+                },
+                "crystallinity": {
+                    "type": "string",
+                    "description": "Describes whether the film is amorphous or crystalline, e.g., polycrystalline, and details of crystalline phases such as monoclinic, tetragonal, orthorhombic."
+                },
+                "pulseTimes": {
+                    "type": "object",
+                    "description": "Pulse times for precursor and co-reactant, influenced by temperature.",
+                    "properties": {
+                        "precursorPulseTime": {
+                            "type": "number",
+                            "description": "Time in seconds for pulsing the precursor, e.g., varies based on deposition conditions and temperature."
+                        },
+                        "coReactantPulseTime": {
+                            "type": "number",
+                            "description": "Time in seconds for pulsing the co-reactant, e.g., varies for NH3."
+                        }
+                    }
+                },
+                "purgeTimes": {
+                    "type": "number",
+                    "description": "Time in seconds for purging the reactor chamber between pulses, e.g., varies based on adsorption properties."
+                },
+                "growthRate": {
+                    "type": "number",
+                    "description": "Growth rate of the film in nm per cycle, varies with temperature and precursor, e.g., 0.04 to 0.07 nm per cycle for TiO2 at 150 to 400\u00b0C."
+                },
+                "substrate": {
+                    "type": "object",
+                    "description": "Details about the substrate used in the deposition process.",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Type of substrate used, e.g., borosilicate glass, ITO, Si(100)."
+                        },
+                        "temperatureImpact": {
+                            "type": "string",
+                            "description": "Impact of substrate temperature on film properties."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "ALDMethod",
+                "materialDeposited",
+                "depositionTemperature",
+                "pressure",
+                "reactor",
+                "crystallinity",
+                "pulseTimes",
+                "purgeTimes",
+                "growthRate",
+                "substrate"
+            ]
+        },
+        "filmProperties": {
+            "type": "object",
+            "description": "Properties of the deposited film.",
+            "properties": {
+                "thicknessControl": {
+                    "type": "object",
+                    "description": "Control and verification of material thickness per cycle including dosing and purge times.",
+                    "properties": {
+                        "growthPerCycle": {
+                            "type": "number",
+                            "description": "The amount of material deposited per cycle, typically measured in \u00c5 per cycle, e.g., varies for titanium nitride, 0.70 \u00c5/cycle at 150\u00b0C for tin oxide."
+                        },
+                        "dosingTime": {
+                            "type": "number",
+                            "description": "Time for dosing the precursor or co-reactant, measured in seconds."
+                        },
+                        "purgeTime": {
+                            "type": "number",
+                            "description": "Time for purging the reactor chamber, measured in seconds."
+                        }
+                    }
+                },
+                "filmDensity": {
+                    "type": "number",
+                    "description": "Density of the film, typically measured in g/cm3, e.g., 21.5 g/cm3 for bulk platinum, 5.85 g/cm3 for zirconium oxide, 9.23 g/cm3 for hafnium oxide, varies for titanium nitride."
+                },
+                "opticalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "refractiveIndex": {
+                            "type": "number",
+                            "description": "Refractive index of the film, range 2.08 to 2.15."
+                        },
+                        "absorptionCoefficient": {
+                            "type": "number",
+                            "description": "Optical absorption coefficient."
+                        }
+                    }
+                },
+                "electricalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "resistivity": {
+                            "type": "number",
+                            "description": "Electrical resistivity of the film, e.g., 12 \u00b5\u03a9-cm for a 110-nm film, varies for titanium nitride."
+                        },
+                        "carrierDensity": {
+                            "type": "number",
+                            "description": "Carrier density in the film."
+                        },
+                        "mobility": {
+                            "type": "number",
+                            "description": "Carrier mobility in the film."
+                        },
+                        "dielectricProperties": {
+                            "type": "object",
+                            "description": "Dielectric properties of the film.",
+                            "properties": {
+                                "permittivity": {
+                                    "type": "number",
+                                    "description": "Effective permittivity of the film."
+                                },
+                                "breakdownResistance": {
+                                    "type": "number",
+                                    "description": "Breakdown resistance of the film in MV cm-1."
+                                }
+                            }
+                        }
+                    }
+                },
+                "uniformity": {
+                    "type": "object",
+                    "description": "Assessment of film thickness uniformity across large substrate areas.",
+                    "properties": {
+                        "variation": {
+                            "type": "number",
+                            "description": "Permissible variation in film thickness, typically measured in percentage."
+                        }
+                    }
+                },
+                "conformality": {
+                    "type": "object",
+                    "description": "Ability of the film to coat 3D structures uniformly.",
+                    "properties": {
+                        "aspectRatio": {
+                            "type": "number",
+                            "description": "Aspect ratio of the 3D structures used in testing conformality."
+                        }
+                    }
+                },
+                "impurities": {
+                    "type": "object",
+                    "description": "Levels of impurities in the film.",
+                    "properties": {
+                        "carbon": {
+                            "type": "number",
+                            "description": "Carbon content in the film, measured in atomic percentage, varies for titanium nitride due to potential incorporation of dimethylamino species."
+                        },
+                        "nitrogen": {
+                            "type": "number",
+                            "description": "Nitrogen content in the film, measured in atomic percentage."
+                        },
+                        "hydrogen": {
+                            "type": "number",
+                            "description": "Hydrogen content in the film, measured in atomic percentage."
+                        }
+                    }
+                }
+            }
+        },
+        "safetyAndEnvironmental": {
+            "type": "object",
+            "description": "Safety and environmental considerations in the ALD process.",
+            "properties": {
+                "safety": {
+                    "type": "string",
+                    "description": "Safety considerations for handling chemicals and reaction products."
+                },
+                "filmStability": {
+                    "type": "boolean",
+                    "description": "Whether the film remains stable under intended environmental conditions."
+                },
+                "reproducibility": {
+                    "type": "boolean",
+                    "description": "Consistency of film thickness and properties in repeated experiments."
+                }
+            }
+        }
+    },
+    "required": [
+        "reactantSelection",
+        "processParameters",
+        "filmProperties",
+        "safetyAndEnvironmental"
+    ]
+}

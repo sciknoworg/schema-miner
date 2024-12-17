@@ -1,0 +1,211 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "description": "A schema representing the steps and parameters involved in characterizing an Atomic Layer Deposition process for various materials.",
+    "type": "object",
+    "properties": {
+        "ALDMethod": {
+            "type": "string",
+            "description": "The specific ALD method used, e.g., thermal ALD, plasma-enhanced ALD."
+        },
+        "MaterialDeposited": {
+            "type": "string",
+            "description": "The material being deposited, e.g., Al2O3, HfO2, MoOx, LiPO(N), Y2O3, LiCoO2, Ga2O3."
+        },
+        "ReactantSelection": {
+            "type": "object",
+            "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+            "properties": {
+                "precursor": {
+                    "type": "string",
+                    "description": "Chemical used as a precursor in the ALD process."
+                },
+                "coReactant": {
+                    "type": "string",
+                    "description": "Chemical used as a co-reactant in the ALD process."
+                },
+                "deliveryMethod": {
+                    "type": "string",
+                    "description": "Method of delivering the reactants to the reaction chamber."
+                }
+            },
+            "required": [
+                "precursor",
+                "coReactant",
+                "deliveryMethod"
+            ]
+        },
+        "ProcessConditions": {
+            "type": "object",
+            "description": "Details about the ALD process conditions.",
+            "properties": {
+                "reactor": {
+                    "type": "string",
+                    "description": "Type of reactor used for the ALD process."
+                },
+                "depositionTemperature": {
+                    "type": "number",
+                    "description": "The temperature at which deposition occurs, typically in \u00b0C."
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "The pressure within the reactor during deposition, typically in Torr."
+                },
+                "dosingTime": {
+                    "type": "object",
+                    "description": "Time for dosing the precursor or co-reactant, measured in seconds.",
+                    "properties": {
+                        "precursor": {
+                            "type": "number"
+                        },
+                        "coReactant": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "purgeTime": {
+                    "type": "object",
+                    "description": "Time for purging the reactor chamber, measured in seconds.",
+                    "properties": {
+                        "precursor": {
+                            "type": "number"
+                        },
+                        "coReactant": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "GrowthBehavior": {
+            "type": "object",
+            "description": "Control and verification of material thickness per cycle, including dosing and purge times to ensure self-limiting growth.",
+            "properties": {
+                "growthPerCycle": {
+                    "type": "number",
+                    "description": "The amount of material deposited per cycle, typically measured in nm per cycle."
+                },
+                "nucleationBehavior": {
+                    "type": "object",
+                    "description": "Initial growth behavior of the film during the first few ALD cycles.",
+                    "properties": {
+                        "initialGrowthType": {
+                            "type": "string",
+                            "description": "Type of initial growth observed, e.g., linear, accelerated, or delayed."
+                        },
+                        "nucleationPeriod": {
+                            "type": "number",
+                            "description": "Time period over which nucleation occurs, typically measured in cycles."
+                        }
+                    }
+                }
+            }
+        },
+        "MaterialProperties": {
+            "type": "object",
+            "description": "Assessment of the physical and chemical properties of the deposited film.",
+            "properties": {
+                "opticalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "refractiveIndex": {
+                            "type": "number",
+                            "description": "Refractive index of the film."
+                        },
+                        "absorptionCoefficient": {
+                            "type": "number",
+                            "description": "Optical absorption coefficient."
+                        }
+                    }
+                },
+                "electricalProperties": {
+                    "type": "object",
+                    "properties": {
+                        "resistivity": {
+                            "type": "number",
+                            "description": "Electrical resistivity of the film."
+                        },
+                        "carrierDensity": {
+                            "type": "number",
+                            "description": "Carrier density in the film."
+                        },
+                        "mobility": {
+                            "type": "number",
+                            "description": "Carrier mobility in the film."
+                        }
+                    }
+                },
+                "uniformity": {
+                    "type": "object",
+                    "description": "Assessment of film thickness uniformity across large substrate areas.",
+                    "properties": {
+                        "variation": {
+                            "type": "number",
+                            "description": "Permissible variation in film thickness, typically measured in percentage."
+                        }
+                    }
+                },
+                "conformality": {
+                    "type": "object",
+                    "description": "Ability of the film to coat 3D structures uniformly.",
+                    "properties": {
+                        "aspectRatio": {
+                            "type": "number",
+                            "description": "Aspect ratio of the 3D structures used in testing conformality."
+                        }
+                    }
+                },
+                "chemicalComposition": {
+                    "type": "object",
+                    "description": "Verification of the material's chemical composition post-deposition.",
+                    "properties": {
+                        "verificationMethods": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Methods used to verify the chemical composition, e.g., XPS or RBS."
+                        }
+                    }
+                },
+                "crystallinity": {
+                    "type": "string",
+                    "description": "Describes whether the film is amorphous or crystalline."
+                },
+                "filmDensity": {
+                    "type": "number",
+                    "description": "Density of the film, typically measured in g/cm3."
+                },
+                "roughness": {
+                    "type": "number",
+                    "description": "Surface roughness of the film, typically measured in nm."
+                }
+            }
+        },
+        "SafetyAndReproducibility": {
+            "type": "object",
+            "description": "Safety and reproducibility aspects of the ALD process.",
+            "properties": {
+                "safety": {
+                    "type": "string",
+                    "description": "Safety considerations for handling chemicals and reaction products."
+                },
+                "filmStability": {
+                    "type": "boolean",
+                    "description": "Whether the film remains stable under intended environmental conditions."
+                },
+                "reproducibility": {
+                    "type": "boolean",
+                    "description": "Consistency of film thickness and properties in repeated experiments."
+                }
+            }
+        }
+    },
+    "required": [
+        "ReactantSelection",
+        "ProcessConditions",
+        "GrowthBehavior",
+        "MaterialProperties",
+        "SafetyAndReproducibility"
+    ]
+}

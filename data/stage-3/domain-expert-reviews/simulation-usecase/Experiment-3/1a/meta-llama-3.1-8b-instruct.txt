@@ -1,0 +1,252 @@
+Property Merging:
+None
+
+Property Grouping:
+1. Binding coefficients shouldn't be in observables
+2. The bottom two groups, "chlorinelossreactions" and "reactionmechanisms" refer to specific examples of ALD processes/papers which won’t be applicable across all papers. I think it would be better to not include them or ask more general questions about reaction mechanisms.
+
+Missing Properties:
+1. Further details into methodologies.
+2. Materials could be broken up into precursors, surface and co-reactants 
+
+Adequacy of Descriptions:
+Too specific at the bottom of the schema, describing individual materials
+
+Domain expert edited schema of the initial generated version:
+
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Deposition (ALD) Process",
+    "description": "JSON schema representing the ALD process parameters and observables",
+    "type": "object",
+    "properties": {
+        "simulationParameters": {
+            "type": "object",
+            "properties": {
+                "methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Methods used (e.g., DFT, HF, post-HF, ML + kMC, MD)"
+                    },
+                    "description": "List of methods used for simulations/calculations"
+                },
+                "materials": {
+                    "type": "array",
+                    "description": "Materials involved in the ALD process.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "examples": [
+                        "Al2O3",
+                        "TiO2",
+                        "Cu(acac)2",
+                        "Ti(CpMe5)",
+                        "ZrO2",
+                        "HfO2",
+                        "Pt on graphene",
+                        "Zinc Oxide",
+                        "Silicon precursors",
+                        "Carbon precursors"
+                    ]
+                },
+                "decompositionAndBinding": {
+                    "type": "object",
+                    "properties": {
+                        "mechanisms": {
+                            "type": "string",
+                            "description": "Decomposition and binding mechanisms/mode (kinetics and thermodynamics)"
+                        }
+                    },
+                    "description": "Decomposition and binding properties"
+                },
+                "growthRate": {
+                    "type": "object",
+                    "properties": {
+                        "rate": {
+                            "type": "number",
+                            "unit": "nm/min",
+                            "description": "Growth rate"
+                        },
+                        "temperatureDependency": {
+                            "type": "object",
+                            "properties": {
+                                "kinetics": {
+                                    "type": "string",
+                                    "description": "Temperature dependence of growth rate (kinetics)"
+                                }
+                            },
+                            "description": "Temperature dependence of growth rate"
+                        }
+                    },
+                    "description": "Growth rate properties"
+                },
+                "surfaceDesorptionDiffusionReactionRates": {
+                    "type": "object",
+                    "properties": {
+                        "rates": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "description": "Surface desorption, diffusion, and reaction rates"
+                            },
+                            "description": "List of surface desorption, diffusion, and reaction rates"
+                        }
+                    },
+                    "description": "Surface desorption, diffusion, and reaction rates"
+                },
+                "precursorChemistry": {
+                    "type": "object",
+                    "properties": {
+                        "precursorType": {
+                            "type": "string",
+                            "description": "Type of precursor (e.g., Cu(acac)2, H2, O3)"
+                        },
+                        "ligandExchange": {
+                            "type": "boolean",
+                            "description": "Whether ligand exchange occurs during ALD"
+                        },
+                        "stericHindrance": {
+                            "type": "object",
+                            "properties": {
+                                "ligandGeometry": {
+                                    "type": "string",
+                                    "description": "Ligand geometry of the chemisorbed precursor"
+                                },
+                                "stericEffect": {
+                                    "type": "string",
+                                    "description": "Steric effect of the ligand geometry on the chemisorbed precursor"
+                                }
+                            },
+                            "description": "Steric hindrance properties"
+                        }
+                    },
+                    "description": "Precursor chemistry properties"
+                }
+            },
+            "description": "Simulation parameters"
+        },
+        "observables": {
+            "type": "object",
+            "properties": {
+                "filmProperties": {
+                    "type": "object",
+                    "properties": {
+                        "uniformity": {
+                            "type": "number",
+                            "unit": "nm",
+                            "description": "Film uniformity"
+                        },
+                        "roughness": {
+                            "type": "number",
+                            "unit": "nm",
+                            "description": "Film roughness"
+                        },
+                        "density": {
+                            "type": "number",
+                            "unit": "g/cm^3",
+                            "description": "Film density"
+                        },
+                        "temperatureProfile": {
+                            "type": "string",
+                            "description": "Temperature profile (thermal conduction)"
+                        },
+                        "chemicalComposition": {
+                            "type": "object",
+                            "properties": {
+                                "elementAnalysis": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Element analysis (e.g., atomic percentage)"
+                                    },
+                                    "description": "Element analysis"
+                                }
+                            },
+                            "description": "Chemical composition"
+                        }
+                    },
+                    "description": "Film properties"
+                },
+                "bindingAffinityStickingCoefficients": {
+                    "type": "object",
+                    "properties": {
+                        "adsorbate": {
+                            "type": "string",
+                            "description": "Adsorbate (precursor/etchant/inhibitor)"
+                        },
+                        "bindingAffinity": {
+                            "type": "number",
+                            "unit": "eV",
+                            "description": "Binding affinity"
+                        },
+                        "stickingCoefficients": {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "unit": "nm",
+                                "description": "Sticking coefficients"
+                            },
+                            "description": "List of sticking coefficients"
+                        }
+                    },
+                    "description": "Binding affinity and sticking coefficients"
+                }
+            },
+            "description": "Observables"
+        },
+        "designAndOperationVariables": {
+            "type": "object",
+            "properties": {
+                "gapDistance": {
+                    "type": "number",
+                    "unit": "mm",
+                    "description": "Gap distance"
+                },
+                "purgeGasFlowRates": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "unit": "sccm",
+                        "description": "Purge gas flow rates"
+                    },
+                    "description": "List of purge gas flow rates"
+                },
+                "precursorGasFlowRates": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "unit": "sccm",
+                        "description": "Precursor gas flow rates"
+                    },
+                    "description": "List of precursor gas flow rates"
+                },
+                "substrateVelocity": {
+                    "type": "number",
+                    "unit": "m/s",
+                    "description": "Substrate velocity"
+                },
+                "vacuumPressure": {
+                    "type": "number",
+                    "unit": "mbar",
+                    "description": "Vacuum pressure"
+                }
+            },
+            "description": "Design and operation variables"
+        },
+        "references": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Reference (e.g., paper, book, website)"
+            },
+            "description": "List of references"
+        }
+    },
+    "required": [
+        "simulationParameters",
+        "observables",
+        "designAndOperationVariables",
+        "references"
+    ]
+}

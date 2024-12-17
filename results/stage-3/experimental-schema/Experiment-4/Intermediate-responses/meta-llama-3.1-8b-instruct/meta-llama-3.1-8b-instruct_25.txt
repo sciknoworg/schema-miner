@@ -1,0 +1,573 @@
+Based on the provided research paper and domain expert feedback, the refined JSON schema for the ALD process is as follows:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "Schema for the ALD process, including parameters and properties",
+  "type": "object",
+  "properties": {
+    "reactantSelection": {
+      "type": "object",
+      "description": "Selection of the precursor and co-reactant",
+      "properties": {
+        "precursor": {
+          "type": "string",
+          "description": "The precursor used in the process"
+        },
+        "coReactor": {
+          "type": "string",
+          "description": "The co-reactant used in the process"
+        },
+        "precursorType": {
+          "type": "string",
+          "description": "Type of precursor (e.g., solid, liquid, gas)"
+        },
+        "precursorChemicalFormula": {
+          "type": "string",
+          "description": "Chemical formula of the precursor"
+        },
+        "precursorMeltingPoint": {
+          "type": "number",
+          "description": "Melting point of the precursor in °C"
+        },
+        "precursorDecompositionTemperature": {
+          "type": "number",
+          "description": "Temperature at which the precursor decomposes in °C"
+        },
+        "precursorPulseLength": {
+          "type": "number",
+          "description": "Length of the precursor pulse in seconds"
+        },
+        "TDMATReaction": {
+          "type": "object",
+          "description": "TDMAT reaction parameters",
+          "properties": {
+            "TDMATExposureTime": {
+              "type": "number",
+              "description": "TDMAT exposure time in seconds"
+            },
+            "TDMATPressure": {
+              "type": "number",
+              "description": "TDMAT pressure in Torr"
+            },
+            "TDMATPurgeTime": {
+              "type": "number",
+              "description": "TDMAT purge time in seconds"
+            }
+          },
+          "required": ["TDMATExposureTime", "TDMATPressure", "TDMATPurgeTime"]
+        },
+        "precursorComplex": {
+          "type": "string",
+          "description": "Type of precursor complex used in the ALD process"
+        },
+        "trisDialkylaminoAluminum": {
+          "type": "object",
+          "description": "Tris(dialkylamino)aluminum properties",
+          "properties": {
+            "trisDiethylaminoAluminum": {
+              "type": "object",
+              "description": "Tris(diethylamino)aluminum properties",
+              "properties": {
+                "synthesisMethod": {
+                  "type": "string",
+                  "description": "Synthesis method of tris(diethylamino)aluminum"
+                },
+                "characterization": {
+                  "type": "object",
+                  "description": "Characterization of tris(diethylamino)aluminum",
+                  "properties": {
+                    "vaporPressure": {
+                      "type": "number",
+                      "description": "Vapor pressure of tris(diethylamino)aluminum"
+                    },
+                    "thermogravimetricAnalysis": {
+                      "type": "object",
+                      "description": "Thermogravimetric analysis of tris(diethylamino)aluminum",
+                      "properties": {
+                        "onsetTemperature": {
+                          "type": "number",
+                          "description": "Onset temperature of tris(diethylamino)aluminum"
+                        },
+                        "residual": {
+                          "type": "number",
+                          "description": "Residual of tris(diethylamino)aluminum"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chemicalComposition": {
+      "type": "object",
+      "description": "Composition of the deposited material",
+      "properties": {
+        "elements": {
+          "type": "array",
+          "description": "Elements present in the deposited material",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stoichiometry": {
+          "type": "object",
+          "description": "Stoichiometry of the deposited material",
+          "properties": {
+            "precursor": {
+              "type": "number",
+              "description": "Stoichiometry ratio of the precursor"
+            },
+            "coReactor": {
+              "type": "number",
+              "description": "Stoichiometry ratio of the co-reactant"
+            }
+          },
+          "required": ["precursor", "coReactor"]
+        }
+      }
+    },
+    "thicknessControl": {
+      "type": "object",
+      "description": "Thickness control parameters",
+      "properties": {
+        "growthPerCycle": {
+          "type": "number",
+          "description": "Growth per cycle (GPC) in nm or atoms/cm^2"
+        },
+        "filmThickness": {
+          "type": "number",
+          "description": "Film thickness in nm"
+        },
+        "cycleTime": {
+          "type": "number",
+          "description": "Cycle time in seconds"
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Purge time in seconds"
+        }
+      },
+      "required": ["growthPerCycle", "filmThickness", "cycleTime", "purgeTime"]
+    },
+    "saturation": {
+      "type": "object",
+      "description": "Saturation parameters",
+      "properties": {
+        "precursorDosingTime": {
+          "type": "number",
+          "description": "Precursor dosing time in seconds"
+        },
+        "coReactorExposureTime": {
+          "type": "number",
+          "description": "Co-reactant exposure time in seconds"
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Purge time in seconds"
+        }
+      },
+      "required": ["precursorDosingTime", "coReactorExposureTime", "purgeTime"]
+    },
+    "materialProperties": {
+      "type": "object",
+      "description": "Material properties",
+      "properties": {
+        "opticalProperties": {
+          "type": "object",
+          "description": "Optical properties",
+          "properties": {
+            "refractiveIndex": {
+              "type": "number",
+              "description": "Refractive index"
+            },
+            "absorptionCoef": {
+              "type": "number",
+              "description": "Absorption coefficient"
+            },
+            "absorptionSpectrum": {
+              "type": "object",
+              "description": "Absorption spectrum of the material"
+            }
+          },
+          "required": ["refractiveIndex", "absorptionCoef", "absorptionSpectrum"]
+        },
+        "electricalProperties": {
+          "type": "object",
+          "description": "Electrical properties",
+          "properties": {
+            "resistivity": {
+              "type": "number",
+              "description": "Resistivity in ohm-cm"
+            },
+            "carrierDensity": {
+              "type": "number",
+              "description": "Carrier density in cm^-3"
+            },
+            "mobility": {
+              "type": "number",
+              "description": "Mobility in cm^2/V-s"
+            }
+          },
+          "required": ["resistivity", "carrierDensity", "mobility"]
+        },
+        "PECPerformance": {
+          "type": "object",
+          "description": "Photoelectrochemical performance of the material",
+          "properties": {
+            "incidentPhotonToCurrentConversionEfficiency": {
+              "type": "number",
+              "description": "Incident photon-to-current conversion efficiency"
+            },
+            "photocurrentDensity": {
+              "type": "number",
+              "description": "Photocurrent density"
+            }
+          },
+          "required": ["incidentPhotonToCurrentConversionEfficiency", "photocurrentDensity"]
+        },
+        "postDepositionAnnealing": {
+          "type": "object",
+          "description": "Post-deposition annealing process",
+          "properties": {
+            "temperature": {
+              "type": "number",
+              "description": "Temperature of the post-deposition annealing process"
+            },
+            "time": {
+              "type": "number",
+              "description": "Time of the post-deposition annealing process"
+            }
+          },
+          "required": ["temperature", "time"]
+        }
+      }
+    },
+    "temperatureDependence": {
+      "type": "object",
+      "description": "Temperature dependence parameters",
+      "properties": {
+        "depositionTemperature": {
+          "type": "number",
+          "description": "Deposition temperature in °C"
+        },
+        "ALDWindow": {
+          "type": "object",
+          "description": "ALD window parameters",
+          "properties": {
+            "GPC": {
+              "type": "number",
+              "description": "GPC in nm or atoms/cm^2"
+            },
+            "temperatureRange": {
+              "type": "array",
+              "description": "Temperature range in °C",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "required": ["GPC", "temperatureRange"]
+        }
+      }
+    },
+    "uniformity": {
+      "type": "object",
+      "description": "Uniformity parameters",
+      "properties": {
+        "thicknessVariation": {
+          "type": "number",
+          "description": "Thickness variation in %"
+        },
+        "uniformity": {
+          "type": "array",
+          "description": "Uniformity values",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": ["thicknessVariation", "uniformity"]
+    },
+    "conformality": {
+      "type": "object",
+      "description": "Conformality parameters",
+      "properties": {
+        "conformality": {
+          "type": "number",
+          "description": "Conformality value"
+        },
+        "aspectRatio": {
+          "type": "number",
+          "description": "Aspect ratio of the trench or via"
+        }
+      },
+      "required": ["conformality", "aspectRatio"]
+    },
+    "nucleationBehavior": {
+      "type": "object",
+      "description": "Nucleation behavior parameters",
+      "properties": {
+        "nucleationMode": {
+          "type": "string",
+          "description": "Nucleation mode (e.g., island growth, layer-by-layer)"
+        },
+        "growthMode": {
+          "type": "string",
+          "description": "Growth mode (e.g., island growth, layer-by-layer)"
+        }
+      },
+      "required": ["nucleationMode", "growthMode"]
+    },
+    "substrate": {
+      "type": "object",
+      "description": "Substrate properties",
+      "properties": {
+        "substrateType": {
+          "type": "string",
+          "description": "Type of substrate (e.g., mica, sapphire, SiO2/Si)"
+        },
+        "substrateSurface": {
+          "type": "string",
+          "description": "Surface properties of the substrate (e.g., Al-terminated, SiO2-terminated)"
+        }
+      },
+      "required": ["substrateType", "substrateSurface"]
+    },
+    "vdWEpitaxy": {
+      "type": "object",
+      "description": "Van der Waals epitaxy parameters",
+      "properties": {
+        "epitaxialRelation": {
+          "type": "string",
+          "description": "Epitaxial relation between the film and substrate"
+        },
+        "inPlaneMosaicity": {
+          "type": "number",
+          "description": "In-plane mosaicity of the film"
+        },
+        "outOfPlaneTexture": {
+          "type": "number",
+          "description": "Out-of-plane texture of the film"
+        }
+      },
+      "required": ["epitaxialRelation", "inPlaneMosaicity", "outOfPlaneTexture"]
+    },
+    "surfacePassivation": {
+      "type": "object",
+      "description": "Surface passivation parameters",
+      "properties": {
+        "surfaceRecombinationVelocity": {
+          "type": "number",
+          "description": "Effective surface recombination velocity"
+        },
+        "surfacePassivationLayer": {
+          "type": "string",
+          "description": "Type of surface passivation layer (e.g., Al2O3, a-SiNx:H)"
+        }
+      },
+      "required": ["surfaceRecombinationVelocity", "surfacePassivationLayer"]
+    },
+    "plasmaEnhancedALD": {
+      "type": "object",
+      "description": "Plasma-enhanced ALD parameters",
+      "properties": {
+        "plasmaPower": {
+          "type": "number",
+          "description": "Plasma power in W"
+        },
+        "plasmaFrequency": {
+          "type": "number",
+          "description": "Plasma frequency in Hz"
+        },
+        "plasmaGasFlow": {
+          "type": "number",
+          "description": "Plasma gas flow in sccm"
+        },
+        "argonGasFlow": {
+          "type": "number",
+          "description": "Argon gas flow in sccm"
+        },
+        "hydrogenGasFlow": {
+          "type": "number",
+          "description": "Hydrogen gas flow in sccm"
+        }
+      },
+      "required": ["plasmaPower", "plasmaFrequency", "plasmaGasFlow", "argonGasFlow", "hydrogenGasFlow"]
+    },
+    "LiPON": {
+      "type": "object",
+      "description": "LiPON properties",
+      "properties": {
+        "LiPONComposition": {
+          "type": "string",
+          "description": "Composition of the LiPON material"
+        },
+        "LiPONStoichiometry": {
+          "type": "object",
+          "description": "Stoichiometry of the LiPON material",
+          "properties": {
+            "Li": {
+              "type": "number",
+              "description": "Stoichiometry ratio of lithium"
+            },
+            "P": {
+              "type": "number",
+              "description": "Stoichiometry ratio of phosphorus"
+            },
+            "O": {
+              "type": "number",
+              "description": "Stoichiometry ratio of oxygen"
+            },
+            "N": {
+              "type": "number",
+              "description": "Stoichiometry ratio of nitrogen"
+            }
+          }
+        },
+        "LiPONConductivity": {
+          "type": "number",
+          "description": "Conductivity of the LiPON material"
+        },
+        "LiPONUniformity": {
+          "type": "array",
+          "description": "Uniformity values of the LiPON material",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "CsI": {
+      "type": "object",
+      "description": "CsI properties",
+      "properties": {
+        "CsIComposition": {
+          "type": "string",
+          "description": "Composition of the CsI material"
+        },
+        "CsIStoichiometry": {
+          "type": "object",
+          "description": "Stoichiometry of the CsI material",
+          "properties": {
+            "Cs": {
+              "type": "number",
+              "description": "Stoichiometry ratio of cesium"
+            },
+            "I": {
+              "type": "number",
+              "description": "Stoichiometry ratio of iodine"
+            }
+          }
+        },
+        "CsIPulseLength": {
+          "type": "number",
+          "description": "Length of the CsI pulse in seconds"
+        },
+        "CsIExposureTime": {
+          "type": "number",
+          "description": "CsI exposure time in seconds"
+        },
+        "CsIPressure": {
+          "type": "number",
+          "description": "CsI pressure in Torr"
+        },
+        "CsIPurgeTime": {
+          "type": "number",
+          "description": "CsI purge time in seconds"
+        }
+      }
+    },
+    "CsPbI3": {
+      "type": "object",
+      "description": "CsPbI3 properties",
+      "properties": {
+        "CsPbI3Composition": {
+          "type": "string",
+          "description": "Composition of the CsPbI3 material"
+        },
+        "CsPbI3Stoichiometry": {
+          "type": "object",
+          "description": "Stoichiometry of the CsPbI3 material",
+          "properties": {
+            "Cs": {
+              "type": "number",
+              "description": "Stoichiometry ratio of cesium"
+            },
+            "Pb": {
+              "type": "number",
+              "description": "Stoichiometry ratio of lead"
+            },
+            "I": {
+              "type": "number",
+              "description": "Stoichiometry ratio of iodine"
+            }
+          }
+        },
+        "CsPbI3PulseLength": {
+          "type": "number",
+          "description": "Length of the CsPbI3 pulse in seconds"
+        },
+        "CsPbI3ExposureTime": {
+          "type": "number",
+          "description": "CsPbI3 exposure time in seconds"
+        },
+        "CsPbI3Pressure": {
+          "type": "number",
+          "description": "CsPbI3 pressure in Torr"
+        },
+        "CsPbI3PurgeTime": {
+          "type": "number",
+          "description": "CsPbI3 purge time in seconds"
+        }
+      }
+    }
+  },
+  "required": [
+    "reactantSelection",
+    "chemicalComposition",
+    "thicknessControl",
+    "saturation",
+    "materialProperties",
+    "temperatureDependence",
+    "uniformity",
+    "conformality",
+    "nucleationBehavior",
+    "substrate",
+    "vdWEpitaxy",
+    "surfacePassivation",
+    "plasmaEnhancedALD",
+    "LiPON",
+    "CsI",
+    "CsPbI3"
+  ]
+}
+```
+
+The changes made to the schema include:
+
+* Added new properties for the `precursor` and `coReactor` objects, including `precursorType`, `precursorChemicalFormula`, `precursorMeltingPoint`, and `precursorDecompositionTemperature`.
+* Added a new object `TDMATReaction` to the `precursor` object, which includes properties for the TDMAT reaction parameters.
+* Added a new object `trisDialkylaminoAluminum` to the `precursor` object, which includes properties for the tris(dialkylamino)aluminum properties.
+* Added a new object `LiPON` to the schema, which includes properties for the LiPON material.
+* Added a new object `CsI` to the schema, which includes properties for the CsI material.
+* Added a new object `CsPbI3` to the schema, which includes properties for the CsPbI3 material.
+* Updated the `materialProperties` object to include new properties for the optical and electrical properties of the material.
+* Updated the `temperatureDependence` object to include new properties for the ALD window parameters.
+* Updated the `uniformity` object to include new properties for the uniformity values.
+* Updated the `conformality` object to include new properties for the conformality value and aspect ratio.
+* Updated the `nucleationBehavior` object to include new properties for the nucleation mode and growth mode.
+* Updated the `substrate` object to include new properties for the substrate type and surface properties.
+* Updated the `vdWEpitaxy` object to include new properties for the epitaxial relation, in-plane mosaicity, and out-of-plane texture.
+* Updated the `surfacePassivation` object to include new properties for the surface recombination velocity and surface passivation layer.
+* Updated the `plasmaEnhancedALD` object to include new properties for the plasma power, plasma frequency, plasma gas flow, argon gas flow, and hydrogen gas flow.
+* Updated the `LiPON` object to include new properties for the LiPON composition, stoichiometry, conductivity, and uniformity.
+* Updated the `CsI` object to include new properties for the CsI composition, stoichiometry, pulse length, exposure time, pressure, and purge time.
+* Updated the `CsPbI3` object to include new properties for the CsPbI3 composition, stoichiometry, pulse length, exposure time, pressure, and purge time.
+
+Note that these changes are based on the information provided in the research paper and domain expert feedback, and may not be comprehensive or accurate.

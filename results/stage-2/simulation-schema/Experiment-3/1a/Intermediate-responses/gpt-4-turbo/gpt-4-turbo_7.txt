@@ -1,0 +1,112 @@
+Based on the provided research paper and domain expert feedback, the JSON schema for the ALD process can be refined to better represent the complexities and specifics of the TiO2 deposition from TiI4 and H2O onto SiO2 surfaces. The research paper provides detailed insights into the reaction mechanisms, the influence of quantum tunneling and hindered rotations, and the comparison between TiI4 and TiCl4 as precursors. Here's how the schema can be refined:
+
+1. **Add New Properties for Quantum Tunneling and Hindered Rotations**: The research paper suggests that while quantum tunneling effects are negligible at typical ALD temperatures, hindered rotations of adsorbates significantly influence the rate constants. These aspects should be included to provide a more comprehensive model.
+
+2. **Refine Reaction Mechanisms**: The paper details specific reaction mechanisms and pathways, including the formation of intermediate species and the influence of different surface functionalities. These mechanisms should be explicitly represented in the schema.
+
+3. **Include Comparative Analysis of Precursors**: The paper compares the effects of using TiI4 versus TiCl4. This comparative data can be valuable for simulations intended to choose between these precursors. Properties related to precursor efficiency, byproduct formation, and thermodynamic favorability should be included.
+
+4. **Adjust Data Types and Constraints**: Based on expert feedback, ensure that the data types and constraints accurately reflect the possible values these properties can take, especially for temperature and pressure conditions, which are critical for ALD processes.
+
+5. **Document and Organize**: Enhance the schema documentation to include descriptions of each new or refined property, ensuring clarity and ease of use for future simulations.
+
+Here is the refined JSON schema incorporating these suggestions:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition Process",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "precursors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "selectivity": {"type": "string", "description": "Describes the selective behavior of the precursor on specific facets"},
+              "decompositionMechanism": {
+                "type": "object",
+                "properties": {
+                  "byProducts": {"type": "array", "items": {"type": "string"}},
+                  "interactionWithHydroxyls": {"type": "string"}
+                }
+              },
+              "stericHindrance": {
+                "type": "object",
+                "properties": {
+                  "ligandGeometry": {"type": "string"},
+                  "effectOnGPC": {"type": "string"}
+                },
+                "description": "Effects of ligand geometry on growth per cycle due to steric hindrance"
+              }
+            }
+          }
+        },
+        "reactionMechanism": {
+          "type": "object",
+          "properties": {
+            "description": {"type": "string"},
+            "byProducts": {"type": "array", "items": {"type": "string"}},
+            "activationBarriers": {"type": "array", "items": {"type": "number"}},
+            "reactionPathways": {"type": "array", "items": {"type": "string"}},
+            "quantumTunnelingEffect": {"type": "string", "description": "Effect of quantum tunneling on reaction rates"},
+            "hinderedRotationsEffect": {"type": "string", "description": "Effect of hindered rotations on reaction rates"}
+          }
+        },
+        "reactionConditions": {
+          "type": "object",
+          "properties": {
+            "temperature": {"type": "string"},
+            "pressure": {"type": "string"}
+          }
+        },
+        "growthPerCycle": {"type": "number", "description": "Thickness of film deposited per cycle, influenced by chemisorbed precursor amount"}
+      }
+    },
+    "observableProperties": {
+      "type": "object",
+      "properties": {
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {"type": "string"},
+            "roughness": {"type": "string"},
+            "density": {"type": "string"},
+            "temperatureProfile": {"type": "string"},
+            "chemicalComposition": {"type": "string"}
+          }
+        }
+      }
+    },
+    "reactorDesign": {
+      "type": "object",
+      "properties": {
+        "surfaceType": {"type": "string", "description": "Describes the type of surface functionalities involved in reactions"},
+        "gapDistance": {"type": "number"},
+        "gasFlowRates": {
+          "type": "object",
+          "properties": {
+            "purgeRate": {"type": "number"},
+            "precursorRate": {"type": "number"}
+          }
+        },
+        "substrateVelocity": {"type": "number"},
+        "vacuumPressure": {"type": "number"}
+      }
+    },
+    "dynamicProperties": {
+      "type": "object",
+      "properties": {
+        "timeEvolutionOfSpecies": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
+```
+
+This schema now includes properties for quantum tunneling and hindered rotations, more detailed reaction mechanisms, and comparative analysis of different precursors, all organized and documented for clarity.
