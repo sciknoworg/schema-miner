@@ -27,12 +27,12 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, var_dic
             return None
 
         #Saving the model response
-        print(f'\nWriting the model\'s response into the file at location: {result_file_path}')
+        print(f'\nWriting the model\'s response to the file at the specified location: {result_file_path}')
         file_path = f'{result_file_path}/{model_name}.txt'
         write_text_file(file_path, model_output)
 
         #Extracting the updated schema
-        print('\nExtracting the JSON Object from the Model\'s Output...')
+        print('\nExtracting the JSON object from the model\'s output...')
         initial_schema = extract_json_schema(model_output, json_encl_expr = [('```json', '```'), ('```', '```')])
         if not initial_schema:
             print('Stopping the inference from the LLM...')
@@ -40,7 +40,7 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, var_dic
         
         #Saving the final json schema
         file_saved = save_json_file(result_file_path, f'{llm_model_name}.json', initial_schema)
-        if file_saved: print(f'JSON Schema Saved at location: {result_file_path}')
+        if file_saved: print(f'JSON schema Saved at location: {result_file_path}')
     except Exception as e:
         print(f'Exception Occurred while doing LLM ({llm_model_name}) Inference')
         print(f'Exception: {e}')
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     print('\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models')
     print('Stage 1: Initial Schema Mining\n')
     
-    print('Please input the LLM to perform schema mining...')
+    print('Please specify the LLM name to perform schema mining...')
     print('''List of possible LLMs:
     1. OPENAI Models:
         - gpt-4o
@@ -69,12 +69,12 @@ if __name__ == "__main__":
     model_name = input('LLM> ').lower()
     llm_inference_class = llm_type_mappings[model_name] if model_name in llm_type_mappings.keys() else OLLAMA_LLM_Inference
 
-    print('\nPlease input the location of the process specification document')
+    print('\nPlease specify the location of the process specification document')
     context_location = input('Document location> ')
     context = read_text_file(context_location)
 
-    print('\nPlease input the location to save the extracted schema')
-    results_dir = input('Extracted schema location> ')
+    print('\nPlease specify the location to save the schema')
+    results_dir = input('Schema location> ')
 
     print(f'\nPerforming LLM ({model_name}) Inference to extract schema...')
     var_dict = {'context': context}

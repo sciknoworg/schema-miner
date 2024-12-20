@@ -25,7 +25,7 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
     llm_model_name = llm_model_name.replace(':', '-')
 
     #Reading the schema from stage-1
-    print(f'\nReading the initial schema from stage-1: {initial_schema_path}/{llm_model_name}.json')
+    print(f'\nReading the schema from stage-1: {initial_schema_path}/{llm_model_name}.json')
     schema = read_json_file(f'{initial_schema_path}/{llm_model_name}.json')
     
     #Reading the domain expert reviews
@@ -38,6 +38,8 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
     #Iterating over the scientific literature
     for filename in os.listdir(literature_path):
         if not filename.endswith('.txt'): continue
+
+        print(f'\n========================== Iteration {index + 1} =================================')
 
         #Reading the full text of the scientific paper
         print(f'\nReading the scientific paper: {literature_path}/{filename}')
@@ -54,7 +56,7 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
             continue
         
         #Saving the model response
-        print(f'Writing the model\'s response into a file at location: {result_path}')
+        print(f'Writing the model\'s response to the file at the specified location: {result_path}')
         file_path = f'{result_path}/Intermediate-responses/{llm_model_name}/{llm_model_name}_{index + 1}.txt'
         write_text_file(file_path, model_output)
         
@@ -98,7 +100,7 @@ if __name__ == "__main__":
     print('\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models ')
     print('Stage 2: Preliminary Schema Refinement\n')
     
-    print('Please input the LLM to perform schema mining...')
+    print('Please specify the LLM name to perform schema mining...')
     print('''List of possible LLMs:
     1. OPENAI Models:
         - gpt-4o
@@ -110,17 +112,17 @@ if __name__ == "__main__":
     model_name = input('LLM> ').lower()
     llm_inference_class = llm_type_mappings[model_name] if model_name in llm_type_mappings.keys() else OLLAMA_LLM_Inference
 
-    print('\nPlease input the location of the initial schema')
-    initial_schema_dir = input('Initial schema location> ')
+    print('\nPlease specify the location to the schema from stage 1')
+    initial_schema_dir = input('Stage 1 - schema location> ')
 
-    print('\nPlease input the location of the domain-expert feedbacks on the initial schema')
+    print('\nPlease specify the location to the domain-expert feedbacks on stage 1 schema')
     expert_review_dir = input('Expert feedback location> ')
 
-    print('\nPlease input the location of the small domain-expert curated collection of research papers')
+    print('\nPlease specify the location to the small domain-expert curated collection of research papers')
     literature_dir = input('Research papers location> ')
 
-    print('\nPlease input the location to save the extracted schema')
-    results_dir = input('Extracted schema location> ')
+    print('\nPlease specify the location to save the schema')
+    results_dir = input('Schema location> ')
 
     print(f'\nPerforming LLM ({model_name}) Inference to extract updated experimental schema...')
     llm_inference(llm_inference_class, model_name, results_dir, initial_schema_dir, expert_review_dir, literature_dir)
