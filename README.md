@@ -31,12 +31,12 @@ LLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Sc
 Formatting Knowledge Base - Converting PDF Documents to Text Files
 
 Please input the directory location containing the PDF documents  
-Directory Path> data  
+Directory Path> data/research-papers
 
 Please input the directory Location to store the converted text files
-Directory Path> data
+Directory Path> data/research-papers
 
-Extracting text from all PDFs from the directory: data
+Extracting text from all PDFs from the directory: data/research-papers
 
 Extracting text from the PDF: ALD-E_Simulation-Parameters-Observables-List.pdf
 Text file saved successfully: True
