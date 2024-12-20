@@ -18,7 +18,7 @@ LLMs4SchemaDiscovery is novel framework that leverages Large Language Models (LL
 
 ### Configuration
 
-Parameters such as API keys, base URLs, and model settings are managed using a dedicated [environment file](.env).
+Parameters such as API keys, base URLs, and model settings are managed using a dedicated environment file. The .env file has to be saved at the root directory of this project.
 
 ### Preparing Knowledge Base
 
