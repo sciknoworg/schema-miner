@@ -27,7 +27,7 @@ Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Lang
 
 ## 🧪 Installation
 
-Install all the necessary Python packages listed in the requirements.txt [requirements.txt](requirements.txt) file.
+Install all the necessary Python packages listed in the [requirements.txt](requirements.txt) file.
 
 ```bash
 pip install -r requirements.txt
@@ -50,6 +50,16 @@ For a quick start, see the provided example notebooks highlighting the overall w
 ### 🛠️ Configuration
 
 Parameters such as API keys, base URLs, and model settings are managed using a dedicated environment file. The .env file has to be saved at the root directory of this project.
+
+**Setting Up the Environment File**
+
+Before running the project, you need to setup the environment variables.
+1. Copy the example file:
+
+    ```bash
+    cp .env.example .env
+    ```
+2. Open ```.env``` file and replace the placeholder values with the actual configuration.
 
 ### 🗂️ Preparing Knowledge Base
 
