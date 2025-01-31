@@ -6,6 +6,7 @@
 
 ![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
+[![DOI](https://zenodo.org/badge/900734076.svg)](https://doi.org/10.5281/zenodo.14781824)
 
 </div>
 
