@@ -25,6 +25,25 @@ Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Lang
   Figure 1: Overview of the LLMs4SchemaDiscovery workflow.
 </p>
 
+## ⚙️ System Requirements
+
+The computational requirements for running this project vary depending on the model being used. If utilizing OpenAI models such as [**GPT-4o**](https://platform.openai.com/docs/models#gpt-4o) and [**GPT-4-turbo**](https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4), no specialized hardware is needed since inference is performed via API calls. A basic system with a stable internet connection is sufficient for executing API-based workflow.
+
+For users opting to run **open-source models** such as [**Llama 3.1 8B**](https://ai.meta.com/blog/meta-llama-3-1/) or other large-scale transformer-based models, local execution demands significantly higher computational resources. While these models can be executed on a CPU, inference times will be considerably longer. However, for efficient execution, a dedicated GPU with VRAM (specified by the model's documentation) is strongly recommended.
+
+While the hardware configuration can be adjusted based on the model size and performance needs, using a GPU significantly accelerates inference processes, reducing execution time drastically compared to CPU-only setups.
+
+### Experimental Configuration
+
+For our experiments, we used the following hardware setup:
+
+* **Processor:** 64-core CPU
+* **Memory:** 500 GB RAM
+* **GPU:** NVIDIA RTX 3090
+* **Models Used:**
+    * **Cloud-based:** GPT-4o and GPT-4-turbo (via OpenAI API)
+    * **Locally run:** Llama 3.1 8B
+
 ## 🧪 Installation
 
 Install all the necessary Python packages listed in the [requirements.txt](requirements.txt) file.
