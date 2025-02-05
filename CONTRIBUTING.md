@@ -1,8 +1,8 @@
-# 🚀 Contributing to Schema-miner
+# Contributing to Schema-miner
 
 Thank you for showing your interest in contributing to **Schema-miner!** We welcome all contributions, whether it's bug reports, feature request, documentation improvement, or code enhancements.
 
-## 📝 How to Contribute
+## How to Contribute
 
 **Reporting Issues**
 
@@ -22,7 +22,7 @@ The ideas for improving **Schema-miner** are really appreciated! If you have a f
     * **Problem Statement:** Explain the problem that this feature solves or what limitation it addresses.
     * **Proposed Solution:** Describe how this feature should work.
 
-## 📌 Submitting a Pull Request (PR)
+## Submitting a Pull Request (PR)
 
 If you would like to contribute in the code, please follow these steps:
 
@@ -64,6 +64,6 @@ To maintain the quality and consistency in the code, please follow these guideli
     * Use inline comments to explain non-trivial logic.
     * If your code introduces a new feature, update the relevant section in the [README.md](README.md)
 
-## ❓ Questions?
+## Questions?
 
 If you have any questions, feel free to open an issue or contact me at [sameer.sadruddin@tib.eu](mailto:sameer.sadruddin@tib.eu).

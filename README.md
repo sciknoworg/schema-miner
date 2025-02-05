@@ -7,6 +7,7 @@
 ![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
 [![DOI](https://zenodo.org/badge/900734076.svg)](https://doi.org/10.5281/zenodo.14781824)
+[![Read the Docs](https://img.shields.io/badge/Read%20the%20Docs-8CA1AF?logo=readthedocs&logoColor=fff)](https://schema-miner.readthedocs.io/en/latest/)
 
 </div>
 
@@ -16,7 +17,7 @@ This is an open-source implementation of Schema-miner (LLMs4SchemaDiscovery).
 
 ## 📋 Schema-miner Overview
 
-Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text, refine schemas with expert input, and incorporate domain-specific ontologies to add semantic knowledge.
+Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text, refine schemas with expert input, and incorporate domain-specific ontologies to add semantic knowledge. A comprehensive documentation for schema-miner, including detailed guides and examples, is available at [schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/).
 
 <p align="center">
   <img src="assets/LLM4SchemaMining - Workflow design.svg" height="300">
