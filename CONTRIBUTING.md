@@ -50,7 +50,7 @@ git push origin feature-name
 
 Submit your pull request by providing a clear description of your changes. Ensure that your code follows the project guidelines properly.
 
-## 🖥️ Code Guidelines
+## Code Guidelines
 
 To maintain the quality and consistency in the code, please follow these guidelines:
 

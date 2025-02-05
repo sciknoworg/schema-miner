@@ -17,7 +17,7 @@ This is an open-source implementation of Schema-miner (LLMs4SchemaDiscovery).
 
 ## 📋 Schema-miner Overview
 
-Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text, refine schemas with expert input, and incorporate domain-specific ontologies to add semantic knowledge. A comprehensive documentation for schema-miner, including detailed guides and examples, is available at [schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/).
+Schema-miner (LLMs4SchemaDiscovery) is novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text, refine schemas with expert input, and incorporate domain-specific ontologies to add semantic knowledge. A comprehensive documentation for schema-miner, including detailed guides and examples, is available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
 
 <p align="center">
   <img src="assets/LLM4SchemaMining - Workflow design.svg" height="300">
