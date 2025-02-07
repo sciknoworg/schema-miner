@@ -13,7 +13,7 @@
 
 **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
 
-This is an open-source implementation of Schema-miner (LLMs4SchemaDiscovery).
+This is an open-source implementation of Schema-miner.
 
 ## 📋 Schema-miner Overview
 
@@ -108,7 +108,7 @@ PDF documents successfully convert to text format!
 
 ### 📊 Generating Initial Schema from Stage 1
 
-An initial JSON schema can be generated based on the domain specification document and the preferred LLM. Stage 1 can be executed using this [script](src/experiments/schema_extraction/schema_extraction_stage1.py). An example run is show below:
+An initial JSON schema can be generated based on the domain specification document and the preferred LLM. Stage 1 can be executed using this [script](src/experiments/schema_extraction/schema_extraction_stage1.py). An example run is shown below:
 
 ```bash
 $ python schema_extraction_stage1.py
@@ -147,7 +147,7 @@ JSON schema Saved at location: results/stage-1
 The schema from stage 1 can refined by the LLM iteratively by analyzing a curated set of research papers and incorporating expert feedback. Stage 2 can be executed using this [script](src/experiments/schema_extraction/schema_extraction_stage2.py). An example run is show below:
 
 ```bash
-$python schema_extraction_stage2.py
+$ python schema_extraction_stage2.py
 
 LLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models 
 Stage 2: Preliminary Schema Refinement
