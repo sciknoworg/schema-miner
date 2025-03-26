@@ -39,9 +39,9 @@ While the hardware configuration can be adjusted based on the model size and per
 
 For our experiments, we used the following hardware setup:
 
-* **Processor:** 64-core CPU
-* **Memory:** 500 GB RAM
-* **GPU:** NVIDIA RTX 3090
+* **Processor:** 16-core CPU
+* **Memory:** 32 GB RAM
+* **GPU:** Intel Arc Graphics
 * **Models Used:**
     * **Cloud-based:** GPT-4o and GPT-4-turbo (via OpenAI API)
     * **Locally run:** Llama 3.1 8B
