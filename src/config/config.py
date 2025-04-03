@@ -18,3 +18,6 @@ class Config:
     #OLLAMA
     OLLAMA_base_url = os.getenv('OLLAMA_BASE_URL')
     OLLAMA_context_length = 32768
+
+    #HuggingFace
+    HUGGINGFACE_access_token = os.getenv('HuggingFace_Access_Token')

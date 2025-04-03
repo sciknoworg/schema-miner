@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.output_parsers import StrOutputParser
 
-from services.LLM_inference import LLM_Inference
+from services.LLM_Inference.LLM_inference import LLM_Inference
 
 class OLLAMA_LLM_Inference(LLM_Inference):
     """
@@ -23,7 +23,7 @@ class OLLAMA_LLM_Inference(LLM_Inference):
 
         #The Large Language Model to use for Inference
         self.model_name = model_name
-        self.model = OllamaLLM(base_url = self.base_url, model = model_name, num_ctx = self.context_length, temperature = 0)
+        self.model = OllamaLLM(base_url = self.base_url, model = model_name, num_ctx = self.context_length, temperature = 0.3)
 
     def __str__(self):
         """

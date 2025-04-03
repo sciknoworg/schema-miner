@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-from services.LLM_inference import LLM_Inference
+from services.LLM_Inference.LLM_inference import LLM_Inference
 
 class SAIA_LLM_Inference(LLM_Inference):
     """
@@ -47,7 +47,7 @@ class SAIA_LLM_Inference(LLM_Inference):
         model_output = None
 
         #Resetting number of retry count
-        self.num_retry = self.config['SAIA']['num_retry']
+        self.num_retry = self.config.SAIA_num_retry
         
         #Iterating until we get a response from the model or the number of retry is exhausted
         while not model_output:

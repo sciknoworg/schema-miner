@@ -1,0 +1,116 @@
+## 10 Steps to ALE Process Development
+
+Develop, optimise and characterise atomic layer etching (ALE) processes
+
+Atomic Layer Etching (ALE) is a method to remove an amount of material with a high level of control over both the film thickness and the film properties. As written by Kanarik 'ALE is useful not  because  it  is  perfect  but  because  it  offers  more  control  than  conventional  etching techniques'.  While  significant  parallels  exist  between  the  development  of  Atomic  Layer Deposition (ALD) and ALE processes, the requirements and considerations for an ALE process are different since ALE must, by its very nature, target already deposited layers. This blogpost considers  general  ALE  processes  and  thus  makes  distinctions  between  directional  and omnidirectional processes and between plasma and thermal processes.
+
+The development path in this document is outlined in a theoretical chronology. The material and  process  of  interest  may  benefit  from  reordering  and/or  repeating  of  some  steps.  It  is advised to look at the process as a whole and define critical steps/outcomes to the steps before starting full development to identify the optimum development path.
+
+## 1. Directionality &amp; Reactant Selection Is directionality desired and which reactants will be used to volatise elements?
+
+Depending on the context in which the ALE process is to be placed, it must be determined whether the desired structures should be etched directionally, followed by what chemistry can be  employed. An  anisotropic  (or  directional)  process  as  illustrated  in  Figure  1a)  requires directional species thus favouring an ion-driven plasma-based process, which can be used to dig down into a surface to create trenches/holes. An isotropic (omnidirectional) process (Figure 1b) may be more likely to be driven by non-directional species (either from a plasma or a gas) to remove material around exposed 3D structures.
+
+Depending on the type of to-be-etched material, an etch chemistry must be chosen such that volatile species can be created with all elements in the material. Inspiration can be taken from existing processes, such as those reported in the ALE database on AtomicLimits, for similar materials. Is the material sensitive to high temperatures? Thermal processes may require (too) high temperatures whereas plasma processes offer highly reactive species at relatively low temperatures. What mechanisms have been used in processes for similar materials and can learnings be taken from the reactant groups (fluorinating / oxygenation / chlorinating / TMAlike / diketone) in these processes?
+
+A Gibbs free energy change analysis, such as a Natarajan-Elliott analysis, may be performed on a candidate chemistry to give an indication as to whether a certain chemistry may work as a candidate. A negative Gibbs free energy change indicates energetically favourable reactions, allowing a comparison to be made between the energetic favourability of self-limiting reactions and continuous reactions for a proposed chemistry. The selection process should also include practical considerations such as which tools are available and suitable for an ALE process to determine which chemicals may be used and at which temperatures a process can safely be run.
+
+Figure 1: Representation of the differences between (a) a directional (anisotropic) etch process and (b) one which works equally in all directions (isotropic). An anisotropic process may be used to etch through a stack (blue and grey) perpendicular to the surface to create a trench whereas an isotropic process may also be used to etch parallel to the surface in deeper layers (blue).
+
+## 2. Thickness Decrease
+
+## Is material removed from the surface when exposed to the etch chemistry?
+
+Before a full process can be developed, the basic etch chemistry should be tested to ensure that the material is removed. This may be done experimentally by exposing a sample to a prototype  (proto-) ALE  process  using  the  basic  building  blocks  of  the  proposed  chemistry. Published literature may give an estimate of expected saturation points, exposures beyond this  point  may  improve  the  chance  of  being  in  saturation  and/or  give  the  best  chance  of obtaining a promising etch rate. Thickness measurements should be taken at regular intervals to investigate whether the material is etched as illustrated in Figure 2.
+
+Practically,  the  proto-ALE  process  can  be  run  for  a  set  number  of  cycles  after  which  a measurement is taken (optically e.g. through spectroscopic ellipsometry (SE) measurements or  by  precise  measurements  in  the  change  in  mass  of  a  sample  with  a  quartz  crystal microbalance (QCM) to investigate whether material has been removed. A removal rate or etch per cycle (EPC) can be calculated as the mean amount of material removed per cycle given by
+
+<!-- formula-not-decoded -->
+
+The  top  surface  may  be  of  different  composition  than  the  bulk  material  because  of  the deposition process or exposure to air. To reduce influences of a different surface, the process should be repeated sufficiently many cycles to allow the process to reach through a potentially different surface into the bulk material. Since the process has not been optimised in this step, a linear etch rate through the film cannot yet be generally assumed. If no working proto-ALE process can be established, return to step 1.
+
+Figure 2: Schematic example of linear thickness decrease and calculation of the etch per cycle (EPC) in a linear regime.
+
+## 3. Etch Control through Saturation Are all sub-cycles self-limiting and is accurate etch
+
+## control achieved?
+
+Now a proto-ALE process has been established, it should be developed into a full ALE process. The next step is to test whether the primary requirement for ALE of self-limitation is sustained by testing for saturation. This may be done by creating saturation curves where the etch rate is measured while one of the sub-cycles is kept at a constant (high) exposure while the other sub-cycle is varied in length and/or composition. A saturation curve in a dosing step should roughly follow the profile illustrated in Figure 3a. The three main points of interest are derived from a saturation curve are the saturating etch rate, the saturating exposure time and the etch rate at no exposure.
+
+Figure 3 curve a, gives a saturation curve for an ideal ALE sub-cycle where a clear plateau is observed at one monolayer of material removed per cycle. A real-world processes can be considered true ALE if the control in the sub-cycle is be maintained meaning that the etch rate must be at or below 1 monolayer/cycle. Three examples are given for a saturation curve, which do not indicate a true ALE sub-cycle. While Figure 3b does saturate, more than one monolayer is removed every cycle, indicating quasi-ALE. Figure 3c does not saturate and thus does not satisfy the self-limitation requirement. From these results, exposure times can be chosen for each of the reactants at saturating values such that no appreciable difference in EPC would be observed if the exposure time were increased.
+
+Figure 3: Generalised representation of saturation curves for (a) a true ALE sub-cycle where at most one monolayer of material is removed. (b) gives a sub-cycle which can affect more than one monolayer, (c) does not saturate and is thus not self-limiting. The latter (b) and (c) do not satisfy the self-limiting requirement and are thus not considered as true ALE.
+
+## 4. Synergy
+
+## Does  etching  only  occur  because  of  alternating half-cycles?
+
+When saturating exposure times have been found for all sub-cycles, a synergy test can be performed as a measure for the degree of self-limitation. In a true ALE process, etching only occurs  as  a  synergistic  effect  from  alternating  the  sub-cycles. This  means  that  no  etching should occur as a result of exposures to one of the sub-cycles, synergy looks at the effect of alternating the sub-cycles by comparing the saturated EPC to the etch rates of the sub-cycles individually.  Synergy  is  inherently  connected  to  the  saturation  investigated  in  step  3,  if  a removal step does not saturate, the synergy will be correspondingly low. Non-saturation of a modification step may not exhibit itself as a continuous etch rate and should be identified from saturation curves.
+
+In a synergy test, a sample undergoes consecutive exposures to one of the sub-cycles from which a potential continuous etch rate can be determined as shown in Figure 4. By repeating this for all sub-cycles, continuous etch rates can be determined for each of the sub-cycles, from which the synergy is calculated as
+
+<!-- formula-not-decoded -->
+
+For  a  two-step ALE  process  with  sub-cycles A,  with  continuous  etch  rate 𝛼 ,  and  B,  with continuous etch rate 𝛽 . An ideal ALE process is characterised by 𝑆 = 1 while a process with 𝑆 = 0 indicates that no saturation is found and the process is a chemical vapour etch (CVE) process rather than an ALE process.
+
+Figure 4: Schematic representation of a synergy test where a sample is first exposed to a repeating sub-cycle A, followed by the full ALE cycle consisting of sub-cycles A and B and repeats of sub-cycle B. Two examples are given where (blue) no etching is observed in the sub-cycles of a true ALE process and (red) where continuous etch component is measured in both of the sub-cycles indicated by 𝛼 and 𝛽 .
+
+## 5. ALE Window
+
+## What is temperature and/or ion window or plasma parameter space of the process?
+
+Reactions only take place when it is energetically favourable to do so. In a thermal sub-cycle, the energetics of the reactions are in large parts determined by the temperature at which the process is run  as  illustrated  in  Figure  5a.  Similar  to  an ALD  temperature  window,  too  low temperatures may result in too low reactivities for reactions to take place. Temperatures above the  window  may  result  in  reactants  breaking  apart  (or  decomposing)  before  reaching  the surface meaning that no etch products are formed. Too high temperatures may also result in unstable bonds between reaction species and the surface resulting in desorption or continuous etching. A temperature window may be determined experimentally by measuring the etch rate for full ALE cycles at different temperatures ranging from, for example, 50 C to 450 C or through a Natarajan-Elliott analysis as outlined in step 1. Different process temperatures may change the saturation point either for the ALE process, thus requiring the runs to be optimised using saturation curves or by running the cycles in over-saturation. Ideally, the EPC is nearly constant in the ALE window but this is not a necessity. The most important aspect of the temperature window  is  that  the  sub-cycles  self-limit  (meaning  a  saturation  point  can  be  found)  at  all temperatures in the window.
+
+Removal in an anisotropic process uses energy supplied by incoming ions to sputter material from  the  surface.  An  ion  energy  window  as  illustrated  in  Figure  5b  should  be  identified experimentally  by  measuring  the  etch  rate  over  a  range  of  peak  ion  energies.  Below  this window, the ion energies are too low to enable sputtering of the modified layer. Above this window, the ion energies are sufficiently high that bonds in both the modified layer and material can be broken meaning that selectivity is lost, resulting in the sub-cycle no longer self-limiting.
+
+Figure 5: Schematic representations of (a) an ALE temperature window and (b) an ion energy window for anisotropic ALE.
+
+## 6. Uniformity
+
+## Are the etched thickness and material properties the same across the wafer?
+
+Sequential self-limiting sub-cycles employed in an ALE process should provide good control over  the  uniformity  of  the  process,  both  in  etch  characteristics  and  material  properties  of interest. This means that an ALE process in saturation should remove the same amount of material at all points on a wafer. Since a uniformity check calculates the variance in etch rates over a full wafer, it can serve as evidence for a good ALE process. Reactant fluxes may not be uniform throughout the chamber likely resulting in saturation occurring at different exposure times. Although running a process in over-saturation may hurt the efficiency of the process, it should not affect the amount of material etched in a true ALE process thus allowing exposure times to be increased to reach saturation at all points on a wafer.
+
+The  non-uniformity  of  an  ALD  process  is  calculated  as  the  ratio  between  the  difference between maximum and minimum thickness and the average thickness, this can be adapted to ALE by taking the difference in etched thickness w.r.t. the average etched thickness 𝑑 ̅ as
+
+<!-- formula-not-decoded -->
+
+In addition to the etch rate, material properties such as the roughness and refractive index should be uniform across the wafer.
+
+## 7. Isotropic or Anisotropic Etching
+
+## Is  the  etch  isotropic  or  anisotropic  in  nanoscale features?
+
+Whether a choice has been made for an isotropic or anisotropic etch process in step 1, the resulting process should be checked for its isotropy (or directionality) when the process has been optimised for saturation and uniformity. If a choice was made for a thermal process, an anisotropic component is less likely to be present meaning that this step may be  of lesser importance. Isotropy can be checked by comparing the etch rates at different parts of a 3D structure as illustrated in Figure 6 through comparison of before etching and after etching TEM images or through analysis of specifically designed structures such as PillarHall TM  chips.
+
+Does an isotropic process remove materials on all orientations? Does an anisotropic process only remove material with line of sight to the plasma? If material, is not removed from all desired surfaces at the same rate, what process parameters may cause this? Too short cycle times may prevent reactants from diffusing into high aspect ratio (deep but narrow) structures during dosing or out of high aspect ratio structures during purging. This may require lengthening of the sub-cycle (far) beyond saturation on a planar substrate to allow species to reach into threedimensional structures.
+
+Figure 6: Schematic isotropy check structures where the dashed regions indicate material removed by the ALE process in (red) an anisotropic process and (blue) an isotropic process.
+
+Since the amount of material removed from surface in an ALE cycle is determined by the saturation point, the etch rate is not expected to depend on aspect ratio of a structure as may be the case in reactive ion etching (RIE). This is known as aspect ratio dependent etching (ARDE) or RIE lag. While this is a feature of the etch uniformity in ALE, the 3D nature of ARDE means that it is more practical for it to be checked in this step. ARDE can be quantified by comparing the etch rate at the bottom of trenches of aspect ratios with the etch rate expected to be lower on higher aspect ratio structures if there is an ARDE component.
+
+## 8. Selectivity materials?
+
+## Is the etch selective with respect to other relevant
+
+Knowledge about the selectivity of a proposed process is a determining factor in whether a process can be included in a wider process flow in which a final device is manufactured, thus making  it  an  essential  property  in  an  etch  process.  In  principle,  selectivity  is  checked  by repeating steps 2, 3, 4 on each material of interest to determine the etch rate of the proposed chemistry on different materials. In practice, this may be done by developing one process for multiple materials in parallel or by performing a single run on a sample composed of multiple materials of interest. Figure 7 schematically shows how a process may affect the materials in such  a  sample.  The  selectivity  is  proportional  to  the  amount  of  material  etched  from  the materials in the sample as illustrated in Figure 7c.
+
+Since the selectivity of a process is a feature of the process and process conditions, process parameters in step 5 and reactant selection in step 1 must be evaluated if the desired selectivity cannot be obtained. As such, the selectivity of the process may be determined at different temperatures  first.  In  an  anisotropic  process,  the  range  of  ion  energies  of  the  species accelerated  towards  the  surface  may  exceed  the  sputter  threshold  of  not  to-be-etched materials. If changes in the process parameter space do not yield a desired selectivity, the reactants chosen in step 1 can be re-evaluated.
+
+Figure 7: Selectivity of an etch process from an (a) initial film comprised of different types of materials: red, blue, green and grey to (b) a post-etch film. Resulting film thickness as a function of cycles is given in (c) where the process etches grey fully selective to green but shows a lesser degree of selectivity w.r.t. blue and green. Adapted from Carver et al.
+
+## 9. Post-Etch Surface
+
+## Is the ALE process sufficiently damage and residue free?
+
+Not only should the material be etched in a controlled manner, the surface left behind after the process  should  conform  to  the  process  requirements.  While  ALE  is  known  to  cause significantly  less  roughening  to  a  surface  than  RIE  and  multiple  cycles  can  resulting  in smoothing of a surface, the post-ALE surface may not be entirely damage and residue free. A process may inadvertently deposit material of leave a modified surface behind after etching. Sufficiently  strong  or  non-saturating  reactants  may  also  cause  damage  to  the  film  and/or structure. Is the post-etch film of the desired composition? Have no unintended elements been included or removed by the ALE process on the target material and other materials used in the final device? Has the process changed the crystallinity of the material and is this desired? Is the process sufficiently controllable in order for the process not to increase surface roughness?
+
+## 10.  Other Aspects
+
+## Are aspects such as safety, cycle times, sustainability, etc. met?
+
+-  Safety : etch chemistries can be harmful to individuals, the processing equipment or the environment. Precautions should be taken to ensure the safety of individuals in the lab.
+-  Placement  in  a  wider  process  context :  previously  reported ALE  processes  can  be grouped in classes, what class does the current process belong to and what insights do  the  differences  and  similarities  between  the  processes  yield?  Are  the  etch parameters for the current process comparable to those found in literature?
+-  Optimisation  balance :  a  balance  may  be  struck  in  the  process  parameter  space  to optimise for material control, etch rate per cycle/per hour, process cost per wafer or cycle,  environmental  impact,  or  other  qualities  of  interest  for  the  process.  What considerations apply to the process being developed and have these been met?
+-  Throughput and scalability : whether a process is included in a wider process flow will depend on whether the process can be scaled up. This includes considerations such as the process length and how process parameters compare to the rest of the process flow.
+
+-  Environmental  impact : etching  steps  are  a  major  contributor  to  greenhouse  gas emissions within semiconductor manufacturing. Therefore, future process development should  look  to  include  emission  potentials  as  part  of  process  optimisation.  In  the reactant choice in step 1, focus can be placed on selection of reactants for low-emission alternatives.

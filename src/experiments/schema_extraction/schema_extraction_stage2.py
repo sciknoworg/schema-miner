@@ -1,9 +1,11 @@
 import os
-from utils.utils import read_json_file, read_text_file, write_text_file, save_json_file, extract_json_schema
-from services.LLM_inference import LLM_Inference
-from services.openai_llm_inference import Openai_LLM_Inference
-from services.saia_llm_inference import SAIA_LLM_Inference
-from services.ollama_llm_inference import OLLAMA_LLM_Inference
+import sys
+from utils.utils import read_json_file, read_text_file, write_text_file, save_json_file, extract_json_schema, read_yaml_file
+from services.LLM_Inference.LLM_inference import LLM_Inference
+from services.LLM_Inference.openai_llm_inference import Openai_LLM_Inference
+from services.LLM_Inference.saia_llm_inference import SAIA_LLM_Inference
+from services.LLM_Inference.ollama_llm_inference import OLLAMA_LLM_Inference
+from services.LLM_Inference.huggingface_llm_inference import HuggingFace_LLM_Inference
 from prompts import prompt_template2
 
 def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_path: str, initial_schema_path: str, expert_review_path: str, literature_path: str):
@@ -23,6 +25,14 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
 
     #Formatting the model name with special characters
     llm_model_name = llm_model_name.replace(':', '-')
+    llm_model_name = llm_model_name.replace('/', '-')
+
+    #Reading the Process description
+    process_config = read_yaml_file('src/config/process_config.yml')
+    if not process_config:
+        print('Cannot read process configuration, Stopping the inference from the LLM...')
+        sys.exit(1)
+    process_name = process_config['name']
 
     #Reading the schema from stage-1
     print(f'\nReading the schema from stage-1: {initial_schema_path}/{llm_model_name}.json')
@@ -47,7 +57,7 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
         
         #Extracting the schema from the LLM
         print('\nCalling the completion API of the model')
-        var_dict = {'current_schema': schema, 'full_text': full_text, 'domain_expert_review': review}
+        var_dict = {'process_name': process_name, 'current_schema': schema, 'full_text': full_text, 'domain_expert_review': review}
         model_output = llm.completion(prompt_template2, var_dict)
 
         #Returns None, if any exception occurrs during the LLM Inference
@@ -94,7 +104,8 @@ if __name__ == "__main__":
     llm_type_mappings = {
         'gpt-4o': Openai_LLM_Inference,
         'gpt-4-turbo': Openai_LLM_Inference,
-        'meta-llama-3.1-8b-instruct': SAIA_LLM_Inference
+        'meta-llama-3.1-8b-instruct': SAIA_LLM_Inference,
+        'Qwen/Qwen2.5-0.5B-Instruct': HuggingFace_LLM_Inference
     }
     
     print('\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models ')
@@ -107,9 +118,11 @@ if __name__ == "__main__":
         - gpt-4-turbo
     2. LLAMA Models:
         - meta-llama-3.1-8b-instruct
-    3. Any other local OLLAMA Model
+    3. HuggingFace Models:
+        - Qwen/Qwen2.5-0.5B-Instruct
+    4. Any other local OLLAMA Model
     ''')
-    model_name = input('LLM> ').lower()
+    model_name = input('LLM> ')
     llm_inference_class = llm_type_mappings[model_name] if model_name in llm_type_mappings.keys() else OLLAMA_LLM_Inference
 
     print('\nPlease specify the location to the schema from stage 1')

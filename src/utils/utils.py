@@ -2,7 +2,6 @@ import os
 import re
 import yaml
 import json
-from langchain_community.document_loaders import PyPDFLoader
 
 def read_json_file(filepath: str, encoding: str = 'utf-8'):
     """
@@ -103,24 +102,6 @@ def write_text_file(file_path: str, text: str, encoding: str = 'utf-8'):
     except Exception as e:
         print('Exception Occured: {}'.format(e))
         return False
-
-def pdf_loader(file_path: str):
-    """
-    Load and extract the text from any PDF file using the Langchain PyPDFLoader method
-
-    :param str file_path: The path to the PDF file
-    :returns content: The text content in the PDF file
-    """
-    #Loads the Langchain PyPDFLoader Object with the file path
-    loader = PyPDFLoader(file_path)
-
-    #Iterates over each page and append its content to the list
-    pages = []
-    for page in loader.lazy_load():
-        pages.append(page)
-    
-    #combines the content from each page and return the final text
-    return '\n\n'.join(page.page_content for page in pages)
 
 def delete_dictionary_keys(dictionary: dict, keys_to_delete: list):
     """

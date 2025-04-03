@@ -1,27 +1,31 @@
 import os
 import pandas as pd
-from utils.utils import pdf_loader, write_text_file
+from services.PDF_Parsers.pdf_parser import PDF_Parser
+from services.PDF_Parsers.docling_pdf_parser import Docling_PDF_Parser
+from services.PDF_Parsers.PyPDF_pdf_parser import PyPDF_PDF_Parser
 
-def pdf_text_extractor(source_filepath: str, filename: str, destination_filepath: str):
+def pdf_text_extractor(source_filepath: str, filename: str, destination_filepath: str, pdf_parser: PDF_Parser):
     """
     Extracts the text from a PDF file and save it in a text file
 
     :param str source_filepath: The file path of the source directory
     :param str filename: PDF file name
     :param str destination_filepath: The file path of the destination directory
+    :param PDF_Parser pdf_parser: The PDF parser object
     """
     print(f'\nExtracting text from the PDF: {filename}')
+    
     #Extracting the text from the PDF file
     complete_file_path = f'{source_filepath}/{filename}'
-    pdf_text = pdf_loader(complete_file_path)
 
-    #Saving the text in a text file
-    filename = ''.join(filename.split('.')[:-1])
-    complete_dest_file_path = f'{destination_filepath}/{filename}.txt'
-    filesaved = write_text_file(complete_dest_file_path, pdf_text)
-    print(f'Text file saved successfully: {filesaved}')
+    #Parsing the PDF Document
+    pdf_parser.parse_pdf(complete_file_path)
 
-def all_pdf_text_extraction(source_filepath: str, destination_filepath: str):
+    #Exporting the PDF Document as a Markdown File
+    pdf_parser.export_as_text(destination_filepath)
+    print('PDF parsed successfully')
+
+def all_pdf_text_extraction(source_filepath: str, destination_filepath: str, pdf_parser: PDF_Parser):
     """
     Extracts text from all the PDF's in the source directory
 
@@ -34,7 +38,7 @@ def all_pdf_text_extraction(source_filepath: str, destination_filepath: str):
         if not filename.endswith('.pdf'): continue
 
         #Extracting the text
-        pdf_text_extractor(source_filepath, filename, destination_filepath)
+        pdf_text_extractor(source_filepath, filename, destination_filepath, pdf_parser)
 
 def read_csv_file(source_filepath: str, filename: str, columns_to_return: list, return_rows: int = None):
     """
@@ -64,15 +68,15 @@ def read_csv_file(source_filepath: str, filename: str, columns_to_return: list, 
 if __name__ == "__main__":
 
     print('\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models ')
-    print('Formatting Knowledge Base - Converting PDF Documents to Text Files')
+    print('Formatting Knowledge Base - Parsing PDF Documents')
 
     print('\nPlease input the directory location containing the PDF documents')
     source_dir_path = input('Directory Path> ')
 
-    print('\nPlease input the directory Location to store the converted text files')
+    print('\nPlease input the directory Location to store the parsed PDF files')
     destination_dir_path = input('Directory Path> ')
 
-    #Executing PDF to text conversion
-    all_pdf_text_extraction(source_dir_path, destination_dir_path)
+    #Parsing PDF Documents into Markdown Files using Docling
+    all_pdf_text_extraction(source_dir_path, destination_dir_path, Docling_PDF_Parser())
 
     print('\nPDF documents successfully convert to text format!')

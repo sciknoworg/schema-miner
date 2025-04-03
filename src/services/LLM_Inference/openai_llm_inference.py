@@ -3,7 +3,7 @@ import os
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-from services.LLM_inference import LLM_Inference
+from services.LLM_Inference.LLM_inference import LLM_Inference
 
 class Openai_LLM_Inference(LLM_Inference):
     """
