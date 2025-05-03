@@ -1,0 +1,464 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process Schema",
+  "type": "object",
+  "properties": {
+    "processType": {
+      "type": "string",
+      "enum": ["thermal", "plasma", "spatial thermal"],
+      "description": "Type of ALE process, including thermal, plasma-based, or spatial thermal."
+    },
+    "chemicalPrecursors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of chemical precursors used in the ALE process, e.g., Cl2, HF, F2, propene, CO, SF6, Al(CH3)3, NbF5, CCl4."
+    },
+    "energySource": {
+      "type": "string",
+      "description": "Type of energy source used, e.g., thermal energy or plasma excitation."
+    },
+    "substrateMaterial": {
+      "type": "string",
+      "description": "Material of the substrate being etched, e.g., semiconductor, dielectric, metal film, or elemental materials like Co, GaN, TiN, Al2O3."
+    },
+    "processParameters": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Temperature in Celsius at which the ALE process is conducted.",
+          "unit": "Celsius"
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure in Pascals within the reaction chamber.",
+          "unit": "Pascals"
+        },
+        "gasFlowRates": {
+          "type": "object",
+          "properties": {
+            "precursorGasFlowRate": {
+              "type": "number",
+              "description": "Flow rate of precursor gas in standard cubic centimeters per minute (sccm).",
+              "unit": "sccm"
+            },
+            "carrierGasFlowRate": {
+              "type": "number",
+              "description": "Flow rate of carrier gas in standard cubic centimeters per minute (sccm).",
+              "unit": "sccm"
+            },
+            "purgeGasFlowRate": {
+              "type": "number",
+              "description": "Flow rate of purge gas in standard cubic centimeters per minute (sccm).",
+              "unit": "sccm"
+            }
+          },
+          "required": ["precursorGasFlowRate", "carrierGasFlowRate", "purgeGasFlowRate"]
+        },
+        "plasmaPower": {
+          "type": "number",
+          "description": "Power of plasma used in plasma-enhanced ALE, in watts.",
+          "unit": "watts"
+        },
+        "exposureTime": {
+          "type": "number",
+          "description": "Duration of exposure for each cycle in seconds.",
+          "unit": "seconds"
+        },
+        "ionIrradiation": {
+          "type": "object",
+          "properties": {
+            "ionType": {
+              "type": "string",
+              "description": "Type of ions used for irradiation, e.g., Ar+, Kr+, Xe+."
+            },
+            "ionEnergy": {
+              "type": "number",
+              "description": "Energy of ions used during the irradiation step, in electron volts (eV).",
+              "unit": "eV"
+            },
+            "ionDose": {
+              "type": "number",
+              "description": "Ion dose required to remove one monolayer of material, in ions/cm².",
+              "unit": "ions/cm²"
+            }
+          },
+          "description": "Parameters related to ion irradiation in the ALE process."
+        },
+        "etchPerCycle": {
+          "type": "number",
+          "description": "Amount of material etched per cycle, in angstroms.",
+          "unit": "angstroms"
+        },
+        "argonIonFluence": {
+          "type": "number",
+          "description": "Fluence of argon ions used during the bombardment step, in ions/cm².",
+          "unit": "ions/cm²"
+        },
+        "fluorinationCoverage": {
+          "type": "object",
+          "properties": {
+            "HFAdsorption": {
+              "type": "number",
+              "description": "Coverage of HF adsorption on the substrate surface, in HF/nm².",
+              "unit": "HF/nm²"
+            },
+            "HfFCoverage": {
+              "type": "number",
+              "description": "Coverage of Hf-F bonds formed on the substrate surface, in Hf-F/nm².",
+              "unit": "Hf-F/nm²"
+            }
+          },
+          "description": "Coverage details for HF adsorption and Hf-F bond formation during fluorination."
+        },
+        "selfLimitingReaction": {
+          "type": "object",
+          "properties": {
+            "reactionType": {
+              "type": "string",
+              "description": "Type of self-limiting reaction, e.g., SL1, SL2, SL3."
+            },
+            "reactionFreeEnergy": {
+              "type": "number",
+              "description": "Free energy of the self-limiting reaction, in electron volts (eV).",
+              "unit": "eV"
+            }
+          },
+          "description": "Details about self-limiting reactions during the ALE process."
+        },
+        "passivationLayer": {
+          "type": "object",
+          "properties": {
+            "layerThickness": {
+              "type": "number",
+              "description": "Thickness of the fluorocarbon passivation layer, in angstroms.",
+              "unit": "angstroms"
+            },
+            "ionEnergy": {
+              "type": "number",
+              "description": "Energy of ions used to grow the passivation layer, in electron volts (eV).",
+              "unit": "eV"
+            },
+            "composition": {
+              "type": "string",
+              "description": "Composition of the passivation layer, e.g., F-rich, C-rich."
+            }
+          },
+          "description": "Details about the fluorocarbon passivation layer used in the ALE process."
+        },
+        "aspectRatioDependentEtching": {
+          "type": "object",
+          "properties": {
+            "ARDEImpact": {
+              "type": "string",
+              "description": "Impact of aspect ratio dependent etching on the process."
+            },
+            "mitigationStrategies": {
+              "type": "string",
+              "description": "Strategies used to mitigate ARDE effects."
+            }
+          },
+          "description": "Information on aspect ratio dependent etching and its mitigation."
+        },
+        "opticalEmissionSpectroscopy": {
+          "type": "object",
+          "properties": {
+            "emissionIntensities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "species": {
+                    "type": "string",
+                    "description": "Species observed in optical emission, e.g., Si, SiCl, SiCl2."
+                  },
+                  "intensity": {
+                    "type": "number",
+                    "description": "Intensity of the optical emission for the species.",
+                    "unit": "arbitrary units"
+                  }
+                },
+                "required": ["species", "intensity"]
+              },
+              "description": "Optical emission intensities of various species during the ALE process."
+            }
+          },
+          "description": "Parameters related to optical emission spectroscopy measurements."
+        },
+        "oxidationChlorinationCycle": {
+          "type": "object",
+          "properties": {
+            "oxidizingAgents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of oxidizing agents used in the oxidation step, e.g., O2, O3, N2O."
+            },
+            "chlorinatingAgents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of chlorinating agents used in the chlorination step, e.g., WCl6, Cl2."
+            },
+            "volatileProducts": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Volatile etch products formed during the process, e.g., WOCl4, WO2Cl2."
+            }
+          },
+          "description": "Details of the oxidation and chlorination cycle in the ALE process."
+        },
+        "kineticModeling": {
+          "type": "object",
+          "properties": {
+            "reactionMechanisms": {
+              "type": "string",
+              "description": "Description of the reaction mechanisms for the ALE process, including critical pathways and kinetic parameters."
+            },
+            "kineticMonteCarlo": {
+              "type": "object",
+              "properties": {
+                "latticeSize": {
+                  "type": "string",
+                  "description": "Size of the lattice used in kMC simulations."
+                },
+                "simulationTime": {
+                  "type": "number",
+                  "description": "Total simulation time for the kMC model, in seconds.",
+                  "unit": "seconds"
+                }
+              },
+              "description": "Parameters related to kinetic Monte Carlo simulations for modeling the ALE process."
+            },
+            "feedForwardNeuralNetwork": {
+              "type": "object",
+              "properties": {
+                "inputParameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Input parameters for the FNN model, typically temperature and pressure."
+                },
+                "outputParameters": {
+                  "type": "string",
+                  "description": "Output parameter for the FNN model, typically the half-cycle time."
+                }
+              },
+              "description": "Parameters related to the feed-forward neural network model used for predicting ALE process outcomes."
+            }
+          },
+          "description": "Details about kinetic modeling approaches used in the ALE process, including kMC and FNN models."
+        },
+        "reactorDesign": {
+          "type": "object",
+          "properties": {
+            "reactorType": {
+              "type": "string",
+              "description": "Type of reactor used, e.g., typical, multi-inlet, showerhead, inclined plate, sheet-to-sheet."
+            },
+            "reactorGeometry": {
+              "type": "object",
+              "properties": {
+                "diameter": {
+                  "type": "number",
+                  "description": "Diameter of the reactor, in millimeters.",
+                  "unit": "mm"
+                },
+                "height": {
+                  "type": "number",
+                  "description": "Height of the reactor, in millimeters.",
+                  "unit": "mm"
+                },
+                "gapDistance": {
+                  "type": "number",
+                  "description": "Gap distance in the reactor, in millimeters.",
+                  "unit": "mm"
+                }
+              },
+              "description": "Geometric dimensions of the reactor."
+            },
+            "meshQuality": {
+              "type": "object",
+              "properties": {
+                "orthogonality": {
+                  "type": "number",
+                  "description": "Orthogonality of the mesh, a measure of mesh quality."
+                },
+                "skewness": {
+                  "type": "number",
+                  "description": "Skewness of the mesh, a measure of mesh quality."
+                },
+                "aspectRatio": {
+                  "type": "number",
+                  "description": "Aspect ratio of the mesh, a measure of mesh quality."
+                }
+              },
+              "description": "Quality indicators for the mesh used in CFD simulations."
+            }
+          },
+          "description": "Details regarding the design and geometry of the reactor used in the ALE process."
+        },
+        "smoothingEffect": {
+          "type": "object",
+          "properties": {
+            "initialRoughness": {
+              "type": "number",
+              "description": "Initial surface roughness before ALE, in nanometers.",
+              "unit": "nm"
+            },
+            "finalRoughness": {
+              "type": "number",
+              "description": "Final surface roughness after ALE, in nanometers.",
+              "unit": "nm"
+            },
+            "smoothingPercentage": {
+              "type": "number",
+              "description": "Percentage of surface smoothing achieved after ALE.",
+              "unit": "%"
+            }
+          },
+          "description": "Details about the smoothing effect observed in ALE, including initial and final roughness."
+        },
+        "surfaceDamage": {
+          "type": "object",
+          "properties": {
+            "damageLayerThickness": {
+              "type": "number",
+              "description": "Thickness of the damaged layer formed during ALE, in nanometers.",
+              "unit": "nm"
+            },
+            "damageMitigation": {
+              "type": "string",
+              "description": "Strategies employed to mitigate surface damage during ALE."
+            }
+          },
+          "description": "Information on surface damage formation and mitigation strategies during ALE."
+        }
+      },
+      "required": [
+        "temperature",
+        "pressure",
+        "gasFlowRates",
+        "exposureTime",
+        "ionIrradiation",
+        "etchPerCycle",
+        "argonIonFluence",
+        "fluorinationCoverage",
+        "selfLimitingReaction",
+        "passivationLayer",
+        "aspectRatioDependentEtching",
+        "opticalEmissionSpectroscopy",
+        "oxidationChlorinationCycle",
+        "kineticModeling",
+        "reactorDesign",
+        "smoothingEffect",
+        "surfaceDamage"
+      ]
+    },
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "etchedMaterial": {
+          "type": "string",
+          "description": "Description of the material that has been etched at the atomic scale."
+        },
+        "byProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of volatile compounds produced as by-products that need to be evacuated, e.g., TiCl3, ClCN."
+        },
+        "surfaceModifications": {
+          "type": "string",
+          "description": "Description of chemical modifications on the surface post-etching."
+        }
+      },
+      "required": ["etchedMaterial", "byProducts"]
+    },
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "decompositionMechanisms": {
+          "type": "string",
+          "description": "Description of decomposition and binding/chemisorption mechanisms."
+        },
+        "etchRate": {
+          "type": "number",
+          "description": "Rate of etching per cycle or per unit time.",
+          "unit": "angstroms per cycle"
+        },
+        "surfaceDesorptionRates": {
+          "type": "string",
+          "description": "Rates of desorption, diffusion, and reaction on the surface."
+        },
+        "bindingAffinity": {
+          "type": "string",
+          "description": "Energy barriers and likelihood of adsorbate binding to the surface."
+        },
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {
+              "type": "string",
+              "description": "Uniformity of the film after etching."
+            },
+            "roughness": {
+              "type": "string",
+              "description": "Roughness of the film surface post-etching."
+            },
+            "density": {
+              "type": "string",
+              "description": "Density of the film material."
+            },
+            "temperatureProfile": {
+              "type": "string",
+              "description": "Thermal conduction and temperature profile of the film."
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Elemental analysis of the film's chemical composition."
+            }
+          },
+          "required": ["uniformity", "roughness", "density", "temperatureProfile", "chemicalComposition"]
+        },
+        "designVariables": {
+          "type": "object",
+          "properties": {
+            "gapDistance": {
+              "type": "number",
+              "description": "Gap distance in the reactor, in micrometers.",
+              "unit": "micrometers"
+            },
+            "purgeFlowRate": {
+              "type": "number",
+              "description": "Flow rate of purge gas in sccm.",
+              "unit": "sccm"
+            },
+            "substrateVelocity": {
+              "type": "number",
+              "description": "Velocity of the substrate in the reactor, in centimeters per second.",
+              "unit": "cm/s"
+            },
+            "vacuumPressure": {
+              "type": "number",
+              "description": "Vacuum pressure in the reactor, in Pascals.",
+              "unit": "Pascals"
+            }
+          },
+          "required": ["gapDistance", "purgeFlowRate", "substrateVelocity", "vacuumPressure"]
+        }
+      },
+      "required": ["decompositionMechanisms", "etchRate", "surfaceDesorptionRates", "bindingAffinity", "filmProperties", "designVariables"]
+    }
+  },
+  "required": ["processType", "chemicalPrecursors", "energySource", "substrateMaterial", "processParameters", "outputs", "simulationParameters"]
+}

@@ -22,7 +22,7 @@ def pdf_text_extractor(source_filepath: str, filename: str, destination_filepath
     pdf_parser.parse_pdf(complete_file_path)
 
     #Exporting the PDF Document as a Markdown File
-    pdf_parser.export_as_text(destination_filepath)
+    pdf_parser.export_as_markdown(destination_filepath)
     print('PDF parsed successfully')
 
 def all_pdf_text_extraction(source_filepath: str, destination_filepath: str, pdf_parser: PDF_Parser):

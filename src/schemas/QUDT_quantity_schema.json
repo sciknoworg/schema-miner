@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "QUDT Enriched Physical Quantity",
+    "type": "object",
+    "properties": {
+        "quantity": {
+            "type": "object",
+            "properties": {
+                "quantityValue": {
+                    "type": "object",
+                    "properties": {
+                        "numericValue": {
+                            "type": "number"
+                        },
+                        "unit": {
+                            "type": "object",
+                            "properties": {
+                                "qudt:ucumCode": {
+                                    "type": "string"
+                                },
+                                "hasQuantityKind": {
+                                    "type": "string"
+                                },
+                                "unitLabel": {
+                                    "type": "string"
+                                },
+                                "sameAs": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "numericValue",
+                        "unit"
+                    ]
+                },
+                "quantityKind": {
+                    "type": "object",
+                    "properties": {
+                        "qudt:description": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "quantityValue"
+            ]
+        }
+    }
+}

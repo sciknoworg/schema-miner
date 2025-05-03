@@ -1,0 +1,130 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process Schema",
+  "description": "A JSON schema representing the parameters and characteristics of the Atomic Layer Etching (ALE) process used in semiconductor fabrication, focusing on the interaction with fluorinated gases.",
+  "type": "object",
+  "properties": {
+    "processType": {
+      "type": "string",
+      "description": "Type of ALE process, either plasma-based or thermal."
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Inputs required for the ALE process.",
+      "properties": {
+        "chemicalPrecursors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of chemical precursors used, e.g., Cl2, HF, F2."
+        },
+        "energySource": {
+          "type": "string",
+          "description": "Type of energy source used, either thermal or plasma excitation."
+        },
+        "substrateMaterial": {
+          "type": "string",
+          "description": "Material of the substrate targeted for etching, such as GaN."
+        },
+        "processParameters": {
+          "type": "object",
+          "description": "Parameters that control the ALE process.",
+          "properties": {
+            "temperature": {
+              "type": "number",
+              "description": "Temperature of the process in degrees Celsius."
+            },
+            "pressure": {
+              "type": "number",
+              "description": "Pressure inside the etching chamber in Pascals."
+            },
+            "gasFlowRates": {
+              "type": "number",
+              "description": "Flow rate of gases in the chamber measured in liters per minute."
+            },
+            "plasmaPower": {
+              "type": "number",
+              "description": "Power of plasma used in plasma-based ALE, measured in watts."
+            },
+            "exposureTime": {
+              "type": "number",
+              "description": "Time for which the substrate is exposed to precursors, measured in seconds."
+            }
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Outputs from the ALE process.",
+      "properties": {
+        "etchedMaterial": {
+          "type": "string",
+          "description": "Description of the material after etching."
+        },
+        "byProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of volatile compounds produced as by-products, such as SFx species."
+        },
+        "surfaceModifications": {
+          "type": "string",
+          "description": "Chemical modifications to the surface post-etch."
+        }
+      }
+    },
+    "simulationParameters": {
+      "type": "object",
+      "description": "Parameters and observables relevant to ALE process simulation.",
+      "properties": {
+        "decompositionMechanisms": {
+          "type": "string",
+          "description": "Details on decomposition and binding mechanisms in the ALE process."
+        },
+        "excitationDynamics": {
+          "type": "string",
+          "description": "Study of photon excitation effects on reaction mechanisms."
+        },
+        "etchRate": {
+          "type": "number",
+          "description": "Rate of etching, typically measured in nanometers per cycle."
+        },
+        "surfaceDesorptionRates": {
+          "type": "string",
+          "description": "Rates at which materials desorb from the surface during etching."
+        },
+        "filmProperties": {
+          "type": "object",
+          "description": "Properties of the film during the ALE process.",
+          "properties": {
+            "uniformity": {
+              "type": "string",
+              "description": "Uniformity of the film post-etching."
+            },
+            "roughness": {
+              "type": "number",
+              "description": "Surface roughness measured in nanometers."
+            },
+            "density": {
+              "type": "number",
+              "description": "Density of the film in grams per cubic centimeter."
+            },
+            "temperatureProfile": {
+              "type": "string",
+              "description": "Temperature distribution across the film during etching."
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Chemical composition of the film post-etching."
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["processType", "inputs", "outputs", "simulationParameters"]
+}

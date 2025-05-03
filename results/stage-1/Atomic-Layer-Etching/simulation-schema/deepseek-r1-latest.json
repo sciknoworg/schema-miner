@@ -1,0 +1,217 @@
+{
+    "type": "AtomicLayerEtchingProcessSchema",
+    "description": "A comprehensive JSON schema for modeling an Atomic Layer Etching (ALE) process, capturing essential parameters and their relationships.",
+    "properties": {
+        "inputs": {
+            "chemicalPrecursors": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Names of chemical precursors used in the ALE process (e.g., Cl2, HF)."
+            },
+            "energySource": {
+                "type": "string",
+                "enum": [
+                    "thermal",
+                    "plasma"
+                ],
+                "default": "thermal",
+                "description": "Type of energy source: thermal or plasma-based."
+            },
+            "substrateMaterial": {
+                "type": "string",
+                "enum": [
+                    "semiconductor",
+                    "dielectric",
+                    "metal"
+                ],
+                "default": "semiconductor",
+                "description": "Material type of the substrate (e.g., Si, TiO2, Cu)."
+            },
+            "processParameters": {
+                "type": "object",
+                "properties": {
+                    "temperature": {
+                        "type": "number",
+                        "unit": "\u00b0C",
+                        "default": 150,
+                        "description": "Temperature of the etching chamber."
+                    },
+                    "pressure": {
+                        "type": "number",
+                        "unit": "Pa",
+                        "default": 0.001,
+                        "description": "Pressure inside the reactor."
+                    },
+                    "gasFlowRates": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [
+                            "low",
+                            "medium"
+                        ],
+                        "description": "Flow rates of gases (e.g., Cl2, HF)."
+                    },
+                    "plasmaPower": {
+                        "type": "number",
+                        "unit": "W",
+                        "default": 50,
+                        "description": "Power of the plasma source."
+                    },
+                    "exposureTime": {
+                        "type": "number",
+                        "unit": "s",
+                        "default": 30,
+                        "description": "Duration of etching in the chamber."
+                    }
+                },
+                "description": "A collection of parameters controlling the ALE process."
+            },
+            "outputs": {
+                "etchedMaterial": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "layer1",
+                        "layer2"
+                    ],
+                    "description": "Names or identifiers of the etched material layers."
+                },
+                "byproducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "HCl",
+                        "HF byproducts"
+                    ],
+                    "description": "Chemical species released during etching."
+                },
+                "surfaceModifications": {
+                    "type": "object",
+                    "properties": {
+                        "topLayer": {
+                            "type": "string",
+                            "enum": [
+                                "changed",
+                                "unchanged"
+                            ],
+                            "default": "changed",
+                            "description": "Surface modification after etching."
+                        }
+                    },
+                    "description": "Effects on the substrate's surface from etching."
+                }
+            }
+        },
+        "simulationParameters": {
+            "decompositionKinetics": {
+                "type": "object",
+                "properties": {
+                    "mechanisms": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [
+                            "adsorption",
+                            "reaction",
+                            "desorption"
+                        ],
+                        "description": "Mechanistic steps in decomposition."
+                    }
+                },
+                "description": "Kinetic mechanisms involved in the decomposition step."
+            },
+            "excitationDynamics": {
+                "type": "object",
+                "properties": {
+                    "photonEnergy": {
+                        "type": "number",
+                        "unit": "eV",
+                        "default": 14.3,
+                        "description": "Photon energy used for excitation."
+                    },
+                    "electronDynamics": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [
+                            "ionization",
+                            "electron transfer"
+                        ],
+                        "description": "Processes involving electron excitation."
+                    }
+                },
+                "description": "Electron dynamics during ALE process."
+            },
+            "etchRateParameters": {
+                "type": "object",
+                "properties": {
+                    "temperatureDependency": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [
+                            "direct",
+                            "inverse"
+                        ],
+                        "description": "Relationship between etch rate and temperature."
+                    }
+                },
+                "description": "Factors affecting the etch rate's dependency on temperature."
+            }
+        },
+        "observables": {
+            "simulationObservables": {
+                "type": "object",
+                "properties": {
+                    "bindingAffinities": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        },
+                        "default": [
+                            0.5,
+                            1.2
+                        ],
+                        "unit": "eV",
+                        "description": "Energy barriers for adsorption."
+                    },
+                    "desorptionRates": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        },
+                        "default": [
+                            0.0003,
+                            0.0005
+                        ],
+                        "unit": "s^-1",
+                        "description": "Rates at which molecules desorb."
+                    }
+                },
+                "description": "Observable parameters from simulations and experiments."
+            }
+        }
+    },
+    "additionalProperties": {
+        "status": {
+            "type": "string",
+            "enum": [
+                "active",
+                "terminated"
+            ],
+            "default": "active",
+            "description": "Current state of the ALE process simulation."
+        }
+    }
+}

@@ -21,9 +21,12 @@ class OLLAMA_LLM_Inference(LLM_Inference):
         #Context length for the model
         self.context_length = self.config.OLLAMA_context_length
 
+        #Response Format
+        self.response_format = self.config.OLLAMA_response_format
+
         #The Large Language Model to use for Inference
         self.model_name = model_name
-        self.model = OllamaLLM(base_url = self.base_url, model = model_name, num_ctx = self.context_length, temperature = 0.3)
+        self.model = OllamaLLM(base_url = None, model = model_name, num_ctx = self.context_length, temperature = 0.3, format = self.response_format)
 
     def __str__(self):
         """

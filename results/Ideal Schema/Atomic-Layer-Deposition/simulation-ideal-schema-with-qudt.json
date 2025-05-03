@@ -1,0 +1,1160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process Schema",
+  "type": "object",
+  "properties": {
+    "simulationParameters": {
+      "type": "object",
+      "description": "Parameters and methodologies used in the ALD simulation.",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "description": "Computational methods used in the ALD process simulation.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "DFT",
+              "HF",
+              "post-HF",
+              "ML",
+              "kMC",
+              "MD",
+              "Hybrid ONIOM",
+              "CCSD(T)",
+              "MP2",
+              "Continuum Fluid Dynamics (CFD)",
+              "RMD",
+              "Monte Carlo",
+              "Lattice Boltzmann Method (LBM)",
+              "Group Contribution Method (GCM)",
+              "Computer-Aided Molecular Design (CAMD)"
+            ]
+          }
+        },
+        "methodDetails": {
+          "type": "object",
+          "description": "Details specific to the computational methods used.",
+          "properties": {
+            "timestep": {
+              "type": "object",
+              "description": "Timestep used in MD simulations.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/FemtoSEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            },
+            "functional": {
+              "type": "string",
+              "description": "Functional used in DFT calculations, e.g., B3LYP."
+            },
+            "basisSet": {
+              "type": "string",
+              "description": "Basis set used in quantum chemical calculations, e.g., 6-31G(d,p)."
+            },
+            "clusterModel": {
+              "type": "string",
+              "description": "Cluster model used (e.g., Si9H12, Si23H24)"
+            }
+          }
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "description": "Method used to obtain the data (e.g., simulation, experiment)"
+            }
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "description": "Materials involved in the ALD process.",
+      "properties": {
+        "precursors": {
+          "type": "array",
+          "description": "List of precursors used in the ALD process.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coReactants": {
+          "type": "array",
+          "description": "List of co-reactants used in the ALD process.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "substrates": {
+          "type": "array",
+          "description": "List of substrates used in the ALD process.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "encapsulationMaterials": {
+          "type": "array",
+          "description": "Materials used for encapsulation in selective growth.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ligandModification": {
+          "type": "object",
+          "description": "Details of any modifications to ligands, such as conversion from methoxy to hydroxyl.",
+          "properties": {
+            "originalLigand": {
+              "type": "string",
+              "description": "Original ligand before modification."
+            },
+            "modifiedLigand": {
+              "type": "string",
+              "description": "Ligand after modification."
+            }
+          }
+        }
+      }
+    },
+    "growthRate": {
+      "type": "object",
+      "description": "Information related to the growth rate of the film.",
+      "properties": {
+        "rate": {
+          "type": "object",
+          "description": "Growth rate of the film per cycle.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Length"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/ANGSTROM"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/LengthPerCycle"
+              ]
+            }
+          }
+        },
+        "temperatureDependence": {
+          "type": "object",
+          "description": "Temperature dependence of the growth rate.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/TemperatureRateOfChange"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/DEG_C"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/TemperatureRateOfChange"
+              ]
+            }
+          }
+        },
+        "propertySource": {
+          "type": "string",
+          "description": "Source of the property (e.g., calculated, observed)"
+        }
+      }
+    },
+    "surfaceProperties": {
+      "type": "object",
+      "description": "Properties related to surface reactions and coverage.",
+      "properties": {
+        "desorptionRate": {
+          "type": "object",
+          "description": "Rate of surface desorption.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Frequency"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/HZ"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Frequency"
+              ]
+            }
+          }
+        },
+        "diffusionRate": {
+          "type": "object",
+          "description": "Rate of surface diffusion.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Frequency"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/HZ"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Frequency"
+              ]
+            }
+          }
+        },
+        "reactionRate": {
+          "type": "object",
+          "description": "Rate of surface reactions.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Frequency"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/MOL-PER-SEC"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Frequency"
+              ]
+            }
+          }
+        },
+        "stickingCoefficient": {
+          "type": "object",
+          "description": "Probability of an adsorbate sticking to the surface.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Dimensionless"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/UNITLESS"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Dimensionless"
+              ]
+            }
+          }
+        },
+        "bindingAffinity": {
+          "type": "object",
+          "description": "Binding affinity of the adsorbate to the surface.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/ChemicalAffinity"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/KiloJ-PER-MOL"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/ChemicalAffinity"
+              ]
+            }
+          }
+        },
+        "surfaceCoverage": {
+          "type": "object",
+          "description": "Coverage of the surface by the adsorbate.",
+          "properties": {
+            "coverage": {
+              "type": "object",
+              "description": "Percentage of surface coverage.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/PERCENT"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                  ]
+                }
+              }
+            },
+            "timeDependent": {
+              "type": "boolean",
+              "description": "Indicates if surface coverage is time-dependent."
+            }
+          }
+        },
+        "chemisorptionCharacteristics": {
+          "type": "object",
+          "description": "Details about chemisorption, steric hindrance, and ligand effects.",
+          "properties": {
+            "chemisorbedPrecursorDensity": {
+              "type": "object",
+              "description": "Density of chemisorbed precursor.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Density",
+                            "http://qudt.org/vocab/quantitykind/ParticleFluence"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/GM-PER-CentiM3",
+                            "http://qudt.org/vocab/unit/NUM-PER-M2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Density",
+                    "http://qudt.org/vocab/quantitykind/ParticleFluence"
+                  ]
+                }
+              }
+            },
+            "stericHindrance": {
+              "type": "string",
+              "description": "Description of steric hindrance effects."
+            },
+            "surfaceHydroxylConcentration": {
+              "type": "object",
+              "description": "Concentration of surface hydroxyl groups.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration",
+                            "http://qudt.org/vocab/quantitykind/ParticleFluence"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/PER-M2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/AmountOfSubstanceConcentration",
+                    "http://qudt.org/vocab/quantitykind/ParticleFluence"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "reactionPathways": {
+          "type": "array",
+          "description": "Reaction pathways for specific surface reactions.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "precursor": {
+                "type": "string",
+                "description": "Precursor involved in the reaction."
+              },
+              "coReactant": {
+                "type": "string",
+                "description": "Co-reactant involved in the reaction."
+              },
+              "intermediateComplex": {
+                "type": "string",
+                "description": "Description of the intermediate complex formed."
+              },
+              "activationEnergy": {
+                "type": "object",
+                "description": "Activation energy for the reaction.",
+                "properties": {
+                  "quantityValue": {
+                    "type": "object",
+                    "properties": {
+                      "numericValue": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "object",
+                        "properties": {
+                          "hasQuantityKind": {
+                            "type": "string",
+                            "enum": [
+                              "https://qudt.org/vocab/quantitykind/Energy"
+                            ]
+                          },
+                          "sameAs": {
+                            "type": "string",
+                            "enum": [
+                              "https://qudt.org/vocab/unit/EV"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "quantityKind": {
+                    "type": "string",
+                    "enum": [
+                      "https://qudt.org/vocab/quantitykind/Energy"
+                    ]
+                  }
+                }
+              },
+              "adsorptionEnergy": {
+                "type": "object",
+                "description": "Adsorption energy of the precursor or co-reactant.",
+                "properties": {
+                  "quantityValue": {
+                    "type": "object",
+                    "properties": {
+                      "numericValue": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "object",
+                        "properties": {
+                          "hasQuantityKind": {
+                            "type": "string",
+                            "enum": [
+                              "https://qudt.org/vocab/quantitykind/Energy"
+                            ]
+                          },
+                          "sameAs": {
+                            "type": "string",
+                            "enum": [
+                              "https://qudt.org/vocab/unit/EV"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "quantityKind": {
+                    "type": "string",
+                    "enum": [
+                      "https://qudt.org/vocab/quantitykind/Energy"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "surfaceTerminationChemistry": {
+          "type": "string",
+          "description": "Description of the surface termination chemistry affecting precursor adsorption."
+        },
+        "propertySource": {
+          "type": "string",
+          "description": "Source of the property (e.g., calculated, observed)"
+        }
+      }
+    },
+    "filmProperties": {
+      "type": "object",
+      "description": "Properties of the deposited film.",
+      "properties": {
+        "uniformity": {
+          "type": "object",
+          "description": "Uniformity of the film.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/PERCENT"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+              ]
+            }
+          }
+        },
+        "roughness": {
+          "type": "object",
+          "description": "Surface roughness of the film.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Length"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/NanoM"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Length"
+              ]
+            }
+          }
+        },
+        "density": {
+          "type": "object",
+          "description": "Density of the film.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/MassDensity"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/GM-PER-CentiM3"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/MassDensity"
+              ]
+            }
+          }
+        },
+        "temperatureProfile": {
+          "type": "array",
+          "description": "Temperature profile across the film.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quantityValue": {
+                "type": "object",
+                "properties": {
+                  "numericValue": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "object",
+                    "properties": {
+                      "hasQuantityKind": {
+                        "type": "string",
+                        "enum": [
+                          "https://qudt.org/vocab/quantitykind/Temperature"
+                        ]
+                      },
+                      "sameAs": {
+                        "type": "string",
+                        "enum": [
+                          "https://qudt.org/vocab/unit/DEG_C",
+                          "https://qudt.org/vocab/unit/K",
+                          "https://qudt.org/vocab/unit/DEG_F",
+                          "https://qudt.org/vocab/unit/DEG_R"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "quantityKind": {
+                "type": "string",
+                "enum": [
+                  "https://qudt.org/vocab/quantitykind/Temperature"
+                ]
+              }
+            }
+          }
+        },
+        "chemicalComposition": {
+          "type": "array",
+          "description": "Elemental composition of the film.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "propertySource": {
+          "type": "string",
+          "description": "Source of the property (e.g., calculated, observed)"
+        }
+      }
+    },
+    "reactorConditions": {
+      "type": "object",
+      "description": "Conditions inside the reactor during ALD.",
+      "properties": {
+        "pressure": {
+          "type": "object",
+          "description": "Pressure inside the reactor.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/ForcePerArea"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/PA"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/ForcePerArea"
+              ]
+            }
+          }
+        },
+        "carrierGasFlow": {
+          "type": "object",
+          "description": "Flow rate of the carrier gas.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/CentiM3-PER-MIN"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+              ]
+            }
+          }
+        },
+        "carrierGasType": {
+          "type": "string",
+          "description": "Type of carrier gas used in the reactor."
+        },
+        "precursorFlow": {
+          "type": "object",
+          "description": "Flow rate and timing of the precursor gas.",
+          "properties": {
+            "flowRate": {
+              "type": "object",
+              "description": "Flow rate of the precursor gas.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/CentiM3-PER-MIN"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                  ]
+                }
+              }
+            },
+            "pulseDuration": {
+              "type": "object",
+              "description": "Duration of precursor pulsing.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            },
+            "purgeDuration": {
+              "type": "object",
+              "description": "Duration of purging after precursor pulsing.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "gapDistance": {
+          "type": "object",
+          "description": "Gap distance in the reactor.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Length"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/MilliM"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Length"
+              ]
+            }
+          }
+        },
+        "propertySource": {
+          "type": "string",
+          "description": "Source of the property (e.g., calculated, observed)"
+        }
+      }
+    },
+    "selectiveGrowthMechanism": {
+      "type": "object",
+      "description": "Mechanism of selective growth in ALD.",
+      "properties": {
+        "facetPreference": {
+          "type": "string",
+          "description": "Preferred facet for selective growth, e.g., Pt(111)."
+        },
+        "substituentEffects": {
+          "type": "string",
+          "description": "Effects of substituents on precursor selectivity."
+        },
+        "blockingMechanisms": {
+          "type": "object",
+          "description": "Mechanisms by which inhibitors block non-growth surfaces.",
+          "properties": {
+            "stericBlocking": {
+              "type": "string",
+              "description": "Description of steric blocking effects, including adsorption prevention and reactivity reduction."
+            },
+            "chemicalPassivation": {
+              "type": "string",
+              "description": "Description of chemical passivation effects on the surface."
+            }
+          }
+        }
+      }
+    },
+    "nucleationProcess": {
+      "type": "object",
+      "description": "Details about the nucleation process during ALD.",
+      "properties": {
+        "nucleationDelay": {
+          "type": "object",
+          "description": "Delay in nucleation during the initial ALD cycles.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Time",
+                        "https://qudt.org/vocab/quantitykind/Frequency",
+                        "https://qudt.org/vocab/quantitykind/Count"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/NUM",
+                        "https://qudt.org/vocab/unit/SEC"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Time",
+                "https://qudt.org/vocab/quantitykind/Frequency",
+                "https://qudt.org/vocab/quantitykind/Count"
+              ]
+            }
+          }
+        },
+        "selfCleaningEffect": {
+          "type": "boolean",
+          "description": "Indicates if a self-cleaning effect is observed during the ALD process."
+        }
+      }
+    }
+  },
+  "required": [
+    "simulationParameters",
+    "materials"
+  ]
+}

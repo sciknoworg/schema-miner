@@ -1,0 +1,219 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "description": "A JSON schema representing the parameters and characteristics of the Atomic Layer Etching (ALE) process used in semiconductor fabrication.",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "type": "string",
+            "description": "Type of ALE process, either plasma-based or thermal."
+        },
+        "inputs": {
+            "type": "object",
+            "description": "Inputs required for the ALE process.",
+            "properties": {
+                "chemicalPrecursors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of chemical precursors used, e.g., Cl2, HF, SF6, Al(CH3)3."
+                },
+                "energySource": {
+                    "type": "string",
+                    "description": "Type of energy source used, either thermal or plasma excitation."
+                },
+                "substrateMaterial": {
+                    "type": "string",
+                    "description": "Material of the substrate targeted for etching, e.g., GaN."
+                },
+                "reactantPressure": {
+                    "type": "number",
+                    "description": "Pressure of the reactant gas used in the process, measured in Torr.",
+                    "unit": "Torr"
+                },
+                "temperatureWindow": {
+                    "type": "object",
+                    "description": "Temperature window in which the ALE process is effective, measured in Kelvin.",
+                    "properties": {
+                        "minTemperature": {
+                            "type": "number",
+                            "description": "Minimum effective temperature for the ALE process.",
+                            "unit": "K"
+                        },
+                        "maxTemperature": {
+                            "type": "number",
+                            "description": "Maximum effective temperature for the ALE process.",
+                            "unit": "K"
+                        }
+                    }
+                },
+                "surfaceModel": {
+                    "type": "object",
+                    "description": "Detailed description of the substrate being modeled, including dimensions and surface orientation.",
+                    "properties": {
+                        "length": {
+                            "type": "number",
+                            "description": "Length of the substrate model in nanometers.",
+                            "unit": "nm"
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Width of the substrate model in nanometers.",
+                            "unit": "nm"
+                        },
+                        "thickness": {
+                            "type": "number",
+                            "description": "Thickness of the substrate model in nanometers.",
+                            "unit": "nm"
+                        },
+                        "surfaceOrientation": {
+                            "type": "string",
+                            "description": "Orientation of the substrate surface, e.g., (111), (100), (110)."
+                        }
+                    },
+                    "required": [
+                        "length",
+                        "width",
+                        "thickness",
+                        "surfaceOrientation"
+                    ]
+                }
+            }
+        },
+        "simulationParameters": {
+            "type": "object",
+            "description": "Parameters and observables relevant to ALE process simulation.",
+            "properties": {
+                "etchedMaterial": {
+                    "type": "string",
+                    "description": "Description of the material after etching."
+                },
+                "byProducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of volatile compounds produced as by-products."
+                },
+                "surfaceModifications": {
+                    "type": "string",
+                    "description": "Chemical modifications to the surface post-etch."
+                },
+                "decompositionMechanisms": {
+                    "type": "string",
+                    "description": "Details on decomposition and binding mechanisms in the ALE process."
+                },
+                "excitationDynamics": {
+                    "type": "string",
+                    "description": "Study of photon excitation effects on reaction mechanisms."
+                },
+                "etchRate": {
+                    "type": "number",
+                    "description": "Rate of etching, typically measured in nanometers per cycle.",
+                    "unit": "nm/cycle"
+                },
+                "surfaceDesorptionRates": {
+                    "type": "string",
+                    "description": "Rates at which materials desorb from the surface during etching."
+                },
+                "filmProperties": {
+                    "type": "object",
+                    "description": "Properties of the film during the ALE process.",
+                    "properties": {
+                        "uniformity": {
+                            "type": "string",
+                            "description": "Uniformity of the film post-etching."
+                        },
+                        "roughness": {
+                            "type": "number",
+                            "description": "Surface roughness measured in nanometers.",
+                            "unit": "nm"
+                        },
+                        "density": {
+                            "type": "number",
+                            "description": "Density of the film in grams per cubic centimeter.",
+                            "unit": "g/cm^3"
+                        },
+                        "temperatureProfile": {
+                            "type": "string",
+                            "description": "Temperature distribution across the film during etching."
+                        },
+                        "chemicalComposition": {
+                            "type": "string",
+                            "description": "Chemical composition of the film post-etching."
+                        }
+                    }
+                }
+            }
+        },
+        "simulationMethodology": {
+            "type": "object",
+            "description": "Parameters and methodologies used in the ALE simulation.",
+            "properties": {
+                "methods": {
+                    "type": "array",
+                    "description": "Computational methods used in the ALE process simulation.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "DFT",
+                            "HF",
+                            "post-HF",
+                            "ML",
+                            "kMC",
+                            "MD",
+                            "Hybrid ONIOM",
+                            "CCSD(T)",
+                            "MP2",
+                            "Continuum Fluid Dynamics (CFD)",
+                            "RMD",
+                            "Monte Carlo",
+                            "Lattice Boltzmann Method (LBM)",
+                            "Group Contribution Method (GCM)",
+                            "Computer-Aided Molecular Design (CAMD)"
+                        ]
+                    }
+                },
+                "methodDetails": {
+                    "type": "object",
+                    "description": "Details specific to the computational methods used.",
+                    "properties": {
+                        "timestep": {
+                            "type": "number",
+                            "description": "Timestep used in MD simulations.",
+                            "unit": "fs"
+                        },
+                        "functional": {
+                            "type": "string",
+                            "description": "Functional used in DFT calculations, e.g., B3LYP."
+                        },
+                        "basisSet": {
+                            "type": "string",
+                            "description": "Basis set used in quantum chemical calculations, e.g., 6-31G(d,p)."
+                        },
+                        "clusterModel": {
+                            "type": "string",
+                            "description": "Cluster model used (e.g., Si9H12, Si23H24)"
+                        }
+                    }
+                },
+                "source": {
+                    "type": "object",
+                    "properties": {
+                        "method": {
+                            "type": "string",
+                            "description": "Method used to obtain the data (e.g., simulation, experiment)"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "inputs",
+        "simulationParameters",
+        "simulationMethodology"
+    ]
+}

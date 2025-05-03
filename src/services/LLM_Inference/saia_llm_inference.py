@@ -20,13 +20,16 @@ class SAIA_LLM_Inference(LLM_Inference):
 
         #API Key of the SAIA Chat AI
         self.api_key = self.config.SAIA_api_key
-
+        
         #Number of retry if model returns any error
         self.num_retry = self.config.SAIA_num_retry
 
+        #Response Format
+        self.response_format = self.config.SAIA_response_format
+
         #The Large Language Model to use for Inference
         self.model_name = model_name
-        self.model = ChatOpenAI(base_url = self.base_url, api_key = self.api_key, model = model_name, temperature = 0)
+        self.model = ChatOpenAI(base_url = self.base_url, api_key = self.api_key, model = model_name, temperature = 0.3, model_kwargs={'response_format': {'type': self.response_format}})
 
     def __str__(self):
         """

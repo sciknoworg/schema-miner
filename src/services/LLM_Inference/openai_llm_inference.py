@@ -11,7 +11,7 @@ class Openai_LLM_Inference(LLM_Inference):
     giving a specified prompt.
     """
 
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, temperature: float = 0.3):
         """
         Initialize the object with OpenAI configuration (API Key, Organization ID, Model name etc.)
         """
@@ -25,9 +25,15 @@ class Openai_LLM_Inference(LLM_Inference):
         self.organization_id = self.config.OPENAI_organization_id
         os.environ['OPENAI_ORGANIZATION'] = self.organization_id
 
+        #Response Format
+        self.response_format = self.config.OPENAI_response_format
+
+        #OpenAI LLM Temperature
+        self.temperature = temperature
+
         #The Large Language Model to use for Inference
         self.model_name = model_name
-        self.model = ChatOpenAI(model = model_name, temperature = 0)
+        self.model = ChatOpenAI(model = model_name, temperature = self.temperature, model_kwargs={'response_format': {'type': self.response_format}})
 
     def __str__(self):
         """

@@ -1,0 +1,124 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process",
+    "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "description": "Type of ALE process, either plasma-based or thermal.",
+            "type": "string",
+            "enum": ["plasma", "thermal"]
+        },
+        "reactants": {
+            "description": "List of chemicals used in the ALE process, including reactants for fluorination and ligand-exchange reactions such as hydrogen fluoride (HF), xenon difluoride (XeF2), boron trichloride (BCl3), acetylacetone (Hacac), and ozone (O3).",
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "material": {
+            "description": "Material being etched, such as aluminum nitride (AlN), which can be either amorphous or crystalline.",
+            "type": "string"
+        },
+        "directionality": {
+            "description": "Specifies if the etching is directional (anisotropic) or omnidirectional (isotropic).",
+            "type": "string",
+            "enum": ["directional", "omnidirectional"]
+        },
+        "processParameters": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "description": "Temperature at which the ALE process is conducted, in degrees Celsius.",
+                    "type": "number"
+                },
+                "pressure": {
+                    "description": "Pressure within the etching chamber during the ALE process, in Torr.",
+                    "type": "number"
+                },
+                "rfPower": {
+                    "description": "RF power used in the process, in watts, applicable for plasma-based processes.",
+                    "type": "number"
+                },
+                "timingSequence": {
+                    "description": "Timing sequence for reactant exposure and purge times in seconds.",
+                    "type": "string"
+                }
+            }
+        },
+        "ALEWindow": {
+            "description": "Operational window for the ALE process detailing the energy and time parameters where the etch per cycle (EPC) remains constant or exhibits self-limiting reactions.",
+            "type": "object",
+            "properties": {
+                "ionenergyWindow": {
+                    "description": "Ion energy range for the ALE window, in electronvolts (eV).",
+                    "type": "array",
+                    "items": {"type": "number"}
+                },
+                "temperatureWindow": {
+                    "description": "Temperature range for the ALE window, in degrees Celsius.",
+                    "type": "array",
+                    "items": {"type": "number"}
+                }
+            }
+        },
+        "etchPerCycle": {
+            "description": "Etch per cycle (EPC), measured as the thickness of material removed per cycle, in angstroms.",
+            "type": "number"
+        },
+        "etchedMaterialProperties": {
+            "description": "Properties of the material post-etching.",
+            "type": "object",
+            "properties": {
+                "surfaceRoughness": {
+                    "description": "Surface roughness after etching, in nanometers.",
+                    "type": "number"
+                },
+                "uniformity": {
+                    "description": "Uniformity of the etching process across a wafer, measured by variance in etch depth.",
+                    "type": "number"
+                }
+            }
+        },
+        "synergy": {
+            "description": "Synergy factor indicating the effectiveness of alternating sub-cycles, expressed as a percentage.",
+            "type": "number"
+        },
+        "selectivity": {
+            "description": "Selectivity of the etching process towards different materials, demonstrating high selectivity over materials like SiO2 and HfO2.",
+            "type": "object",
+            "properties": {
+                "selectiveTo": {
+                    "description": "Materials to which the process is selective.",
+                    "type": "array",
+                    "items": {"type": "string"}
+                }
+            }
+        },
+        "otherAspects": {
+            "description": "Other considerations such as safety, environmental impact, and process scalability.",
+            "type": "object",
+            "properties": {
+                "safety": {
+                    "description": "Safety considerations for the ALE process.",
+                    "type": "string"
+                },
+                "environmentalImpact": {
+                    "description": "Environmental impact considerations for the ALE process.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "reactants",
+        "material",
+        "directionality",
+        "processParameters",
+        "ALEWindow",
+        "etchPerCycle",
+        "etchedMaterialProperties",
+        "synergy",
+        "selectivity",
+        "otherAspects"
+    ]
+}

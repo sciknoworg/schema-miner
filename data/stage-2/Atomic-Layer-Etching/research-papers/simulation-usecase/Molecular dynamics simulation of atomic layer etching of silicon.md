@@ -1,0 +1,169 @@
+## Molecular dynamics simulation of atomic layer etching of silicon
+
+Satish D. Athavale and Demetre J. Economou a)
+
+Plasma Processing Laboratory, Department of Chemical Engineering, University of Houston, Houston,
+
+Texas 77204-4792
+
+~ Received 5 October 1994; accepted 13 March 1995 !
+
+A molecular dynamics study of 50 eV Arion bombardment of a Si 100 1 ~ ! crystal with a monolayer of adsorbed chlorine was conducted to simulate atomic layer etching of Si. The total ~ ALET ! reaction yieldi atoms removed per ionwas 0.172; 84% of silicon was removed as SiCl, 8% as ~ S ! elemental Si and 8% as SiCl . Based on the total yield, an ion dose of 1.16ions/cm is 2 3 10 16 2 necessary to remove one monolayer of silicon. Reaction occurs during the ps time scale of the ion-solid interaction. Long time-scale chemistry of ms ~ 100s ! which is possible in ion-assisted etching with simultaneous exposure to neutral and ion beams does not happen in ALET. It was further found that 93% of Si originated from the top silicon layer and 7% from the layer underneath. In addition, some structural ''damage'' was induced to the top three silicon layers. It appears that perfect ALET of silicon is not possible for an ion energy of 50 eV. © 1995 American Vacuum Society.
+
+## I. INTRODUCTION
+
+Dimensional control down to the atomic level is becoming progressively important in the fabrication of abrupt het- acuation of the chamber to exhaust the reaction proderostructure interfaces and extremely thin layers for optoelectronics, quantum devices, and nanostructures. 1 For example, molecular-beam epitaxy BE ~ M ! and metalorganic chemical vapor depositionOCVD ~ M ! have been used to grow extremely thin layers of compound semiconductors and layers as required. their alloys. lso, atomic layer epitaxyE 2 A ~ AL ! and flow-rate modulation epitaxy FME ~ ! have been developed to deposit regarding than conventional MBE. 4 3, In ALE, the precursor ~ e.g., trimethylgallium and arsine to deposit GaAs ed to ! are f the epitaxial reactor in a sequential manner such that GaAs is grown one layer at a time. ~ 4 ! Ev ucts. Completion of a cycle results in etching of one atomic layer of the film. The cycle can be repeated to etch as many atomic
+
+- ~ 3 ! Exposure to an energetic beam, to effect chemical reaction between the adsorbed gas and the underlying solid. In this step a monolayer of the solid is removed.
+
+with atomic-resolution heterointerfaces which are smoother e, the gas must be selected such that spontaneous etchspecies ing of the solid does not occur in stepThis is not a techniques Etching with monolayer accuracy places some limitations the choice of gas and energetic beam. For exampl ~ 1 . ! severe limitation since, even if spontaneous etching could normally occur, cooling of the substrate at sufficiently low temperature would quench the spontaneous reaction, without affecting the reaction in step in step3 ~ 3 ! @ ~ ! energy is supplied by the energetic beam, i.e., this is hermally actinot a t vated process Also, the energetic beam must be chosen so # . self-limiting , i.e., once surface reaction has been co ~ ! any further irradiation by the energetic beam should not damage the exposed underlayer. If the above precautions are not taken, etching with monolayer accu
+
+Much attention has been paid to deposition, but etching with atomic layer resolution is also a crucial step for fabrication of nanoelectronic devices. Dry etching 5 such as reactive ion etching E ~ RI ! and chemically assisted ion beam etchingCAIBE ~ ! are not capable of atomic layer that the process is resolution because etching is too rapid. In addition, the rela- mpleted in step 3 , tively high ion energy 00s of eV ~ 1 ! can damage the crystal. Atomic layer etching ALET ~ ! can provide monolayer resolution without substrate damage. By exposing the crystalline racy is not possible. substrate to a reactive gas and an energetic beam , elec-~ ions trons, photons in a cyclic manner, ! etching of a monolayer per cycle may be achieved.
+
+room
+
+Atomic layer etching : The ALET concept is demonstrated schematically in Fig. 1, which shows a complete cycle of theis possible to achieve monolayer etching. However, monoprocess.The cycle consists of the following four steps. layer 9 ~ 1 ! Exposure of the clean semiconductor surface to a gas, actor atmosphere, even in minute amounts, can lead to forand adsorptionchemisorptionof the gas onto the sur- mation of oxide islands on the surface, resulting in less than ~ ! face. ~ 2 ! Evacuation of the chamber, so that only the chemisorbed layer can subsequently react. This step is necessary to s and Ar avoid etching by gas-phase species in step . ~ 3 ! ALET of GaAs has been demonstrated 6-13 by using Cl 2 /Cl gas and low-energy Arbombardment or KrF exci1 mer laser irradiation. It has been shown that by carefully controlling the reactive species and energetic beam exposure, it etching of Si is difficult to achieve. Oxygen in the re a monolayer etching per cycle and rough surfaces. ALET of Si 14-16 has been studied using Cl Cl or fluorine-containing 2 / gase 1 bombardment. Molecular chlorine or chlorine radicals do not spontaneously etch undoped Si at temperature. Chlorine 17 does chemisorb on the silicon surface ,19 18 but surface reaction leading to volatile chlorides a ! Author to whom correspondence should be addressed.
+
+967
+
+<!-- image -->
+
+FIG. 2. Schematic of the cell used for molecular dynamics simulations. The filled circles represent Cl atoms and the open circles represent Si atoms.
+
+<!-- image -->
+
+tained from these simulations are used to guide our experimental ALET system. This work differs from other MD simulation studies reported in the literature hat there 29,30 in t is no simultaneous exposure of the substrate to neutral and ion beams.
+
+FIG. 1. Schematic of the ALET process. The filled circles represent Cl atoms, the open circles represent Si atoms, and present Arions. 1 re 1
+
+## II. MD SIMULATION
+
+layer
+
+Molecular dynamics MD ~ ! simulations are suitable forectory of individual atoms by solving Newton's equation of studying the interaction of energetic ions with materials. MD on. follows the trajectory of each atom in the simulation cell as aent of the potential field. The interatomic potential confunction of time for several ps of the ion-solid interaction; of contributions due to two-body and three-body interphysical quantities of interest may be calculated by time or ons. We have used the interatomic potentials developed ensemble averaging. MD simulations have been used in the by past to study physical sputtering,ysical 26 ph vapor deposition,and the reaction of energetic neutrals with a milar to those first developed by Stillinger and Weber 27 surface in the absence of ion bombardment. D simula28 M tions have also been used to study the interaction of Ar 1 ions with Si under simultaneous exposure to chlorineand 29 fluorine. Some of the key results of these simulations areg processes.Therefore, the Ar ion is modeled as an en30 the formation of surface roughness nd 29 a the creation of weakly bound species that can desorb spontaneously. 30 In this work, we have performed MD simulations to study a screening length of 0.88 times the Firsov values. the interaction of 50 eV Ar ions 1 with a Si 100 ~ ! surface covered with a monolayer of chlorine. The focus of the simu- corresponds lations is step ~ 3 ! of ALET. Emphasis was placed on the extent of subsurface damage created by the ions, the natureGear type was used to advance the simulation in time and energy distribution of the products, the etching mecha- ntegrating the equation of motion for each atom in the nism, and the ion dose required for complete reaction toulation cell. occur. The goal is to identify conditions under which etching ach with monolayer accuracy may be possible. The results ob- 'equilibration'' phase lasting 600 time steps during which MD is a deterministic simulation which follows the traj moti 31 The force on each atom is calculated as the spatial gradi sists acti Feil et al. 29 The Si-Cl, Si-Si, and Cl-Cl interactions were calculated using two-body and three-body interactions si 32 for the Si-F system. When an ion approaches the surface, the ion wave functions overlap those of the surface atoms and charge transfer takes place through Auger or resonant tunnelin 33 ergetic neutral. The Ar-Ar, Ar-Cl, and Ar-Si interactions were expressed by a purely repulsive Moliere potential with 34 A dimensionless time step of 0.005 as used, where t w t 5 0.0766 ps to the period of vibrations of an isolated Si -Si bond. A fifth-order predictor-corrector algorithm of the 31 by i sim E simulation run consisted of two phases:an ~ a ! '
+
+~ SiCl x ! does not occur. This reaction can be induced by en- The simulation cell consisted of 288 Si atoms arranged in ergetic ion bombardment. In fact the etching of silicon under layers of 32 atoms each to form a Si simultaneous exposure to chlorine gas and Ar ons has been 1 i reported extensively in the literature. 20-25 Assuming that a suitable combination of gas and energetic e 21.7 Å beam have been identified, one needs to determine the dura- he tion of steps 1 - 4 ~ ! ~ ! so that a monolayer of the substrate is onditions were applied in the nd removed per cycle. The duration of exposure to the reactive infinite crystal. Ar ons with 50 eV kinetic energy were gas @ step 1 ~ !# and the energetic beam step 3 @ ~ !# are of particular importance. For example, if less than a monolayer ofdinates of the ion location were picked at random but the gas is adsorbed during step , less than a monolayer etch-vertical distance was fixed at 8.5 Å. At this distance the ~ 1 ! ing per cycle and a rough surface are expected. In the case of eraction between the ion and the cell is negligible. Disions used as an energetic beam in step the ion dose and ~ 3 , ! energy must be such that the top layer reacts completely, yet er No. 1on top of a pristine Si lattice. damage of the underlayers does not occur. nine ~ 100 ! lattice. The top silicon layer was covered with a monolayer of chlorine, as shown in Fig. 2. The approximate dimensions of the cell ar 3 21.7 Å 3 12.9 Å. The surface area of the cell in t x -z plane is approximately 472 Å. Periodic boundary c x a z directions to simulate an 1 i introduced perpendicular to the cell surface. The x and z co r y 5 int tance y was measured with respect to the chlorine ~ lay !
+
+968
+
+gather on along the vertical axisy circles as a function of time. The FI ~ fill ! a positi ~ empt ! dashed horizontal line indicates the position at which an atom moving away from the lattice is removed from the simulation cell.
+
+<!-- image -->
+
+the system was allowed to relax to 300 K, andan ''etch-~ b ! ing'' phase which started with the introduction of an argon ion at t 5 0 and continued for 3500 time steps until .34 t 5 1 ps. Some simulations were continued further up tops t 5 4 but no substantial change in the results was observed. However, for ion energies higher than 50 eV used here, a simulation for more than 1.34 ps may be necessary. At the beginning of the etching phase of each simulation run, an Ar 1 was directed at a pristine Si surface covered with a monolayer of Cl atoms. Subsequent ions were directed at the lattice generated by the previous ions. This way the depletion of Cl from the surface as etching proceeds was accounted for properly. Such a sequence of ion bombardments represented one group of simulation runs. An average of 60 simulation runs were conducted for each group. Five groups of runs were per- G. 3. A typical plot of Ar kinetic energy ed circlesnd Ar projected formed, each starting with a pristine cell, to statistics. 35
+
+At the end of each simulation run, a search was made for weakly bound specieswbs ~ ! on the surface. A wbs is defined as one with a binding energy of less than 1 eV. e binding 30 Th energy of each surface species was determined by the differ- etration depth distance away from the surface.
+
+perature of the crystal remains at a desired set point. Another fluence of the surface. method, proposed by Berendsen et al. , 36 uses an algorithm to remove/add a quantity of heat from the simulation cell de- ular ion bombardment events shown in that figure. Averpending on the actual temperature and the set point. We have e values of interesting quantities obtained from a total of used the Berendsen scheme of coupling to a heat bath main- 00 MD simulation runs and the corresponding 95% confitained at T 5 300 K with a coupling constant of 30 fs. For this ence intervals are shown in Table I. purpose, the simulation cell was divided into three regions as shown in Fig. 2. The top seven atomic layers constitute the adiabatic region where the atomic velocities were not res- I. Average values for different physical quantities. caled during the 3500 etching time steps of the simulation ~ the velocities were rescaled during the 600 equilibration time steps . The next two atomic layers form the heat sink ! region, where heat was removed throughout the simulation. Finally, the bottom layer of the cell was fixed in space. Time at which Ar loses more than 95% of Quantitative measures related to Fig. 3 were for the partic ag 3 d TABLE
+
+ence of the potential energy of the crystal with that species ontinue, until a violent collision causes Ar to regain a on the surface and with the species removed to an infinite gnificant portion of the lost KE and start its upward moveThe temperature of the crystal rises during ion bombard- V kinetic energy. We consider an atom to leave the ''inment, and heat must be removed so as to represent the physi- ence'' of the lattice when this atom crosses the0 Å cal mechanisms of heat loss from the crystal. Heat removal ane moving upwards. It is clear from Fig. 3 that the kinetic can be carried out in a number of different ways. The sim- ergy of the Ar atom remains constant after it has crossed plest way is to scale the atomic velocities so that the tem- 4.50 Å plane suggesting that the atom is then outside pen ~ y 52 2 Å ! . Collisions with the lattice atoms c si ment. Ar eventually leaves the lattice after about 0.4 ps with 2 e flu y 5 4.5 pl en the y 5 the in
+
+## III. RESULTS AND DISCUSSION
+
+In the figures to follow,0 refers to the time of intro- ime at which Ar leaves the lattice t 5 duction of the argon ion at a vertical distance ofÅ. It y 5 8.5 is interesting to analyze the sequence of events that occur when an individual Ar ion bombards the surface. Eventu1 ally the ion is either reflected/recoiled from the surface or it aximum number of atoms in the is trapped inside the lattice. A plot of the ion kinetic energy otps and its projected position along the is as a function of y ax time is shown in Fig. 3. The energetic Ar arting kinetic Maximum penetration depth of Ar inside ~ st energy 50 eV ! penetrates the lattice and undergoes collisionstice when it is reflected with the atoms in the top few layers of the crystal, rapidly um penetration depth of Ar inside losing its kinetic energy; more than 95% of the Ar KE ~ KE ! is lost within about 0.14 ps. Ar continues its journey inside the lattice further losing KE reaching a minimum of less than mum number of atoms in the hot spot 0.2 eV. At this moment 0.17 ~ ps, Ar ! is at its maximum T ~ ps ! Time at which product species leaves the lattice ps ~ ! Time at which the hot spot is at maximum temperatureps ~ ! Time at m hot sp ~ ! Time at which the lattice is at maximum temperatureps ~ ! lat ~ Å ! Maxim lattice when it is trapped ~ Å ! Maximum temperature of the lattice ~ K ! Maximum hot-spot temperatureK ~ ! Maxi
+
+| Quantity                                                                  | Average value 95% confidence intervals   |
+|---------------------------------------------------------------------------|------------------------------------------|
+| Time at which Ar loses more than 95% of its kinetic energy ~ ps !         | 0.140.01 6                               |
+| Time at which Ar is at the maximum depth inside the lattice ~ ps !        | 0.16 6 0.02                              |
+| Time at which Ar leaves the lattice ~ ps !                                | 0.46 6 0.08                              |
+| Time at which product species leaves the lattices ~ p !                   | 0.201 6 0.                               |
+| occur Time at which the hot spot is at maximum temperatureps ~ !          | 0.08.02 6 0                              |
+| or itaximum energy Ti at m number of atoms in the hot spotps ~ !          | 0.36 6 0.04                              |
+| Time at which the lattice is at maximum temperatureps ~ !                 | 0.1301 6 0.                              |
+| Maximum penetration depth of Ar inside lattice when it is reflected ~ Å ! | 3.66 6 0.32                              |
+| Maximu penetration depth of Ar inside lattice when it is trapped ~ Å !    | 5.82 6 0.47                              |
+| inside Maximum temperature of the lattice ~ K !                           | 1070 6 53                                |
+| Maximum hot-spot temperatureK ~ !                                         | 3235 6 815                               |
+| than Maximum number of atoms in the hot spot                              | 78 6 8                                   |
+
+969
+
+FIG. 4. The hot-spot temperature iangles and the number of atoms in the ~ tr ! hot spotcircles as a function of time. The figure shows an average over ~ ! 300 simulation runs.
+
+<!-- image -->
+
+lation. Of the silicon-containing species, SiCl is the majorit product followed by SiCl and Si. Chlorine atoms are re2 moved with a 4% yield. Also, for every 100 argon ions impinging on the surface, 80 are reflected/recoiled back during the same ion bombardment event and the remaining 20 are thermalized inside the lattice only to be removed during the subsequent ion bombardment event. The statistics are not adequate to report the fraction of impinging ions that are permanently trapped in the lattice; it seems that this fractio is below 1%. When the product is SiCl, the Cl atom corresponds to the one originally attached to the Si atom at the beginning of the group of simulation runs. When SiCl 2 is removed, the Cl atom was previously attached to an adjacent Si atom. This is to be expected since surface diffusion is negligible under the conditions of our simulation.
+
+averaged any products of higher chlorination. The total sputtering over all the atoms in the adiabatic region, rises significantly of silicon under the conditions studiedis lower acterize the development of the ''hot spot'' by considering lable on the surface compared to that available during Because in ALET the surface is deficient in chlorine, products of higher chlorination are unlikely to form. This explains the relatively small yield of SiCl he absence 2 and t of yield ~ 0.172 ! than that of a silicon surface exposed to chlorine and 50 eV Ar 1 b simultaneously ~ 0.25, ! but it is higher than the physical sputtering yield of Si by 50 eV Ar ~ 0.015 ! 1 ions 21 The enhancement of the sputtering yield due to the presence of Cl is evident; the lower sputtering yield under ALET conditions is expected due to the limited amount of Cl avai simultaneous and continuous exposure of Si to chlorine and Ar 1
+
+around 0.35 ps when approximately 75 atoms are in the hot imulations. This is consistent with the results of Barone and temperature fluorinated top layers of the silicon lattice was should be considered only qualitatively, since temperature is authors observed that, when F atoms were plentiful Table II lists the product yields obtained by the MD simu- nd species formed readily. These wbs may be sputtered No weakly bound specieswbs ~ ! have been detected in our s Gra 30 who observed no wbs when the F/Si atomic ratio in the , 0.39. These enough to passivate the silicon dangling bonds, weakly bou or desorbed spontaneously on a much longer time scale ~ ms ! than it is possible to capture by the MD simulation. Under simultaneous exposure to neutral and ion beams, as in the study of Barone and Graves, wbs can be formed when the neutral to ion flux ratio is high enough. Under the ALET conditions, the Cl/Si ratio is too low for wbs to be formed. TABLE II. Average product yield.
+
+The instantaneous temperature of the crystal, reaching a maximum of about 1070 K around the time when most of the kinetic energy of the ion has dissipated in colli-ombardment sions with the lattice atoms.15 ps. Beyond that point ~; 0 ! ''heat'' removal by the constant temperature bath dominates,. causing the crystal temperature to gradually decay a ~ over few ps ! towards the bath temperature0 K ~ 30 ! . One can charonly the atoms in the crystal which are ''directly'' affected by the energetic Ar. The temperature of the hot spot was calcu- ions. lated as an average over all atoms with ''temperature'' in he kinetic energies of the product species ranged from excess of 400 K. The time evolution of the hot-spot tempera- 2 to 7.0 eV. The products leave the surface about 0.2 ps ture and the number of atoms in the hot spot, again averaged llowing ion impact, which is after the peak in the crystal over 300 simulations runs, are shown in Fig. 4. The hot-spot perature0.13 ps and the peak in the hot-spot temperatemperature passes through a maximum of over 3000 K around 0.10 ps, when only a dozen or so atoms are directly umber of atoms in the hot spot reaches a maximum able affected by the impinging Ar. These relatively energetic at- e kinetic energy distribution of the products could not oms transfer part of their energy to the surroundings increas- to either collision cascade or ''evaporation'' from a hot ing the number of atoms in the hot spot. This is equivalent to t. The latter mechanism was postulated by Oostra , spatial spreading of the hot spot with a concomitant decrease 75 eV Ar in temperature. As the process continues, the number of at- e to chlorine. oms in the hot spot passes through a broad maximum at spot. Later on the number of atoms in the hot spot decreases ves as the KE is dissipated further. The hot-spot difficult to define for a small number of atoms. T 0. fo tem ~ ! ture 0.08 ps, but before the time.36 ps at which the ~ ! ~ 0 ! n ~ T I . Th ! be fit spo et al. 22 for 1 bombardment of Si with simultaneous exposur
+
+| Yield                  | Average value 6 ~ 95% confidence intervals !   |
+|------------------------|------------------------------------------------|
+| Si                     | 0.013 6 0.002                                  |
+| Cl                     | 0.040 6 0.003                                  |
+| Ar                     | 0.803 6 0.078                                  |
+| Ar thermalization      | 0.192.062 6 0                                  |
+| Ar trapped permanently | , 0.01                                         |
+| SiCl                   | 0.145 6 0.035                                  |
+| SiCl 2                 | 0.014 6 0.003                                  |
+
+Figure 5 shows the layer-by-layer distribution of ''damage'' of the crystal lattice after 43 consecutive ion bombardments starting from the pristine cell of Fig. 1. The amount of damage is expressed as the displacement, in Å, of the atoms from their position in the pristine cell. We only accounted for atoms that were present in the lattice after 43 bombardment
+
+<!-- image -->
+
+970
+
+sputtering. Otherwise, surface roughness will again be a problem. Based on a total sputtering yield of 0.172 for the silicon-containing species le II , and the silicon surface ~ Tab ! atom density2 ~ 3 10 15 atoms/cm 2 ! , the required ion dose to remove a monolayer is 1.1610 3 16 ions/cm. For an ion cur2 rent density of 1 mA/cm , the ion irradiation step 3 would 2 require an exposure for about 2 s.
+
+## IV. CONCLUSIONS
+
+etch
+
+Implication for ALET: Table III shows that almost 93% of cascade, the Si-containing species originate from the topmost silicony bound species were detected after ion bombardment. layer layer 2 in Fig. 2however, some product removal ~ ! ; occurs from the underlying silicon layer. Also, crystal ''dam- of interest. These observations suggest that, in ALET, age'' extends over a few atomic layers at the top 5, ~ Fig. ! which may result in unacceptable surface ''roughness'' nteraction. This is in sharp contrast to ion-assisted etchin 29 with repeated ALET cycling. Hence perfect atomic layer ffected by etching cannot be achieved with an ion energy of 50 eV. ace to reactive neutral and ion beams. Under these condiAlso, practical systems may be limited by residual oxygen in ns long time-scale0s of ms the chamber forming oxide islands on the surface. The ion n. Because MD can only capture the events occurring on energy should then be high enough to remove any oxide by The reaction products were removed during the collision a few tenths of ps after ion bombardment. No weakl In addition, surface diffusion is negligible under the conditions chemistry happens only during the ps time scale of ion-solid i e simultaneous and continuous exposure of the surf tio ~ 10 ! chemistry can readily happe the ps time scale, MD is suitable for the study of ALET.
+
+events, neglecting the species that were removed as products. 0 eV Ar As expected, the damage is maximum at the topmost atomic with temperatures in excess of 3000 K. The hot spot is dislayer,layer 1 and diminishes as one goes deeper into the ipated within a few ps after ion bombardment, and the crys-~ ! lattice. The average displacement for the heat sink layers eturns ~ layers 8 and 9is about 0.1 Å, as expected for a crystal at ! room temperature ~; 5%-10% of interatomic distance. 37 ! The crystal ''damage'' can also be studied in terms of creation of vacancies and interstitial atoms. Following the treatment used by Karetta and Urbassek, observed that 38 we the number of vacancies and interstitials is maximum in the tioned topmost atomic layer. Although, no vacancies are present ller than that predicted by the simulation. This is because below the third atomic layer, a few interstitials can be created tion of complete reaction of the adsorbed Cl would in those deeper layers during the early stages of an ion bom- uire an excessive amount of computer time, as the yield bardment event. However, these interstitials are annealed eases with decreasing surface coverage by Cl. quickly before the ion leaves the lattice. Atomic layer etching ALET ~ ! is a technique to etch a crystalline solid with monolayer accuracy. It is a cyclic process consisting of gas adsorption on the surface1, ~ step ! evacuation of excess gas tep 2, irradiation of the surface ~ s ! by an energetic beamstep 3, and evacuation to remove the ~ ! reaction product step 4. Completion of a cycle results in ~ ! etching of one monolayer of the solid. A molecular dynamics simulation of ALET of silicon with chlorine gas was performed focusing on step 3. For this purpose, a Si sur-~ 100 ! face with an adsorbed monolayer of chlorine was bombarded by 5 1 ions. Ion bombardment creates a ''hot spot'' s tal r to ambient temperature. The total silicon yield was 0.172Si atoms removed per ion ; 84% of silicon ~ ! was removed as SiCl, 8% as elemental Si, and 8% as SiCl 2 . Based on the total yield, an ion dose of 1.16 ions/cm 3 10 16 2 is necessary to remove one monolayer of silicon. It should be cau that, in reality, the silicon total yield would b sma simula req decr FIG. 5. The layer-by-layer distribution of the atomic displacements in the lattice after 43 ion bombardments of the same cell starting from a pristine silicon crystal with a monolayer of chlorine at the surface. See Fig. 2 for layer numbering.
+
+TABLE III. Fraction of Si atoms removed from different atomic layers in the crystal. See Fig. 2 for layer numbering.
+
+| Layer No.   |   Fraction of Si atoms removed from this layer |
+|-------------|------------------------------------------------|
+| 2           |                                           0.93 |
+| 3           |                                           0.07 |
+| 4-9         |                                           0    |
+
+This
+
+It was found that 93% of the silicon removed originated from the topmost silicon layer; the remaining 7% was from the layer underneath. An ion energy of 50 eV caused some structural ''damage'' to the top three silicon layers. could result in unacceptable surface ''roughness'' with repeated ALET cycling. Furthermore, the ion energy may be limited by the need to sputter away surface oxides which may form as a result of residual oxygen, that can also lead to rough surfaces.
+
+971
+
+## ACKNOWLEDGMENTS
+
+The authors gratefully acknowledge the financial support . A. Ogryzlo, D. L. Flamm, D. E. Ibbotson, and J. A. Mucha, J. Appl. provided by the State of Texas through the Advanced Tech- Phys. nology Program. They would like to thank Dr. H. Feil for D. J. D. Sullivan, H. C. Flaum, and A. C. Kummel, J. Phys. Chem. helpful discussions and Dr. M. Barone and Professor D. Graves for helpful discussions and for sharing a preprint . Rowe, G. Margaritondo, and S. B. Christman, Phys. Rev. B 1581 prior to publication. Thanks are also due to Dr. James M. 1977 ; L. J. Whitman, S. A. Joyce, J. A. Yarmoff, F. R. McFeely, and L. Briggs for allowing the use of the visualization facilities of minello, Surf. Sci. , 297 1990 . the Institute for Molecular Design at the University of Houston. 17 E 64 , 6510 1988 . ~ ! 18 97 , 12051 ~ 1993 ; Q. Gao, C. C. Cheng, P. J. Chen, W. J. Choyke, and J. T. ! Yates, Jr., J. Chem. Phys. , 8308 1993 , see references therein. 98 ~ ! 19 J. E 16 , ~ ! J. Ter 232 ~ ! 20 J. Dieleman, F. H. M. Sanders, A. W. Kolfschoten, P. C. Zalm, A. E. de Vries, and A. Haring, J. Vac. Sci. Technol. B 384 1985 . 3 , 1 ~ !
+
+- 16 J. Yamamoto, T. Kawakasi, H. Sakaue, S. Shingubara, and Y. Horiike, Thin Solid Films 225 , 124 1993 . ~ !
+- 21 D. J. Oostra, R. P. van Ingen, A. Haring, A. E. de Vries, and G. N. A. van Veen, Appl. Phys. Lett., 1506 1987 . 50 ~ !
+- 1 T. F. Kuech, P. D. Dapkus, and Y. Aoyagi, Mater. Res. Soc. Symp. Proc. 22 222 , 195 1991 . ~ !
+- D. J. Oostra, A. Haring, R. P. van Ingen, and A. E. de Vries, J. Appl. Phys. 64 , 315 1988 . ~ !
+- 23 J. van Zwol, J. van Laar, A. W. Kolfschoten, and J. Dieleman, J. Vac. Sci. Technol. B 5 , 1410 1987 . ~ !
+- J. W. Coburn, J. Vac. Sci. Technol. B , 1384 1994 . 12 ~ !
+- 2 '' Advances in Materials, Processing, and Devices in III-V Compound Semiconductors ,'' edited by D. K. Sadana, L. Eastman, and R. Dubuis, Mater. Res. Soc. Symp. Proc. No. 144aterials Research Society, Pitts- 24 ~ M burgh, PA, 1989. !
+- 3 T. Yao, Z. Zhu, K. Uesugi, S. Kamiyama, and M. Fujimoto, J. Vac. Sci. Technol. A 8 , 996 1990 . ~ !
+- 4 N. Kobayashi, T. Makimoto, Y. Yamauchi, and Y. Horikoshi, J. Appl. 26 R. Maboudian, Z. Postwa, M. El-Maazawi, B. J. Garrison, and N. WinoPhys. 66 , 640 1989 . ~ !
+- 25 G. J. P. Joosten, M. J. M. Vugts, H. J. Spruijt, H. A. J. Senhorst, and H. C. W. Bieijerinck, J. Vac. Sci. Technol. A 636 1994 ; H. F. Winters, 12 , ~ ! ibid . 6 , 1997 1988 . ~ !
+- 5 S. M. Rossnagel, J. J. Cuomo, and W. D. Westwood, Handbook of Plasma Processing Technology ~ Noyes, Park Ridge, NJ, 1989 ! .
+- grad, Phys. Rev. B 42 , 7311 1990 . ~ !
+- 27 K. H. Muller, J. Vac. Sci. Technol. A 2161 1987 . 5 , ~ !
+- 28 P. C. Weakliem and E. A. Carter, J. Chem. Phys. , 737 98 ~ 1993 ; T. A. ! Schoolcraft and B. J. Garrison, J. Am. Chem. Soc. 8221 1991 . 113 , ~ !
+- 6 T. Meguro, M. Hamagaki, S. Modaressi, T. Hara, Y. Aoyagi, M. Ishii, and Y. Yamamoto, Appl. Phys. Lett. , 1552 1990 . 56 ~ !
+- 7 T. Meguro and Y. Aoyagi, Mater. Res. Soc. Symp. Proc. , 121 1991 . 222 ~ ! 8 Y. Aoyagi, K. Shinmura, K. Kawasaki, T. Tanaka, K. Gamo, S. Namba, and I. Nakamoto, Appl. Phys. Lett. , 968 1992 . 60 ~ !
+- 9 M. Ishii, T. Meguro, H. Kodama, Y. Yamamoto, and Y. Aoyagi, Jpn. J. Appl. Phys. 31 , 2212 1992 . ~ !
+- 29 H. Feil, J. Dieleman, and B. J. Garrison, J. Appl. Phys. 03 1993 . 74 , 13 ~ ! 30 M. E. Barone and D. B. Graves, J. Appl. Phys. , 1263 1995 . 77 ~ !
+- 31 J. M. Haile, Molecular Dynamics Simulation: Elementary Methods ~ Wiley, New York, 1992 . !
+- 10 Y. Aoyagi, K. Shinmura, K. Kawasaki, I. Nakamoto, K. Gamo, and S. Namba, Thin Solid Films 225 , 120 1993 . ~ !
+- 32 F. H. Stillinger and T. A. Weber, Phys. Rev. B 5262 31 , ~ 1985 ; F. H. ! Stillinger and T. A. Weber, J. Chem. Phys.5123 1988 ; F. H. Still88 , ~ ! inger and T. A. Weber, Phys. Rev. Lett. 2144 1989 . 62 , ~ !
+- 11 T. Meguro, M. Ishii, K. Kodama, Y. Yamamoto, K. Gamo, and Y. Aoyagi, Thin Solid Films 225 , 136 1993 . ~ !
+- 33 P. Sigmund, Phys. Rev. 184 , 383 1969 . ~ !
+- 34 J. F. Ziegler, J. P. Biersack, and U. Littmark, The Stopping and Range of Ions in Solids ~ Pergamon, New York, 1985 , Vol. 1. !
+- 35 L. Davies, Efficiency in Research, Development and Production: The Statistical Design and Analysis of Chemical Experiments ~ Royal Society of Chemistry, Cambridge, 1993 ! .
+- 12 O. L. Bourne, D'Arcy Hart, D. M. Rayner, and P. A. Hackett, J. Vac. Sci. Technol. B 11 , 556 1993 . ~ !
+- 13 M. Ishii, T. Meguro, K. Gamo, T. Sugano, and Y. Aoyagi, Jpn. J. Appl. Phys. 32 , 6178 1993 . ~ !
+- 14 Shindo, S. Miyazaki, and M. Hirose, J. Vac. Sci. Technol. A 844 8 , 1 ~ 1990 . !
+- Y. Horiike, T. Tanaka, M. Nakano, S. Iseda, H. Sakaue, A. Nagata, H. H. C. J. Berendsen, J. P. M. Postma, W. F. van Gunsteren, A. DiNola, and 36 J. R. Haak, J. Chem. Phys. , 3684 1984 . 81 ~ !
+- 37 C. A. Wert and R. M. Thomson, Physics of Solids , 2nd ed. McGraw-~ Hill, New York, 1970 . !
+- 38 F. Karetta and H. M. Urbassek, J. Appl. Phys.5410 1992 . 71 , ~ !
+- 15 H. Sakaue, K. Asami, T. Ichihara, S. Ishizuka, K. Kawamura, and Y. Horiike, Mater. Res. Soc. Symp. Proc., 195 1991 . 222 ~ !

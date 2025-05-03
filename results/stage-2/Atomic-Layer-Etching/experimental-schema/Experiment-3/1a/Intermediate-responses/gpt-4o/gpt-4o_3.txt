@@ -1,0 +1,256 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "type": "object",
+  "properties": {
+    "ALEsystem": {
+      "type": "object",
+      "properties": {
+        "materialTobeEtched": {
+          "type": "string",
+          "description": "Material that is being etched, e.g., silicon (Si), tantalum (Ta), etc."
+        },
+        "ALEProcess": {
+          "type": "string",
+          "enum": ["thermal", "plasma", "electrochemical"],
+          "description": "Specifies whether the ALE process is thermal, plasma-based, or electrochemical."
+        },
+        "reactants": {
+          "type": "object",
+          "properties": {
+            "reactantA": {
+              "type": "string",
+              "description": "First reactant used in the etching process, e.g., BCl3."
+            },
+            "reactantB": {
+              "type": "string",
+              "description": "Second reactant used in the etching process, e.g., Ar plasma."
+            }
+          },
+          "required": ["reactantA", "reactantB"]
+        }
+      },
+      "required": ["materialTobeEtched", "ALEProcess", "reactants"]
+    },
+    "directionality": {
+      "type": "string",
+      "enum": ["anisotropic", "isotropic"],
+      "description": "Specifies whether the etching process is directional (anisotropic) or omnidirectional (isotropic)."
+    },
+    "processParameters": {
+      "type": "object",
+      "properties": {
+        "substrateTemperature": {
+          "type": "number",
+          "description": "Temperature of the substrate during the ALE process.",
+          "units": "Celsius"
+        },
+        "reactor": {
+          "type": "string",
+          "description": "Reactor type used for the ALE process."
+        },
+        "plasmaPower": {
+          "type": "number",
+          "description": "Power of the plasma if plasma-enhanced ALE is used.",
+          "units": "Watts"
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure within the reactor during the ALE process.",
+          "units": "Torr"
+        },
+        "reactantFlow": {
+          "type": "object",
+          "properties": {
+            "flowRateA": {
+              "type": "number",
+              "description": "Flow rate of reactant A.",
+              "units": "sccm"
+            },
+            "flowRateB": {
+              "type": "number",
+              "description": "Flow rate of reactant B.",
+              "units": "sccm"
+            }
+          }
+        },
+        "dosingTimes": {
+          "type": "object",
+          "properties": {
+            "dosingTimeA": {
+              "type": "number",
+              "description": "Dosing time for reactant A.",
+              "units": "seconds"
+            },
+            "dosingTimeB": {
+              "type": "number",
+              "description": "Dosing time for reactant B.",
+              "units": "seconds"
+            }
+          }
+        },
+        "purgingTimes": {
+          "type": "object",
+          "properties": {
+            "purgeTimeA": {
+              "type": "number",
+              "description": "Purge time after reactant A.",
+              "units": "seconds"
+            },
+            "purgeTimeB": {
+              "type": "number",
+              "description": "Purge time after reactant B.",
+              "units": "seconds"
+            }
+          }
+        },
+        "numberOfCycles": {
+          "type": "number",
+          "description": "Number of ALE cycles to reach saturation."
+        }
+      },
+      "required": ["substrateTemperature", "reactor", "pressure", "reactantFlow", "dosingTimes", "purgingTimes", "numberOfCycles"]
+    },
+    "etchControl": {
+      "type": "object",
+      "properties": {
+        "etchPerCycle": {
+          "type": "number",
+          "description": "Average amount of material removed per cycle.",
+          "units": "nm/cycle"
+        },
+        "saturationExposureTimes": {
+          "type": "object",
+          "properties": {
+            "saturatingEtchRate": {
+              "type": "number",
+              "description": "Etch rate at saturation.",
+              "units": "nm/cycle"
+            },
+            "saturatingExposureTime": {
+              "type": "number",
+              "description": "Exposure time at which saturation occurs.",
+              "units": "seconds"
+            }
+          },
+          "required": ["saturatingEtchRate", "saturatingExposureTime"]
+        }
+      },
+      "required": ["etchPerCycle", "saturationExposureTimes"]
+    },
+    "synergy": {
+      "type": "object",
+      "properties": {
+        "synergyValue": {
+          "type": "number",
+          "description": "Synergy value indicating the degree of self-limitation in the process.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "ALEwindow": {
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "type": "object",
+          "properties": {
+            "minTemperature": {
+              "type": "number",
+              "description": "Minimum temperature for the ALE window.",
+              "units": "Celsius"
+            },
+            "maxTemperature": {
+              "type": "number",
+              "description": "Maximum temperature for the ALE window.",
+              "units": "Celsius"
+            }
+          },
+          "required": ["minTemperature", "maxTemperature"]
+        },
+        "ionEnergyWindow": {
+          "type": "object",
+          "properties": {
+            "minIonEnergy": {
+              "type": "number",
+              "description": "Minimum ion energy for the ALE window.",
+              "units": "eV"
+            },
+            "maxIonEnergy": {
+              "type": "number",
+              "description": "Maximum ion energy for the ALE window.",
+              "units": "eV"
+            }
+          },
+          "required": ["minIonEnergy", "maxIonEnergy"]
+        }
+      },
+      "required": ["temperatureWindow", "ionEnergyWindow"]
+    },
+    "etchedMaterialProperties": {
+      "type": "object",
+      "properties": {
+        "uniformity": {
+          "type": "object",
+          "properties": {
+            "nonUniformity": {
+              "type": "number",
+              "description": "Non-uniformity of the etch process across the wafer.",
+              "units": "%"
+            }
+          }
+        },
+        "materialProperties": {
+          "type": "object",
+          "properties": {
+            "roughness": {
+              "type": "number",
+              "description": "Surface roughness after etching.",
+              "units": "nm"
+            },
+            "refractiveIndex": {
+              "type": "number",
+              "description": "Refractive index of the material after etching."
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Chemical composition of the etched film."
+            },
+            "crystallinity": {
+              "type": "string",
+              "description": "Crystallinity of the etched film."
+            }
+          }
+        }
+      }
+    },
+    "selectivity": {
+      "type": "object",
+      "properties": {
+        "selectivityDescription": {
+          "type": "string",
+          "description": "Description of the selectivity, determining if the proposed chemistry can be applied to different materials."
+        }
+      }
+    },
+    "otherAspects": {
+      "type": "object",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for the etching process."
+        },
+        "sustainability": {
+          "type": "string",
+          "description": "Sustainability considerations for the etching process."
+        },
+        "environmentalImpact": {
+          "type": "string",
+          "description": "Environmental impact considerations for the etching process."
+        }
+      }
+    }
+  },
+  "required": ["ALEsystem", "directionality", "processParameters", "etchControl", "synergy", "ALEwindow", "etchedMaterialProperties", "selectivity", "otherAspects"]
+}

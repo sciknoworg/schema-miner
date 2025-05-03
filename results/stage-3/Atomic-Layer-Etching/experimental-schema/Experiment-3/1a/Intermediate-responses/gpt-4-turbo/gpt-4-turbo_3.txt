@@ -1,0 +1,178 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+  "type": "object",
+  "properties": {
+    "processType": {
+      "description": "Type of ALE process, either plasma-based or thermal.",
+      "type": "string",
+      "enum": ["plasma", "thermal"]
+    },
+    "reactants": {
+      "description": "List of reactants used in the ALE process.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "material": {
+      "description": "Material that is being etched",
+      "type": "string"
+    },
+    "directionality": {
+      "description": "Specifies if the etching is anisotropic (directional) or isotropic (omnidirectional).",
+      "type": "string",
+      "enum": ["anisotropic", "isotropic"]
+    },
+    "processParameters": {
+      "description": "Parameters that define the conditions under which the ALE process operates.",
+      "type": "object",
+      "properties": {
+        "flowRate": {
+          "description": "Flow rate of reactants in sccm.",
+          "type": "number"
+        },
+        "pressure": {
+          "description": "Pressure inside the reactor during the ALE process, measured in Torr.",
+          "type": "number"
+        },
+        "substrate": {
+          "description": "Type of substrate used, such as silicon wafers.",
+          "type": "string"
+        },
+        "substrateTemperature": {
+          "description": "Temperature of the substrate during the ALE process, measured in Celsius.",
+          "type": "number"
+        },
+        "dosingTimes": {
+          "description": "Duration of reactant dosing in seconds.",
+          "type": "number"
+        },
+        "purgingTimes": {
+          "description": "Duration of purging in seconds.",
+          "type": "number"
+        },
+        "reactor": {
+          "description": "Specific reactor where the ALE was performed.",
+          "type": "string"
+        },
+        "plasmaPower": {
+          "description": "Power of plasma used in plasma-enhanced ALE, measured in Watts.",
+          "type": "number"
+        },
+        "rfPower": {
+          "description": "RF Power used in plasma-enhanced ALE, measured in Watts.",
+          "type": "number"
+        }
+      }
+    },
+    "ALEWindow": {
+      "description": "Operational window for the ALE process, including temperature and ion energy.",
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "description": "Operational temperature range in Celsius for the ALE process.",
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Minimum temperature in Celsius."
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum temperature in Celsius."
+            }
+          }
+        },
+        "ionEnergyWindow": {
+          "description": "Range of ion energies used in anisotropic ALE processes, measured in electronvolts (eV).",
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Minimum ion energy in eV."
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum ion energy in eV."
+            }
+          }
+        }
+      }
+    },
+    "etchPerCycle": {
+      "description": "Etch rate per cycle, measured as layers per cycle.",
+      "type": "number"
+    },
+    "etchedMaterialProperties": {
+      "description": "Properties of the etched material, including uniformity and roughness.",
+      "type": "object",
+      "properties": {
+        "uniformity": {
+          "description": "Uniformity of the etching process across a wafer, measured as variance in etch rate.",
+          "type": "number"
+        },
+        "roughness": {
+          "description": "Surface roughness post-etch, measured in nanometers.",
+          "type": "number"
+        },
+        "chemicalComposition": {
+          "description": "Chemical composition of the etched material.",
+          "type": "string"
+        },
+        "characterizationMethod": {
+          "description": "Method used to characterize the etched material, such as AFM or ellipsometry.",
+          "type": "string"
+        }
+      }
+    },
+    "synergy": {
+      "description": "Synergy factor indicating the effectiveness of alternating sub-cycles, where 1 is ideal and 0 indicates no synergy.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "selectivity": {
+      "description": "Selectivity of the etching process towards different materials.",
+      "type": "object",
+      "properties": {
+        "selectiveTo": {
+          "description": "Materials to which the process is selective.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "otherAspects": {
+      "description": "Other considerations such as safety, environmental impact, and process scalability.",
+      "type": "object",
+      "properties": {
+        "safety": {
+          "description": "Safety considerations for the ALE process.",
+          "type": "string"
+        },
+        "environmentalImpact": {
+          "description": "Environmental impact considerations for the ALE process.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "processType",
+    "reactants",
+    "material",
+    "directionality",
+    "processParameters",
+    "ALEWindow",
+    "etchPerCycle",
+    "etchedMaterialProperties",
+    "synergy",
+    "selectivity",
+    "otherAspects"
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+  "type": "object",
+  "properties": {
+    "processType": {
+      "description": "Type of ALE process, either plasma-based or thermal.",
+      "type": "string",
+      "enum": ["plasma", "thermal"]
+    },
+    "reactants": {
+      "description": "List of reactants used in the ALE process, such as acetylacetone (Hacac) and O2 plasma.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "material": {
+      "description": "Material that is being etched, e.g., zinc oxide (ZnO).",
+      "type": "string"
+    },
+    "directionality": {
+      "description": "Specifies if the etching is anisotropic or isotropic.",
+      "type": "string",
+      "enum": ["anisotropic", "isotropic"]
+    },
+    "processParameters": {
+      "type": "object",
+      "properties": {
+        "flowRate": {
+          "description": "Flow rate of reactants in standard cubic centimeters per minute (sccm).",
+          "type": "number",
+          "units": "sccm"
+        },
+        "pressure": {
+          "description": "Pressure inside the reactor during the ALE process, measured in Torr.",
+          "type": "number",
+          "units": "Torr"
+        },
+        "substrateTemperature": {
+          "description": "Temperature of the substrate during the ALE process, measured in Celsius.",
+          "type": "number",
+          "units": "Celsius"
+        }
+      }
+    },
+    "ALEWindow": {
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "description": "Operational temperature range in Celsius for the ALE process.",
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Minimum temperature in Celsius."
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum temperature in Celsius."
+            }
+          }
+        },
+        "ionEnergyWindow": {
+          "description": "Range of ion energies used in anisotropic ALE processes, measured in electronvolts (eV).",
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Minimum ion energy in eV."
+            },
+            "max": {
+              "type": "number",
+              "description": "Maximum ion energy in eV."
+            }
+          }
+        }
+      }
+    },
+    "etchPerCycle": {
+      "description": "Etch per cycle (EPC), measured as layers per cycle.",
+      "type": "number"
+    },
+    "etchedMaterialProperties": {
+      "type": "object",
+      "properties": {
+        "uniformity": {
+          "description": "Uniformity of the etching process across a wafer, measured by variance in etch rate.",
+          "type": "number"
+        },
+        "roughness": {
+          "description": "Surface roughness post etching, measured in nanometers.",
+          "type": "number",
+          "units": "nm"
+        },
+        "characterizationMethod": {
+          "description": "Method used for characterizing the etched material, e.g., AFM, ellipsometry.",
+          "type": "string"
+        }
+      }
+    },
+    "synergy": {
+      "description": "Synergy factor indicating the effectiveness of alternating sub-cycles, scaled from 0 to 1.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "selectivity": {
+      "description": "Selectivity of the etching process towards different materials.",
+      "type": "object",
+      "properties": {
+        "selectiveTo": {
+          "description": "Materials to which the process is selective.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "otherAspects": {
+      "description": "Other considerations such as safety, environmental impact, and process scalability.",
+      "type": "object",
+      "properties": {
+        "safety": {
+          "description": "Safety considerations for the ALE process.",
+          "type": "string"
+        },
+        "environmentalImpact": {
+          "description": "Environmental impact considerations for the ALE process.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "processType",
+    "reactants",
+    "material",
+    "directionality",
+    "processParameters",
+    "ALEWindow",
+    "etchPerCycle",
+    "etchedMaterialProperties",
+    "synergy",
+    "selectivity",
+    "otherAspects"
+  ]
+}

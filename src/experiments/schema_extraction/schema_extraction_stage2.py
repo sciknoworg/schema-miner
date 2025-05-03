@@ -6,7 +6,7 @@ from services.LLM_Inference.openai_llm_inference import Openai_LLM_Inference
 from services.LLM_Inference.saia_llm_inference import SAIA_LLM_Inference
 from services.LLM_Inference.ollama_llm_inference import OLLAMA_LLM_Inference
 from services.LLM_Inference.huggingface_llm_inference import HuggingFace_LLM_Inference
-from prompts import prompt_template2
+from prompts.schema_extraction import prompt_template2
 
 def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_path: str, initial_schema_path: str, expert_review_path: str, literature_path: str):
     """
@@ -32,7 +32,6 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
     if not process_config:
         print('Cannot read process configuration, Stopping the inference from the LLM...')
         sys.exit(1)
-    process_name = process_config['name']
 
     #Reading the schema from stage-1
     print(f'\nReading the schema from stage-1: {initial_schema_path}/{llm_model_name}.json')
@@ -47,17 +46,22 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
 
     #Iterating over the scientific literature
     for filename in os.listdir(literature_path):
-        if not filename.endswith('.txt'): continue
+        if not filename.endswith('.md'): continue
 
         print(f'\n========================== Iteration {index + 1} =================================')
 
         #Reading the full text of the scientific paper
         print(f'\nReading the scientific paper: {literature_path}/{filename}')
         full_text = read_text_file(f'{literature_path}/{filename}')
-        
+
         #Extracting the schema from the LLM
         print('\nCalling the completion API of the model')
-        var_dict = {'process_name': process_name, 'current_schema': schema, 'full_text': full_text, 'domain_expert_review': review}
+        var_dict = {'process_name': process_config['name'],
+                    'stage2_objectives': process_config['stage2_objectives'],
+                    'stage2_user_prompt_conditions': process_config['stage2_user_prompt_conditions'],
+                    'current_schema': schema,
+                    'full_text': full_text,
+                    'domain_expert_review': review}
         model_output = llm.completion(prompt_template2, var_dict)
 
         #Returns None, if any exception occurrs during the LLM Inference
@@ -79,20 +83,21 @@ def llm_inference(llm_inference_obj: LLM_Inference, llm_model_name: str, result_
         #Updating the previous schema with the current schema and clearing the expert review for next iteration
         schema = updated_schema
         index += 1
+        # review = ''
         
         #Updating the domain-expert's feedback
-        print('\nDo you want to provide feedback?')
-        provide_feedback = input('Feedback (yes/no)> ')
+        # print('\nDo you want to provide feedback?')
+        # provide_feedback = input('Feedback (yes/no)> ')
 
-        review = ''
-        if provide_feedback.lower() == 'yes':
-            print('\nPlease input your feedback')
-            review = input('Feedback> ')
+        # review = ''
+        # if provide_feedback.lower() == 'yes':
+        #     print('\nPlease input your feedback')
+        #     review = input('Feedback> ')
         
-        print('\nDo you want to continue with the next paper?')
-        cont = input('Continue (yes)/Stop (no)> ')
-        if cont.lower() == 'no':
-            break
+        # print('\nDo you want to continue with the next paper?')
+        # cont = input('Continue (yes)/Stop (no)> ')
+        # if cont.lower() == 'no':
+        #     break
         
     #Saving the final json schema
     file_saved = save_json_file(result_path, f'{llm_model_name}.json', schema)

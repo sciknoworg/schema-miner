@@ -1,0 +1,31 @@
+Property Merging:
+Combine etch control and thickness decrease into: Etch Control: [etchPerCycle:…, saturationExposureTimes]. It should be required that the process is saturated!
+
+Property Grouping:
+Create a new group named etchedMaterialProperties, that contains all the characterization on the etched material. That should include: uniformity, refractive index, roughness. There also include other material properties, that I mention in the missing properties section.
+
+Missing Properties:
+1. Reactants: Should mention: Reactant A, Reactant B
+2. Substrate temperature	
+3. Material that is etched
+4. Substrate
+5. Dosing, Puring times of reactants
+6. Reactor where ALE was performed
+7. Power of plasma if plasma enhanced ALD is used
+8. Pressure
+9. Flow of reactants
+10. Number of ALE cycles to reach saturation
+11. Mass loss during one or more cycles, by QCM measurements
+12. Further material properties: chemical composition of the film, crystallinity
+
+Adequacy of Descriptions:
+1. Temperature sensitivity parameter should be removed. This refers to whether the process is Plasma or Thermal. The choice between the two should be the question raised, not whether the material is sensitive or not to high temperatures.
+2. I don't know if the Gibbs free energy change calculation is required. Maybe it's better if it's mentioned in the simulation-schema.
+3. Remove the initial and final thickness parameters.
+4. For the material properties it's good also to mention the characterization method used e.g. for thickness in-situ SE, for chemical composition XPS etc.
+5. Change the name of processWindow to ALEWindow and also change the process window phrase used in the description of the parameters to ALE window. In the ALE window there should be a self-limiting behaviour. Keep the temperature and ion energy window parameters. Also you can include in the descriptions of each parameter what happens if the value exceed the ALE window e.g. decomposition in high process temperature or sputtering in high ion energy.
+6. I think the selectivity for the ALE processes should be skipped for now.
+7. Remove the postEtchSurface group. This is summarized in the etchedMaterialProperties group.
+8. Remove the throughput of the etching processes in the other aspects group. This is something not typically mentioned in research papers. It can be taken into account for future ALE schemas.
+9. Remove the isotropy group. These are mention in the etchControl group, since the EPC is mentioned there. No need to distinguish between anisotropic EPC and isotropic EPC.
+10. Change the description of selectivity. Describe this more of to determine if proposed chemistry can be applied on different materials.

@@ -1,0 +1,108 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process",
+    "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "description": "Type of ALE process, either plasma-based or thermal.",
+            "type": "string",
+            "enum": ["plasma", "thermal"]
+        },
+        "directionality": {
+            "description": "Specifies if the etching is anisotropic or isotropic.",
+            "type": "string",
+            "enum": ["anisotropic", "isotropic"]
+        },
+        "reactants": {
+            "description": "List of reactants used in the ALE process.",
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "ALEWindow": {
+            "type": "object",
+            "properties": {
+                "temperatureWindow": {
+                    "description": "Operational temperature range in Celsius for the ALE process. Different process temperatures may change the saturation point either for the ALE process, thus requiring the runs to be optimized using saturation curves or by running the cycles in over-saturation. Ideally, the EPC is nearly constant in the ALE window but this is not a necessity. The most important aspect of the temperature window is that the sub-cycles self-limit (meaning a saturation point can be found) at all temperatures in the window.",
+                    "type": "object",
+                    "properties": {
+                        "min": {"type": "number", "description": "Minimum temperature in Celsius."},
+                        "max": {"type": "number", "description": "Maximum temperature in Celsius."}
+                    }
+                },
+                "ionEnergyWindow": {
+                    "description": "Range of ion energies used in anisotropic ALE processes, measured in electronvolts (eV). The EPC is almost constant but it’s not necessary. It’s important to have a self-limiting process.",
+                    "type": "object",
+                    "properties": {
+                        "min": {"type": "number", "description": "Minimum ion energy in eV."},
+                        "max": {"type": "number", "description": "Maximum ion energy in eV."}
+                    }
+                }
+            }
+        },
+        "etchPerCycle": {
+            "description": "Etch rate per cycle, measured as layers per cycle.",
+            "type": "number"
+        },
+        "synergy": {
+            "description": "Synergy factor indicating the effectiveness of alternating sub-cycles. Should be between 0 and 1, with 1 being an ideal ALE process and 0 indicating no synergy.",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "uniformity": {
+            "description": "Uniformity of the etching process across a wafer.",
+            "type": "object",
+            "properties": {
+                "variance": {
+                    "description": "Variance in etch rate across the wafer.",
+                    "type": "number"
+                }
+            }
+        },
+        "selectivity": {
+            "description": "Selectivity of the etching process towards different materials.",
+            "type": "object",
+            "properties": {
+                "selectiveTo": {
+                    "description": "Materials to which the process is selective.",
+                    "type": "array",
+                    "items": {"type": "string"}
+                }
+            }
+        },
+        "etchedMaterialProperties": {
+            "description": "Properties of the material after etching.",
+            "type": "object",
+            "properties": {
+                "material": {
+                    "description": "Material that is etched.",
+                    "type": "string"
+                },
+                "surfaceRoughness": {
+                    "description": "Surface roughness of the etched material, measured in nanometers.",
+                    "type": "number"
+                },
+                "characterizationMethod": {
+                    "description": "Method used to characterize the etched material.",
+                    "type": "string"
+                }
+            }
+        },
+        "otherAspects": {
+            "description": "Other considerations such as safety, environmental impact, and process scalability.",
+            "type": "object",
+            "properties": {
+                "safety": {
+                    "description": "Safety considerations for the ALE process.",
+                    "type": "string"
+                },
+                "environmentalImpact": {
+                    "description": "Environmental impact considerations for the ALE process.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": ["processType", "directionality", "reactants", "ALEWindow", "etchPerCycle", "synergy", "uniformity", "selectivity", "etchedMaterialProperties", "otherAspects"]
+}

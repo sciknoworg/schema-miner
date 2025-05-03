@@ -1,0 +1,225 @@
+Property Merging:
+There should be generic properties for etchant or precursors etc, rather than chemical specific, e.g. "TMAParameters". These paper specific properties should be merged into general forms.
+
+Property Grouping:
+1. Groupings are very unstructured
+2. "parameters" is mostly experimentally focused and therefore inappropriate for this application, the "simulationMethodology" properties should be removed from this group and given a separate group
+3. Several properties are outside of groupings when they shouldn't be, e,g. "etchRate"
+4. Several properties are repeated across different groupings unnecessarily
+
+Missing Properties:
+Simulation parameters should include a detailed description of the substrate being modelled, e.g., its dimensions, the unit cell used to create the model, etc
+
+Adequacy of Descriptions:
+Descriptions given are generally accurate
+
+Domain expert edited schema of the initial generated version:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "description": "A JSON schema representing the Atomic Layer Etching process, including its inputs, parameters, and outputs.",
+    "type": "object",
+    "properties": {
+        "inputs": {
+            "type": "object",
+            "description": "The primary inputs to the ALE process.",
+            "properties": {
+                "chemicalPrecursors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Halogen-based gases such as chlorine (Cl2) or hydrogen fluoride (HF), or plasma species in the case of plasma-enhanced ALE."
+                    },
+                    "description": "Halogen-based gases or plasma species used in the ALE process."
+                },
+                "externalEnergySource": {
+                    "type": "string",
+                    "description": "Thermal energy for thermal ALE or plasma excitation for plasma ALE."
+                },
+                "substrateMaterial": {
+                    "type": "string",
+                    "description": "The target material to be etched, which can be a semiconductor, dielectric, or metal film."
+                },
+                "chlorinationEnergy": {
+                    "type": "number",
+                    "unit": "eV",
+                    "description": "The energy used for chlorination during the surface modification step."
+                },
+                "reactantChemicals": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "molecule": {
+                                "type": "string",
+                                "description": "The reactant molecule, such as propene, butyne, silane, or trimethyl silane."
+                            },
+                            "oxidationState": {
+                                "type": "integer",
+                                "description": "The oxidation state of the metal atom, such as +1 or +2."
+                            }
+                        },
+                        "required": [
+                            "molecule",
+                            "oxidationState"
+                        ]
+                    },
+                    "description": "The reactant chemicals used in the ALE process."
+                }
+            },
+            "required": [
+                "chemicalPrecursors",
+                "externalEnergySource",
+                "substrateMaterial",
+                "chlorinationEnergy",
+                "reactantChemicals"
+            ]
+        },
+        "parameters": {
+            "type": "object",
+            "description": "Process parameters that must be carefully controlled to maintain process stability and efficiency.",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "unit": "Celsius",
+                    "description": "Temperature of the ALE process."
+                },
+                "pressure": {
+                    "type": "number",
+                    "unit": "Pascals",
+                    "description": "Pressure inside the reaction chamber."
+                },
+                "gasFlowRates": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "description": "Gas flow rates for each precursor."
+                    },
+                    "description": "Gas flow rates for each precursor."
+                },
+                "plasmaPower": {
+                    "type": "number",
+                    "unit": "Watts",
+                    "description": "Plasma power (if applicable)."
+                },
+                "exposureTime": {
+                    "type": "number",
+                    "unit": "seconds",
+                    "description": "Exposure time for each cycle."
+                }
+
+            },
+            "required": [
+                "temperature",
+                "pressure",
+                "gasFlowRates",
+                "plasmaPower",
+                "exposureTime",
+                "simulationMethodology"
+            ]
+        },
+        "simulationMethodology": {
+            "type": "object",
+            "description": "Description of the simulation methodology used.",
+            "properties": {
+                "method": {
+                    "type": "string",
+                    "description": "Simulation method used (e.g. DFT, etc.)."
+                },
+                "functional": {
+                    "type": "string",
+                    "description": "Exchange-correlation functional used (e.g. PBE, etc.)."
+                },
+                "convergenceCriteria": {
+                    "type": "object",
+                    "description": "Convergence criteria used in the simulation.",
+                    "properties": {
+                        "energy": {
+                            "type": "number",
+                            "unit": "eV",
+                            "description": "Convergence criterion for energy."
+                        },
+                        "force": {
+                            "type": "number",
+                            "unit": "eV/\u00c5",
+                            "description": "Convergence criterion for force."
+                        }
+                    }
+                }
+            }
+        },
+        "simulationResults": {
+            "type": "object",
+            "description": "Simulation parameters used to model and optimize the ALE process.",
+            "properties": {
+                "decompositionMechanisms": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Investigation into the underlying mechanisms that drive ALE processes."
+                    },
+                    "description": "Investigation into the underlying mechanisms that drive ALE processes."
+                },
+                "excitationDynamics": {
+                    "type": "string",
+                    "description": "Study of the effects of photon excitation on reaction mechanisms and energies."
+                },
+                "etchRate": {
+                    "type": "number",
+                    "unit": "nm/cycle",
+                    "description": "Etch rate per cycle."
+                },
+                "bindingEnergy": {
+                    "type": "number",
+                    "unit": "eV",
+                    "description": "Binding energy of the etched material."
+                },
+                "dissociationEnergy": {
+                    "type": "number",
+                    "unit": "eV",
+                    "description": "Dissociation energy of the etched material."
+                },
+                "etchedMaterial": {
+                    "type": "string",
+                    "description": "The precisely etched material."
+                },
+                "byProducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Volatile compounds produced during the ALE process."
+                    },
+                    "description": "Volatile compounds produced during the ALE process."
+                },
+                "etchantCoverage": {
+                    "type": "number",
+                    "unit": "percent",
+                    "description": "Coverage of the etchant on the substrate surface."
+                }
+            }
+        },
+        "ionBombardment": {
+            "type": "object",
+            "description": "Properties related to ion bombardment in the ALE process.",
+            "properties": {
+                "ionEnergy": {
+                    "type": "number",
+                    "unit": "eV",
+                    "description": "Energy of the ion bombarding the surface."
+                },
+                "ionDose": {
+                    "type": "number",
+                    "unit": "ions/cm^2",
+                    "description": "Dose of ions bombarding the surface."
+                },
+                "etchingYield": {
+                    "type": "number",
+                    "description": "Yield of etching per ion bombarding the surface."
+                }
+            }
+        }
+    }
+}
+```

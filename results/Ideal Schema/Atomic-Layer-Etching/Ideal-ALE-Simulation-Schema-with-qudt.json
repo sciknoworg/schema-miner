@@ -1,0 +1,488 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "type": "string",
+            "enum": [
+                "thermal",
+                "plasma"
+            ],
+            "description": "Type of ALE process, either thermal or plasma-based."
+        },
+        "chemicalPrecursors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of chemical precursors used in the ALE process, e.g., Cl2, HF, SF6, Al(CH3)3."
+        },
+        "energySource": {
+            "type": "string",
+            "description": "Type of energy source used, e.g., thermal energy or plasma excitation."
+        },
+        "substrateMaterial": {
+            "type": "object",
+            "description": "Material of the substrate being etched, including type and chemical composition.",
+            "properties": {
+            "type": {
+                "type": "string",
+                "description": "Type of the substrate material, e.g., semiconductor, dielectric, or metal film."
+            },
+            "chemicalComposition": {
+                "type": "string",
+                "description": "Chemical composition of the substrate material, e.g., SiO2, Al2O3, GaN."
+            }
+            },
+            "required": [
+            "type",
+            "chemicalComposition"
+            ]
+        },
+        "surfaceModel": {
+            "type": "object",
+            "properties": {
+                "dimensions": {
+                    "type": "object",
+                    "description": "Dimensions of the substrate model.",
+                    "properties": {
+                        "length": {
+                            "type": "number",
+                            "description": "Length of the substrate model in nanometers.",
+                            "unit": "nm"
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Width of the substrate model in nanometers.",
+                            "unit": "nm"
+                        },
+                        "thickness": {
+                            "type": "number",
+                            "description": "Thickness of the substrate model in nanometers.",
+                            "unit": "nm"
+                        }
+                    },
+                    "required": ["length", "width", "thickness"]
+                },
+                "surfaceArea": {
+                    "type": "number",
+                    "description": "Surface area of the substrate model in square nanometers.",
+                    "unit": "nm^2"
+                },
+                "surfaceProperties": {
+                    "type": "object",
+                    "description": "Properties related to the substrate surface.",
+                    "properties": {
+                        "surfaceOrientation": {
+                            "type": "string",
+                            "description": "Orientation of the substrate surface, e.g., (111), (100), (110)."
+                        },
+                        "surfaceFacet": {
+                            "type": "string",
+                            "description": "Specific facet of the surface, e.g., (111), (100), (110)."
+                        },
+                        "termination": {
+                            "type": "string",
+                            "description": "Termination of the surface, e.g., hydrogen-terminated, oxygen-terminated."
+                        }
+                    },
+                    "required": [
+                        "surfaceOrientation",
+                        "surfaceFacet",
+                        "termination"
+                    ]
+                },
+                "latticeParameters": {
+                    "type": "object",
+                    "description": "Breakdown of the lattice parameters for the substrate model.",
+                    "properties": {
+                        "lengths": {
+                            "type": "object",
+                            "description": "Lengths of the unit cell edges in angstroms.",
+                            "properties": {
+                                "a": {
+                                    "type": "number",
+                                    "description": "Length of the a-axis in angstroms.",
+                                    "unit": "angstroms"
+                                },
+                                "b": {
+                                    "type": "number",
+                                    "description": "Length of the b-axis in angstroms.",
+                                    "unit": "angstroms"
+                                },
+                                "c": {
+                                    "type": "number",
+                                    "description": "Length of the c-axis in angstroms.",
+                                    "unit": "angstroms"
+                                }
+                            },
+                            "required": ["a", "b", "c"]
+                        },
+                        "angles": {
+                            "type": "object",
+                            "description": "Angles between the unit cell edges in degrees.",
+                            "properties": {
+                                "alpha": {
+                                    "type": "number",
+                                    "description": "Angle between b and c axes in degrees.",
+                                    "unit": "degrees"
+                                },
+                                "beta": {
+                                    "type": "number",
+                                    "description": "Angle between a and c axes in degrees.",
+                                    "unit": "degrees"
+                                },
+                                "gamma": {
+                                    "type": "number",
+                                    "description": "Angle between a and b axes in degrees.",
+                                    "unit": "degrees"
+                                }
+                            },
+                            "required": ["alpha", "beta", "gamma"]
+                        },
+                        "spaceGroup": {
+                            "type": "string",
+                            "description": "Space group of the crystal structure."
+                        },
+                        "atomicCoordinates": {
+                            "type": "array",
+                            "description": "List of atomic or crystallographic coordinates.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "element": {
+                                        "type": "string",
+                                        "description": "Chemical element symbol, e.g., Si, O."
+                                    },
+                                    "x": {
+                                        "type": "number",
+                                        "description": "X-coordinate of the atom in fractional coordinates."
+                                    },
+                                    "y": {
+                                        "type": "number",
+                                        "description": "Y-coordinate of the atom in fractional coordinates."
+                                    },
+                                    "z": {
+                                        "type": "number",
+                                        "description": "Z-coordinate of the atom in fractional coordinates."
+                                    }
+                                },
+                                "required": ["element", "x", "y", "z"]
+                            }
+                        }
+                    },
+                    "required": ["lengths", "angles", "spaceGroup", "atomicCoordinates"]
+                }
+            },
+            "required": [
+                "dimensions",
+                "surfaceArea",
+                "surfaceProperties",
+                "latticeParameters"
+            ]
+        },
+        "processParameters": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "description": "Temperature at which the ALE process is conducted.",
+                    "unit": "Celsius"
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Pressure within the reaction chamber.",
+                    "unit": "Pascals"
+                },
+                "gasFlowRates": {
+                    "type": "object",
+                    "properties": {
+                        "precursorGasFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of precursor gas in standard cubic centimeters per minute (sccm).",
+                            "unit": "sccm"
+                        },
+                        "carrierGasFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of carrier gas in standard cubic centimeters per minute (sccm).",
+                            "unit": "sccm"
+                        }
+                    },
+                    "required": [
+                        "precursorGasFlowRate",
+                        "carrierGasFlowRate"
+                    ]
+                },
+                "plasmaPower": {
+                    "type": "number",
+                    "description": "Power of plasma used in plasma-enhanced ALE, in watts.",
+                    "unit": "watts"
+                },
+                "exposureTime": {
+                    "type": "number",
+                    "description": "Duration of exposure for each cycle in seconds.",
+                    "unit": "seconds"
+                }
+            },
+            "description": "Parameters that define the ALE process conditions, in the case of reactor scale modelling.",
+            "required": [
+                "temperature",
+                "pressure",
+                "gasFlowRates",
+                "exposureTime"
+            ]
+        },
+        "simulationResults": {
+            "type": "object",
+            "properties": {
+                "etchedMaterial": {
+                    "type": "string",
+                    "description": "Description of the material that has been etched at the atomic scale."
+                },
+                "byProducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of volatile compounds produced as by-products that need to be evacuated."
+                },
+                "surfaceModifications": {
+                    "type": "string",
+                    "description": "Description of chemical modifications on the surface post-etching."
+                },
+                "decompositionMechanisms": {
+                    "type": "string",
+                    "description": "Description of decomposition and binding/chemisorption mechanisms."
+                },
+                "excitationDynamics": {
+                    "type": "string",
+                    "description": "Study of photon excitation effects on reaction mechanisms."
+                },
+                "etchRate": {
+                    "type": "number",
+                    "description": "Rate of etching per cycle or per unit time.",
+                    "unit": "angstroms per cycle"
+                },
+                "surfaceDesorptionRates": {
+                    "type": "string",
+                    "description": "Rates of desorption, diffusion, and reaction on the surface."
+                },
+                "bindingAffinity": {
+                    "type": "string",
+                    "description": "Energy barriers and likelihood of adsorbate binding to the surface."
+                },
+                "filmProperties": {
+                    "type": "object",
+                    "properties": {
+                        "uniformity": {
+                            "type": "string",
+                            "description": "Uniformity of the film after etching."
+                        },
+                        "roughness": {
+                            "type": "string",
+                            "description": "Roughness of the film surface post-etching."
+                        },
+                        "density": {
+                            "type": "string",
+                            "description": "Density of the film material."
+                        },
+                        "temperatureProfile": {
+                            "type": "string",
+                            "description": "Thermal conduction and temperature profile of the film."
+                        },
+                        "chemicalComposition": {
+                            "type": "string",
+                            "description": "Elemental analysis of the film's chemical composition."
+                        }
+                    },
+                    "required": [
+                        "uniformity",
+                        "roughness",
+                        "density",
+                        "temperatureProfile",
+                        "chemicalComposition"
+                    ]
+                },
+                "designVariables": {
+                    "type": "object",
+                    "properties": {
+                        "gapDistance": {
+                            "type": "number",
+                            "description": "Gap distance in the reactor, in micrometers.",
+                            "unit": "micrometers"
+                        },
+                        "purgeFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of purge gas in sccm.",
+                            "unit": "sccm"
+                        },
+                        "vacuumPressure": {
+                            "type": "number",
+                            "description": "Vacuum pressure in the reactor, in Pascals.",
+                            "unit": "Pascals"
+                        }
+                    },
+                    "description": "Design variables that affect the reactor scale modelling.",
+                    "required": [
+                        "gapDistance",
+                        "purgeFlowRate",
+                        "vacuumPressure"
+                    ]
+                },
+                "fluorinationDetails": {
+                    "type": "object",
+                    "properties": {
+                        "fluorinationAgent": {
+                            "type": "string",
+                            "description": "Chemical agent used for fluorination, e.g., HF."
+                        },
+                        "fluorinationCoverage": {
+                            "type": "number",
+                            "description": "Coverage of fluorination on the surface in HF/nm^2.",
+                            "unit": "HF/nm^2"
+                        },
+                        "selfLimitingTemperature": {
+                            "type": "number",
+                            "description": "Temperature below which the fluorination reaction is self-limiting.",
+                            "unit": "Kelvin"
+                        }
+                    },
+                    "description": "Details about the fluorination steps (if fluorination is used)."
+                },
+                "selfLimitingReaction": {
+                    "type": "object",
+                    "properties": {
+                        "reactionType": {
+                            "type": "string",
+                            "description": "Type of reaction, either self-limiting or continuous vapor etch (CVE)."
+                        },
+                        "reactionFreeEnergy": {
+                            "type": "number",
+                            "description": "Free energy change of the reaction in electronvolts (eV).",
+                            "unit": "eV"
+                        },
+                        "minimumThermodynamicBarrier": {
+                            "type": "number",
+                            "description": "Minimum thermodynamic barrier for the reaction in electronvolts (eV).",
+                            "unit": "eV"
+                        }
+                    },
+                    "description": "Details about the self-limiting and CVE reactions."
+                },
+                "inertGasIrradiation": {
+                    "type": "object",
+                    "properties": {
+                        "ionType": {
+                            "type": "string",
+                            "description": "Type of inert gas ion used in the desorption step, e.g., Ar, Kr, Xe."
+                        },
+                        "ionEnergy": {
+                            "type": "number",
+                            "description": "Energy of inert gas ions used in the desorption step, in electronvolts (eV).",
+                            "unit": "eV"
+                        },
+                        "ionDose": {
+                            "type": "number",
+                            "description": "Ion dose used in the desorption step, in ions/cm^2.",
+                            "unit": "ions/cm^2"
+                        },
+                        "oxidationStep": {
+                            "type": "object",
+                            "properties": {
+                                "oxidantType": {
+                                    "type": "string",
+                                    "description": "Type of oxidant used in the oxidation step, e.g., O2."
+                                },
+                                "oxidantEnergy": {
+                                    "type": "number",
+                                    "description": "Energy of oxidant ions used, in electronvolts (eV).",
+                                    "unit": "eV"
+                                },
+                                "oxidantDose": {
+                                    "type": "number",
+                                    "description": "Dose of oxidant ions used, in ions/cm^2.",
+                                    "unit": "ions/cm^2"
+                                }
+                            },
+                            "description": "Details of the oxidation step in the PE-ALE process."
+                        }
+                    },
+                    "description": "Parameters specific to inert gas ion irradiation in PE-ALE processes."
+                }                
+            },
+            "required": [
+                "etchedMaterial",
+                "byProducts",
+                "surfaceModifications",
+                "decompositionMechanisms",
+                "etchRate",
+                "surfaceDesorptionRates",
+                "bindingAffinity"
+            ]
+        },
+        "simulationMethodology": {
+            "type": "object",
+            "description": "Parameters and methodologies used in the ALE simulation.",
+            "properties": {
+                "methods": {
+                    "type": "array",
+                    "description": "Computational methods used in the ALE process simulation.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "DFT",
+                            "MD",
+                            "AIMD",
+                            "kMC",
+                            "hybrid QM/MM",
+                            "Continuum Fluid Dynamics (CFD)"
+                        ]
+                    }
+                },
+                "methodDetails": {
+                    "type": "object",
+                    "description": "Details specific to the computational methods used.",
+                    "properties": {
+                        "timestep": {
+                            "type": "number",
+                            "description": "Timestep used in MD simulations.",
+                            "unit": "fs"
+                        },
+                        "functional": {
+                            "type": "string",
+                            "description": "Functional used in DFT calculations, e.g., PBE."
+                        },
+                        "basisSet": {
+                            "type": "string",
+                            "description": "Basis set used in quantum chemical calculations, e.g., plane-wave basis."
+                        },
+                        "convergenceCriteria": {
+                            "type": "string",
+                            "description": "Convergence criteria used in simulations, e.g., energy convergence threshold."
+                        }
+                    }
+                },
+                "source": {
+                    "type": "object",
+                    "properties": {
+                        "method": {
+                            "type": "string",
+                            "description": "Method used to obtain the data (e.g., simulation, experiment)"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "chemicalPrecursors",
+        "energySource",
+        "substrateMaterial",
+        "surfaceModel",
+        "processParameters",
+        "simulationResults",
+        "simulationMethodology"
+    ]
+}

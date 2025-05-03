@@ -45,6 +45,7 @@ class Docling_PDF_Parser(PDF_Parser):
         #Configure the Docling PDF Pipeline
         pipeline_options = PdfPipelineOptions()
         pipeline_options.do_ocr = True
+        pipeline_options.do_formula_enrichment = True
         pipeline_options.do_table_structure = True
         pipeline_options.table_structure_options.do_cell_matching = True
         pipeline_options.table_structure_options.mode = TableFormerMode.ACCURATE
@@ -62,15 +63,17 @@ class Docling_PDF_Parser(PDF_Parser):
         self.parsed_data = converter.convert(input_doc_path)
         self.filename = self.parsed_data.input.file.stem
 
-    def export_as_markdown(self, output_dir: str) -> None:
+    def export_as_markdown(self, output_dir: str, include_image: bool = False) -> None:
         """
         Export the parsed PDF as a Markdown Document
 
         :param str output_dir: The output directory to save the exported markdown file
+        :param bool include_image: Whether to include images as a base64 encoded strings in the markdown file
         """
         # Export Markdown format
+        image_mode = ImageRefMode.EMBEDDED if include_image else ImageRefMode.PLACEHOLDER
         with open(f'{output_dir}/{self.filename}.md', 'w', encoding='utf-8') as fp:
-            fp.write(self.parsed_data.document.export_to_markdown(image_mode = ImageRefMode.EMBEDDED))
+            fp.write(self.parsed_data.document.export_to_markdown(image_mode = image_mode))
 
     def export_as_html(self, output_dir: str) -> None:
         """

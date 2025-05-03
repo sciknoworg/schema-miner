@@ -1,0 +1,410 @@
+{
+    "ALEProcessSchema": {
+        "properties": {
+            "directionality": {
+                "type": "string",
+                "description": "Whether the etching is directional (anisotropic) or omnidirectional.",
+                "enum": [
+                    "Directional",
+                    "Omnidirectional"
+                ]
+            },
+            "reactants": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Type of etching species used (e.g., Fluorinating, Oxygenation, Chlorinating, TMAlike, Diketone)."
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Source or origin of the reactants."
+                    },
+                    "conditions": {
+                        "type": "string",
+                        "description": "Conditions under which the etching occurs (e.g., temperature, pressure)."
+                    }
+                }
+            },
+            "plasma_or_thermal": {
+                "type": "string",
+                "description": "Whether the process uses plasma or thermal activation for etching."
+            },
+            "process_optimization": {
+                "type": "boolean",
+                "description": "Whether the process has been optimized through iterative testing and parameter adjustment."
+            },
+            "thickness_decrease": {
+                "type": "object",
+                "properties": {
+                    "initial_thickness": {
+                        "type": "number",
+                        "unit": "Angstrom",
+                        "description": "Initial thickness of the material to be etched."
+                    },
+                    "target_thickness": {
+                        "type": "number",
+                        "unit": "Angstrom",
+                        "description": "Target thickness after etching."
+                    },
+                    "thickness_rate": {
+                        "type": "object",
+                        "properties": {
+                            "mean_rate": {
+                                "type": "number",
+                                "unit": "Angstrom per cycle",
+                                "description": "Average rate of material removal per cycle."
+                            },
+                            "variance": {
+                                "type": "number",
+                                "unit": "Angstrom squared",
+                                "description": "Variance in thickness removal across the wafer."
+                            }
+                        }
+                    }
+                }
+            },
+            "saturation_curves": {
+                "type": "object",
+                "properties": {
+                    "saturation_points": {
+                        "type": "array",
+                        "items": {
+                            "thickness": {
+                                "type": "number",
+                                "unit": "Angstrom",
+                                "description": "Thickness at which etching saturates."
+                            },
+                            "exposure": {
+                                "type": "number",
+                                "unit": "Cycle",
+                                "description": "Exposure time or cycles to reach saturation."
+                            }
+                        }
+                    },
+                    "synergy_test": {
+                        "type": "object",
+                        "properties": {
+                            "sub_cycle_a_exposure": {
+                                "type": "number",
+                                "unit": "Cycle",
+                                "description": "Exposure time for sub-cycle A in the synergy test."
+                            },
+                            "sub_cycle_b_exposure": {
+                                "type": "number",
+                                "unit": "Cycle",
+                                "description": "Exposure time for sub-cycle B in the synergy test."
+                            },
+                            "synergy_value": {
+                                "type": "number",
+                                "unit": "None",
+                                "description": "Measure of how well the process exhibits self-limitation (0 to 1)."
+                            }
+                        }
+                    }
+                }
+            },
+            "temperature_window": {
+                "type": "object",
+                "properties": {
+                    "min_temp": {
+                        "type": "number",
+                        "unit": "Celsius",
+                        "description": "Minimum temperature at which the process can operate without desaturating."
+                    },
+                    "max_temp": {
+                        "type": "number",
+                        "unit": "Celsius",
+                        "description": "Maximum temperature at which the process can operate sustainably."
+                    }
+                }
+            },
+            "ion_energy_window": {
+                "type": "object",
+                "properties": {
+                    "min_energy": {
+                        "type": "number",
+                        "unit": "eV",
+                        "description": "Minimum ion energy required for effective etching."
+                    },
+                    "max_energy": {
+                        "type": "number",
+                        "unit": "eV",
+                        "description": "Maximum ion energy that allows selective etching without damaging other materials."
+                    }
+                }
+            },
+            "uniformity_metrics": {
+                "type": "object",
+                "properties": {
+                    "max_thickness": {
+                        "type": "number",
+                        "unit": "Angstrom",
+                        "description": "Maximum thickness of material after a full ALE cycle."
+                    },
+                    "min_thickness": {
+                        "type": "number",
+                        "unit": "Angstrom",
+                        "description": "Minimum thickness of material after a full ALE cycle."
+                    }
+                }
+            },
+            "isotropic flagged": {
+                "type": "boolean",
+                "description": "Whether the etching process affects all surface orientations equally."
+            },
+            "aspects_checked": {
+                "type": "array",
+                "items": {
+                    "aspect_ratio": "number",
+                    "orientation": "string"
+                }
+            },
+            "selectivity_metrics": {
+                "type": "object",
+                "properties": {
+                    "selective_materials": {
+                        "type": "array",
+                        "items": {
+                            "material": "string",
+                            "selectivity": {
+                                "type": "number",
+                                "unit": "None",
+                                "description": "Degree of selectivity for each material."
+                            }
+                        }
+                    },
+                    "selectivity_ratio": {
+                        "type": "number",
+                        "unit": "None",
+                        "description": "Ratio of selective removal across different materials."
+                    }
+                }
+            },
+            "post_etch_metrics": {
+                "type": "object",
+                "properties": {
+                    "surface_roughness": {
+                        "type": "number",
+                        "unit": "Angstrom",
+                        "description": "Roughness of the etched surface."
+                    },
+                    "residual_material_content": {
+                        "type": "number",
+                        "unit": "wt%",
+                        "description": "Percentage of original material remaining after etching."
+                    }
+                }
+            },
+            "safety_precautions": {
+                "type": "object",
+                "properties": {
+                    "prevention Measures": {
+                        "type": "string",
+                        "description": "Preventive measures taken to ensure worker safety and equipment protection."
+                    }
+                }
+            },
+            "process_class": {
+                "type": "string",
+                "enum": [
+                    "Thermal",
+                    "Plasma"
+                ],
+                "description": "Classify the ALE process based on its activation method (thermal or plasma)."
+            },
+            "optimization_parameters": {
+                "type": "object",
+                "properties": {
+                    "balance_factors": {
+                        "type": "array",
+                        "items": {
+                            "factor": "string",
+                            "weight": {
+                                "type": "number",
+                                "unit": "None",
+                                "description": "Priority given to each factor (e.g., material control, cycle time)."
+                            }
+                        }
+                    },
+                    "process_factors": {
+                        "type": "array",
+                        "items": {
+                            "parameter": "string",
+                            "value": {
+                                "type": "number",
+                                "unit": "None",
+                                "description": "Specific values for each process parameter."
+                            }
+                        }
+                    }
+                }
+            },
+            "throughput_and scalability": {
+                "type": "object",
+                "properties": {
+                    "process_length": {
+                        "type": "number",
+                        "unit": "micrometers",
+                        "description": "Length of the etching process chamber."
+                    },
+                    "cycle_time": {
+                        "type": "number",
+                        "unit": "Cycle",
+                        "description": "Time taken to complete one full ALE cycle."
+                    }
+                }
+            },
+            "environmental_impact": {
+                "type": "object",
+                "properties": {
+                    "emission_potential": {
+                        "type": "number",
+                        "unit": "kg CO2 per wafer",
+                        "description": "Emissions generated during the etching process."
+                    }
+                }
+            }
+        },
+        "required_properties": [
+            "directionality",
+            "reactants",
+            "plasma_or_thermal",
+            "process_optimization",
+            "thickness_decrease",
+            "saturation_curves",
+            "temperature_window",
+            "ion_energy_window",
+            "uniformity_metrics",
+            "isotropic flagged",
+            "aspects_checked",
+            "selectivity_metrics",
+            "post_etch_metrics",
+            "safety_precautions",
+            "process_class",
+            "optimization_parameters",
+            "throughput_and scalability",
+            "environmental_impact"
+        ],
+        "additional_properties": [
+            "process_optimization_status",
+            "synergy_test_result",
+            "uniformity_assessment",
+            "post_etch_analysis",
+            "safety_assessment",
+            "process_classify_report",
+            "optimization_summary",
+            "throughput_analysis",
+            "environmental_impact_assessment"
+        ],
+        "example": {
+            "directionality": "Omnidirectional",
+            "reactants": {
+                "type": "Fluorinating",
+                "source": "Commercial Fluorine Gas",
+                "conditions": {
+                    "temperature": 150,
+                    "pressure": 1e-08
+                }
+            },
+            "plasma_or_thermal": "Plasma",
+            "process_optimization": true,
+            "thickness_decrease": {
+                "initial_thickness": 500,
+                "target_thickness": 200,
+                "mean_rate": {
+                    "mean_rate": 10,
+                    "variance": 4
+                },
+                "saturation_points": [
+                    {
+                        "thickness": 300,
+                        "exposure": 5
+                    },
+                    {
+                        "thickness": 250,
+                        "exposure": 8
+                    }
+                ],
+                "synergy_test": {
+                    "sub_cycle_a_exposure": 10,
+                    "sub_cycle_b_exposure": 15,
+                    "synergy_value": 0.6
+                }
+            },
+            "temperature_window": {
+                "min_temp": 25,
+                "max_temp": 150
+            },
+            "ion_energy_window": {
+                "min_energy": 10,
+                "max_energy": 20
+            },
+            "uniformity_metrics": {
+                "max_thickness": 320,
+                "min_thickness": 280
+            },
+            "isotropic flagged": false,
+            "aspects_checked": [
+                {
+                    "aspect_ratio": 1.5,
+                    "orientation": "Vertical"
+                },
+                {
+                    "aspect_ratio": 2.0,
+                    "orientation": "Horizontal"
+                }
+            ],
+            "selectivity_metrics": {
+                "selective_materials": [
+                    {
+                        "material": "SiO2",
+                        "selectivity": 0.8
+                    },
+                    {
+                        "material": "GeO2",
+                        "selectivity": 0.6
+                    }
+                ],
+                "selectivity_ratio": 0.75
+            },
+            "post_etch_metrics": {
+                "surface_roughness": 15,
+                "residual_material_content": 0.3
+            },
+            "safety_precautions": {
+                "prevention Measures": "Use of negative pressure chamber and proper PPE"
+            },
+            "process_class": "Thermal",
+            "optimization_parameters": {
+                "balance_factors": [
+                    {
+                        "factor": "Material Control",
+                        "weight": 0.4
+                    },
+                    {
+                        "factor": "Cycle Time",
+                        "weight": 0.6
+                    }
+                ],
+                "process_factors": [
+                    {
+                        "parameter": "Initial Thickness",
+                        "value": 500
+                    },
+                    {
+                        "parameter": "EPC per Cycle",
+                        "value": 10
+                    }
+                ]
+            },
+            "throughput_and scalability": {
+                "process_length": 200,
+                "cycle_time": 30
+            },
+            "environmental_impact": {
+                "emission_potential": 5.2
+            }
+        }
+    }
+}

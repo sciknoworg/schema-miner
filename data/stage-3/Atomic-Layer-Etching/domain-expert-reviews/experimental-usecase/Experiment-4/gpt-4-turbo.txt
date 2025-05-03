@@ -1,0 +1,193 @@
+Property Merging:
+None needed
+
+Property Grouping:
+None needed
+
+Missing Properties:
+Temperature, Pressure, Reactor, Plasma Power, RF Power, Pulsing and purging times missing!
+
+Adequacy of Descriptions:
+1. Remove reactivity and volatility: these are not always mentioned in papers. And also the role of the co-reactant.
+2. Rename temperatureRange parameter to temperatureWindow. Rename etchParameters group name to aleWindow
+
+Domain expert edited schema of the initial generated version:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process",
+    "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "description": "Type of ALE process, either plasma-based or thermal.",
+            "type": "string",
+            "enum": [
+                "plasma",
+                "thermal"
+            ]
+        },
+        "directionality": {
+            "description": "Specifies if the etching is directional (anisotropic) or omnidirectional (isotropic).",
+            "type": "string",
+            "enum": [
+                "directional",
+                "omnidirectional"
+            ]
+        },
+        "reactants": {
+            "description": "List of chemicals used in the ALE process.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the chemical reactant."
+                    },
+
+                    }
+                },
+            }
+        },
+       "processParameters": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "string",
+                    "description": "Temperature during the ALE process."
+                    },
+                "pressure": {
+                    "type": "string",
+                    "description": "Pressure during the ALE process."
+                    },
+                    },
+                "plasmaPower": {
+                    "type": "string",
+                    "description": "Plasma power during the ALE process, if plasma-based."
+                    },
+                "rFPower": {
+                    "type": "string",
+                    "description": "RF power during the ALE process, if plasma-based."
+                    },
+                "pulseTimes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Pulsing times for each of the reactants"
+                    },
+                "purgeTimes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Purging times for each of the reactants"
+                    },
+            },
+
+        "aleWindow": {
+            "type": "object",
+            "properties": {
+                "temperatureWindow": {
+                    "description": "Operational temperature range in Celsius for the ALE process.",
+                    "type": "object",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "description": "Minimum temperature in Celsius."
+                        },
+                        "max": {
+                            "type": "number",
+                            "description": "Maximum temperature in Celsius."
+                        }
+                    }
+                },
+                "ionEnergyWindow": {
+                    "description": "Range of ion energies used in anisotropic ALE processes, measured in electronvolts (eV).",
+                    "type": "object",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "description": "Minimum ion energy in eV."
+                        },
+                        "max": {
+                            "type": "number",
+                            "description": "Maximum ion energy in eV."
+                        }
+                    }
+                }
+            }
+        },
+        "saturation": {
+            "description": "Details about the saturation behavior of the ALE process.",
+            "type": "object",
+            "properties": {
+                "isSelfLimiting": {
+                    "description": "Indicates if all sub-cycles are self-limiting.",
+                    "type": "boolean"
+                },
+                "saturatingEtchRate": {
+                    "description": "Etch rate at saturation, measured as layers per cycle.",
+                    "type": "number"
+                }
+            }
+        },
+        "synergy": {
+            "description": "Synergy factor indicating the effectiveness of alternating sub-cycles.",
+            "type": "number"
+        },
+        "uniformity": {
+            "description": "Uniformity of the etching process across a wafer.",
+            "type": "object",
+            "properties": {
+                "variance": {
+                    "description": "Variance in etch rate across the wafer.",
+                    "type": "number"
+                }
+            }
+        },
+        "selectivity": {
+            "description": "Selectivity of the etching process towards different materials.",
+            "type": "object",
+            "properties": {
+                "selectiveTo": {
+                    "description": "Materials to which the process is selective.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+
+        "otherAspects": {
+            "description": "Other considerations such as safety, environmental impact, and process scalability.",
+            "type": "object",
+            "properties": {
+                "safety": {
+                    "description": "Safety considerations for the ALE process.",
+                    "type": "string"
+                },
+                "environmentalImpact": {
+                    "description": "Environmental impact considerations for the ALE process.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "directionality",
+        "reactants",
+        "etchParameters",
+        "saturation",
+        "synergy",
+        "uniformity",
+        "selectivity",
+        "postEtchSurface",
+        "otherAspects"
+    ]
+}
+```

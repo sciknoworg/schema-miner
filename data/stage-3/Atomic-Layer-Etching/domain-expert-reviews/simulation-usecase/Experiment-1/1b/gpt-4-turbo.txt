@@ -1,0 +1,197 @@
+Property Merging:
+"Outputs" and "simulationParameters" groups should be combined as they are both results based properties, and the whole schema should only be discussing results of simulation studies.
+
+Property Grouping:
+None needed
+
+Missing Properties:
+1. Inputs should include a detailed description of the substrate being modelled, e.g., its dimensions, the unit cell used to create the model, etc
+2. Results properties should be expanded to allow for the extraction of string and numerical values, e.g. binding mechanism discussion 
+3. Methodology needs further expansion to cover all aspects required for result replication.
+
+Adequacy of Descriptions:
+Need to ensure that all properties are from simulations, e.g., "filmProperties", and "designVariables" could come from larger-scale simulations
+
+Domain expert edited schema of the initial generated version:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "description": "A JSON schema representing the parameters and characteristics of the Atomic Layer Etching (ALE) process used in semiconductor fabrication, focusing on both simulation and experimental aspects.",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "type": "string",
+            "description": "Type of ALE process, either plasma-based or thermal."
+        },
+        "inputs": {
+            "type": "object",
+            "description": "Inputs required for the ALE process.",
+            "properties": {
+                "chemicalPrecursors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of chemical precursors used, e.g., Cl2, HF."
+                },
+                "energySource": {
+                    "type": "string",
+                    "description": "Type of energy source used, either thermal or plasma excitation."
+                },
+                "substrateMaterial": {
+                    "type": "string",
+                    "description": "Material of the substrate targeted for etching."
+                },
+                "substrateModelDimensions": {
+                    "type": "object",
+                    "description": "Dimensions of the substrate model used in simulations.",
+                    "properties": {
+                        "length": {
+                            "type": "number",
+                            "description": "Length of the substrate in nanometers."
+                        },
+                        "width": {
+                            "type": "number",
+                            "description": "Width of the substrate in nanometers."
+                        },
+                        "thickness": {
+                            "type": "number",
+                            "description": "Thickness of the substrate in nanometers."
+                        }
+                    }
+                },
+                "processParameters": {
+                    "type": "object",
+                    "description": "Parameters that control the ALE process.",
+                    "properties": {
+                        "temperature": {
+                            "type": "number",
+                            "description": "Temperature of the process in degrees Celsius."
+                        },
+                        "pressure": {
+                            "type": "number",
+                            "description": "Pressure inside the etching chamber in Pascals."
+                        },
+                        "gasFlowRates": {
+                            "type": "number",
+                            "description": "Flow rate of gases in the chamber measured in liters per minute."
+                        },
+                        "plasmaPower": {
+                            "type": "number",
+                            "description": "Power of plasma used in plasma-based ALE, measured in watts."
+                        },
+                        "exposureTime": {
+                            "type": "number",
+                            "description": "Time for which the substrate is exposed to precursors, measured in seconds."
+                        }
+                    }
+                }
+            }
+        },
+        "outputs": {
+            "type": "object",
+            "description": "Outputs from the ALE process.",
+            "properties": {
+                "etchedMaterial": {
+                    "type": "string",
+                    "description": "Description of the material after etching."
+                },
+                "byProducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of volatile compounds produced as by-products."
+                },
+                "surfaceModifications": {
+                    "type": "string",
+                    "description": "Chemical modifications to the surface post-etch."
+                }
+            }
+        },
+        "simulationParameters": {
+            "type": "object",
+            "description": "Parameters and observables relevant to ALE process simulation.",
+            "properties": {
+                "decompositionMechanisms": {
+                    "type": "string",
+                    "description": "Details on decomposition and binding mechanisms in the ALE process."
+                },
+                "excitationDynamics": {
+                    "type": "string",
+                    "description": "Study of photon excitation effects on reaction mechanisms."
+                },
+                "etchRate": {
+                    "type": "number",
+                    "description": "Rate of etching, typically measured in nanometers per cycle."
+                },
+                "surfaceDesorptionRates": {
+                    "type": "string",
+                    "description": "Rates at which materials desorb from the surface during etching."
+                },
+                "filmProperties": {
+                    "type": "object",
+                    "description": "Properties of the film during the ALE process.",
+                    "properties": {
+                        "uniformity": {
+                            "type": "string",
+                            "description": "Uniformity of the film post-etching."
+                        },
+                        "roughness": {
+                            "type": "number",
+                            "description": "Surface roughness measured in nanometers."
+                        },
+                        "density": {
+                            "type": "number",
+                            "description": "Density of the film in grams per cubic centimeter."
+                        },
+                        "temperatureProfile": {
+                            "type": "string",
+                            "description": "Temperature distribution across the film during etching."
+                        },
+                        "chemicalComposition": {
+                            "type": "string",
+                            "description": "Chemical composition of the film post-etching."
+                        }
+                    }
+                }
+            }
+        },
+        "simulationMethodology": {
+            "type": "object",
+            "description": "Description of the simulation methodology used in the ALE process.",
+            "properties": {
+                "methodType": {
+                    "type": "string",
+                    "description": "Type of simulation method used, e.g., DFT, molecular dynamics."
+                },
+                "functional": {
+                    "type": "string",
+                    "description": "The exchange-correlation functional used in DFT simulations."
+                },
+                "convergenceCriteria": {
+                    "type": "string",
+                    "description": "Criteria for convergence in the simulation."
+                },
+                "studyFocus": {
+                    "type": "string",
+                    "description": "Focus of the study, e.g., mechanism of binding of a precursor, effect of gas flow in the reactor."
+                },
+                "combinedWithExperimental": {
+                    "type": "boolean",
+                    "description": "Indicates if the simulation study was combined with experimental efforts."
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "inputs",
+        "outputs",
+        "simulationParameters",
+        "simulationMethodology"
+    ]
+}
+```

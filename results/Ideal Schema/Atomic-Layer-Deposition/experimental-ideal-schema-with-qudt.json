@@ -1,0 +1,743 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Deposition (ALD) Process",
+  "description": "A schema representing the steps and parameters involved in setting up and characterizing an Atomic Layer Deposition process and the deposited film.",
+  "type": "object",
+  "properties": {
+    "ALDSystem": {
+      "type": "object",
+      "description": "Details about the ALD system used.",
+      "properties": {
+        "ALDMethod": {
+          "type": "string",
+          "description": "The specific ALD technique used, e.g., thermal ALD, plasma-enhanced ALD."
+        },
+        "MaterialDeposited": {
+          "type": "string",
+          "description": "The material being deposited, e.g., TiO2, Copper."
+        }
+      }
+    },
+    "ReactantSelection": {
+      "type": "object",
+      "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
+      "properties": {
+        "Precursor": {
+          "type": "string",
+          "description": "Chemical used as a precursor in the ALD process, e.g., tris(diethylamino)aluminum."
+        },
+        "CoReactant": {
+          "type": "string",
+          "description": "Chemical used as a co-reactant in the ALD process, e.g., water, hydrogen plasma."
+        },
+        "CarrierGas": {
+          "type": "string",
+          "description": "Type of carrier gas used in the delivery of reactants."
+        }
+      }
+    },
+    "ProcessParameters": {
+      "type": "object",
+      "description": "Specific parameters under which the ALD process is carried out.",
+      "properties": {
+        "Reactor": {
+          "type": "object",
+          "description": "Type and details of the reactor used for the ALD process.",
+          "properties": {
+            "Name": {
+              "type": "string",
+              "description": "Name of the reactor."
+            },
+            "Manufacturer": {
+              "type": "string",
+              "description": "Manufacturer of the reactor."
+            }
+          }
+        },
+        "DeliveryMethod": {
+          "type": "string",
+          "description": "Method of delivering the precursor and co-reactant to the reaction chamber."
+        },
+        "Temperature": {
+          "type": "object",
+          "description": "The temperature at which deposition occurs, typically in °C.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Temperature"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/DEG_C",
+                        "https://qudt.org/vocab/unit/K",
+                        "https://qudt.org/vocab/unit/DEG_F"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Temperature"
+              ]
+            }
+          }
+        },
+        "Pressure": {
+          "type": "object",
+          "description": "The pressure within the reactor during deposition, typically in Torr.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/ForcePerArea"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/MilliM_HG"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/ForcePerArea"
+              ]
+            }
+          }
+        },
+        "ThicknessControl": {
+          "type": "object",
+          "description": "Control and verification of material thickness per cycle.",
+          "properties": {
+            "GrowthPerCycle": {
+              "type": "object",
+              "description": "The amount of material deposited per cycle, typically measured in nm per cycle.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Length"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/ANGSTROM"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Length"
+                  ]
+                }
+              }
+            },
+            "saturation": {
+              "type": "boolean",
+              "description": "Indicates if saturation conditions are achieved during dosing and purging."
+            },
+            "nucleationPeriod": {
+              "type": "object",
+              "description": "Initial growth behavior of the film during the first few ALD cycles, measured in cycles.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Count"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/UNITLESS"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Count"
+                  ]
+                }
+              }
+            },
+            "DosingTime": {
+              "type": "object",
+              "properties": {
+                "Precursor": {
+                  "type": "object",
+                  "description": "Time for dosing the precursor, measured in seconds.",
+                  "properties": {
+                    "quantityValue": {
+                      "type": "object",
+                      "properties": {
+                        "numericValue": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "object",
+                          "properties": {
+                            "hasQuantityKind": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/quantitykind/Time"
+                              ]
+                            },
+                            "sameAs": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/unit/MilliSEC"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Time"
+                      ]
+                    }
+                  }
+                },
+                "CoReactant": {
+                  "type": "object",
+                  "description": "Time for dosing the co-reactant, measured in seconds.",
+                  "properties": {
+                    "quantityValue": {
+                      "type": "object",
+                      "properties": {
+                        "numericValue": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "object",
+                          "properties": {
+                            "hasQuantityKind": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/quantitykind/Time"
+                              ]
+                            },
+                            "sameAs": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/unit/MilliSEC"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Time"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "PurgeTime": {
+              "type": "object",
+              "properties": {
+                "Precursor": {
+                  "type": "object",
+                  "description": "Time for purging the reactor chamber after precursor dosing, measured in seconds.",
+                  "properties": {
+                    "quantityValue": {
+                      "type": "object",
+                      "properties": {
+                        "numericValue": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "object",
+                          "properties": {
+                            "hasQuantityKind": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/quantitykind/Time"
+                              ]
+                            },
+                            "sameAs": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/unit/MilliSEC"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Time"
+                      ]
+                    }
+                  }
+                },
+                "CoReactant": {
+                  "type": "object",
+                  "description": "Time for purging the reactor chamber after co-reactant dosing, measured in seconds.",
+                  "properties": {
+                    "quantityValue": {
+                      "type": "object",
+                      "properties": {
+                        "numericValue": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "object",
+                          "properties": {
+                            "hasQuantityKind": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/quantitykind/Time"
+                              ]
+                            },
+                            "sameAs": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/unit/MilliSEC"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Time"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "MaterialProperties": {
+      "type": "object",
+      "description": "Assessment of the properties of the deposited film.",
+      "properties": {
+        "OpticalProperties": {
+          "type": "object",
+          "properties": {
+            "RefractiveIndex": {
+              "type": "object",
+              "description": "Refractive index of the film.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            ""
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                  ]
+                }
+              }
+            },
+            "AbsorptionCoefficient": {
+              "type": "object",
+              "description": "Optical absorption coefficient.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Transmittance",
+                            "https://qudt.org/vocab/quantitykind/TransmittanceDensity"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            ""
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Transmittance",
+                    "https://qudt.org/vocab/quantitykind/TransmittanceDensity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "ElectricalProperties": {
+          "type": "object",
+          "properties": {
+            "Resistivity": {
+              "type": "object",
+              "description": "Electrical resistivity of the film.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/ElectricResistivity"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/OHM-M"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/ElectricResistivity"
+                  ]
+                }
+              }
+            },
+            "CarrierDensity": {
+              "type": "object",
+              "description": "Carrier density in the film.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/ElectricChargeVolumeDensity"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/C-PER-M3",
+                            "http://qudt.org/3.1.0/vocab/unit/PER-M3"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/ElectricChargeVolumeDensity"
+                  ]
+                }
+              }
+            },
+            "Mobility": {
+              "type": "object",
+              "description": "Carrier mobility in the film.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/ElectronMobility"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/CentiM2-PER-V-SEC",
+                            "http://qudt.org/vocab/unit/M2-PER-V-SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/ElectronMobility"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "Uniformity": {
+          "type": "object",
+          "description": "Assessment of film thickness uniformity across large substrate areas.",
+          "properties": {
+            "Variation": {
+              "type": "object",
+              "description": "Permissible variation in film thickness, typically measured in percentage.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/PERCENT"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "Conformality": {
+          "type": "object",
+          "description": "Ability of the film to coat 3D structures uniformly.",
+          "properties": {
+            "AspectRatio": {
+              "type": "object",
+              "description": "Aspect ratio of the 3D structures used in testing conformality.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/UNITLESS"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "ChemicalComposition": {
+          "type": "string",
+          "description": "Chemical composition of the deposited film."
+        },
+        "Crystallinity": {
+          "type": "string",
+          "description": "Describes whether the film is amorphous or crystalline."
+        },
+        "FilmDensity": {
+          "type": "object",
+          "description": "Density of the film, typically measured in g/cm3.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/MassDensity"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/GM-PER-DeciM3"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/MassDensity"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "OtherAspects": {
+      "type": "object",
+      "description": "Other important aspects of the ALD process development such as safety and reproducibility.",
+      "properties": {
+        "Safety": {
+          "type": "string",
+          "description": "Safety considerations for handling chemicals and reaction products."
+        },
+        "FilmStability": {
+          "type": "boolean",
+          "description": "Whether the film remains stable under intended environmental conditions."
+        },
+        "Reproducibility": {
+          "type": "boolean",
+          "description": "Consistency of results in repeated experiments."
+        }
+      }
+    }
+  },
+  "required": [
+    "ALDSystem",
+    "ReactantSelection",
+    "ProcessParameters",
+    "MaterialProperties",
+    "OtherAspects"
+  ]
+}

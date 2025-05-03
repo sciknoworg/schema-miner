@@ -134,8 +134,18 @@ def extract_json_schema(text:str, json_encl_expr: list):
     :param str json_encl_expr: The list of tuples containing start and end expression between which JSON schema is stored.
     :return dict: The extracted JSON schema
     """
-    #Trying every start and end expression combination
+    #Intialize schema
     schema = None
+    
+    #Check if the response only contains the JSON object
+    try:
+        schema = json.loads(text.strip())
+        return schema
+    except Exception as e:
+        print('The LLM\'s response does not contains only the JSON Schema')
+        print('Now, Extracting the JSON Schema enclosed within the start expression and end expression')
+
+    #Trying every start and end expression combination to extract JSON object
     for expr in json_encl_expr:
         #Formatting the regex
         json_extract_pattern = fr"{expr[0]}(.*?){expr[1]}"

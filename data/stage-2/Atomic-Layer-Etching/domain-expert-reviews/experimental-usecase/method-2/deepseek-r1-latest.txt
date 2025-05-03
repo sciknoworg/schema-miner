@@ -1,0 +1,232 @@
+Domain expert edited schema of the initial generated version:
+
+```json
+{
+  "ALEProcessSchema": {
+    "properties": {
+      "directionality": {
+        "type": "string",
+        "description": "Whether the etching is anisotropic or isotropic.",
+        "enum": [
+          "Anisotropic",
+          "Isotropic"
+        ]
+      },
+      "reactants": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source or origin of the reactants."
+          }
+        },
+        "plasma_or_thermal": {
+          "type": "string",
+          "description": "Whether the process uses plasma or thermal activation for etching."
+        },
+        "process_optimization": {
+          "type": "boolean",
+          "description": "Whether the process has been optimized through iterative testing and parameter adjustment."
+        },
+        "etch_per_cycle": {
+          "type": "object",
+          "properties": {
+            "mean_rate": {
+              "type": "number",
+              "unit": "Angstrom per cycle",
+              "description": "Average rate of material removal per cycle."
+            },
+            "variance": {
+              "type": "number",
+              "unit": "Angstrom squared",
+              "description": "Variance in thickness removal across the wafer."
+            }
+          }
+        }
+      }
+    },
+    "saturation ": {
+      "type": "object",
+      "properties": {
+        "exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Exposure time or cycles to reach saturation."
+        }
+      }
+    },
+    "synergy_test": {
+      "type": "object",
+      "properties": {
+        "sub_cycle_a_exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Etch rate for sub-cycle A in the synergy test."
+        },
+        "sub_cycle_b_exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Etch rate for sub-cycle B in the synergy test."
+        },
+        "synergy_value": {
+          "type": "number",
+          "unit": "None",
+          "description": "Measure of how well the process exhibits self-limitation (0 to 1)."
+        }
+      }
+    }
+  },
+  "temperature_window": {
+    "type": "object",
+    "properties": {
+      "min_temp": {
+        "type": "number",
+        "unit": "Celsius",
+        "description": "Minimum temperature at which the process can be saturated."
+      },
+      "max_temp": {
+        "type": "number",
+        "unit": "Celsius",
+        "description": "Maximum temperature at which the process can be saturated"
+      }
+    }
+  },
+  "ion_energy_window": {
+    "type": "object",
+    "properties": {
+      "min_energy": {
+        "type": "number",
+        "unit": "eV",
+        "description": "Minimum ion energy required for complete etching."
+      },
+      "max_energy": {
+        "type": "number",
+        "unit": "eV",
+        "description": "Maximum ion energy that allows selective etching without damaging the material."
+      }
+    }
+  },
+  "uniformity_metrics": {
+    "type": "object",
+    "properties": {
+      "max_thickness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Maximum thickness of material after a full ALE cycle."
+      },
+      "min_thickness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Minimum thickness of material after a full ALE cycle."
+      }
+    }
+  },
+  "aspectratio ": {
+    "type": "array",
+    "items": {
+      "aspect_ratio": "number",
+      "orientation": "string"
+    }
+  },
+  "selectivity_metrics": {
+    "type": "object",
+    "properties": {
+      "selective_materials": {
+        "type": "array",
+        "items": {
+          "material": "string",
+          "selectivity": {
+            "type": "number",
+            "unit": "None",
+            "description": "Degree of selectivity for each material."
+          }
+        }
+      },
+      "selectivity_ratio": {
+        "type": "number",
+        "unit": "None",
+        "description": "Ratio of selective removal across different materials."
+      }
+    }
+  },
+  "etchedMaterialProperties": {
+    "type": "object",
+    "properties": {
+      "surface_roughness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Roughness of the etched surface."
+      },
+      "residual_material_content": {
+        "type": "number",
+        "unit": "wt%",
+        "description": "Percentage of original material remaining after etching."
+      }
+    }
+  },
+  "safety_precautions": {
+    "type": "object",
+    "properties": {
+      "prevention Measures": {
+        "type": "string",
+        "description": "Preventive measures taken to ensure worker safety and equipment protection."
+      }
+    }
+  },
+  "throughput_and scalability": {
+    "type": "object",
+    "properties": {
+      "process length": {
+        "type": "number",
+        "unit": "hours",
+        "description": "Length of the etching process."
+      },
+      "cycle_time": {
+        "type": "number",
+        "unit": "Cycle",
+        "description": "Time taken to complete one full ALE cycle."
+      }
+    }
+  },
+  "environmental_impact": {
+    "type": "object",
+    "properties": {
+      "sustainability": {
+        "type": "string",
+        "description": "How sustainable the process is."
+      }
+    }
+  },
+  "required_properties": [
+    "directionality",
+    "reactants",
+    "plasma_or_thermal",
+    "process_optimization",
+    "thickness_decrease",
+    "saturation_curves",
+    "temperature_window",
+    "ion_energy_window",
+    "uniformity_metrics",
+    "isotropic flagged",
+    "aspects_checked",
+    "selectivity_metrics",
+    "post_etch_metrics",
+    "safety_precautions",
+    "process_class",
+    "optimization_parameters",
+    "throughput_and scalability",
+    "environmental_impact"
+  ],
+  "additional_properties": [
+    "process_optimization_status",
+    "synergy_test_result",
+    "uniformity_assessment",
+    "post_etch_analysis",
+    "safety_assessment",
+    "process_classify_report",
+    "optimization_summary",
+    "throughput_analysis",
+    "environmental_impact_assessment"
+  ]
+}
+```

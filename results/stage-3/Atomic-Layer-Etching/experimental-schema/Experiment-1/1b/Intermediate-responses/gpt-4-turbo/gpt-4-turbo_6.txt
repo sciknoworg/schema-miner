@@ -1,0 +1,178 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process",
+    "description": "Schema for defining parameters and stages in an Atomic Layer Etching (ALE) process",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "description": "Type of ALE process, either plasma-based or thermal.",
+            "type": "string",
+            "enum": [
+                "plasma",
+                "thermal"
+            ]
+        },
+        "material": {
+            "description": "Material that is etched, such as InGaAs or InAlAs.",
+            "type": "string"
+        },
+        "directionality": {
+            "description": "Specifies if the etching is anisotropic or isotropic.",
+            "type": "string",
+            "enum": [
+                "anisotropic",
+                "isotropic"
+            ]
+        },
+        "reactants": {
+            "description": "List of reactants used in the ALE process, including metal precursors and etchants such as HF and DMAC.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "processParameters": {
+            "description": "Process parameters used during the ALE process",
+            "type": "object",
+            "properties": {
+                "flowRate": {
+                    "description": "Flow rate of reactants during the ALE process, measured in standard cubic centimeters per minute (sccm).",
+                    "type": "number"
+                },
+                "pressure": {
+                    "description": "Pressure inside the reactor during the ALE process, measured in pascals.",
+                    "type": "number"
+                },
+                "substrate": {
+                    "description": "Type of substrate used in the ALE process.",
+                    "type": "string"
+                },
+                "substrateTemperature": {
+                    "description": "Temperature of the substrate during the ALE process, measured in Celsius.",
+                    "type": "number"
+                },
+                "reactor": {
+                    "description": "Reactor where the ALE process is performed.",
+                    "type": "string"
+                },
+                "plasmaPower": {
+                    "description": "Power of plasma used in plasma-enhanced ALE, measured in watts.",
+                    "type": "number"
+                },
+                "dosingTimes": {
+                    "description": "Dosing times for reactants, measured in seconds.",
+                    "type": "number"
+                },
+                "purgingTimes": {
+                    "description": "Purging times between reactant doses, measured in seconds.",
+                    "type": "number"
+                },
+                "numberOfCyclesToSaturation": {
+                    "description": "Number of ALE cycles required to reach saturation.",
+                    "type": "number"
+                },
+                "massLossPerCycle": {
+                    "description": "Mass loss during one or more cycles, measured by Quartz Crystal Microbalance (QCM) in micrograms.",
+                    "type": "number"
+                }
+            }
+        },
+        "ALEWindow": {
+            "type": "object",
+            "properties": {
+                "temperatureWindow": {
+                    "description": "Temperature range in Celsius for the ALE process, for which the sub-cycles are self-limiting.",
+                    "type": "object",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "description": "Minimum temperature in Celsius."
+                        },
+                        "max": {
+                            "type": "number",
+                            "description": "Maximum temperature in Celsius."
+                        }
+                    }
+                },
+                "ionEnergyWindow": {
+                    "description": "Range of ion energies used in anisotropic ALE processes, measured in electronvolts (eV).",
+                    "type": "object",
+                    "properties": {
+                        "min": {
+                            "type": "number",
+                            "description": "Minimum ion energy in eV."
+                        },
+                        "max": {
+                            "type": "number",
+                            "description": "Maximum ion energy in eV."
+                        }
+                    }
+                }
+            }
+        },
+        "etchPerCycle": {
+            "description": "Etch rate per cycle, measured as nanometers per cycle.",
+            "type": "number"
+        },
+        "synergy": {
+            "description": "Synergy factor indicating the effectiveness of alternating sub-cycles. Should be between 0 and 1, with 1 being an ideal ALE process and 0 indicating no synergy.",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "etchedMaterialProperties": {
+            "description": "Properties of the material after etching.",
+            "type": "object",
+            "properties": {
+                "surfaceRoughness": {
+                    "description": "Surface roughness of the etched material, measured in nanometers.",
+                    "type": "number"
+                },
+                "characterizationMethod": {
+                    "description": "Method used to characterize the etched material, such as Raman spectroscopy, X-ray photoelectron spectroscopy (XPS), and atomic force microscopy (AFM).",
+                    "type": "string"
+                },
+                "uniformity": {
+                    "description": "Uniformity of the etching process across a wafer.",
+                    "type": "object",
+                    "properties": {
+                        "variance": {
+                            "description": "Variance in etch rate across the wafer.",
+                            "type": "number"
+                        }
+                    }
+                },
+                "chemicalComposition": {
+                    "description": "Chemical composition of the etched material, specifying elements such as Mo, S, Cl.",
+                    "type": "string"
+                }
+            }
+        },
+        "otherAspects": {
+            "description": "Other considerations such as safety, environmental impact, and process scalability.",
+            "type": "object",
+            "properties": {
+                "safety": {
+                    "description": "Safety considerations for the ALE process.",
+                    "type": "string"
+                },
+                "environmentalImpact": {
+                    "description": "Environmental impact considerations for the ALE process.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "material",
+        "directionality",
+        "reactants",
+        "ALEWindow",
+        "etchPerCycle",
+        "synergy",
+        "etchedMaterialProperties",
+        "processParameters",
+        "otherAspects"
+    ]
+}

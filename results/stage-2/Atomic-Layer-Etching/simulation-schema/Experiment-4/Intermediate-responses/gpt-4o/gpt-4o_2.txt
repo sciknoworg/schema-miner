@@ -1,0 +1,181 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process Schema",
+  "type": "object",
+  "properties": {
+    "processType": {
+      "type": "string",
+      "enum": ["thermal", "plasma"],
+      "description": "Type of ALE process, either thermal or plasma-based."
+    },
+    "chemicalPrecursors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of chemical precursors used in the ALE process, e.g., Cl2, HF, F2."
+    },
+    "energySource": {
+      "type": "string",
+      "description": "Type of energy source used, e.g., thermal energy or plasma excitation."
+    },
+    "substrateMaterial": {
+      "type": "string",
+      "description": "Material of the substrate being etched, e.g., semiconductor, dielectric, or metal film."
+    },
+    "processParameters": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Temperature in Celsius at which the ALE process is conducted.",
+          "unit": "Celsius"
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure in Pascals within the reaction chamber.",
+          "unit": "Pascals"
+        },
+        "gasFlowRates": {
+          "type": "object",
+          "properties": {
+            "precursorGasFlowRate": {
+              "type": "number",
+              "description": "Flow rate of precursor gas in standard cubic centimeters per minute (sccm).",
+              "unit": "sccm"
+            },
+            "carrierGasFlowRate": {
+              "type": "number",
+              "description": "Flow rate of carrier gas in standard cubic centimeters per minute (sccm).",
+              "unit": "sccm"
+            }
+          },
+          "required": ["precursorGasFlowRate", "carrierGasFlowRate"]
+        },
+        "plasmaPower": {
+          "type": "number",
+          "description": "Power of plasma used in plasma-enhanced ALE, in watts.",
+          "unit": "watts"
+        },
+        "exposureTime": {
+          "type": "number",
+          "description": "Duration of exposure for each cycle in seconds.",
+          "unit": "seconds"
+        },
+        "chlorinationEnergy": {
+          "type": "number",
+          "description": "Energy used during the chlorination step, in electron volts (eV).",
+          "unit": "eV"
+        },
+        "bombardmentEnergy": {
+          "type": "number",
+          "description": "Energy used during the bombardment step, in electron volts (eV).",
+          "unit": "eV"
+        }
+      },
+      "required": ["temperature", "pressure", "gasFlowRates", "exposureTime", "chlorinationEnergy", "bombardmentEnergy"]
+    },
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "etchedMaterial": {
+          "type": "string",
+          "description": "Description of the material that has been etched at the atomic scale."
+        },
+        "byProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of volatile compounds produced as by-products that need to be evacuated."
+        },
+        "surfaceModifications": {
+          "type": "string",
+          "description": "Description of chemical modifications on the surface post-etching."
+        }
+      },
+      "required": ["etchedMaterial", "byProducts"]
+    },
+    "simulationParameters": {
+      "type": "object",
+      "properties": {
+        "decompositionMechanisms": {
+          "type": "string",
+          "description": "Description of decomposition and binding/chemisorption mechanisms."
+        },
+        "excitationDynamics": {
+          "type": "string",
+          "description": "Study of photon excitation effects on reaction mechanisms."
+        },
+        "etchRate": {
+          "type": "number",
+          "description": "Rate of etching per cycle or per unit time.",
+          "unit": "angstroms per cycle"
+        },
+        "surfaceDesorptionRates": {
+          "type": "string",
+          "description": "Rates of desorption, diffusion, and reaction on the surface."
+        },
+        "bindingAffinity": {
+          "type": "string",
+          "description": "Energy barriers and likelihood of adsorbate binding to the surface."
+        },
+        "filmProperties": {
+          "type": "object",
+          "properties": {
+            "uniformity": {
+              "type": "string",
+              "description": "Uniformity of the film after etching."
+            },
+            "roughness": {
+              "type": "string",
+              "description": "Roughness of the film surface post-etching."
+            },
+            "density": {
+              "type": "string",
+              "description": "Density of the film material."
+            },
+            "temperatureProfile": {
+              "type": "string",
+              "description": "Thermal conduction and temperature profile of the film."
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Elemental analysis of the film's chemical composition."
+            }
+          },
+          "required": ["uniformity", "roughness", "density", "temperatureProfile", "chemicalComposition"]
+        },
+        "designVariables": {
+          "type": "object",
+          "properties": {
+            "gapDistance": {
+              "type": "number",
+              "description": "Gap distance in the reactor, in micrometers.",
+              "unit": "micrometers"
+            },
+            "purgeFlowRate": {
+              "type": "number",
+              "description": "Flow rate of purge gas in sccm.",
+              "unit": "sccm"
+            },
+            "substrateVelocity": {
+              "type": "number",
+              "description": "Velocity of the substrate in the reactor, in centimeters per second.",
+              "unit": "cm/s"
+            },
+            "vacuumPressure": {
+              "type": "number",
+              "description": "Vacuum pressure in the reactor, in Pascals.",
+              "unit": "Pascals"
+            }
+          },
+          "required": ["gapDistance", "purgeFlowRate", "substrateVelocity", "vacuumPressure"]
+        }
+      },
+      "required": ["decompositionMechanisms", "excitationDynamics", "etchRate", "surfaceDesorptionRates", "bindingAffinity", "filmProperties", "designVariables"]
+    }
+  },
+  "required": ["processType", "chemicalPrecursors", "energySource", "substrateMaterial", "processParameters", "outputs", "simulationParameters"]
+}

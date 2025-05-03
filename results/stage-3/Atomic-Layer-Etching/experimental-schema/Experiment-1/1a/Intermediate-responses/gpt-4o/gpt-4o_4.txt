@@ -1,0 +1,376 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "type": "object",
+  "properties": {
+    "directionality": {
+      "type": "string",
+      "enum": ["anisotropic", "isotropic"],
+      "description": "Specifies whether the etching process is directional (anisotropic) or omnidirectional (isotropic)."
+    },
+    "processType": {
+      "type": "object",
+      "properties": {
+        "thermal": {
+          "type": "boolean",
+          "description": "Indicates if the ALE process is thermal."
+        },
+        "plasma": {
+          "type": "boolean",
+          "description": "Indicates if the ALE process is plasma-based."
+        }
+      }
+    },
+    "reactantSelection": {
+      "type": "object",
+      "properties": {
+        "reactantA": {
+          "type": "string",
+          "description": "First reactant used in the etching process."
+        },
+        "reactantB": {
+          "type": "string",
+          "description": "Second reactant used in the etching process."
+        },
+        "dosingTime": {
+          "type": "number",
+          "description": "Dosing time for reactants during the ALE cycle.",
+          "units": "seconds"
+        },
+        "purgeTime": {
+          "type": "number",
+          "description": "Purge time between reactant dosing during the ALE cycle.",
+          "units": "seconds"
+        },
+        "flowRate": {
+          "type": "number",
+          "description": "Flow rate of reactants during the process.",
+          "units": "sccm"
+        },
+        "partialPressure": {
+          "type": "object",
+          "properties": {
+            "reactantAPressure": {
+              "type": "number",
+              "description": "Partial pressure of reactant A during dosing.",
+              "units": "mTorr"
+            },
+            "reactantBPressure": {
+              "type": "number",
+              "description": "Partial pressure of reactant B during dosing.",
+              "units": "mTorr"
+            }
+          },
+          "required": ["reactantAPressure", "reactantBPressure"]
+        }
+      },
+      "required": ["reactantA", "reactantB"]
+    },
+    "etchControl": {
+      "type": "object",
+      "properties": {
+        "etchPerCycle": {
+          "type": "number",
+          "description": "Average amount of material removed per cycle, indicating the etch rate.",
+          "units": "nm/cycle"
+        },
+        "numberOfCyclesToSaturation": {
+          "type": "number",
+          "description": "Number of ALE cycles required to reach saturation."
+        },
+        "activationEnergy": {
+          "type": "number",
+          "description": "Activation energy for the temperature-dependent etching process.",
+          "units": "kcal/mol"
+        },
+        "massChangePerCycle": {
+          "type": "object",
+          "properties": {
+            "minMassChange": {
+              "type": "number",
+              "description": "Minimum mass change per cycle.",
+              "units": "ng/cm^2"
+            },
+            "maxMassChange": {
+              "type": "number",
+              "description": "Maximum mass change per cycle.",
+              "units": "ng/cm^2"
+            }
+          }
+        }
+      },
+      "required": ["etchPerCycle"]
+    },
+    "ALEWindow": {
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "type": "object",
+          "properties": {
+            "minTemperature": {
+              "type": "number",
+              "description": "Minimum temperature for the ALE window.",
+              "units": "Celsius"
+            },
+            "maxTemperature": {
+              "type": "number",
+              "description": "Maximum temperature for the ALE window.",
+              "units": "Celsius"
+            }
+          },
+          "required": ["minTemperature", "maxTemperature"]
+        },
+        "ionEnergyWindow": {
+          "type": "object",
+          "properties": {
+            "minIonEnergy": {
+              "type": "number",
+              "description": "Minimum ion energy for the ALE window.",
+              "units": "eV"
+            },
+            "maxIonEnergy": {
+              "type": "number",
+              "description": "Maximum ion energy for the ALE window.",
+              "units": "eV"
+            }
+          },
+          "required": ["minIonEnergy", "maxIonEnergy"]
+        }
+      }
+    },
+    "etchedMaterialProperties": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "type": "string",
+          "description": "Name of the material that is etched during this specific ALE process."
+        },
+        "substrate": {
+          "type": "string",
+          "description": "Substrate on which the material is deposited."
+        },
+        "chemicalComposition": {
+          "type": "string",
+          "description": "Chemical composition of the film."
+        },
+        "crystallinity": {
+          "type": "string",
+          "description": "Crystallinity of the etched material."
+        },
+        "uniformity": {
+          "type": "object",
+          "properties": {
+            "nonUniformity": {
+              "type": "number",
+              "description": "Non-uniformity of the etch process across the wafer.",
+              "units": "%"
+            }
+          }
+        },
+        "roughness": {
+          "type": "number",
+          "description": "Surface roughness after etching.",
+          "units": "nm"
+        },
+        "refractiveIndex": {
+          "type": "number",
+          "description": "Refractive index of the material after etching."
+        },
+        "bandGapEnergy": {
+          "type": "object",
+          "properties": {
+            "minBandGap": {
+              "type": "number",
+              "description": "Minimum band gap energy of the material.",
+              "units": "eV"
+            },
+            "maxBandGap": {
+              "type": "number",
+              "description": "Maximum band gap energy of the material.",
+              "units": "eV"
+            }
+          }
+        }
+      }
+    },
+    "reactorDetails": {
+      "type": "object",
+      "properties": {
+        "reactorType": {
+          "type": "string",
+          "description": "Type of reactor used for the ALE process."
+        },
+        "pressure": {
+          "type": "number",
+          "description": "Pressure within the reactor during the ALE process.",
+          "units": "Torr"
+        },
+        "plasmaPower": {
+          "type": "number",
+          "description": "Power of plasma used if plasma-enhanced ALE is applied.",
+          "units": "W"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Temperature applied during the ALE process.",
+          "units": "Celsius"
+        }
+      }
+    },
+    "synergy": {
+      "type": "object",
+      "properties": {
+        "synergyValue": {
+          "type": "number",
+          "description": "Synergy value indicating the degree of self-limitation in the process.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "selectivity": {
+      "type": "object",
+      "properties": {
+        "selectivityDescription": {
+          "type": "string",
+          "description": "Description of the selectivity of the proposed chemistry for different materials."
+        },
+        "etchSelectivity": {
+          "type": "object",
+          "properties": {
+            "targetMaterial": {
+              "type": "string",
+              "description": "Material for which selectivity is measured."
+            },
+            "selectivityRatio": {
+              "type": "number",
+              "description": "Etch selectivity ratio over other materials."
+            }
+          }
+        }
+      }
+    },
+    "otherAspects": {
+      "type": "object",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for the etching process."
+        },
+        "sustainability": {
+          "type": "string",
+          "description": "Sustainability considerations for the etching process."
+        },
+        "environmentalImpact": {
+          "type": "string",
+          "description": "Environmental impact considerations for the etching process."
+        }
+      }
+    },
+    "etchMechanisms": {
+      "type": "object",
+      "properties": {
+        "surfaceBindingEnergy": {
+          "type": "number",
+          "description": "Energy required to remove an atom from the surface, also known as surface binding energy.",
+          "units": "eV"
+        },
+        "desorptionEnergy": {
+          "type": "number",
+          "description": "Energy barrier for desorption of modified surface species.",
+          "units": "eV"
+        },
+        "adsorptionEnergy": {
+          "type": "number",
+          "description": "Energy barrier for adsorption of reactants on the surface.",
+          "units": "eV"
+        },
+        "reactionMechanism": {
+          "type": "string",
+          "description": "Description of the reaction mechanism, such as fluorination and ligand-exchange."
+        },
+        "layerRemovalSequence": {
+          "type": "string",
+          "description": "Sequence of atomic layer removal, e.g., S-Mo-S for MoS2."
+        }
+      }
+    },
+    "processCycle": {
+      "type": "object",
+      "properties": {
+        "cycleSteps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Description of each step in the ALE cycle."
+          }
+        },
+        "selfLimitingBehavior": {
+          "type": "boolean",
+          "description": "Indicates if the process exhibits self-limiting behavior."
+        }
+      }
+    },
+    "criticalExposure": {
+      "type": "object",
+      "properties": {
+        "criticalPressure": {
+          "type": "number",
+          "description": "Critical pressure required for self-limited etching.",
+          "units": "mTorr"
+        },
+        "criticalDose": {
+          "type": "number",
+          "description": "Critical dose of energetic particles required for self-limited etching.",
+          "units": "atoms/cm^2"
+        }
+      }
+    },
+    "ionBeamParameters": {
+      "type": "object",
+      "properties": {
+        "ionType": {
+          "type": "string",
+          "description": "Type of ion used in the ion beam, e.g., Ar+."
+        },
+        "ionEnergy": {
+          "type": "object",
+          "properties": {
+            "minIonEnergy": {
+              "type": "number",
+              "description": "Minimum energy of ions used in the ion beam.",
+              "units": "eV"
+            },
+            "maxIonEnergy": {
+              "type": "number",
+              "description": "Maximum energy of ions used in the ion beam.",
+              "units": "eV"
+            }
+          }
+        },
+        "ionFlux": {
+          "type": "number",
+          "description": "Flux of ions in the ion beam.",
+          "units": "ions/cm^2/s"
+        }
+      }
+    }
+  },
+  "required": [
+    "directionality",
+    "processType",
+    "reactantSelection",
+    "etchControl",
+    "ALEWindow",
+    "etchedMaterialProperties",
+    "reactorDetails",
+    "synergy",
+    "selectivity",
+    "otherAspects",
+    "etchMechanisms",
+    "processCycle",
+    "criticalExposure",
+    "ionBeamParameters"
+  ]
+}

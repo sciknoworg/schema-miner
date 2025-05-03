@@ -1,0 +1,39 @@
+Property Merging:
+Create a new group named: etchedMaterialProperties, that contains all the characterization data on the etched material. There it should be included, the uniformity of the surface, the chemical composition of the material, the roughness etc. Don't forget to mention the respective characterization method for each property measured.
+
+Missing Properties:
+1. Material that is etched
+2. Other material properties
+3. Process Parameters: flow rate, pressure, substrate
+4. Substrate temperature	
+5. Material that is etched
+6. Substrate
+7. Dosing, Puring times of reactants
+8. Reactor where ALE was performed
+9. Power of plasma if plasma enhanced ALD is used
+10. Pressure
+11. Flow of reactants
+12. Number of ALE cycles to reach saturation
+13. Mass loss during one or more cycles, by QCM measurements
+
+Adequacy of Descriptions:
+1. Change directional to anisotropic and omnidirection to isotropic
+2. Description for Reactants: replace chemicals to reactants
+3. Replace etchParameters naming to ALEWindow and temperature range to temperatureWindow. Its description is found here: "Different process temperatures may change the saturation point either for the ALE process, thus requiring the runs to be optimised using saturation curves or by running the cycles in over-saturation. Ideally, the EPC is nearly constant in the ALE window but this is not a necessity. The most important aspect of the temperature window is that the sub-cycles self-limit (meaning a saturation point can be found) at all temperatures in the window.". For the ionEnergyWindow:the same, the EPC is almost constant but it’s not necessary. It’s important to have a self-limiting process.
+4. Rename saturation parameter to etchPerCycle
+5. Synergy: should be between 1 and 0, with 1 being an ideal ALE process and 0 no saturation.
+6. Remove the postEtchSurface parameter
+
+Domain expert edited schema of the initial generated version:
+
+-> Process Type
+-> Reactants
+-> Material
+-> Directionality
+-> processParameters
+-> ALEWindow
+-> etchPerCycle
+-> etchedMaterialProperties
+-> Synergy
+-> Selectivity
+-> otherAspects

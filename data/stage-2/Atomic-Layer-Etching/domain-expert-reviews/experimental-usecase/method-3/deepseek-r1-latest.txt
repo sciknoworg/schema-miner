@@ -1,0 +1,260 @@
+Property Merging:
+Combine process_class with plasma_or_thermal group.
+
+Property Grouping:
+1. Convert the process optimization property group to etchPerCycle property, that contains only the value of the EPC measured in saturation. Include also the mean and variance, as you have for the thickness rate parameter. The initial and target thickness should be removed.
+2. Rename saturation curves group to saturation and mention there only the timings that are required to achieve saturation for etching. For now it’s quite hard for LLMs to extract data from figures. It would be interesting to see that in future data extraction using LLMs. 
+3. Change uniformity metrics property to just uniformity. 
+4. Rename aspects checked to aspect ratio if the etching is studied in a 3D structure
+5. Rename post_etch_metrics to etchedMaterialProperties. Mention if you can the characterization method to obtain this material property.
+
+Missing Properties:
+1. Process parameters: temperature, pressure, substrate, plasma power if plasma process, flow rate of reactants, delivery to the reactor, purging gas, reactor used
+2. Include other material properties as well: crystallinity, chemical composition, refractive index etc.
+
+Adequacy of Descriptions:
+
+1. Better use: anisotropic or isotropic to describe the directionality of the ALE process.
+2. For the reactants: better describe them as reactant used during the ALE process Reactant 1 and Reactant 2. Don't go too specific with mention the Fluorinating, Oxygenation, Chlorinating, TMAlike, Diketone etc.
+3. Remove the source property or explain better what you mean. It's not very clear to me.
+4. Rename conditions to processConditions. Be more detailed with what the process parameters could be.
+5. For the synergy test the a and b coefficients are the etch rates, not the exposure times. It's good though that you mention them, apart from the synergy value!
+6. "Maximum temperature at which the process can operate sustainably." That’s not true. More of there is saturation at that range.
+7. "Maximum ion energy that allows selective etching without damaging other materials." Fix this as well. It's more of damaging the bonds in both the modified layer and the material.
+8. Remove the isotropic flagged. If you want to continue using it, please explain further why you want to use it. We already talk about isotropic or anisotropic in the beginning of the schema.
+9. Please describe a bit in more detail the balance and process factors. Check if they overlap with the process parameters I mentioned to you earlier. Be more specific in what you ask for
+10. Remove the process_length. A process can have a time length! Maybe you’re talking about reactor length, since you're describing something in micrometers.
+11. Be more generic with the environmental impact. It's not common to mention the emissions etc. but it can be a more of generic description of the sustainability of the process and not some metrics.
+
+Domain expert edited schema of the initial generated version:
+
+```json
+{
+  "ALEProcessSchema": {
+    "properties": {
+      "directionality": {
+        "type": "string",
+        "description": "Whether the etching is anisotropic or isotropic.",
+        "enum": [
+          "Anisotropic",
+          "Isotropic"
+        ]
+      },
+      "reactants": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Source or origin of the reactants."
+          }
+        },
+        "plasma_or_thermal": {
+          "type": "string",
+          "description": "Whether the process uses plasma or thermal activation for etching."
+        },
+        "process_optimization": {
+          "type": "boolean",
+          "description": "Whether the process has been optimized through iterative testing and parameter adjustment."
+        },
+        "etch_per_cycle": {
+          "type": "object",
+          "properties": {
+            "mean_rate": {
+              "type": "number",
+              "unit": "Angstrom per cycle",
+              "description": "Average rate of material removal per cycle."
+            },
+            "variance": {
+              "type": "number",
+              "unit": "Angstrom squared",
+              "description": "Variance in thickness removal across the wafer."
+            }
+          }
+        }
+      }
+    },
+    "saturation ": {
+      "type": "object",
+      "properties": {
+        "exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Exposure time or cycles to reach saturation."
+        }
+      }
+    },
+    "synergy_test": {
+      "type": "object",
+      "properties": {
+        "sub_cycle_a_exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Etch rate for sub-cycle A in the synergy test."
+        },
+        "sub_cycle_b_exposure": {
+          "type": "number",
+          "unit": "Cycle",
+          "description": "Etch rate for sub-cycle B in the synergy test."
+        },
+        "synergy_value": {
+          "type": "number",
+          "unit": "None",
+          "description": "Measure of how well the process exhibits self-limitation (0 to 1)."
+        }
+      }
+    }
+  },
+  "temperature_window": {
+    "type": "object",
+    "properties": {
+      "min_temp": {
+        "type": "number",
+        "unit": "Celsius",
+        "description": "Minimum temperature at which the process can be saturated."
+      },
+      "max_temp": {
+        "type": "number",
+        "unit": "Celsius",
+        "description": "Maximum temperature at which the process can be saturated"
+      }
+    }
+  },
+  "ion_energy_window": {
+    "type": "object",
+    "properties": {
+      "min_energy": {
+        "type": "number",
+        "unit": "eV",
+        "description": "Minimum ion energy required for complete etching."
+      },
+      "max_energy": {
+        "type": "number",
+        "unit": "eV",
+        "description": "Maximum ion energy that allows selective etching without damaging the material."
+      }
+    }
+  },
+  "uniformity_metrics": {
+    "type": "object",
+    "properties": {
+      "max_thickness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Maximum thickness of material after a full ALE cycle."
+      },
+      "min_thickness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Minimum thickness of material after a full ALE cycle."
+      }
+    }
+  },
+  "aspectratio ": {
+    "type": "array",
+    "items": {
+      "aspect_ratio": "number",
+      "orientation": "string"
+    }
+  },
+  "selectivity_metrics": {
+    "type": "object",
+    "properties": {
+      "selective_materials": {
+        "type": "array",
+        "items": {
+          "material": "string",
+          "selectivity": {
+            "type": "number",
+            "unit": "None",
+            "description": "Degree of selectivity for each material."
+          }
+        }
+      },
+      "selectivity_ratio": {
+        "type": "number",
+        "unit": "None",
+        "description": "Ratio of selective removal across different materials."
+      }
+    }
+  },
+  "etchedMaterialProperties": {
+    "type": "object",
+    "properties": {
+      "surface_roughness": {
+        "type": "number",
+        "unit": "Angstrom",
+        "description": "Roughness of the etched surface."
+      },
+      "residual_material_content": {
+        "type": "number",
+        "unit": "wt%",
+        "description": "Percentage of original material remaining after etching."
+      }
+    }
+  },
+  "safety_precautions": {
+    "type": "object",
+    "properties": {
+      "prevention Measures": {
+        "type": "string",
+        "description": "Preventive measures taken to ensure worker safety and equipment protection."
+      }
+    }
+  },
+  "throughput_and scalability": {
+    "type": "object",
+    "properties": {
+      "process length": {
+        "type": "number",
+        "unit": "hours",
+        "description": "Length of the etching process."
+      },
+      "cycle_time": {
+        "type": "number",
+        "unit": "Cycle",
+        "description": "Time taken to complete one full ALE cycle."
+      }
+    }
+  },
+  "environmental_impact": {
+    "type": "object",
+    "properties": {
+      "sustainability": {
+        "type": "string",
+        "description": "How sustainable the process is."
+      }
+    }
+  },
+  "required_properties": [
+    "directionality",
+    "reactants",
+    "plasma_or_thermal",
+    "process_optimization",
+    "thickness_decrease",
+    "saturation_curves",
+    "temperature_window",
+    "ion_energy_window",
+    "uniformity_metrics",
+    "isotropic flagged",
+    "aspects_checked",
+    "selectivity_metrics",
+    "post_etch_metrics",
+    "safety_precautions",
+    "process_class",
+    "optimization_parameters",
+    "throughput_and scalability",
+    "environmental_impact"
+  ],
+  "additional_properties": [
+    "process_optimization_status",
+    "synergy_test_result",
+    "uniformity_assessment",
+    "post_etch_analysis",
+    "safety_assessment",
+    "process_classify_report",
+    "optimization_summary",
+    "throughput_analysis",
+    "environmental_impact_assessment"
+  ]
+}
+```

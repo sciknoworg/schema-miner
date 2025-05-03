@@ -1,0 +1,264 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "description": "Schema for representing the Atomic Layer Etching process",
+    "type": "object",
+    "properties": {
+        "material": {
+            "description": "Material being etched",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "chemicalComposition": {
+                    "description": "Chemical composition of the etched material",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "element": {
+                                "type": "string"
+                            },
+                            "percentage": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "element",
+                            "percentage"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "chemicalComposition"
+            ]
+        },
+        "aleProcess": {
+            "description": "Atomic Layer Etching process used",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "Type of ALE process (thermal or plasma)",
+                    "type": "string",
+                    "enum": [
+                        "thermal",
+                        "plasma"
+                    ]
+                },
+                "etchPerCycle": {
+                    "description": "Etch per cycle (EPC) of the ALE process",
+                    "type": "number"
+                },
+                "directionality": {
+                    "description": "Desired directionality of the etch process (anisotropic or isotropic)",
+                    "type": "string",
+                    "enum": [
+                        "anisotropic",
+                        "isotropic"
+                    ]
+                },
+                "reactants": {
+                    "description": "Reactants used in the etching process",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "formula": {
+                                "type": "string"
+                            },
+                            "pressure": {
+                                "description": "Pressure of the reactant",
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "formula",
+                            "pressure"
+                        ]
+                    }
+                },
+                "plasmaPower": {
+                    "description": "Plasma Power used during the ALE process",
+                    "type": "number"
+                },
+                "rfPower": {
+                    "description": "RF Power used during the ALE process",
+                    "type": "number"
+                },
+                "pressure": {
+                    "description": "Pressure during the ALE process in the chamber",
+                    "type": "number"
+                },
+                "Reactor": {
+                    "description": "Reactor used for the ALE process",
+                    "type": "string"
+                },
+                "temperatureWindow": {
+                    "description": "Temperature range for optimal etch rate (in Celsius)",
+                    "type": "object",
+                    "properties": {
+                        "minTemp": {
+                            "type": "number"
+                        },
+                        "maxTemp": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "minTemp",
+                        "maxTemp"
+                    ]
+                },
+                "ionEnergyWindow": {
+                    "description": "Ion energy range for optimal etch rate (in eV)",
+                    "type": "object",
+                    "properties": {
+                        "minIonEnergy": {
+                            "type": "number"
+                        },
+                        "maxIonEnergy": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "minIonEnergy",
+                        "maxIonEnergy"
+                    ]
+                },
+                "uniformity": {
+                    "description": "Uniformity of the etch process (in %)",
+                    "type": "string"
+                },
+                "selectivity": {
+                    "description": "Selectivity of the etch process",
+                    "type": "object",
+                    "properties": {
+                        "materialSelectivity": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/material"
+                            }
+                        }
+                    },
+                    "required": [
+                        "materialSelectivity"
+                    ]
+                },
+                "etchedMaterialProperties": {
+                    "description": "Properties of the post-etch material",
+                    "type": "object",
+                    "properties": {
+                        "materialProperty": {
+                            "type": "object",
+                            "properties": {
+                                "density": {
+                                    "type": "number"
+                                },
+                                "thermalConductivity": {
+                                    "type": "number"
+                                },
+                                "electricalConductivity": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "density",
+                                "thermalConductivity",
+                                "electricalConductivity"
+                            ]
+                        },
+                        "materialPropertyUniformity": {
+                            "description": "Uniformity of material properties",
+                            "type": "string"
+                        },
+                        "chemicalComposition": {
+                            "description": "Chemical composition of the etched material",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "element": {
+                                        "type": "string"
+                                    },
+                                    "percentage": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "element",
+                                    "percentage"
+                                ]
+                            }
+                        },
+                        "refractiveIndex": {
+                            "description": "Refractive index of the etched material",
+                            "type": "number"
+                        },
+                        "roughness": {
+                            "description": "Roughness of the etched material",
+                            "type": "number"
+                        },
+                        "crystallinity": {
+                            "description": "Crystallinity of the etched material",
+                            "type": "string",
+                            "enum": [
+                                "amorphous",
+                                "crystalline"
+                            ]
+                        }
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "etchPerCycle",
+                "directionality",
+                "reactants",
+                "temperatureWindow",
+                "ionEnergyWindow",
+                "uniformity",
+                "selectivity",
+                "etchedMaterialProperties"
+            ]
+        }
+    },
+    "definitions": {
+        "material": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "chemicalComposition": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "element": {
+                                "type": "string"
+                            },
+                            "percentage": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "element",
+                            "percentage"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "chemicalComposition"
+            ]
+        }
+    }
+}

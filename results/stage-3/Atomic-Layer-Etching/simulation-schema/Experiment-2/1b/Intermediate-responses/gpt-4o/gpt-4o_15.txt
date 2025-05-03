@@ -1,0 +1,401 @@
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Atomic Layer Etching Process Schema",
+    "type": "object",
+    "properties": {
+        "processType": {
+            "type": "string",
+            "enum": [
+                "thermal",
+                "plasma",
+                "spatial thermal"
+            ],
+            "description": "Type of ALE process, either thermal, plasma-based, or spatial thermal."
+        },
+        "chemicalPrecursors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of chemical precursors used in the ALE process, e.g., Cl2, HF, SF6, Al(CH3)3."
+        },
+        "energySource": {
+            "type": "string",
+            "description": "Type of energy source used, e.g., thermal energy or plasma excitation."
+        },
+        "substrateMaterial": {
+            "type": "string",
+            "description": "Material of the substrate being etched, e.g., semiconductor, dielectric, or metal film."
+        },
+        "surfaceModel": {
+            "type": "object",
+            "properties": {
+                "length": {
+                    "type": "number",
+                    "description": "Length of the substrate model in nanometers.",
+                    "unit": "nm"
+                },
+                "width": {
+                    "type": "number",
+                    "description": "Width of the substrate model in nanometers.",
+                    "unit": "nm"
+                },
+                "thickness": {
+                    "type": "number",
+                    "description": "Thickness of the substrate model in nanometers.",
+                    "unit": "nm"
+                },
+                "surfaceOrientation": {
+                    "type": "string",
+                    "description": "Orientation of the substrate surface, e.g., (111), (100), (110)."
+                },
+                "unitCell": {
+                    "type": "string",
+                    "description": "Unit cell used to create the substrate model."
+                }
+            },
+            "required": [
+                "length",
+                "width",
+                "thickness",
+                "surfaceOrientation",
+                "unitCell"
+            ]
+        },
+        "processParameters": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "description": "Temperature in Celsius at which the ALE process is conducted.",
+                    "unit": "Celsius"
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Pressure in Pascals within the reaction chamber.",
+                    "unit": "Pascals"
+                },
+                "gasFlowRates": {
+                    "type": "object",
+                    "properties": {
+                        "precursorGasFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of precursor gas in standard cubic centimeters per minute (sccm).",
+                            "unit": "sccm"
+                        },
+                        "carrierGasFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of carrier gas in standard cubic centimeters per minute (sccm).",
+                            "unit": "sccm"
+                        }
+                    },
+                    "required": [
+                        "precursorGasFlowRate",
+                        "carrierGasFlowRate"
+                    ]
+                },
+                "plasmaPower": {
+                    "type": "number",
+                    "description": "Power of plasma used in plasma-enhanced ALE, in watts.",
+                    "unit": "watts"
+                },
+                "exposureTime": {
+                    "type": "number",
+                    "description": "Duration of exposure for each cycle in seconds.",
+                    "unit": "seconds"
+                },
+                "chlorinationEnergy": {
+                    "type": "number",
+                    "description": "Energy used during the chlorination step, in electron volts (eV).",
+                    "unit": "eV"
+                },
+                "bombardmentEnergy": {
+                    "type": "number",
+                    "description": "Energy used during the bombardment step, in electron volts (eV).",
+                    "unit": "eV"
+                },
+                "argonIonFluence": {
+                    "type": "number",
+                    "description": "Fluence of argon ions used during the bombardment step, in ions/cm².",
+                    "unit": "ions/cm²"
+                },
+                "photoAssistedDesorption": {
+                    "type": "object",
+                    "properties": {
+                        "photonEnergy": {
+                            "type": "number",
+                            "description": "Energy of plasma-generated photons assisting in desorption, in electron volts (eV).",
+                            "unit": "eV"
+                        },
+                        "excitationMechanism": {
+                            "type": "string",
+                            "description": "Mechanism of photon-induced excitation, e.g., σ to σ* transition."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "temperature",
+                "pressure",
+                "gasFlowRates",
+                "exposureTime"
+            ]
+        },
+        "simulationParameters": {
+            "type": "object",
+            "properties": {
+                "etchedMaterial": {
+                    "type": "string",
+                    "description": "Description of the material that has been etched at the atomic scale."
+                },
+                "byProducts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of volatile compounds produced as by-products that need to be evacuated."
+                },
+                "surfaceModifications": {
+                    "type": "string",
+                    "description": "Description of chemical modifications on the surface post-etching."
+                },
+                "decompositionMechanisms": {
+                    "type": "string",
+                    "description": "Description of decomposition and binding/chemisorption mechanisms."
+                },
+                "excitationDynamics": {
+                    "type": "string",
+                    "description": "Study of photon excitation effects on reaction mechanisms."
+                },
+                "etchRate": {
+                    "type": "number",
+                    "description": "Rate of etching per cycle or per unit time.",
+                    "unit": "angstroms per cycle"
+                },
+                "surfaceDesorptionRates": {
+                    "type": "string",
+                    "description": "Rates of desorption, diffusion, and reaction on the surface."
+                },
+                "bindingAffinity": {
+                    "type": "string",
+                    "description": "Energy barriers and likelihood of adsorbate binding to the surface."
+                },
+                "filmProperties": {
+                    "type": "object",
+                    "properties": {
+                        "uniformity": {
+                            "type": "string",
+                            "description": "Uniformity of the film after etching."
+                        },
+                        "roughness": {
+                            "type": "string",
+                            "description": "Roughness of the film surface post-etching."
+                        },
+                        "density": {
+                            "type": "string",
+                            "description": "Density of the film material."
+                        },
+                        "temperatureProfile": {
+                            "type": "string",
+                            "description": "Thermal conduction and temperature profile of the film."
+                        },
+                        "chemicalComposition": {
+                            "type": "string",
+                            "description": "Elemental analysis of the film's chemical composition."
+                        }
+                    },
+                    "required": [
+                        "uniformity",
+                        "roughness",
+                        "density",
+                        "temperatureProfile",
+                        "chemicalComposition"
+                    ]
+                },
+                "designVariables": {
+                    "type": "object",
+                    "properties": {
+                        "gapDistance": {
+                            "type": "number",
+                            "description": "Gap distance in the reactor, in micrometers.",
+                            "unit": "micrometers"
+                        },
+                        "purgeFlowRate": {
+                            "type": "number",
+                            "description": "Flow rate of purge gas in sccm.",
+                            "unit": "sccm"
+                        },
+                        "vacuumPressure": {
+                            "type": "number",
+                            "description": "Vacuum pressure in the reactor, in Pascals.",
+                            "unit": "Pascals"
+                        }
+                    },
+                    "required": [
+                        "gapDistance",
+                        "purgeFlowRate",
+                        "vacuumPressure"
+                    ]
+                }
+            },
+            "required": [
+                "etchedMaterial",
+                "byProducts",
+                "surfaceModifications",
+                "decompositionMechanisms",
+                "excitationDynamics",
+                "etchRate",
+                "surfaceDesorptionRates",
+                "bindingAffinity",
+                "filmProperties",
+                "designVariables"
+            ]
+        },
+        "simulationMethodology": {
+            "type": "object",
+            "description": "Parameters and methodologies used in the ALE simulation.",
+            "properties": {
+                "methods": {
+                    "type": "array",
+                    "description": "Computational methods used in the ALE process simulation.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "DFT",
+                            "TDDFT",
+                            "HF",
+                            "post-HF",
+                            "ML",
+                            "kMC",
+                            "MD",
+                            "Hybrid ONIOM",
+                            "CCSD(T)",
+                            "MP2",
+                            "Continuum Fluid Dynamics (CFD)",
+                            "RMD",
+                            "Monte Carlo",
+                            "Lattice Boltzmann Method (LBM)",
+                            "Group Contribution Method (GCM)",
+                            "Computer-Aided Molecular Design (CAMD)"
+                        ]
+                    }
+                },
+                "methodDetails": {
+                    "type": "object",
+                    "description": "Details specific to the computational methods used.",
+                    "properties": {
+                        "timestep": {
+                            "type": "number",
+                            "description": "Timestep used in MD simulations.",
+                            "unit": "fs"
+                        },
+                        "functional": {
+                            "type": "string",
+                            "description": "Functional used in DFT calculations, e.g., B3LYP."
+                        },
+                        "basisSet": {
+                            "type": "string",
+                            "description": "Basis set used in quantum chemical calculations, e.g., 6-31G(d,p)."
+                        },
+                        "clusterModel": {
+                            "type": "string",
+                            "description": "Cluster model used (e.g., Si9H12, Si23H24)."
+                        }
+                    }
+                },
+                "source": {
+                    "type": "object",
+                    "properties": {
+                        "method": {
+                            "type": "string",
+                            "description": "Method used to obtain the data (e.g., simulation, experiment)."
+                        }
+                    }
+                }
+            }
+        },
+        "fluorinationDetails": {
+            "type": "object",
+            "description": "Details specific to the fluorination process in ALE.",
+            "properties": {
+                "fluorineSpecies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Types of fluorine species involved, e.g., SF, SF2, SF3."
+                },
+                "surfaceReactivity": {
+                    "type": "string",
+                    "description": "Description of surface reactivity towards fluorine species."
+                },
+                "desorptionProcesses": {
+                    "type": "string",
+                    "description": "Description of desorption processes of fluorinated species."
+                },
+                "hfCoverage": {
+                    "type": "object",
+                    "properties": {
+                        "minimumCoverage": {
+                            "type": "number",
+                            "description": "Minimum HF coverage on the surface, in HF/nm².",
+                            "unit": "HF/nm²"
+                        },
+                        "maximumCoverage": {
+                            "type": "number",
+                            "description": "Maximum HF coverage on the surface, in HF/nm².",
+                            "unit": "HF/nm²"
+                        }
+                    }
+                }
+            }
+        },
+        "reactionMechanisms": {
+            "type": "object",
+            "description": "Details of the reaction mechanisms involved in ALE.",
+            "properties": {
+                "selfLimitingReactions": {
+                    "type": "string",
+                    "description": "Description of self-limiting reactions in the ALE process."
+                },
+                "chemicalVaporEtchReactions": {
+                    "type": "string",
+                    "description": "Description of chemical vapor etch reactions competing with self-limiting reactions."
+                },
+                "reactionFreeEnergies": {
+                    "type": "object",
+                    "properties": {
+                        "selfLimitingFreeEnergy": {
+                            "type": "number",
+                            "description": "Free energy of self-limiting reactions, in eV.",
+                            "unit": "eV"
+                        },
+                        "chemicalVaporEtchFreeEnergy": {
+                            "type": "number",
+                            "description": "Free energy of chemical vapor etch reactions, in eV.",
+                            "unit": "eV"
+                        },
+                        "minimumThermodynamicBarrier": {
+                            "type": "number",
+                            "description": "Minimum thermodynamic barrier between self-limiting and chemical vapor etch reactions, in eV.",
+                            "unit": "eV"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "processType",
+        "chemicalPrecursors",
+        "energySource",
+        "substrateMaterial",
+        "surfaceModel",
+        "processParameters",
+        "simulationParameters",
+        "simulationMethodology",
+        "fluorinationDetails",
+        "reactionMechanisms"
+    ]
+}

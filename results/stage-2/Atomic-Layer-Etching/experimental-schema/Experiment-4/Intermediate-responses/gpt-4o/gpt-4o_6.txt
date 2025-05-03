@@ -1,0 +1,329 @@
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "type": "object",
+  "properties": {
+    "directionality": {
+      "type": "string",
+      "enum": ["anisotropic", "isotropic"],
+      "description": "Specifies whether the etching process is directional (anisotropic) or omnidirectional (isotropic)."
+    },
+    "reactantSelection": {
+      "type": "object",
+      "properties": {
+        "reactants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of reactants used in the etching process."
+        },
+        "temperatureSensitivity": {
+          "type": "boolean",
+          "description": "Indicates if the material is sensitive to high temperatures."
+        },
+        "gibbsFreeEnergyChange": {
+          "type": "number",
+          "description": "Gibbs free energy change for the proposed chemistry, indicating energetically favorable reactions.",
+          "units": "kJ/mol"
+        },
+        "plasmaType": {
+          "type": "string",
+          "description": "Type of plasma used in the process, e.g., SF6, NF3."
+        }
+      },
+      "required": ["reactants"]
+    },
+    "thicknessDecrease": {
+      "type": "object",
+      "properties": {
+        "initialThickness": {
+          "type": "number",
+          "description": "Initial thickness of the material before etching.",
+          "units": "nm"
+        },
+        "finalThickness": {
+          "type": "number",
+          "description": "Final thickness of the material after etching.",
+          "units": "nm"
+        },
+        "etchPerCycle": {
+          "type": "number",
+          "description": "Average amount of material removed per cycle.",
+          "units": "nm/cycle"
+        }
+      },
+      "required": ["initialThickness", "finalThickness"]
+    },
+    "etchControl": {
+      "type": "object",
+      "properties": {
+        "saturationCurve": {
+          "type": "object",
+          "properties": {
+            "saturatingEtchRate": {
+              "type": "number",
+              "description": "Etch rate at saturation.",
+              "units": "nm/cycle"
+            },
+            "saturatingExposureTime": {
+              "type": "number",
+              "description": "Exposure time at which saturation occurs.",
+              "units": "seconds"
+            }
+          },
+          "required": ["saturatingEtchRate", "saturatingExposureTime"]
+        }
+      }
+    },
+    "synergy": {
+      "type": "object",
+      "properties": {
+        "synergyValue": {
+          "type": "number",
+          "description": "Synergy value indicating the degree of self-limitation in the process.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "processWindow": {
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "type": "object",
+          "properties": {
+            "minTemperature": {
+              "type": "number",
+              "description": "Minimum temperature for the process window.",
+              "units": "Celsius"
+            },
+            "maxTemperature": {
+              "type": "number",
+              "description": "Maximum temperature for the process window.",
+              "units": "Celsius"
+            }
+          },
+          "required": ["minTemperature", "maxTemperature"]
+        },
+        "ionEnergyWindow": {
+          "type": "object",
+          "properties": {
+            "minIonEnergy": {
+              "type": "number",
+              "description": "Minimum ion energy for the process window.",
+              "units": "eV"
+            },
+            "maxIonEnergy": {
+              "type": "number",
+              "description": "Maximum ion energy for the process window.",
+              "units": "eV"
+            }
+          },
+          "required": ["minIonEnergy", "maxIonEnergy"]
+        }
+      }
+    },
+    "uniformity": {
+      "type": "object",
+      "properties": {
+        "nonUniformity": {
+          "type": "number",
+          "description": "Non-uniformity of the etch process across the wafer.",
+          "units": "%"
+        },
+        "materialProperties": {
+          "type": "object",
+          "properties": {
+            "roughness": {
+              "type": "number",
+              "description": "Surface roughness after etching.",
+              "units": "nm"
+            },
+            "refractiveIndex": {
+              "type": "number",
+              "description": "Refractive index of the material after etching."
+            }
+          }
+        }
+      }
+    },
+    "isotropy": {
+      "type": "object",
+      "properties": {
+        "isotropicEtchRate": {
+          "type": "number",
+          "description": "Etch rate in isotropic processes.",
+          "units": "nm/cycle"
+        },
+        "anisotropicEtchRate": {
+          "type": "number",
+          "description": "Etch rate in anisotropic processes.",
+          "units": "nm/cycle"
+        }
+      }
+    },
+    "selectivity": {
+      "type": "object",
+      "properties": {
+        "selectivityRatio": {
+          "type": "number",
+          "description": "Ratio of etch rates between target and non-target materials."
+        }
+      }
+    },
+    "postEtchSurface": {
+      "type": "object",
+      "properties": {
+        "damageFree": {
+          "type": "boolean",
+          "description": "Indicates if the surface is damage-free after etching."
+        },
+        "residueFree": {
+          "type": "boolean",
+          "description": "Indicates if the surface is residue-free after etching."
+        }
+      }
+    },
+    "otherAspects": {
+      "type": "object",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for the etching process."
+        },
+        "sustainability": {
+          "type": "string",
+          "description": "Sustainability considerations for the etching process."
+        },
+        "throughput": {
+          "type": "number",
+          "description": "Throughput of the etching process.",
+          "units": "wafers/hour"
+        },
+        "environmentalImpact": {
+          "type": "string",
+          "description": "Environmental impact considerations for the etching process."
+        }
+      }
+    },
+    "reactorConfiguration": {
+      "type": "object",
+      "properties": {
+        "reactorType": {
+          "type": "string",
+          "description": "Type of reactor used for the etching process, e.g., RIE, ICP."
+        },
+        "reactorTemperature": {
+          "type": "number",
+          "description": "Temperature setting of the reactor during the process.",
+          "units": "Celsius"
+        }
+      }
+    },
+    "surfaceModification": {
+      "type": "object",
+      "properties": {
+        "modificationAgent": {
+          "type": "string",
+          "description": "Chemical agent used for surface modification, e.g., BCl3."
+        },
+        "modificationTemperature": {
+          "type": "number",
+          "description": "Temperature during the surface modification step.",
+          "units": "Celsius"
+        }
+      }
+    },
+    "surfaceBindingEnergy": {
+      "type": "object",
+      "properties": {
+        "E0": {
+          "type": "number",
+          "description": "Surface binding energy of the material.",
+          "units": "eV"
+        },
+        "Edes": {
+          "type": "number",
+          "description": "Energy barrier for desorption.",
+          "units": "eV"
+        },
+        "Eads": {
+          "type": "number",
+          "description": "Energy barrier for adsorption.",
+          "units": "eV"
+        }
+      }
+    },
+    "smoothingEffect": {
+      "type": "object",
+      "properties": {
+        "initialRoughness": {
+          "type": "number",
+          "description": "Initial surface roughness before etching.",
+          "units": "nm"
+        },
+        "finalRoughness": {
+          "type": "number",
+          "description": "Final surface roughness after etching.",
+          "units": "nm"
+        },
+        "smoothingPercentage": {
+          "type": "number",
+          "description": "Percentage of surface smoothing achieved through ALE.",
+          "units": "%"
+        }
+      }
+    },
+    "halfReactions": {
+      "type": "object",
+      "properties": {
+        "firstHalfReaction": {
+          "type": "string",
+          "description": "Description of the first half-reaction in the ALE process."
+        },
+        "secondHalfReaction": {
+          "type": "string",
+          "description": "Description of the second half-reaction in the ALE process."
+        },
+        "selfLimitingBehavior": {
+          "type": "boolean",
+          "description": "Indicates if the half-reactions exhibit self-limiting behavior."
+        }
+      }
+    },
+    "ALECriteria": {
+      "type": "object",
+      "properties": {
+        "selfLimitingReactions": {
+          "type": "boolean",
+          "description": "Indicates if the reactions are self-limiting, a key criterion for ALE."
+        },
+        "reactionSeparation": {
+          "type": "boolean",
+          "description": "Indicates if the reactions are separated into distinct steps."
+        }
+      }
+    }
+  },
+  "required": [
+    "directionality",
+    "reactantSelection",
+    "thicknessDecrease",
+    "etchControl",
+    "synergy",
+    "processWindow",
+    "uniformity",
+    "isotropy",
+    "selectivity",
+    "postEtchSurface",
+    "otherAspects",
+    "reactorConfiguration",
+    "surfaceModification",
+    "surfaceBindingEnergy",
+    "smoothingEffect",
+    "halfReactions",
+    "ALECriteria"
+  ]
+}
