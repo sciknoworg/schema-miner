@@ -214,6 +214,15 @@ JSON schema updated with LLM: gpt-4o
 
 Stage 3, validates and finalizes the schema using a larger, uncurated corpus of research papers, ensuring generalizability and semantic robustness. Stage 3 can be executed using this [script](src/experiments/schema_extraction/schema_extraction_stage3.py). The execution of stage 3 is similar to stage 2 except only the scientific corpus is been changed.
 
+## 👥 Contact & Contributions
+
+We’d love to hear from you!
+Whether you're interested in collaborating on SCHEMA-MINER or have ideas to extend its capabilities, feel free to reach out:
+    - Collaboration inquiries: Contact Dr. Jennifer D'Souza at jennifer.dsouza [at] tib.eu
+    - Development questions or bug reports: Please open an issue right here in the repository.
+
+Let’s build better schema-mining tools—together!
+
 ## 📃 License
 
 This work is licensed under a [MIT License](LICENSE.txt)
