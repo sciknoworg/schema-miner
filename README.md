@@ -214,14 +214,38 @@ JSON schema updated with LLM: gpt-4o
 
 Stage 3, validates and finalizes the schema using a larger, uncurated corpus of research papers, ensuring generalizability and semantic robustness. Stage 3 can be executed using this [script](src/experiments/schema_extraction/schema_extraction_stage3.py). The execution of stage 3 is similar to stage 2 except only the scientific corpus is been changed.
 
+## 📚 Citing this Work
+
+If you use `schema-miner` in your research or applications, please cite the following paper:
+
+> Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.  
+> **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**  
+> In *The Semantic Web – ESWC 2025*, Springer, Cham, pp. 244–261.  
+> [https://doi.org/10.1007/978-3-031-94578-6_14](https://doi.org/10.1007/978-3-031-94578-6_14)
+
+### 📌 BibTeX
+```bibtex
+@InProceedings{10.1007/978-3-031-94578-6_14,
+  author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Babaei Giglou, Hamed and Rula, Anisa and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+  editor    = {Curry, Edward and Acosta, Maribel and Poveda-Villal{\'o}n, Maria and van Erp, Marieke and Ojo, Adegboyega and Hose, Katja and Shimizu, Cogan and Lisena, Pasquale},
+  title     = {LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models},
+  booktitle = {The Semantic Web},
+  year      = {2025},
+  publisher = {Springer Nature Switzerland},
+  address   = {Cham},
+  pages     = {244--261},
+  isbn      = {978-3-031-94578-6},
+}
+```
+
 ## 👥 Contact & Contributions
 
 We’d love to hear from you!
 Whether you're interested in collaborating on `schema-miner` or have ideas to extend its capabilities, feel free to reach out:
 
-- **Collaboration inquiries:** Contact Dr. Jennifer D'Souza at jennifer.dsouza [at] tib.eu
+- **Collaboration inquiries:** Contact Jennifer D'Souza at jennifer.dsouza [at] tib.eu
 
-- **Development questions or bug reports:** Please [open an issue](https://github.com/sciknoworg/schema-miner/issues) right here in the repository
+- **Development questions or bug reports:** Please [open an issue](https://github.com/sciknoworg/schema-miner/issues) right here in the repository or get in touch with the lead developer Sameer Sadruddin at sameer.sadruddin [at] tub.eu
 
 Let’s build better schema-mining tools—together!
 
