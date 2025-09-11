@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "QUDT Enriched Physical Quantity",
+    "description": "A JSON Schema representation of a physical quantity enriched with QUDT ontology concepts. Captures both the numeric value and associated unit semantics.",
+    "type": "object",
+    "properties": {
+        "quantityValue": {
+            "type": "object",
+            "description": "The measured or observed value of the physical quantity, expressed as a numeric value along with its associated unit.",
+            "properties": {
+                "numericValue": {
+                    "type": "number",
+                    "description": "The numerical magnitude of the physical quantity (e.g., 9.81, 25.0)."
+                },
+                "unit": {
+                    "type": "object",
+                    "description": "The unit of measurement associated with the numeric value, following QUDT ontology terms.",
+                    "properties": {
+                        "hasQuantityKind": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "The QUDT URI of the quantity kind that categorizes the physical property measured by this unit."
+                        },
+                        "sameAs": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "An external identifier or URI that provides a reference equivalent to this unit"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "numericValue",
+                "unit"
+            ]
+        },
+        "quantityKind": {
+            "type": "string",
+            "description": "The QUDT URI of the quantity kind that categorizes the physical property measured by this unit."
+        }
+    },
+    "required": [
+        "quantityValue",
+        "quantityKind"
+    ]
+}

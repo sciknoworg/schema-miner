@@ -3,23 +3,43 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "schema-miner"
-version = "1.0.0"
+name = "schema_miner"
+version = "2.0.0"
 description = "A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models"
-authors = [{name = "Sameer Sadruddin", email = "sameer.sadruddin@tib.eu"}]
-license = {text = "MIT"} 
+authors = [
+    {name = "Sameer Sadruddin", email = "sameer.sadruddin@tib.eu"},
+    {name = "Jennifer D'Souza", email = "jennifer.dsouza@tib.eu"}
+]
+maintainers = [
+    {name = "Sameer Sadruddin", email = "sameer.sadruddin@tib.eu"}
+]
 dependencies = [
     "evaluate>=0.4.3",
     "langchain_community>=0.3.14",
     "langchain_core>=0.3.29",
     "langchain_ollama>=0.2.2",
     "langchain_openai>=0.3.0",
+    "langchain-huggingface>=0.1.2",
     "pandas>=2.2.3",
     "python-dotenv>=1.0.1",
     "PyYAML>=6.0.2",
-    "transformers>=4.48.0"
+    "transformers>=4.48.0",
+    "rdflib>=7.1.4",
+    "docling>=2.28.4",
+    "faiss-cpu>=1.10.0"
 ]
+requires-python = ">=3.11"
+readme = "README_PYPI.md"
+license = "MIT"
+keywords = ["Schema Discovery", "Schema Mining", "Scientific Schemas", "Large Language Models", "Human-in-the-loop Workflow"]
 
 [project.urls]
 homepage = "https://github.com/sciknoworg/schema-miner"
 repository = "https://github.com/sciknoworg/schema-miner"
+Documentation = "https://schema-miner.readthedocs.io"
+
+[tool.setuptools.packages.find]
+include = ["schema_miner*"]
+
+[tool.setuptools.package-data]
+schema_miner = ["schemas/*.json"]
