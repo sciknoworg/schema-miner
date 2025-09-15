@@ -1,154 +1,133 @@
 Quickstart
 ==========
 
-Configuration
+This guide walks you through running schema-miner: extracting a schema, refining it, and grounding it with QUDT.
+
+Prerequisites
 *************
 
-Parameters such as API keys, base URLs, and model settings are managed using a dedicated environment file. The .env file has to be saved at the root directory of the project.
+- You have installed `schema-miner` and set up any required API keys (see :doc:`installation`).
+- You have data prepared in the directory structure described below.
 
-**Setting Up the Environment File**
+Step 1: Data Setup
+******************
 
-Before running the project, you need to setup the environment variables.
+Before extraction, prepare your data directories. For example:
 
-1. Copy the example file:
+.. code-block:: python
 
-    .. code-block:: bash
+    # Process Specification for Stage 1
+    process_specification_filepath = '../data/stage-1/Atomic-Layer-Deposition/Experimental-Usecase'
+    process_specification_filename = 'ALD-Process-Development.pdf'
 
-        cp .env.example .env
+    # Small curated corpus of scientific papers
+    scientific_paper_stage2_dir = '../data/stage-2/Atomic-Layer-Deposition/research-papers/experimental-usecase'
 
-2. Open ``.env`` file and replace the placeholder values with the actual configuration.
+    # Bigger corpus of scientific papers
+    scientific_paper_stage3_dir = '../data/stage-3/Atomic-Layer-Deposition/research-papers/experimental_usecase'
 
-Step 1: Preparing Knowledge Base
-********************************
+Step 2: Process Configuration
+*****************************
 
-The knowledge base includes an initial domain specification document and relevant research papers for stages 2 and 3. For machine processing, the input documents are in plain text format. If research papers are in PDF format, the pdf to text conversion script `file_text_extractor <https://github.com/sciknoworg/schema-miner/blob/main/src/experiments/file_text_extractor.py>`_ can be used. The script takes the directory of the PDFs and the directory to save the converted text files.
+Initialize the process name and description whose schema has to be extracted:
 
-.. code-block:: bash
+.. code-block:: python
 
-    $ python file_text_extractor.py
+    from schema_miner.config.processConfig import ProcessConfig
 
-    LLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models 
-    Formatting Knowledge Base - Converting PDF Documents to Text Files
+    ProcessConfig.Process_name = "Atomic Layer Deposition"
+    ProcessConfig.Process_description = "An ALD process involves a series of controlled chemical reactions used to deposit thin films on a surface at an atomic level"
 
-    Please input the directory location containing the PDF documents  
-    Directory Path> data/research-papers
+Also make sure your LLM keys/config are set:
 
-    Please input the directory Location to store the converted text files
-    Directory Path> data/research-papers
+.. code-block:: python
 
-    Extracting text from all PDFs from the directory: data/research-papers
+    from schema_miner.config.envConfig import EnvConfig
+    EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
+    EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
 
-    Extracting text from the PDF: ALD-E_Simulation-Parameters-Observables-List.pdf
-    Text file saved successfully: True
+Step 3: Stage 1 - Initial Schema Mining
+***************************************
 
-    PDF documents successfully convert to text format!
+An initial JSON schema can be generated based on the domain specification document and the preferred LLM. An example run is shown below:
 
-Step 2: Generating Initial Schema from Stage 1
-**********************************************
+.. code-block:: python
 
-An initial JSON schema can be generated based on the domain specification document and the preferred LLM. Stage 1 can be executed using the `schema_extraction_stage1 <https://github.com/sciknoworg/schema-miner/blob/main/src/experiments/schema_extraction/schema_extraction_stage1.py>`_ script. An example run is shown below:
+    import json
+    import logging
+    from pathlib import Path
+    from schema_miner.pdf_text_extractor import pdf_text_extractor
+    from schema_miner.schema_extractor.extract_schema import extract_schema_stage1
 
-.. code-block:: bash
+    # Choose LLM
+    llm_model_name = 'gpt-4o'
 
-    $ python schema_extraction_stage1.py
+    # Input process specification
+    process_specification = pdf_text_extractor(process_specification_filepath, process_specification_filename, return_text = True)
 
-    LLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models
-    Stage 1: Initial Schema Mining
+    # Extract schema
+    results_file_path = Path("./results/stage-1/Atomic-Layer-Deposition/experimental-schema")
+    schema = extract_schema_stage1(llm_model_name, process_specification, results_file_path, save_schema = True)
 
-    Please specify the LLM name to perform schema mining...
-    List of possible LLMs:
-        1. OPENAI Models:
-            - gpt-4o
-            - gpt-4-turbo
-        2. LLAMA Models:
-            - meta-llama-3.1-8b-instruct
-        3. Any other local OLLAMA Model
-
-    LLM> gpt-4o
-
-    Please specify the location of the process specification document
-    Document location> data/stage-1/ALD-Process-Development.txt
-
-    Please specify the location to save the schema
-    Schema location> results/stage-1
-
-    Performing LLM (gpt-4o) Inference to extract schema...
-    Using OPENAI - LLM Inference with Model: gpt-4o
-
-    Writing the models response to the file at the specified location: results/stage-1
-
-    Extracting the JSON object from the models output...
-    JSON schema Saved at location: results/stage-1
-
-Step 3: Refining Stage 1 Schemas with scientific literature and human feedback
+Step 4: Stage 2 - Preliminary Schema Refinement
 ******************************************************************************
 
-The schema from stage 1 can refined by the LLM iteratively by analyzing a curated set of research papers and incorporating expert feedback. Stage 2 can be executed using the `schema_extraction_stage2 <https://github.com/sciknoworg/schema-miner/blob/main/src/experiments/schema_extraction/schema_extraction_stage2.py>`_ script. An example run is show below:
+The schema from stage 1 can refined by the LLM iteratively by analyzing a curated set of research papers and incorporating expert feedback. An example run is show below:
 
-.. code-block:: bash
+.. code-block:: python
 
-    $ python schema_extraction_stage2.py
+    from schema_miner.schema_extractor.extract_schema import extract_schema_stage2
 
-    LLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models 
-    Stage 2: Preliminary Schema Refinement
+    # Input Initial Schema, Expert Feedback and Scientific Literature
+    schema = Path("./results/stage-1/Atomic-Layer-Deposition/experimental-schema/gpt-4o.json")
+    expert_review = Path("./data/stage-2/Atomic-Layer-Deposition/domain-expert-reviews/experimental-usecase/method-1/gpt-4o.txt")
+    scientific_paper = pdf_text_extractor(scientific_paper_stage2_dir, '1 Groner et al.pdf', return_text = True)
 
-    Please specify the LLM name to perform schema mining...
-    List of possible LLMs:
-        1. OPENAI Models:
-            - gpt-4o
-            - gpt-4-turbo
-        2. LLAMA Models:
-            - meta-llama-3.1-8b-instruct
-        3. Any other local OLLAMA Model
+    # Refine schema
+    results_file_path = Path("./results/stage-2/Atomic-Layer-Deposition/experimental-schema")
+    schema = extract_schema_stage2(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 
-    LLM> gpt-4o
+Step 5: Stage 3 – Final Schema Refinement
+*****************************************
 
-    Please specify the location to the schema from stage 1
-    Stage 1 - schema location> results/stage-1
+The schema from stage 2 can be finalized by the LLM iteratively by a larger set of research papers and expert feedback. An example run is show below:
 
-    Please specify the location to the domain-expert feedbacks on stage 1 schema
-    Expert feedback location> data/stage-2/domain-expert-reviews/experimental-usecase/method-1
+.. code-block:: python
 
-    Please specify the location to the small domain-expert curated collection of research papers
-    Research papers location> data/stage-2/research-papers/experimental-usecase
+    from schema_miner.schema_extractor.extract_schema import extract_schema_stage3
 
-    Please specify the location to save the schema
-    Schema location> results/stage-2
+    # Input Schema, Expert Feedback and Scientific Literature
+    schema = Path("./results/stage-2/Atomic-Layer-Deposition/experimental-schema/gpt-4o.json")
+    expert_review = Path("./data/stage-3/Atomic-Layer-Deposition/domain-expert-reviews/experimental-usecase/Experiment-1/1a/gpt-4o.txt")
+    scientific_paper = pdf_text_extractor(scientific_paper_stage3_dir, '1-Mattinen et al.pdf', return_text = True)
 
-    Performing LLM (gpt-4o) Inference to extract updated experimental schema...
-    Using OPENAI - LLM Inference with Model: gpt-4o
+    # Finalize schema
+    results_file_path = Path("./results/stage-3/Atomic-Layer-Deposition/experimental-schema")
+    schema = extract_schema_stage3(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 
-    Reading the schema from stage-1: results/stage-1/gpt-4o.json
+    # View Final Schema
+    logging.info(f"{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent=2)}")
 
-    Reading the domain expert review on the initial schema: data/stage-2/domain-expert-reviews/experimental-usecase/method-1/gpt-4o.txt
+Step 6: Ontology Grounding with QUDT
+************************************
 
-    ========================== Iteration 1 =================================
+Once a process schema is extracted, it can be semantically grounded using the `QUDT Ontologies <https://www.qudt.org/pages/HomePage.html>`_ (Quantities, Units, Dimensions, and Data Types).
 
-    Reading the scientific paper: data/stage-2/research-papers/experimental-usecase/1 Groner et al.txt
+The grounding workflow uses either LLM prompting or an agentic LLM approach to align schema fields with QUDT concepts. Following is an example of an agent based qudt grounding.
 
-    Calling the completion API of the model
-    Writing the models response to the file at the specified location: results/stage-2
+.. code-block:: python
 
-    Do you want to provide feedback?
-    Feedback (yes/no)> yes
+    from schema_miner.ontology_grounding.agentic_qudt_grounding import agentic_qudt_grounding
 
-    Please input your feedback
-    Feedback> The reactivity should be mentioned either at the process conditions or film properties. It’s the result of deposition under specific conditions not a standard property of the precursor or co-reactant.
+    # Select LLM for grounding
+    llm_model_name = 'gpt-4o'
 
-    Do you want to continue with the next paper?
-    Continue (yes)/Stop (no)> yes
+    # Ground the schema with QUDT Ontology
+    process_schema = Path('./results/Ideal Schema/Atomic-Layer-Deposition/experimental-ideal-schema.json')
+    results_file_path = Path("./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema")
+    schema = agentic_qudt_grounding(llm_model_name, process_schema, results_file_path, save_schema = True)
 
-    ========================== Iteration 2 =================================
-    Reading the scientific paper: data/stage-2/research-papers/experimental-usecase/2 Aaltonen et al.txt
+    # Display grounded schema
+    logging.info(f'{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent = 2)}')
 
-    Calling the completion API of the model
-    Writing the models response to the file at the specified location: results/stage-2
-
-    Do you want to provide feedback?
-    Feedback (yes/no)> no
-
-    Do you want to continue with the next paper?
-    Continue (yes)/Stop (no)> no
-    JSON schema updated with LLM: gpt-4o
-
-Stage 3, validates and finalizes the schema using a larger, uncurated corpus of research papers, ensuring generalizability and semantic robustness. Stage 3 can be executed using this `schema_extraction_stage3 <https://github.com/sciknoworg/schema-miner/blob/main/src/experiments/schema_extraction/schema_extraction_stage3.py>`_ script. The execution of stage 3 is similar to stage 2 except only the scientific corpus is been changed.
+For a detailed description of each function and module, please refer to the :doc:`Package Reference <../packagereference/schema-extractor>`.
