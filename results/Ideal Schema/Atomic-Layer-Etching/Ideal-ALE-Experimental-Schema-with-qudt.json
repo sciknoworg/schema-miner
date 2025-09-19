@@ -1,264 +1,886 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Atomic Layer Etching Process",
-    "type": "object",
-    "properties": {
-        "material": {
-            "type": "string",
-            "description": "Material that is being etched."
-        },
-        "aleProcess": {
-            "type": "string",
-            "description": "Type of ALE process used. Whether it is plasma or thermal."
-        },
-        "directionality": {
-            "type": "string",
-            "enum": [
-                "anisotropic",
-                "isotropic"
-            ],
-            "description": "Specifies whether the etching process is directional (anisotropic) or omnidirectional (isotropic)."
-        },
-        "reactantSelection": {
-            "type": "object",
-            "properties": {
-                "reactantA": {
-                    "type": "string",
-                    "description": "Primary reactant used in the surface modification step."
-                },
-                "reactantB": {
-                    "type": "string",
-                    "description": "Secondary reactant used in the surface removal step."
-                }
-            },
-            "required": [
-                "reactantA",
-                "reactantB"
-            ]
-        },
-        "processDetails": {
-            "type": "object",
-            "properties": {
-                "substrateTemperature": {
-                    "type": "number",
-                    "description": "Temperature of the substrate during the ALE process.",
-                    "units": "Celsius"
-                },
-                "pressure": {
-                    "type": "number",
-                    "description": "Pressure within the reactor during the ALE process.",
-                    "units": "Torr"
-                },
-                "substrate": {
-                    "type": "string",
-                    "description": "Substrate on which the etching is performed."
-                },
-                "pulseTimes": {
-                    "type": "object",
-                    "properties": {
-                        "pulseA": {
-                            "type": "number",
-                            "description": "Saturation exposure time for reactant A",
-                            "units": "seconds"
-                        },
-                        "pulseB": {
-                            "type": "number",
-                            "description": "Saturation exposure time for reactant B.",
-                            "units": "seconds"
-                        }
-                    },
-                    "required": [
-                        "pulseA",
-                        "pulseB"
-                    ]
-                },
-                "purgeTimes": {
-                    "type": "object",
-                    "properties": {
-                        "purgeA": {
-                            "type": "number",
-                            "description": "Time for purge after pulsing reactant A.",
-                            "units": "seconds"
-                        },
-                        "purgeB": {
-                            "type": "number",
-                            "description": "Time for purge after pulsing reactant B.",
-                            "units": "seconds"
-                        }
-                    },
-                "reactorType": {
-                    "type": "string",
-                    "description": "Type of reactor where ALE was performed."
-                },
-                "plasmaPower": {
-                    "type": "number",
-                    "description": "Power of plasma if plasma-enhanced ALE is used.",
-                    "units": "Watts"
-                },
-                "RFpower": {
-                    "type": "number",
-                    "description": "RF power, if plasma-enhanced ALE is used.",
-                    "units": "Watts"
-                },
-                "reactantFlow": {
-                    "type": "number",
-                    "description": "Flow rate of reactants during the ALE process.",
-                    "units": "sccm"
-                },
-                "numberOfCycles": {
-                    "type": "number",
-                    "description": "Number of ALE cycles to reach saturation."
-                }
-            }
-        },
-        "etchControl": {
-            "type": "object",
-            "properties": {
-                "etchPerCycle": {
-                    "type": "number",
-                    "description": "Average amount of material removed per cycle.",
-                    "units": "nm/cycle"
-                },
-                "massLoss": {
-                    "type": "number",
-                    "description": "Mass loss during one or more cycles, measured by QCM.",
-                    "units": "ng"
-                }
-            },
-            "required": [
-                "etchPerCycle"
-            ]
-        },
-        "synergy": {
-            "type": "object",
-            "properties": {
-                "synergyValue": {
-                    "type": "number",
-                    "description": "Synergy value indicating the degree of self-limitation in the process.",
-                    "minimum": 0,
-                    "maximum": 1
-                }
-            }
-        },
-        "ALEWindow": {
-            "type": "object",
-            "properties": {
-                "temperatureWindow": {
-                    "type": "object",
-                    "properties": {
-                        "minTemperature": {
-                            "type": "number",
-                            "description": "Minimum temperature for the ALE window. Exceeding this may cause decomposition.",
-                            "units": "Celsius"
-                        },
-                        "maxTemperature": {
-                            "type": "number",
-                            "description": "Maximum temperature for the ALE window. Exceeding this may cause decomposition.",
-                            "units": "Celsius"
-                        }
-                    },
-                    "required": [
-                        "minTemperature",
-                        "maxTemperature"
-                    ]
-                },
-                "ionEnergyWindow": {
-                    "type": "object",
-                    "properties": {
-                        "minIonEnergy": {
-                            "type": "number",
-                            "description": "Minimum ion energy for the ALE window. Exceeding this may cause sputtering.",
-                            "units": "eV"
-                        },
-                        "maxIonEnergy": {
-                            "type": "number",
-                            "description": "Maximum ion energy for the ALE window. Exceeding this may cause sputtering.",
-                            "units": "eV"
-                        }
-                    },
-                    "required": [
-                        "minIonEnergy",
-                        "maxIonEnergy"
-                    ]
-                }
-            }
-        },
-        "etchedMaterialProperties": {
-            "type": "object",
-            "properties": {
-                "materialProperties": {
-                    "type": "object",
-                    "properties": {
-                        "roughness": {
-                            "type": "number",
-                            "description": "Surface roughness after etching.",
-                            "units": "nm"
-                        },
-                        "refractiveIndex": {
-                            "type": "number",
-                            "description": "Refractive index of the material after etching."
-                        },
-                        "chemicalComposition": {
-                            "type": "string",
-                            "description": "Chemical composition of the etched film."
-                        },
-                        "crystallinity": {
-                            "type": "string",
-                            "description": "Crystallinity of the etched material."
-                        },
-                        "uniformity": {
-                            "type": "object",
-                            "properties": {
-                                "nonUniformity": {
-                                    "type": "number",
-                                    "description": "Non-uniformity of the etch process across the wafer.",
-                                    "units": "%"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "selectivity": {
-            "type": "object",
-            "properties": {
-                "selectivityDescription": {
-                    "type": "string",
-                    "description": "Description of the selectivity of the process, determining if proposed chemistry can be applied on different materials."
-                }
-            }
-        },
-        "otherAspects": {
-            "type": "object",
-            "properties": {
-                "safety": {
-                    "type": "string",
-                    "description": "Safety considerations for the etching process."
-                },
-                "sustainability": {
-                    "type": "string",
-                    "description": "Sustainability considerations for the etching process."
-                },
-                "environmentalImpact": {
-                    "type": "string",
-                    "description": "Environmental impact considerations for the etching process."
-                }
-            }
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Atomic Layer Etching Process",
+  "type": "object",
+  "properties": {
+    "material": {
+      "type": "string",
+      "description": "Material that is being etched."
     },
-    "required": [
-        "materialEtched",
-        "aleProcess",
-        "directionality",
-        "reactantSelection",
-        "etchControl",
-        "synergy",
-        "ALEWindow",
-        "etchedMaterialProperties",
-        "selectivity",
-        "otherAspects",
-        "processDetails"
-    ]
-}
+    "aleProcess": {
+      "type": "string",
+      "description": "Type of ALE process used. Whether it is plasma or thermal."
+    },
+    "directionality": {
+      "type": "string",
+      "enum": [
+        "anisotropic",
+        "isotropic"
+      ],
+      "description": "Specifies whether the etching process is directional (anisotropic) or omnidirectional (isotropic)."
+    },
+    "reactantSelection": {
+      "type": "object",
+      "properties": {
+        "reactantA": {
+          "type": "string",
+          "description": "Primary reactant used in the surface modification step."
+        },
+        "reactantB": {
+          "type": "string",
+          "description": "Secondary reactant used in the surface removal step."
+        }
+      },
+      "required": [
+        "reactantA",
+        "reactantB"
+      ]
+    },
+    "processDetails": {
+      "type": "object",
+      "properties": {
+        "substrateTemperature": {
+          "type": "object",
+          "description": "Temperature of the substrate during the ALE process.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Temperature"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/DEG_C",
+                        "https://qudt.org/vocab/unit/K",
+                        "https://qudt.org/vocab/unit/DEG_F"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Temperature"
+              ]
+            }
+          }
+        },
+        "pressure": {
+          "type": "object",
+          "description": "Pressure within the reactor during the ALE process.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Pressure"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/PA",
+                        "https://qudt.org/vocab/unit/TORR"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Pressure"
+              ]
+            }
+          }
+        },
+        "substrate": {
+          "type": "string",
+          "description": "Substrate on which the etching is performed."
+        },
+        "pulseTimes": {
+          "type": "object",
+          "properties": {
+            "pulseA": {
+              "type": "object",
+              "description": "Saturation exposure time for reactant A",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/MilliSEC",
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            },
+            "pulseB": {
+              "type": "object",
+              "description": "Saturation exposure time for reactant B.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/MilliSEC",
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "pulseA",
+            "pulseB"
+          ]
+        },
+        "purgeTimes": {
+          "type": "object",
+          "properties": {
+            "purgeA": {
+              "type": "object",
+              "description": "Time for purge after pulsing reactant A.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/MilliSEC",
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            },
+            "purgeB": {
+              "type": "object",
+              "description": "Time for purge after pulsing reactant B.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/Time"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/MilliSEC",
+                            "http://qudt.org/vocab/unit/SEC"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/Time"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "reactorType": {
+          "type": "string",
+          "description": "Type of reactor where ALE was performed."
+        },
+        "plasmaPower": {
+          "type": "object",
+          "description": "Power of plasma if plasma-enhanced ALE is used.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Power"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/W",
+                        "https://qudt.org/vocab/unit/MilliW"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Power"
+              ]
+            }
+          }
+        },
+        "RFpower": {
+          "type": "object",
+          "description": "RF power, if plasma-enhanced ALE is used.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/RF-Power"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/W"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/RF-Power"
+              ]
+            }
+          }
+        },
+        "reactantFlow": {
+          "type": "object",
+          "description": "Flow rate of reactants during the ALE process.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/MolarFlowRate"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/SCM-PER-MIN"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/MolarFlowRate"
+              ]
+            }
+          }
+        },
+        "numberOfCycles": {
+          "type": "object",
+          "description": "Number of ALE cycles to reach saturation.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Count"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/unit/UNITLESS"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Count"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "etchControl": {
+      "type": "object",
+      "properties": {
+        "etchPerCycle": {
+          "type": "object",
+          "description": "Average amount of material removed per cycle.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/Length"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/NanoM"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "https://qudt.org/vocab/quantitykind/Length"
+              ]
+            }
+          }
+        },
+        "massLoss": {
+          "type": "object",
+          "description": "Mass loss during one or more cycles, measured by QCM.",
+          "properties": {
+            "quantityValue": {
+              "type": "object",
+              "properties": {
+                "numericValue": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "object",
+                  "properties": {
+                    "hasQuantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "http://qudt.org/vocab/quantitykind/Mass"
+                      ]
+                    },
+                    "sameAs": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/unit/NanoGM"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "quantityKind": {
+              "type": "string",
+              "enum": [
+                "http://qudt.org/vocab/quantitykind/Mass"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "etchPerCycle"
+      ]
+    },
+    "synergy": {
+      "type": "object",
+      "properties": {
+        "synergyValue": {
+          "type": "number",
+          "description": "Synergy value indicating the degree of self-limitation in the process.",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "aleWindow": {
+      "type": "object",
+      "properties": {
+        "temperatureWindow": {
+          "type": "object",
+          "properties": {
+            "minTemperature": {
+              "type": "object",
+              "description": "Minimum temperature for the ALE window. Exceeding this may cause decomposition.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Temperature"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/DEG_C",
+                            "https://qudt.org/vocab/unit/K",
+                            "https://qudt.org/vocab/unit/DEG_F"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Temperature"
+                  ]
+                }
+              }
+            },
+            "maxTemperature": {
+              "type": "object",
+              "description": "Maximum temperature for the ALE window. Exceeding this may cause decomposition.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Temperature"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/DEG_C",
+                            "https://qudt.org/vocab/unit/K",
+                            "https://qudt.org/vocab/unit/DEG_F"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Temperature"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "minTemperature",
+            "maxTemperature"
+          ]
+        },
+        "ionEnergyWindow": {
+          "type": "object",
+          "properties": {
+            "minIonEnergy": {
+              "type": "object",
+              "description": "Minimum ion energy for the ALE window. Exceeding this may cause sputtering.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Energy"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/EV"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Energy"
+                  ]
+                }
+              }
+            },
+            "maxIonEnergy": {
+              "type": "object",
+              "description": "Maximum ion energy for the ALE window. Exceeding this may cause sputtering.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Energy"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/EV"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Energy"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "minIonEnergy",
+            "maxIonEnergy"
+          ]
+        }
+      }
+    },
+    "etchedMaterialProperties": {
+      "type": "object",
+      "properties": {
+        "materialProperties": {
+          "type": "object",
+          "properties": {
+            "roughness": {
+              "type": "object",
+              "description": "Surface roughness after etching.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/quantitykind/Length"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "https://qudt.org/vocab/unit/NanoM"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "https://qudt.org/vocab/quantitykind/Length"
+                  ]
+                }
+              }
+            },
+            "refractiveIndex": {
+              "type": "object",
+              "description": "Refractive index of the material after etching.",
+              "properties": {
+                "quantityValue": {
+                  "type": "object",
+                  "properties": {
+                    "numericValue": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "object",
+                      "properties": {
+                        "hasQuantityKind": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/quantitykind/RefractiveIndex"
+                          ]
+                        },
+                        "sameAs": {
+                          "type": "string",
+                          "enum": [
+                            "http://qudt.org/vocab/unit/UNITLESS"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "quantityKind": {
+                  "type": "string",
+                  "enum": [
+                    "http://qudt.org/vocab/quantitykind/RefractiveIndex"
+                  ]
+                }
+              }
+            },
+            "chemicalComposition": {
+              "type": "string",
+              "description": "Chemical composition of the etched film."
+            },
+            "crystallinity": {
+              "type": "string",
+              "description": "Crystallinity of the etched material."
+            },
+            "uniformity": {
+              "type": "object",
+              "properties": {
+                "nonUniformity": {
+                  "type": "object",
+                  "description": "Non-uniformity of the etch process across the wafer.",
+                  "properties": {
+                    "quantityValue": {
+                      "type": "object",
+                      "properties": {
+                        "numericValue": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "object",
+                          "properties": {
+                            "hasQuantityKind": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                              ]
+                            },
+                            "sameAs": {
+                              "type": "string",
+                              "enum": [
+                                "https://qudt.org/vocab/unit/PERCENT"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "quantityKind": {
+                      "type": "string",
+                      "enum": [
+                        "https://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "selectivity": {
+      "type": "object",
+      "properties": {
+        "selectivityDescription": {
+          "type": "string",
+          "description": "Description of the selectivity of the process, determining if proposed chemistry can be applied on different materials."
+        }
+      }
+    },
+    "otherAspects": {
+      "type": "object",
+      "properties": {
+        "safety": {
+          "type": "string",
+          "description": "Safety considerations for the etching process."
+        },
+        "sustainability": {
+          "type": "string",
+          "description": "Sustainability considerations for the etching process."
+        },
+        "environmentalImpact": {
+          "type": "string",
+          "description": "Environmental impact considerations for the etching process."
+        }
+      }
+    }
+  },
+  "required": [
+    "material",
+    "aleProcess",
+    "directionality",
+    "reactantSelection",
+    "etchControl",
+    "synergy",
+    "aleWindow",
+    "etchedMaterialProperties",
+    "selectivity",
+    "otherAspects",
+    "processDetails"
+  ]
 }

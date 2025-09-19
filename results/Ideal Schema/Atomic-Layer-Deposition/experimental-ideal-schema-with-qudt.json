@@ -4,61 +4,61 @@
   "description": "A schema representing the steps and parameters involved in setting up and characterizing an Atomic Layer Deposition process and the deposited film.",
   "type": "object",
   "properties": {
-    "ALDSystem": {
+    "aldSystem": {
       "type": "object",
       "description": "Details about the ALD system used.",
       "properties": {
-        "ALDMethod": {
+        "aldMethod": {
           "type": "string",
           "description": "The specific ALD technique used, e.g., thermal ALD, plasma-enhanced ALD."
         },
-        "MaterialDeposited": {
+        "materialDeposited": {
           "type": "string",
           "description": "The material being deposited, e.g., TiO2, Copper."
         }
       }
     },
-    "ReactantSelection": {
+    "reactantSelection": {
       "type": "object",
       "description": "Selection of precursor and co-reactant based on their reactivity, volatility, and safety.",
       "properties": {
-        "Precursor": {
+        "precursor": {
           "type": "string",
           "description": "Chemical used as a precursor in the ALD process, e.g., tris(diethylamino)aluminum."
         },
-        "CoReactant": {
+        "coReactant": {
           "type": "string",
           "description": "Chemical used as a co-reactant in the ALD process, e.g., water, hydrogen plasma."
         },
-        "CarrierGas": {
+        "carrierGas": {
           "type": "string",
           "description": "Type of carrier gas used in the delivery of reactants."
         }
       }
     },
-    "ProcessParameters": {
+    "processParameters": {
       "type": "object",
       "description": "Specific parameters under which the ALD process is carried out.",
       "properties": {
-        "Reactor": {
+        "reactor": {
           "type": "object",
           "description": "Type and details of the reactor used for the ALD process.",
           "properties": {
-            "Name": {
+            "name": {
               "type": "string",
               "description": "Name of the reactor."
             },
-            "Manufacturer": {
+            "manufacturer": {
               "type": "string",
               "description": "Manufacturer of the reactor."
             }
           }
         },
-        "DeliveryMethod": {
+        "deliveryMethod": {
           "type": "string",
           "description": "Method of delivering the precursor and co-reactant to the reaction chamber."
         },
-        "Temperature": {
+        "temperature": {
           "type": "object",
           "description": "The temperature at which deposition occurs, typically in °C.",
           "properties": {
@@ -97,7 +97,7 @@
             }
           }
         },
-        "Pressure": {
+        "pressure": {
           "type": "object",
           "description": "The pressure within the reactor during deposition, typically in Torr.",
           "properties": {
@@ -134,11 +134,11 @@
             }
           }
         },
-        "ThicknessControl": {
+        "thicknessControl": {
           "type": "object",
           "description": "Control and verification of material thickness per cycle.",
           "properties": {
-            "GrowthPerCycle": {
+            "growthPerCycle": {
               "type": "object",
               "description": "The amount of material deposited per cycle, typically measured in nm per cycle.",
               "properties": {
@@ -216,10 +216,10 @@
                 }
               }
             },
-            "DosingTime": {
+            "dosingTime": {
               "type": "object",
               "properties": {
-                "Precursor": {
+                "precursor": {
                   "type": "object",
                   "description": "Time for dosing the precursor, measured in seconds.",
                   "properties": {
@@ -256,7 +256,7 @@
                     }
                   }
                 },
-                "CoReactant": {
+                "coReactant": {
                   "type": "object",
                   "description": "Time for dosing the co-reactant, measured in seconds.",
                   "properties": {
@@ -295,10 +295,10 @@
                 }
               }
             },
-            "PurgeTime": {
+            "purgeTime": {
               "type": "object",
               "properties": {
-                "Precursor": {
+                "precursor": {
                   "type": "object",
                   "description": "Time for purging the reactor chamber after precursor dosing, measured in seconds.",
                   "properties": {
@@ -335,7 +335,7 @@
                     }
                   }
                 },
-                "CoReactant": {
+                "coReactant": {
                   "type": "object",
                   "description": "Time for purging the reactor chamber after co-reactant dosing, measured in seconds.",
                   "properties": {
@@ -378,14 +378,14 @@
         }
       }
     },
-    "MaterialProperties": {
+    "materialProperties": {
       "type": "object",
       "description": "Assessment of the properties of the deposited film.",
       "properties": {
-        "OpticalProperties": {
+        "opticalProperties": {
           "type": "object",
           "properties": {
-            "RefractiveIndex": {
+            "refractiveIndex": {
               "type": "object",
               "description": "Refractive index of the film.",
               "properties": {
@@ -401,13 +401,13 @@
                         "hasQuantityKind": {
                           "type": "string",
                           "enum": [
-                            "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                            "http://qudt.org/vocab/quantitykind/RefractiveIndex"
                           ]
                         },
                         "sameAs": {
                           "type": "string",
                           "enum": [
-                            ""
+                            "http://qudt.org/vocab/unit/UNITLESS"
                           ]
                         }
                       }
@@ -417,12 +417,12 @@
                 "quantityKind": {
                   "type": "string",
                   "enum": [
-                    "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+                    "http://qudt.org/vocab/quantitykind/RefractiveIndex"
                   ]
                 }
               }
             },
-            "AbsorptionCoefficient": {
+            "absorptionCoefficient": {
               "type": "object",
               "description": "Optical absorption coefficient.",
               "properties": {
@@ -445,7 +445,7 @@
                         "sameAs": {
                           "type": "string",
                           "enum": [
-                            ""
+                            "http://qudt.org/vocab/unit/UNITLESS"
                           ]
                         }
                       }
@@ -463,10 +463,10 @@
             }
           }
         },
-        "ElectricalProperties": {
+        "electricalProperties": {
           "type": "object",
           "properties": {
-            "Resistivity": {
+            "resistivity": {
               "type": "object",
               "description": "Electrical resistivity of the film.",
               "properties": {
@@ -503,7 +503,7 @@
                 }
               }
             },
-            "CarrierDensity": {
+            "carrierDensity": {
               "type": "object",
               "description": "Carrier density in the film.",
               "properties": {
@@ -541,7 +541,7 @@
                 }
               }
             },
-            "Mobility": {
+            "mobility": {
               "type": "object",
               "description": "Carrier mobility in the film.",
               "properties": {
@@ -581,11 +581,11 @@
             }
           }
         },
-        "Uniformity": {
+        "uniformity": {
           "type": "object",
           "description": "Assessment of film thickness uniformity across large substrate areas.",
           "properties": {
-            "Variation": {
+            "variation": {
               "type": "object",
               "description": "Permissible variation in film thickness, typically measured in percentage.",
               "properties": {
@@ -624,11 +624,11 @@
             }
           }
         },
-        "Conformality": {
+        "conformality": {
           "type": "object",
           "description": "Ability of the film to coat 3D structures uniformly.",
           "properties": {
-            "AspectRatio": {
+            "aspectRatio": {
               "type": "object",
               "description": "Aspect ratio of the 3D structures used in testing conformality.",
               "properties": {
@@ -667,15 +667,15 @@
             }
           }
         },
-        "ChemicalComposition": {
+        "chemicalComposition": {
           "type": "string",
           "description": "Chemical composition of the deposited film."
         },
-        "Crystallinity": {
+        "crystallinity": {
           "type": "string",
           "description": "Describes whether the film is amorphous or crystalline."
         },
-        "FilmDensity": {
+        "filmDensity": {
           "type": "object",
           "description": "Density of the film, typically measured in g/cm3.",
           "properties": {
@@ -714,19 +714,19 @@
         }
       }
     },
-    "OtherAspects": {
+    "otherAspects": {
       "type": "object",
       "description": "Other important aspects of the ALD process development such as safety and reproducibility.",
       "properties": {
-        "Safety": {
+        "safety": {
           "type": "string",
           "description": "Safety considerations for handling chemicals and reaction products."
         },
-        "FilmStability": {
+        "filmStability": {
           "type": "boolean",
           "description": "Whether the film remains stable under intended environmental conditions."
         },
-        "Reproducibility": {
+        "reproducibility": {
           "type": "boolean",
           "description": "Consistency of results in repeated experiments."
         }
@@ -734,10 +734,10 @@
     }
   },
   "required": [
-    "ALDSystem",
-    "ReactantSelection",
-    "ProcessParameters",
-    "MaterialProperties",
-    "OtherAspects"
+    "aldSystem",
+    "reactantSelection",
+    "processParameters",
+    "materialProperties",
+    "otherAspects"
   ]
 }

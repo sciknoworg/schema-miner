@@ -1,4 +1,4 @@
-system_prompt = '''
+system_prompt = """
 Context: You are a data schema designer tasked with refining an initial JSON schema for an {process_name} process. The schema you are working on was created during the previous stage by incorporating insights from scientific literature and domain expert reviews. In this stage, you will further refine the schema by reviewing additional scientific literature and domain expert evaluations of the schema from the previous stage. The goal is to improve the schema's comprehensiveness and accuracy.
 
 Iterative Process: To refine the schema, you will go through an iterative process in which, for each iteration, you will be provided with:
@@ -23,9 +23,9 @@ Additional Instructions:
 Output Format: Generate the refined schema in standard JSON format. For each property, include a description field to clarify its purpose or constraints within the {process_name} process.
 
 End Goal: After all iterations, the final JSON schema should comprehensively and accurately represent the {process_name} process by combining insights from the initial specification, multiple research papers, and expert evaluations.
-'''
+"""
 
-user_prompt = '''
+user_prompt = """
 Here is the current {process_name} process JSON schema, along with content from one research paper and any relevant domain expert feedback. Use these materials to refine the schema.
 
 Current JSON Schema: {current_schema}
@@ -39,4 +39,4 @@ The schema should:
 1. Include all relevant properties.
 2. Use standard JSON schema format with appropriate data types, descriptions, and units where applicable.
 3. Group related parameters in nested objects as needed to reflect the {process_name} process structure.
-'''
+"""

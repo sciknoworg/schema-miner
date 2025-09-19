@@ -1,13 +1,14 @@
 import os
 
-from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
 
 from schema_miner.services.LLM_Inference.LLM_inference import LLM_Inference
 
+
 class Openai_LLM_Inference(LLM_Inference):
     """
-    Openai_LLM_Inference is a subclass of LLM_Inference which has a task of doing inference from the specific Large Language Model(LLM) 
+    Openai_LLM_Inference is a subclass of LLM_Inference which has a task of doing inference from the specific Large Language Model(LLM)
     giving a specified prompt.
     """
 
@@ -15,31 +16,33 @@ class Openai_LLM_Inference(LLM_Inference):
         """
         Initialize the object with OpenAI configuration (API Key, Organization ID, Model name etc.)
         """
-        super().__init__()
+        super().__init__(model_name=model_name, temperature=temperature)
 
-        #API Key of OpenAI
+        # API Key of OpenAI
+        assert self.config.OPENAI_api_key is not None
         self.api_key = self.config.OPENAI_api_key
-        os.environ['OPENAI_API_KEY'] = self.api_key
+        os.environ["OPENAI_API_KEY"] = self.api_key
 
-        #Organization ID of OpenAI
+        # Organization ID of OpenAI
+        assert self.config.OPENAI_organization_id is not None
         self.organization_id = self.config.OPENAI_organization_id
-        os.environ['OPENAI_ORGANIZATION'] = self.organization_id
+        os.environ["OPENAI_ORGANIZATION"] = self.organization_id
 
-        #Response Format
+        # Response Format
         self.response_format = self.config.OPENAI_response_format
 
-        #OpenAI LLM Temperature
-        self.temperature = temperature
-
-        #The Large Language Model to use for Inference
-        self.model_name = model_name
-        self.model = ChatOpenAI(model = model_name, temperature = self.temperature, model_kwargs={'response_format': {'type': self.response_format}})
+        # The Large Language Model to use for Inference
+        self.model = ChatOpenAI(
+            model=self.model_name,
+            temperature=self.temperature,
+            model_kwargs={"response_format": {"type": self.response_format}},
+        )
 
     def __str__(self):
         """
         Returns a human-readable representation of an object
         """
-        return f'OPENAI - LLM Inference with Model: {self.model_name}'
+        return f"OPENAI - LLM Inference with Model: {self.model_name}"
 
     def completion(self, prompt_template, var_dict: dict):
         """
@@ -50,19 +53,20 @@ class Openai_LLM_Inference(LLM_Inference):
         :returns model_output: The parsed LLM output
         """
         try:
-            #Formatting the prompt
+            # Formatting the prompt
             prompt = self.format_prompt_template(prompt_template, var_dict)
-            
-            #Invoking the model's completion API with the prompt
+
+            # Invoking the model's completion API with the prompt
             model_output = self.model.invoke(prompt.to_messages())
 
-            #Parsing the LLM's output to extract the final output
+            # Parsing the LLM's output to extract the final output
             model_output = StrOutputParser().invoke(model_output)
 
-            #Returns the LLM's output
+            # Returns the LLM's output
             return model_output
         except Exception as e:
-            self.logger.debug(f'Exception Occurred while calling the Completion API of model: {self.model_name}')
-            self.logger.debug(f'Exception: {e}')
+            self.logger.debug(
+                f"Exception Occurred while calling the Completion API of model: {self.model_name}"
+            )
+            self.logger.debug(f"Exception: {e}")
             return None
-        

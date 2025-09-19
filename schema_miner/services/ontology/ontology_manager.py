@@ -1,5 +1,7 @@
 from rdflib import Graph
+
 from .ontology_parser import Ontology_Parser
+
 
 class OntologyManager:
     """
@@ -7,21 +9,24 @@ class OntologyManager:
 
     Supports lazy loading and can return the ontology either as an RDFLib Graph or as a serialized string in a specified RDF format.
     """
-    def __init__(self, url: str, input_format: str = 'turtle'):
+
+    def __init__(self, url: str, input_format: str = "turtle"):
         self.url = url
         self.input_format = input_format
-        self.ontology = None
+        self.ontology: str | Graph = None
 
-    def _read_ontology(self, output_format: str = 'turtle', return_as_graph: bool = False) -> None:
+    def _read_ontology(self, output_format: str = "turtle", return_as_graph: bool = False) -> None:
         """
         Load the ontology from the URL and store it in the instance cache.
-        
+
         :param str output_format: Serialization format if returning as string.
         :param bool return_as_graph: If True, store as RDFLib Graph. Else store as string.
         """
-        self.ontology = Ontology_Parser.load(self.url, self.input_format, output_format, return_as_graph)
+        self.ontology = Ontology_Parser.load(
+            self.url, self.input_format, output_format, return_as_graph
+        )
 
-    def get(self, output_format: str = 'turtle', return_as_graph: bool = False) -> str | Graph:
+    def get(self, output_format: str = "turtle", return_as_graph: bool = False) -> str | Graph:
         """
         Retrieve the ontology, loading it if it has not been loaded yet.
 

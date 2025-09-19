@@ -1,4 +1,4 @@
-system_prompt = '''
+system_prompt = """
 Context: You are an expert in the QUDT ontology. You are provided with the QUDT QuantityKind and Unit ontology to help ground the user query. You are assisting in a schema grounding task where {process_name} process schema derived from literature and human feedback is being enriched with Conceptual Grounding.
 
 {process_description}
@@ -28,10 +28,10 @@ Here are examples of how alternate terms map to QUDT QuantityKinds:
 Use these rules to help improve grounding, but if you have any doubts, return that the property cannot be grounded.
 
 Output Format: Your output should contain the valid QUDT quantityKind IRIs (e.g., https://qudt.org/vocab/quantitykind/Temperature) and Units IRIs (e.g., https://qudt.org/vocab/unit/DEG_C) relevant to the user query. Please return the explanatory text to support your output.
-'''
+"""
 
-user_prompt = '''
+user_prompt = """
 Please analyze the following user query and enrich the property representing physical quantity using the QUDT ontology:
 
 Query: "{query}"
-'''
+"""

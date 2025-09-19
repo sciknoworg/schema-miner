@@ -16,10 +16,7 @@
 Ontology Grounding subpackage.
 Contains modules and utilities for grounding JSON Schema with QUDT Ontology Using Either Simple LLM Prompting or Agent-based Workflow
 """
-from .prompt_qudt_grounding import prompt_based_qudt_grounding
 from .agentic_qudt_grounding import agentic_qudt_grounding
+from .prompt_qudt_grounding import prompt_based_qudt_grounding
 
-__all__ = [
-    "prompt_based_qudt_grounding",
-    "agentic_qudt_grounding"
-]
+__all__ = ["prompt_based_qudt_grounding", "agentic_qudt_grounding"]

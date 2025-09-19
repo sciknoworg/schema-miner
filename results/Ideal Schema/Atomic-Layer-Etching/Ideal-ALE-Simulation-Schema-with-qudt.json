@@ -26,18 +26,18 @@
             "type": "object",
             "description": "Material of the substrate being etched, including type and chemical composition.",
             "properties": {
-            "type": {
-                "type": "string",
-                "description": "Type of the substrate material, e.g., semiconductor, dielectric, or metal film."
-            },
-            "chemicalComposition": {
-                "type": "string",
-                "description": "Chemical composition of the substrate material, e.g., SiO2, Al2O3, GaN."
-            }
+                "type": {
+                    "type": "string",
+                    "description": "Type of the substrate material, e.g., semiconductor, dielectric, or metal film."
+                },
+                "chemicalComposition": {
+                    "type": "string",
+                    "description": "Chemical composition of the substrate material, e.g., SiO2, Al2O3, GaN."
+                }
             },
             "required": [
-            "type",
-            "chemicalComposition"
+                "type",
+                "chemicalComposition"
             ]
         },
         "surfaceModel": {
@@ -48,27 +48,159 @@
                     "description": "Dimensions of the substrate model.",
                     "properties": {
                         "length": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Length of the substrate model in nanometers.",
-                            "unit": "nm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Length"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/NanoM"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Length"
+                                    ]
+                                }
+                            }
                         },
                         "width": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Width of the substrate model in nanometers.",
-                            "unit": "nm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Width"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/NanoM"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Width"
+                                    ]
+                                }
+                            }
                         },
                         "thickness": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Thickness of the substrate model in nanometers.",
-                            "unit": "nm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Thickness"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/NanoM"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Thickness"
+                                    ]
+                                }
+                            }
                         }
                     },
-                    "required": ["length", "width", "thickness"]
+                    "required": [
+                        "length",
+                        "width",
+                        "thickness"
+                    ]
                 },
                 "surfaceArea": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Surface area of the substrate model in square nanometers.",
-                    "unit": "nm^2"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Area"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/unit/NanoM2"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "http://qudt.org/vocab/quantitykind/Area"
+                            ]
+                        }
+                    }
                 },
                 "surfaceProperties": {
                     "type": "object",
@@ -102,44 +234,244 @@
                             "description": "Lengths of the unit cell edges in angstroms.",
                             "properties": {
                                 "a": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Length of the a-axis in angstroms.",
-                                    "unit": "angstroms"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/quantitykind/Length"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/unit/ANGSTROM"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Length"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "b": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Length of the b-axis in angstroms.",
-                                    "unit": "angstroms"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/quantitykind/Length"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/unit/ANGSTROM"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Length"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "c": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Length of the c-axis in angstroms.",
-                                    "unit": "angstroms"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/quantitykind/Length"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "http://qudt.org/vocab/unit/ANGSTROM"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Length"
+                                            ]
+                                        }
+                                    }
                                 }
                             },
-                            "required": ["a", "b", "c"]
+                            "required": [
+                                "a",
+                                "b",
+                                "c"
+                            ]
                         },
                         "angles": {
                             "type": "object",
                             "description": "Angles between the unit cell edges in degrees.",
                             "properties": {
                                 "alpha": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Angle between b and c axes in degrees.",
-                                    "unit": "degrees"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/unit/DEG"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "beta": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Angle between a and c axes in degrees.",
-                                    "unit": "degrees"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/unit/DEG"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "gamma": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Angle between a and b axes in degrees.",
-                                    "unit": "degrees"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/unit/DEG"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Angle"
+                                            ]
+                                        }
+                                    }
                                 }
                             },
-                            "required": ["alpha", "beta", "gamma"]
+                            "required": [
+                                "alpha",
+                                "beta",
+                                "gamma"
+                            ]
                         },
                         "spaceGroup": {
                             "type": "string",
@@ -168,11 +500,21 @@
                                         "description": "Z-coordinate of the atom in fractional coordinates."
                                     }
                                 },
-                                "required": ["element", "x", "y", "z"]
+                                "required": [
+                                    "element",
+                                    "x",
+                                    "y",
+                                    "z"
+                                ]
                             }
                         }
                     },
-                    "required": ["lengths", "angles", "spaceGroup", "atomicCoordinates"]
+                    "required": [
+                        "lengths",
+                        "angles",
+                        "spaceGroup",
+                        "atomicCoordinates"
+                    ]
                 }
             },
             "required": [
@@ -186,27 +528,157 @@
             "type": "object",
             "properties": {
                 "temperature": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Temperature at which the ALE process is conducted.",
-                    "unit": "Celsius"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Temperature"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/unit/DEG_C",
+                                                "https://qudt.org/vocab/unit/K",
+                                                "https://qudt.org/vocab/unit/DEG_F"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "https://qudt.org/vocab/quantitykind/Temperature"
+                            ]
+                        }
+                    }
                 },
                 "pressure": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Pressure within the reaction chamber.",
-                    "unit": "Pascals"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Pressure"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/unit/PA"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "http://qudt.org/vocab/quantitykind/Pressure"
+                            ]
+                        }
+                    }
                 },
                 "gasFlowRates": {
                     "type": "object",
                     "properties": {
                         "precursorGasFlowRate": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Flow rate of precursor gas in standard cubic centimeters per minute (sccm).",
-                            "unit": "sccm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/CentiM3-PER-MIN"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                                    ]
+                                }
+                            }
                         },
                         "carrierGasFlowRate": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Flow rate of carrier gas in standard cubic centimeters per minute (sccm).",
-                            "unit": "sccm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/CentiM3-PER-MIN"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/VolumeFlowRate"
+                                    ]
+                                }
+                            }
                         }
                     },
                     "required": [
@@ -215,14 +687,78 @@
                     ]
                 },
                 "plasmaPower": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Power of plasma used in plasma-enhanced ALE, in watts.",
-                    "unit": "watts"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Power"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/unit/W"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "https://qudt.org/vocab/quantitykind/Power"
+                            ]
+                        }
+                    }
                 },
                 "exposureTime": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Duration of exposure for each cycle in seconds.",
-                    "unit": "seconds"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Time"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/unit/SEC"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "http://qudt.org/vocab/quantitykind/Time"
+                            ]
+                        }
+                    }
                 }
             },
             "description": "Parameters that define the ALE process conditions, in the case of reactor scale modelling.",
@@ -260,13 +796,78 @@
                     "description": "Study of photon excitation effects on reaction mechanisms."
                 },
                 "etchRate": {
-                    "type": "number",
+                    "type": "object",
                     "description": "Rate of etching per cycle or per unit time.",
-                    "unit": "angstroms per cycle"
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Length"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/unit/ANGSTROM"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "https://qudt.org/vocab/quantitykind/Length"
+                            ]
+                        }
+                    }
                 },
                 "surfaceDesorptionRates": {
-                    "type": "string",
-                    "description": "Rates of desorption, diffusion, and reaction on the surface."
+                    "type": "object",
+                    "description": "Rates of desorption, diffusion, and reaction on the surface.",
+                    "properties": {
+                        "quantityValue": {
+                            "type": "object",
+                            "properties": {
+                                "numericValue": {
+                                    "type": "number"
+                                },
+                                "unit": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hasQuantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/quantitykind/Frequency"
+                                            ]
+                                        },
+                                        "sameAs": {
+                                            "type": "string",
+                                            "enum": [
+                                                "http://qudt.org/vocab/unit/HZ"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "quantityKind": {
+                            "type": "string",
+                            "enum": [
+                                "http://qudt.org/vocab/quantitykind/Frequency"
+                            ]
+                        }
+                    }
                 },
                 "bindingAffinity": {
                     "type": "string",
@@ -280,12 +881,78 @@
                             "description": "Uniformity of the film after etching."
                         },
                         "roughness": {
-                            "type": "string",
-                            "description": "Roughness of the film surface post-etching."
+                            "type": "object",
+                            "description": "Roughness of the film surface post-etching.",
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Length"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/NanoM"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Length"
+                                    ]
+                                }
+                            }
                         },
                         "density": {
-                            "type": "string",
-                            "description": "Density of the film material."
+                            "type": "object",
+                            "description": "Density of the film material.",
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Density"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/GM-PER-CentiM3"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Density"
+                                    ]
+                                }
+                            }
                         },
                         "temperatureProfile": {
                             "type": "string",
@@ -308,19 +975,115 @@
                     "type": "object",
                     "properties": {
                         "gapDistance": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Gap distance in the reactor, in micrometers.",
-                            "unit": "micrometers"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Length"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/MicroM"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Length"
+                                    ]
+                                }
+                            }
                         },
                         "purgeFlowRate": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Flow rate of purge gas in sccm.",
-                            "unit": "sccm"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/MolarFlowRate"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/SCM-PER-MIN"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/MolarFlowRate"
+                                    ]
+                                }
+                            }
                         },
                         "vacuumPressure": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Vacuum pressure in the reactor, in Pascals.",
-                            "unit": "Pascals"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/quantitykind/Pressure"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/PA"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Pressure"
+                                    ]
+                                }
+                            }
                         }
                     },
                     "description": "Design variables that affect the reactor scale modelling.",
@@ -338,14 +1101,80 @@
                             "description": "Chemical agent used for fluorination, e.g., HF."
                         },
                         "fluorinationCoverage": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Coverage of fluorination on the surface in HF/nm^2.",
-                            "unit": "HF/nm^2"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/ParticleFluence"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/NUM-PER-M2"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/ParticleFluence"
+                                    ]
+                                }
+                            }
                         },
                         "selfLimitingTemperature": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Temperature below which the fluorination reaction is self-limiting.",
-                            "unit": "Kelvin"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Temperature"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/DEG_C",
+                                                        "https://qudt.org/vocab/unit/K",
+                                                        "https://qudt.org/vocab/unit/DEG_F"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Temperature"
+                                    ]
+                                }
+                            }
                         }
                     },
                     "description": "Details about the fluorination steps (if fluorination is used)."
@@ -358,14 +1187,78 @@
                             "description": "Type of reaction, either self-limiting or continuous vapor etch (CVE)."
                         },
                         "reactionFreeEnergy": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Free energy change of the reaction in electronvolts (eV).",
-                            "unit": "eV"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/EV"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                    ]
+                                }
+                            }
                         },
                         "minimumThermodynamicBarrier": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Minimum thermodynamic barrier for the reaction in electronvolts (eV).",
-                            "unit": "eV"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/EV"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                    ]
+                                }
+                            }
                         }
                     },
                     "description": "Details about the self-limiting and CVE reactions."
@@ -378,9 +1271,41 @@
                             "description": "Type of inert gas ion used in the desorption step, e.g., Ar, Kr, Xe."
                         },
                         "ionEnergy": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Energy of inert gas ions used in the desorption step, in electronvolts (eV).",
-                            "unit": "eV"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "https://qudt.org/vocab/unit/EV"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "https://qudt.org/vocab/quantitykind/Energy"
+                                    ]
+                                }
+                            }
                         },
                         "ionDose": {
                             "type": "number",
@@ -395,9 +1320,41 @@
                                     "description": "Type of oxidant used in the oxidation step, e.g., O2."
                                 },
                                 "oxidantEnergy": {
-                                    "type": "number",
+                                    "type": "object",
                                     "description": "Energy of oxidant ions used, in electronvolts (eV).",
-                                    "unit": "eV"
+                                    "properties": {
+                                        "quantityValue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "numericValue": {
+                                                    "type": "number"
+                                                },
+                                                "unit": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hasQuantityKind": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/quantitykind/Energy"
+                                                            ]
+                                                        },
+                                                        "sameAs": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "https://qudt.org/vocab/unit/EV"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "quantityKind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "https://qudt.org/vocab/quantitykind/Energy"
+                                            ]
+                                        }
+                                    }
                                 },
                                 "oxidantDose": {
                                     "type": "number",
@@ -409,7 +1366,7 @@
                         }
                     },
                     "description": "Parameters specific to inert gas ion irradiation in PE-ALE processes."
-                }                
+                }
             },
             "required": [
                 "etchedMaterial",
@@ -445,9 +1402,42 @@
                     "description": "Details specific to the computational methods used.",
                     "properties": {
                         "timestep": {
-                            "type": "number",
+                            "type": "object",
                             "description": "Timestep used in MD simulations.",
-                            "unit": "fs"
+                            "properties": {
+                                "quantityValue": {
+                                    "type": "object",
+                                    "properties": {
+                                        "numericValue": {
+                                            "type": "number"
+                                        },
+                                        "unit": {
+                                            "type": "object",
+                                            "properties": {
+                                                "hasQuantityKind": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/quantitykind/Time"
+                                                    ]
+                                                },
+                                                "sameAs": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "http://qudt.org/vocab/unit/FemtoSEC",
+                                                        "http://qudt.org/vocab/unit/SEC"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "quantityKind": {
+                                    "type": "string",
+                                    "enum": [
+                                        "http://qudt.org/vocab/quantitykind/Time"
+                                    ]
+                                }
+                            }
                         },
                         "functional": {
                             "type": "string",

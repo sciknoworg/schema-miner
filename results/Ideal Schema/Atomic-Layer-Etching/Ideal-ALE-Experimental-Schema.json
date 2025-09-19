@@ -85,180 +85,180 @@
                             "description": "Time for purge after pulsing reactant B.",
                             "units": "seconds"
                         }
-                    },
-                    "reactorType": {
-                        "type": "string",
-                        "description": "Type of reactor where ALE was performed."
-                    },
-                    "plasmaPower": {
-                        "type": "number",
-                        "description": "Power of plasma if plasma-enhanced ALE is used.",
-                        "units": "Watts"
-                    },
-                    "RFpower": {
-                        "type": "number",
-                        "description": "RF power, if plasma-enhanced ALE is used.",
-                        "units": "Watts"
-                    },
-                    "reactantFlow": {
-                        "type": "number",
-                        "description": "Flow rate of reactants during the ALE process.",
-                        "units": "sccm"
-                    },
-                    "numberOfCycles": {
-                        "type": "number",
-                        "description": "Number of ALE cycles to reach saturation."
-                    }
-                }
-            },
-            "etchControl": {
-                "type": "object",
-                "properties": {
-                    "etchPerCycle": {
-                        "type": "number",
-                        "description": "Average amount of material removed per cycle.",
-                        "units": "nm/cycle"
-                    },
-                    "massLoss": {
-                        "type": "number",
-                        "description": "Mass loss during one or more cycles, measured by QCM.",
-                        "units": "ng"
                     }
                 },
-                "required": [
-                    "etchPerCycle"
-                ]
-            },
-            "synergy": {
-                "type": "object",
-                "properties": {
-                    "synergyValue": {
-                        "type": "number",
-                        "description": "Synergy value indicating the degree of self-limitation in the process.",
-                        "minimum": 0,
-                        "maximum": 1
-                    }
+                "reactorType": {
+                    "type": "string",
+                    "description": "Type of reactor where ALE was performed."
+                },
+                "plasmaPower": {
+                    "type": "number",
+                    "description": "Power of plasma if plasma-enhanced ALE is used.",
+                    "units": "Watts"
+                },
+                "RFpower": {
+                    "type": "number",
+                    "description": "RF power, if plasma-enhanced ALE is used.",
+                    "units": "Watts"
+                },
+                "reactantFlow": {
+                    "type": "number",
+                    "description": "Flow rate of reactants during the ALE process.",
+                    "units": "sccm"
+                },
+                "numberOfCycles": {
+                    "type": "number",
+                    "description": "Number of ALE cycles to reach saturation."
+                }
+            }
+        },
+        "etchControl": {
+            "type": "object",
+            "properties": {
+                "etchPerCycle": {
+                    "type": "number",
+                    "description": "Average amount of material removed per cycle.",
+                    "units": "nm/cycle"
+                },
+                "massLoss": {
+                    "type": "number",
+                    "description": "Mass loss during one or more cycles, measured by QCM.",
+                    "units": "ng"
                 }
             },
-            "ALEWindow": {
-                "type": "object",
-                "properties": {
-                    "temperatureWindow": {
-                        "type": "object",
-                        "properties": {
-                            "minTemperature": {
-                                "type": "number",
-                                "description": "Minimum temperature for the ALE window. Exceeding this may cause decomposition.",
-                                "units": "Celsius"
-                            },
-                            "maxTemperature": {
-                                "type": "number",
-                                "description": "Maximum temperature for the ALE window. Exceeding this may cause decomposition.",
-                                "units": "Celsius"
-                            }
+            "required": [
+                "etchPerCycle"
+            ]
+        },
+        "synergy": {
+            "type": "object",
+            "properties": {
+                "synergyValue": {
+                    "type": "number",
+                    "description": "Synergy value indicating the degree of self-limitation in the process.",
+                    "minimum": 0,
+                    "maximum": 1
+                }
+            }
+        },
+        "ALEWindow": {
+            "type": "object",
+            "properties": {
+                "temperatureWindow": {
+                    "type": "object",
+                    "properties": {
+                        "minTemperature": {
+                            "type": "number",
+                            "description": "Minimum temperature for the ALE window. Exceeding this may cause decomposition.",
+                            "units": "Celsius"
                         },
-                        "required": [
-                            "minTemperature",
-                            "maxTemperature"
-                        ]
+                        "maxTemperature": {
+                            "type": "number",
+                            "description": "Maximum temperature for the ALE window. Exceeding this may cause decomposition.",
+                            "units": "Celsius"
+                        }
                     },
-                    "ionEnergyWindow": {
-                        "type": "object",
-                        "properties": {
-                            "minIonEnergy": {
-                                "type": "number",
-                                "description": "Minimum ion energy for the ALE window. Exceeding this may cause sputtering.",
-                                "units": "eV"
-                            },
-                            "maxIonEnergy": {
-                                "type": "number",
-                                "description": "Maximum ion energy for the ALE window. Exceeding this may cause sputtering.",
-                                "units": "eV"
-                            }
+                    "required": [
+                        "minTemperature",
+                        "maxTemperature"
+                    ]
+                },
+                "ionEnergyWindow": {
+                    "type": "object",
+                    "properties": {
+                        "minIonEnergy": {
+                            "type": "number",
+                            "description": "Minimum ion energy for the ALE window. Exceeding this may cause sputtering.",
+                            "units": "eV"
                         },
-                        "required": [
-                            "minIonEnergy",
-                            "maxIonEnergy"
-                        ]
-                    }
+                        "maxIonEnergy": {
+                            "type": "number",
+                            "description": "Maximum ion energy for the ALE window. Exceeding this may cause sputtering.",
+                            "units": "eV"
+                        }
+                    },
+                    "required": [
+                        "minIonEnergy",
+                        "maxIonEnergy"
+                    ]
                 }
-            },
-            "etchedMaterialProperties": {
-                "type": "object",
-                "properties": {
-                    "materialProperties": {
-                        "type": "object",
-                        "properties": {
-                            "roughness": {
-                                "type": "number",
-                                "description": "Surface roughness after etching.",
-                                "units": "nm"
-                            },
-                            "refractiveIndex": {
-                                "type": "number",
-                                "description": "Refractive index of the material after etching."
-                            },
-                            "chemicalComposition": {
-                                "type": "string",
-                                "description": "Chemical composition of the etched film."
-                            },
-                            "crystallinity": {
-                                "type": "string",
-                                "description": "Crystallinity of the etched material."
-                            },
-                            "uniformity": {
-                                "type": "object",
-                                "properties": {
-                                    "nonUniformity": {
-                                        "type": "number",
-                                        "description": "Non-uniformity of the etch process across the wafer.",
-                                        "units": "%"
-                                    }
+            }
+        },
+        "etchedMaterialProperties": {
+            "type": "object",
+            "properties": {
+                "materialProperties": {
+                    "type": "object",
+                    "properties": {
+                        "roughness": {
+                            "type": "number",
+                            "description": "Surface roughness after etching.",
+                            "units": "nm"
+                        },
+                        "refractiveIndex": {
+                            "type": "number",
+                            "description": "Refractive index of the material after etching."
+                        },
+                        "chemicalComposition": {
+                            "type": "string",
+                            "description": "Chemical composition of the etched film."
+                        },
+                        "crystallinity": {
+                            "type": "string",
+                            "description": "Crystallinity of the etched material."
+                        },
+                        "uniformity": {
+                            "type": "object",
+                            "properties": {
+                                "nonUniformity": {
+                                    "type": "number",
+                                    "description": "Non-uniformity of the etch process across the wafer.",
+                                    "units": "%"
                                 }
                             }
                         }
                     }
                 }
-            },
-            "selectivity": {
-                "type": "object",
-                "properties": {
-                    "selectivityDescription": {
-                        "type": "string",
-                        "description": "Description of the selectivity of the process, determining if proposed chemistry can be applied on different materials."
-                    }
-                }
-            },
-            "otherAspects": {
-                "type": "object",
-                "properties": {
-                    "safety": {
-                        "type": "string",
-                        "description": "Safety considerations for the etching process."
-                    },
-                    "sustainability": {
-                        "type": "string",
-                        "description": "Sustainability considerations for the etching process."
-                    },
-                    "environmentalImpact": {
-                        "type": "string",
-                        "description": "Environmental impact considerations for the etching process."
-                    }
+            }
+        },
+        "selectivity": {
+            "type": "object",
+            "properties": {
+                "selectivityDescription": {
+                    "type": "string",
+                    "description": "Description of the selectivity of the process, determining if proposed chemistry can be applied on different materials."
                 }
             }
         },
-        "required": [
-            "materialEtched",
-            "aleProcess",
-            "directionality",
-            "reactantSelection",
-            "etchControl",
-            "synergy",
-            "ALEWindow",
-            "etchedMaterialProperties",
-            "selectivity",
-            "otherAspects",
-            "processDetails"
-        ]
-    }
+        "otherAspects": {
+            "type": "object",
+            "properties": {
+                "safety": {
+                    "type": "string",
+                    "description": "Safety considerations for the etching process."
+                },
+                "sustainability": {
+                    "type": "string",
+                    "description": "Sustainability considerations for the etching process."
+                },
+                "environmentalImpact": {
+                    "type": "string",
+                    "description": "Environmental impact considerations for the etching process."
+                }
+            }
+        }
+    },
+    "required": [
+        "material",
+        "aleProcess",
+        "directionality",
+        "reactantSelection",
+        "etchControl",
+        "synergy",
+        "ALEWindow",
+        "etchedMaterialProperties",
+        "selectivity",
+        "otherAspects",
+        "processDetails"
+    ]
 }

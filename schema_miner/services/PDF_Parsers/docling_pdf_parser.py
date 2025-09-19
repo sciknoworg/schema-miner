@@ -2,16 +2,12 @@ import os
 from pathlib import Path
 
 from docling.datamodel.base_models import InputFormat
-from docling_core.types.doc import ImageRefMode
-from docling.datamodel.pipeline_options import (
-    AcceleratorDevice,
-    AcceleratorOptions,
-    PdfPipelineOptions,
-    TableFormerMode
-)
+from docling.datamodel.pipeline_options import AcceleratorDevice, AcceleratorOptions, PdfPipelineOptions, TableFormerMode
 from docling.document_converter import DocumentConverter, PdfFormatOption
+from docling_core.types.doc import ImageRefMode
 
 from schema_miner.services.PDF_Parsers.pdf_parser import PDF_Parser
+
 
 class Docling_PDF_Parser(PDF_Parser):
     """
@@ -28,7 +24,7 @@ class Docling_PDF_Parser(PDF_Parser):
         """
         Returns a human-readable representation of an object
         """
-        return f'Docling PDF Parser'
+        return "Docling PDF Parser"
 
     def parse_pdf(self, source: str) -> None:
         """
@@ -36,13 +32,13 @@ class Docling_PDF_Parser(PDF_Parser):
 
         :param str: The source path containing the the PDF file
         """
-        #Check if source path is valid
-        assert os.path.isfile(source), f'{source} is not a valid file!'
+        # Check if source path is valid
+        assert os.path.isfile(source), f"{source} is not a valid file!"
 
-        #Initialize the Path object
+        # Initialize the Path object
         input_doc_path = Path(source)
 
-        #Configure the Docling PDF Pipeline
+        # Configure the Docling PDF Pipeline
         pipeline_options = PdfPipelineOptions()
         pipeline_options.do_ocr = True
         pipeline_options.do_formula_enrichment = True
@@ -50,16 +46,18 @@ class Docling_PDF_Parser(PDF_Parser):
         pipeline_options.table_structure_options.do_cell_matching = True
         pipeline_options.table_structure_options.mode = TableFormerMode.ACCURATE
         pipeline_options.generate_picture_images = True
-        pipeline_options.accelerator_options = AcceleratorOptions(num_threads=4, device=AcceleratorDevice.AUTO)
+        pipeline_options.accelerator_options = AcceleratorOptions(
+            num_threads=4, device=AcceleratorDevice.AUTO
+        )
 
-        #Intialize the Docling's Document Converter Object with the Configuration
+        # Intialize the Docling's Document Converter Object with the Configuration
         converter = DocumentConverter(
             format_options={
                 InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
             }
         )
 
-        #Parse the Input Document
+        # Parse the Input Document
         self.parsed_data = converter.convert(input_doc_path)
         self.filename = self.parsed_data.input.file.stem
 
@@ -71,9 +69,9 @@ class Docling_PDF_Parser(PDF_Parser):
         :param bool include_image: Whether to include images as a base64 encoded strings in the markdown file
         """
         # Export Markdown format
-        image_mode = ImageRefMode.EMBEDDED if include_image else ImageRefMode.PLACEHOLDER
-        with open(f'{output_dir}/{self.filename}.md', 'w', encoding='utf-8') as fp:
-            fp.write(self.parsed_data.document.export_to_markdown(image_mode = image_mode))
+        image_mode = (ImageRefMode.EMBEDDED if include_image else ImageRefMode.PLACEHOLDER)
+        with open(f"{output_dir}/{self.filename}.md", "w", encoding="utf-8") as fp:
+            fp.write(self.parsed_data.document.export_to_markdown(image_mode=image_mode))
 
     def export_as_html(self, output_dir: str) -> None:
         """
@@ -82,8 +80,8 @@ class Docling_PDF_Parser(PDF_Parser):
         :param str output_dir: The output directory to save the exported HTML file
         """
         # Export HTML format
-        with open(f'{output_dir}/{self.filename}.html', 'w', encoding='utf-8') as fp:
-            fp.write(self.parsed_data.document.export_to_html(image_mode = ImageRefMode.EMBEDDED))
+        with open(f"{output_dir}/{self.filename}.html", "w", encoding="utf-8") as fp:
+            fp.write(self.parsed_data.document.export_to_html(image_mode=ImageRefMode.EMBEDDED))
 
     def export_as_text(self, output_dir: str) -> None:
         """
@@ -92,5 +90,5 @@ class Docling_PDF_Parser(PDF_Parser):
         :param str output_dir: The output directory to save the exported text file
         """
         # Export Text format
-        with open(f'{output_dir}/{self.filename}.txt', 'w', encoding='utf-8') as fp:
+        with open(f"{output_dir}/{self.filename}.txt", "w", encoding="utf-8") as fp:
             fp.write(self.parsed_data.document.export_to_text())

@@ -1,4 +1,4 @@
-system_prompt = '''
+system_prompt = """
 Role:
 You are a semantic data specialist with deep knowledge of scientific ontologies, especially the QUDT (Quantities, Units, Dimensions and Types) ontology. You are assisting in a schema grounding task where {process_name} process schema derived from literature and human feedback is being enriched with Conceptual Grounding.
 
@@ -32,9 +32,9 @@ Do not just insert the schema for the quantityKind and Unit, you must fill in th
 Output Format: Your output should be the updated JSON schema, maintaining its structure but adding the "quantity" field to relevant properties using the structure above. Do not return explanatory text, but only the updated schema in pure JSON format.
 
 End Goal: The goal is to semantically ground all measurable physical properties in the schema using QUDT ontology, enhancing clarity, machine interpretability, and interoperability across scientific and semantic web applications.
-'''
+"""
 
-user_prompt = '''
+user_prompt = """
 Please analyze the following JSON schema and enrich the properties representing physical quantities using the QUDT ontology:
 
 {process_schema}
@@ -45,4 +45,4 @@ The schema should:
 2. Do **not** insert the schema for quantityKind and Unit — actually fill in values based on what the property represents.
 3. Do not modify other schema properties or structure.
 4. Output should be the updated JSON schema only.
-'''
+"""

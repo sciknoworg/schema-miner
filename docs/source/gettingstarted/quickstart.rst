@@ -1,7 +1,7 @@
 Quickstart
 ==========
 
-This guide walks you through running schema-miner: extracting a schema, refining it, and grounding it with QUDT.
+This guide walks you through running schema miner pro: extracting a schema, refining it, and grounding it with QUDT.
 
 Prerequisites
 *************
@@ -66,7 +66,7 @@ An initial JSON schema can be generated based on the domain specification docume
     process_specification = pdf_text_extractor(process_specification_filepath, process_specification_filename, return_text = True)
 
     # Extract schema
-    results_file_path = Path("./results/stage-1/Atomic-Layer-Deposition/experimental-schema")
+    results_file_path = "./results/stage-1/Atomic-Layer-Deposition/experimental-schema"
     schema = extract_schema_stage1(llm_model_name, process_specification, results_file_path, save_schema = True)
 
 Step 4: Stage 2 - Preliminary Schema Refinement
@@ -84,7 +84,7 @@ The schema from stage 1 can refined by the LLM iteratively by analyzing a curate
     scientific_paper = pdf_text_extractor(scientific_paper_stage2_dir, '1 Groner et al.pdf', return_text = True)
 
     # Refine schema
-    results_file_path = Path("./results/stage-2/Atomic-Layer-Deposition/experimental-schema")
+    results_file_path = "./results/stage-2/Atomic-Layer-Deposition/experimental-schema"
     schema = extract_schema_stage2(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 
 Step 5: Stage 3 – Final Schema Refinement
@@ -102,7 +102,7 @@ The schema from stage 2 can be finalized by the LLM iteratively by a larger set 
     scientific_paper = pdf_text_extractor(scientific_paper_stage3_dir, '1-Mattinen et al.pdf', return_text = True)
 
     # Finalize schema
-    results_file_path = Path("./results/stage-3/Atomic-Layer-Deposition/experimental-schema")
+    results_file_path = "./results/stage-3/Atomic-Layer-Deposition/experimental-schema"
     schema = extract_schema_stage3(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 
     # View Final Schema
@@ -124,7 +124,7 @@ The grounding workflow uses either LLM prompting or an agentic LLM approach to a
 
     # Ground the schema with QUDT Ontology
     process_schema = Path('./results/Ideal Schema/Atomic-Layer-Deposition/experimental-ideal-schema.json')
-    results_file_path = Path("./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema")
+    results_file_path = "./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema"
     schema = agentic_qudt_grounding(llm_model_name, process_schema, results_file_path, save_schema = True)
 
     # Display grounded schema

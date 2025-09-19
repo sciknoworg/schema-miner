@@ -1,10 +1,12 @@
 import logging
 from pathlib import Path
-from schema_miner.config.processConfig import ProcessConfig
-from schema_miner.services.LLM_Inference.inference_runner import llm_inference
+
 from schema_miner.config.llmRegistry import LLMRegistry
-from schema_miner.prompts.schema_extraction import prompt_template1, prompt_template2, prompt_template3
-from schema_miner.utils.file_utils import save_json_file, load_text_input, load_json_input
+from schema_miner.config.processConfig import ProcessConfig
+from schema_miner.prompts.schema_extraction import prompt_template1, prompt_template2
+from schema_miner.services.LLM_Inference.inference_runner import llm_inference
+from schema_miner.utils.file_utils import load_json_input, load_text_input, save_json_file
+
 
 def extract_schema_stage1(llm_model_name: str, process_specification: str | Path, result_file_path: str, save_schema: bool = False) -> dict | None:
     """
@@ -18,28 +20,36 @@ def extract_schema_stage1(llm_model_name: str, process_specification: str | Path
     """
     # Initialize the logger
     logger = logging.getLogger(__name__)
-    logger.info(f'\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process')
-    logger.info('Stage 1: Initial Schema Mining\n')
-    
+    logger.info(
+        f"\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process"
+    )
+    logger.info("Stage 1: Initial Schema Mining\n")
+
     # Retrieve LLM inference class
     llm_inference_class = LLMRegistry.get_llm_Inference_cls(llm_model_name)
 
     # Read process specification document
-    logger.info('Reading the process specification document...')
+    logger.info("Reading the process specification document...")
     context = load_text_input(process_specification)
 
     # Extract process schema using LLM and process specification document
-    logger.info(f'\nPerforming LLM ({llm_model_name}) Inference to extract schema...')
-    var_dict = {'process_name': ProcessConfig.Process_name, 'process_description': ProcessConfig.Process_description, 'context': context}
+    logger.info(f"\nPerforming LLM ({llm_model_name}) Inference to extract schema...")
+    var_dict = {
+        "process_name": ProcessConfig.Process_name,
+        "process_description": ProcessConfig.Process_description,
+        "context": context,
+    }
     schema = llm_inference(llm_inference_class, llm_model_name, prompt_template1, var_dict, result_file_path)
 
     # Optionally save extracted schema on disk
     if save_schema:
-        file_saved = save_json_file(result_file_path, f'{llm_model_name.replace(':', '-').replace('/', '-')}.json', schema)
-        if file_saved: logger.info(f'JSON schema saved at location: {result_file_path}')
+        file_saved = save_json_file(result_file_path, f"{llm_model_name.replace(':', '-').replace('/', '-')}.json", schema)
+        if file_saved:
+            logger.info(f"JSON schema saved at location: {result_file_path}")
 
     # Return extracted JSON schema
     return schema
+
 
 def extract_schema_stage2(llm_model_name: str, initial_schema: dict | Path, expert_review: str | Path, scientific_paper: str | Path, result_file_path: str, save_schema: bool = False) -> dict | None:
     """
@@ -56,38 +66,47 @@ def extract_schema_stage2(llm_model_name: str, initial_schema: dict | Path, expe
 
     # Initialize the logger
     logger = logging.getLogger(__name__)
-    logger.info(f'\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process')
-    logger.info('Stage 2: Preliminary Schema Refinement\n')
+    logger.info(
+        f"\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process"
+    )
+    logger.info("Stage 2: Preliminary Schema Refinement\n")
 
     # Retrieve LLM Inference Class
     llm_inference_class = LLMRegistry.get_llm_Inference_cls(llm_model_name)
 
     # Read the initial schema from stage-1
-    logger.info(f'\nReading the schema from stage-1')
+    logger.info("\nReading the schema from stage-1")
     schema = load_json_input(initial_schema)
 
     # Read the domain-expert reviews
-    logger.info(f'\nReading the domain expert review on the initial schema')
+    logger.info("\nReading the domain expert review on the initial schema")
     review = load_text_input(expert_review)
 
     # Read the scientific paper
-    logger.info(f'\nReading the scientific paper')
-    full_text = load_text_input(scientific_paper) 
+    logger.info("\nReading the scientific paper")
+    full_text = load_text_input(scientific_paper)
 
-    #Extract the updated schema from the LLM
-    logger.info('\nCalling the completion API of the model')
-    var_dict = {'process_name': ProcessConfig.Process_name, 'current_schema': schema, 'full_text': full_text, 'domain_expert_review': review}
-        
-    #Update the Schema using the LLM and a Scientific Paper as Input
+    # Extract the updated schema from the LLM
+    logger.info("\nCalling the completion API of the model")
+    var_dict = {
+        "process_name": ProcessConfig.Process_name,
+        "current_schema": schema,
+        "full_text": full_text,
+        "domain_expert_review": review,
+    }
+
+    # Update the Schema using the LLM and a Scientific Paper as Input
     schema = llm_inference(llm_inference_class, llm_model_name, prompt_template2, var_dict, result_file_path)
-    
+
     # Optionally save extracted schema on disk
     if save_schema:
-        file_saved = save_json_file(result_file_path, f'{llm_model_name.replace(':', '-').replace('/', '-')}.json', schema)
-        if file_saved: logger.info(f'JSON schema updated with LLM: {llm_model_name}')
+        file_saved = save_json_file(result_file_path, f"{llm_model_name.replace(':', '-').replace('/', '-')}.json", schema)
+        if file_saved:
+            logger.info(f"JSON schema updated with LLM: {llm_model_name}")
 
-    #Returning the Updated Process Schema
+    # Returning the Updated Process Schema
     return schema
+
 
 def extract_schema_stage3(llm_model_name: str, refined_schema: dict | Path, expert_review: str | Path, scientific_paper: str | Path, result_file_path: str, save_schema: bool = False) -> dict | None:
     """
@@ -104,35 +123,43 @@ def extract_schema_stage3(llm_model_name: str, refined_schema: dict | Path, expe
 
     # Initialize the logger
     logger = logging.getLogger(__name__)
-    logger.info(f'\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process')
-    logger.info('Stage 3: Finalize Schema Refinement\n')
+    logger.info(
+        f"\nLLMs4SchemaDiscovery Framework -- A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models for {ProcessConfig.Process_name} process"
+    )
+    logger.info("Stage 3: Finalize Schema Refinement\n")
 
     # Retrieve LLM Inference Class
     llm_inference_class = LLMRegistry.get_llm_Inference_cls(llm_model_name)
 
     # Read the initial schema from stage-1
-    logger.info(f'\nReading the refined schema from stage-2')
+    logger.info("\nReading the refined schema from stage-2")
     schema = load_json_input(refined_schema)
 
     # Read the domain-expert reviews
-    logger.info(f'\nReading the domain expert review on the refined schema')
+    logger.info("\nReading the domain expert review on the refined schema")
     review = load_text_input(expert_review)
 
     # Read the scientific paper
-    logger.info(f'\nReading the scientific paper')
-    full_text = load_text_input(scientific_paper) 
+    logger.info("\nReading the scientific paper")
+    full_text = load_text_input(scientific_paper)
 
-    #Extract the updated schema from the LLM
-    logger.info('\nCalling the completion API of the model')
-    var_dict = {'process_name': ProcessConfig.Process_name, 'current_schema': schema, 'full_text': full_text, 'domain_expert_review': review}
-        
-    #Update the Schema using the LLM and a Scientific Paper as Input
+    # Extract the updated schema from the LLM
+    logger.info("\nCalling the completion API of the model")
+    var_dict = {
+        "process_name": ProcessConfig.Process_name,
+        "current_schema": schema,
+        "full_text": full_text,
+        "domain_expert_review": review,
+    }
+
+    # Update the Schema using the LLM and a Scientific Paper as Input
     schema = llm_inference(llm_inference_class, llm_model_name, prompt_template2, var_dict, result_file_path)
-    
+
     # Optionally save extracted schema on disk
     if save_schema:
-        file_saved = save_json_file(result_file_path, f'{llm_model_name.replace(':', '-').replace('/', '-')}.json', schema)
-        if file_saved: logger.info(f'JSON schema updated with LLM: {llm_model_name}')
+        file_saved = save_json_file(result_file_path, f"{llm_model_name.replace(':', '-').replace('/', '-')}.json", schema)
+        if file_saved:
+            logger.info(f"JSON schema updated with LLM: {llm_model_name}")
 
-    #Returning the Updated Process Schema
+    # Returning the Updated Process Schema
     return schema

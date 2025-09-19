@@ -4,7 +4,7 @@ Installation
 System Requirements
 *******************
 
-The computational requirements for running schema-miner vary depending on the model being used. If utilizing OpenAI models such as `GPT-4o <https://platform.openai.com/docs/models#gpt-4o>`_ and `GPT-4-turbo <https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4>`_, no specialized hardware is needed since inference is performed via API calls. A basic system with a stable internet connection is sufficient for executing API-based workflow.
+The computational requirements for running schema- miner pro vary depending on the model being used. If utilizing OpenAI models such as `GPT-4o <https://platform.openai.com/docs/models#gpt-4o>`_ and `GPT-4-turbo <https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4>`_, no specialized hardware is needed since inference is performed via API calls. A basic system with a stable internet connection is sufficient for executing API-based workflow.
 
 For users opting to run **open-source models** such as `Llama 3.1 8B <https://ai.meta.com/blog/meta-llama-3-1/>`_ or other large-scale transformer-based models, local execution demands significantly higher computational resources. While these models can be executed on a CPU, inference times will be considerably longer. However, for efficient execution, a dedicated GPU with VRAM (specified by the model's documentation) is strongly recommended.
 
@@ -20,11 +20,11 @@ It is best practice to install the project in a virtual environment to avoid dep
 Installation with PIP (PyPI)
 ****************************
 
-Schema-miner is published on PyPI, you can install it directly:
+Schema miner pro is published on PyPI, you can install it directly:
 
 .. code-block:: bash
 
-    pip install -i https://test.pypi.org/simple/ schema-miner
+    pip install -i schema-miner
 
 This will install the latest stable release along with its dependencies.
 
@@ -38,7 +38,6 @@ To work with the development version or contribute to the project, clone the Git
     git clone https://github.com/sciknoworg/schema-miner.git
     cd schema-miner
     pip install -r requirements.txt
-    pip install -e .
 
 .. hint:: This installs the package in editable mode, so changes to the source code are reflected immediately without reinstallation.
 

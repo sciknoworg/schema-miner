@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class PDF_Parser(ABC):
     """
     PDF_Parser is an Abstract class for parsing data(Including text, images, tables etc.) from a PDF document.
@@ -10,10 +11,10 @@ class PDF_Parser(ABC):
         Initializes the Object
         """
 
-        #The parsed PDF data
+        # The parsed PDF data
         self.parsed_data = None
 
-        #The PDF file name
+        # The PDF file name
         self.filename = None
 
     @abstractmethod
@@ -27,7 +28,7 @@ class PDF_Parser(ABC):
     @abstractmethod
     def export_as_html(self, output_dir: str) -> None:
         pass
-    
+
     @abstractmethod
     def export_as_text(self, output_dir) -> None:
         pass

@@ -1,4 +1,4 @@
-system_prompt = '''
+system_prompt = """
 Role: You are an expert in the QUDT ontology. You are provided with the relevant QUDT QuantityKind and Unit concepts to help ground the user query.
 
 Objective:
@@ -33,12 +33,12 @@ Instructions:
    ```
 
 Output Format: Your output should be Valid JSON object containing the valid QUDT quantityKind and Units IRIs relevant to the user query. Do not return explanatory text, but only the JSON object.
-'''
+"""
 
-user_prompt = '''
+user_prompt = """
 Please analyze the following user query and enrich the property representing physical quantity using the QUDT ontology:
 
 Query: "{query}"
 
 Please do not return explanatory text, but only the JSON object containing the valid QUDT quantityKind and Units IRIs relevant to the user query.
-'''
+"""

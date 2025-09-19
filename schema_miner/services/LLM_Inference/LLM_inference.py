@@ -4,17 +4,24 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from schema_miner.config.envConfig import EnvConfig
 
+
 class LLM_Inference:
     """
     LLM_Inference is a super class for doing LLM inference using different Large Language Models(LLMs).
     """
 
-    def __init__(self):
+    def __init__(self, model_name: str, temperature: float = 0.3):
         """
         Initialize the object and reads the configuration file
         """
 
-        #Reading the Config File
+        # The Large Language Model to use for Inference
+        self.model_name = model_name
+
+        # LLM Temperature
+        self.temperature = temperature
+
+        # Reading the Config File
         self.config = EnvConfig
 
         # Initialize the logger
@@ -28,16 +35,18 @@ class LLM_Inference:
         :param dict var_dict: The dictionary containing variable name and its corresponding value to format the prompt.
         :returns prompt: The formatted prompt
         """
-        #Creating the chat prompt template using Langchain
-        chat_prompt_template = ChatPromptTemplate.from_messages([
-            ('system', prompt_template.system_prompt),
-            ('user', prompt_template.user_prompt),
-        ])
+        # Creating the chat prompt template using Langchain
+        chat_prompt_template = ChatPromptTemplate.from_messages(
+            [
+                ("system", prompt_template.system_prompt),
+                ("user", prompt_template.user_prompt),
+            ]
+        )
 
-        #Replacing the placeholders in the prompt with its value
+        # Replacing the placeholders in the prompt with its value
         prompt = chat_prompt_template.invoke(var_dict)
 
-        #Returning the formatted prompt
+        # Returning the formatted prompt
         return prompt
 
     def completion(self, prompt_template, var_dict):

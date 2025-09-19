@@ -1,0 +1,31 @@
+# Pre-commit configuration for schema-miner
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace        # Remove extra spaces
+      - id: end-of-file-fixer          # Ensure newline at EOF
+      - id: check-yaml                 # Validate YAML files
+      - id: check-toml                 # Validate pyproject.toml
+      - id: check-json                 # Validate JSON files
+      - id: check-added-large-files    # Prevent committing huge files
+        args: ["--maxkb=5000"]   # Fail if file > 2 MB
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.13.0
+    hooks:
+      - id: ruff
+        args: ["--fix"]  # Auto-fix issues when possible
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.18.1
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-PyYAML, types-requests]  # Add stubs if needed
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        args: ["-ll", "-iii"]  # Show medium/high severity issues

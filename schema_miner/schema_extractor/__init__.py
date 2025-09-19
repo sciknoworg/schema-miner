@@ -16,10 +16,10 @@
 Schema Extractor subpackage.
 Contains modules and utilities for extracting JSON Schema Using LLMs, Scientific Publications and Domain-Expert Feedbacks.
 """
-from .extract_schema import extract_schema_stage1, extract_schema_stage2, extract_schema_stage3
+from .extract_schema import (
+    extract_schema_stage1,
+    extract_schema_stage2,
+    extract_schema_stage3,
+)
 
-__all__ = [
-    "extract_schema_stage1",
-    "extract_schema_stage2",
-    "extract_schema_stage3"
-]
+__all__ = ["extract_schema_stage1", "extract_schema_stage2", "extract_schema_stage3"]

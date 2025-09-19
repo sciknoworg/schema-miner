@@ -16,9 +16,6 @@
 PDF text Extractor subpackage.
 Contains modules and utilities for extracting text from a PDF Document.
 """
-from .extract_text import pdf_text_extractor, all_pdf_text_extraction
+from .extract_text import all_pdf_text_extraction, pdf_text_extractor
 
-__all__ = [
-    "pdf_text_extractor",
-    "all_pdf_text_extraction"
-]
+__all__ = ["pdf_text_extractor", "all_pdf_text_extraction"]
