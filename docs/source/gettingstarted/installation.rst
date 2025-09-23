@@ -24,7 +24,7 @@ Schema miner pro is published on PyPI, you can install it directly:
 
 .. code-block:: bash
 
-    pip install -i schema-miner
+    pip install schema-miner
 
 This will install the latest stable release along with its dependencies.
 
@@ -39,12 +39,13 @@ To work with the development version or contribute to the project, clone the Git
     cd schema-miner
     pip install -r requirements.txt
 
-.. hint:: This installs the package in editable mode, so changes to the source code are reflected immediately without reinstallation.
-
 Configuration of API keys
 *************************
 
-Schema-miner uses large language models (LLMs) that require API access (e.g., OpenAI). API keys and other secrets are managed via a .env file at the project root.
+Schema-miner pro uses large language models (LLMs) that require API access (e.g., OpenAI). API keys and other secrets are managed either via a .env file at the project root or with the EnvConfig Class.
+
+Configuration Using ``.env``
+----------------------------
 
 1. Copy the example configuration file:
 
@@ -60,6 +61,23 @@ Schema-miner uses large language models (LLMs) that require API access (e.g., Op
     OPENAI_ORGANIZATION_ID = 'Your OpenAI Organization ID'
 
 3. Schema-miner automatically loads these values at runtime using the provided configuration utilities.
+
+Configuration Using ``EnvConfig``
+---------------------------------
+
+.. code-block:: python
+
+    from schema_miner.config.envConfig import EnvConfig
+
+    # OpenAI Keys
+    EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
+    EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
+
+    # Ollama
+    EnvConfig.OLLAMA_base_url = '<Ollama Base URL or empty if Ollama running locally>'
+
+    # HuggingFace
+    EnvConfig.HUGGINGFACE_access_token = '<Your huggingface access token>'
 
 Next steps
 **********

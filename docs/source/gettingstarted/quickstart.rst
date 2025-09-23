@@ -43,8 +43,16 @@ Also make sure your LLM keys/config are set:
 .. code-block:: python
 
     from schema_miner.config.envConfig import EnvConfig
+
+    # OpenAI Keys
     EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
     EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
+
+    # Ollama
+    EnvConfig.OLLAMA_base_url = '<Ollama Base URL or empty if Ollama running locally>'
+
+    # HuggingFace
+    EnvConfig.HUGGINGFACE_access_token = '<Your huggingface access token>'
 
 Step 3: Stage 1 - Initial Schema Mining
 ***************************************

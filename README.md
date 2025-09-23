@@ -1,5 +1,5 @@
 <p align="center">
-<img width="450" src="assets/schema-miner-pro-logo.jpg" alt="schema miner pro logo" />
+<img width="450" src="https://github.com/sciknoworg/schema-miner/blob/main/assets/schema-miner-pro-logo.jpg?raw=true" alt="schema miner pro logo" />
 </p>
 
 <div align="center">
@@ -21,14 +21,14 @@ This is an open-source implementation of Schema-Miner<sup>pro</sup>.
 
 ## 📋 Schema-miner<sup>pro</sup> Overview
 
-Schema-Miner is a novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance the schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text and refines schemas with expert input. Schema-Miner<sup>pro</sup> extends Schema-Miner with an ontology grounding component powered by agentic AI. It performs multi-step reasoning using lexical heuristics and semantic similarity search, and grounds schema elements in formal ontologies (e.g., QUDT). Comprehensive documentation for Schema-Miner Pro, including detailed guides and examples, is available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
+Schema-Miner is a novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance the schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text and refines schemas with expert input. Schema-Miner<sup>pro</sup> extends Schema-Miner with an ontology grounding component powered by agentic AI. It performs multi-step reasoning using lexical heuristics and semantic similarity search, and grounds schema elements in formal ontologies (e.g., [QUDT](https://www.qudt.org/pages/HomePage.html)). Comprehensive documentation for Schema-Miner Pro, including detailed guides and examples, is available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sciknoworg/schema-miner/refs/heads/main/assets/LLM4SchemaMining%20-%20Workflow%20design.svg" height="300">
 </p>
 
 <p align="center">
-  Figure 1: Overview of the LLMs4SchemaDiscovery workflow.
+  Figure 1: Overview of the LLMs4SchemaDiscovery workflow implemented in the SCHEMA-MINER tool. Stage 1 generates an initial process schema using domain specifications, while Stage 2, refines this schema using a small, curated scientific corpus. In Stage 3, schema is further enriched using a larger, non-curated corpus. The final stage involves grounding the properties in formal ontologies.
 </p>
 
 ## ⚙️ System Requirements
@@ -52,7 +52,7 @@ For our experiments, we used the following hardware setup:
 
 ## 🧪 Installation
 
-Install the package directly from PyPI:
+Install the package directly from PyPI using ``pip``:
 
 ```bash
 pip install schema-miner
@@ -75,22 +75,30 @@ For a quick start, see the provided example notebooks highlighting the overall w
 
 |  | Notebook |
 | --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1 | [Schema Mining With LLMs and expert Example](tutorials/notebooks/schema_mining_with_LLMs_and_expert_example.ipynb) |
-| 2 | [Schema Ontology Grounding Example](tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb) |
+| 1 | [Schema Mining With LLMs and expert Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_with_LLMs_and_expert_example.ipynb) |
+| 2 | [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb) |
 
 </div>
 
 ##  🧑‍💻 Schema-miner<sup>pro</sup> Tool Usage
 
-Schema_Miner enables schema discovery and refinement through a 3-stage pipeline (Stage 1 to 3) powered by LLMs, domain expertise, and scientific literature. Schema-Miner<sup>pro</sup> extends this pipeline with an automated ontology-grounding component (Stage 4), performing multi-step reasoning and semantic alignment to formal ontologies, while preserving human-in-the-loop validation.
+Schema-Miner enables schema discovery and refinement through a 3-stage pipeline (Stage 1 to 3) powered by LLMs, domain expertise, and scientific literature. Schema-Miner<sup>pro</sup> extends this pipeline with an automated ontology-grounding component (Stage 4), performing multi-step reasoning and semantic alignment to formal ontologies, while preserving human-in-the-loop validation.
 
 ### 🛠️ Configuration
-Before running schema-miner, configure your environment. For example:
+Before running schema-miner, configure your environment:
 
 ```python
 from schema_miner.config.envConfig import EnvConfig
+
+# OpenAI Keys
 EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
 EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
+
+# Ollama
+EnvConfig.OLLAMA_base_url = '<Ollama Base URL or empty if Ollama running locally>'
+
+# HuggingFace
+EnvConfig.HUGGINGFACE_access_token = '<Your huggingface access token>'
 ```
 
 ### 📂 Data Setup
@@ -139,7 +147,7 @@ llm_model_name = 'gpt-4o'
 process_specification = pdf_text_extractor(process_specification_filepath, process_specification_filename, return_text = True)
 
 # Extract schema
-results_file_path = Path("./results/stage-1/Atomic-Layer-Deposition/experimental-schema")
+results_file_path = "./results/stage-1/Atomic-Layer-Deposition/experimental-schema"
 schema = extract_schema_stage1(llm_model_name, process_specification, results_file_path, save_schema = True)
 ```
 
@@ -156,7 +164,7 @@ expert_review = Path("./data/stage-2/Atomic-Layer-Deposition/domain-expert-revie
 scientific_paper = pdf_text_extractor(scientific_paper_stage2_dir, '1 Groner et al.pdf', return_text = True)
 
 # Refine schema
-results_file_path = Path("./results/stage-2/Atomic-Layer-Deposition/experimental-schema")
+results_file_path = "./results/stage-2/Atomic-Layer-Deposition/experimental-schema"
 schema = extract_schema_stage2(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 ```
 
@@ -173,7 +181,7 @@ expert_review = Path("./data/stage-3/Atomic-Layer-Deposition/domain-expert-revie
 scientific_paper = pdf_text_extractor(scientific_paper_stage3_dir, '1-Mattinen et al.pdf', return_text = True)
 
 # Finalize schema
-results_file_path = Path("./results/stage-3/Atomic-Layer-Deposition/experimental-schema")
+results_file_path = "./results/stage-3/Atomic-Layer-Deposition/experimental-schema"
 schema = extract_schema_stage3(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
 
 # View Final Schema
@@ -182,7 +190,7 @@ logging.info(f"{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent=
 
 ### 🌐 Stage 4 – Ontology Grounding with QUDT
 
-Once a process schema is extracted, it can be semantically grounded using the [QUDT Ontologies](https://www.qudt.org/pages/HomePage.html) (Quantities, Units, Dimensions, and Data Types).
+Once a process schema is extracted, it can be semantically grounded using the [QUDT](https://www.qudt.org/pages/HomePage.html) (Quantities, Units, Dimensions, and Data Types) Ontology.
 
 The grounding workflow uses either LLM prompting or an agentic LLM approach to align schema fields with QUDT concepts. Following is an example of an agent based qudt grounding.
 
@@ -194,7 +202,7 @@ llm_model_name = 'gpt-4o'
 
 # Ground the schema with QUDT Ontology
 process_schema = Path('./results/Ideal Schema/Atomic-Layer-Deposition/experimental-ideal-schema.json')
-results_file_path = Path("./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema")
+results_file_path = "./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema"
 schema = agentic_qudt_grounding(llm_model_name, process_schema, results_file_path, save_schema = True)
 
 # Display grounded schema
@@ -244,7 +252,7 @@ If you use this repository in your research or applications, please cite the app
 ## 👥 Contact & Contributions
 
 We’d love to hear from you!
-Whether you're interested in collaborating on `schema miner pro` or have ideas to extend its capabilities, feel free to reach out:
+Whether you're interested in collaborating on `Schema-MinerPro` or have ideas to extend its capabilities, feel free to reach out:
 
 - **Collaboration inquiries:** Contact Jennifer D'Souza at jennifer.dsouza [at] tib.eu
 

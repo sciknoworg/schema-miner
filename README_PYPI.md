@@ -1,5 +1,5 @@
 <p align="center">
-<img width="450" src="assets/schema-miner-pro-logo.jpg" alt="schema-miner logo" />
+<img width="450" src="https://github.com/sciknoworg/schema-miner/blob/main/assets/schema-miner-pro-logo.jpg?raw=true" alt="schema-miner pro logo" />
 </p>
 
 <div align="center">
@@ -17,11 +17,11 @@
 
 <h3 align="center">SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h3>
 
-Schema-Miner is an open-source framework for scientific schema mining. It combines Large Language Models (LLMs) with human-in-the-loop refinement to extract, and semantically ground schema properties from unstructured text. Schema-Miner Pro extends this framework with an automated ontology-grounding component, aligning the schema with formal ontologies (e.g., QUDT). Documentation and usage guides are available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
+Schema-Miner is an open-source framework for scientific schema mining. It combines Large Language Models (LLMs) with human-in-the-loop refinement to extract, and semantically ground schema properties from unstructured text. Schema-Miner Pro extends this framework with an automated ontology-grounding component, aligning the schema with formal ontologies (e.g., [QUDT](https://www.qudt.org/pages/HomePage.html)). Documentation and usage guides are available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
 
 ## 🧪 Installation
 
-Install the package directly from PyPI:
+Install the package directly from PyPI using ``pip``:
 
 ```bash
 pip install schema-miner
@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ## ⚙️ System Requirements
 Running with OpenAI models (e.g., [**GPT-4o**](https://platform.openai.com/docs/models#gpt-4o), [**GPT-4-turbo**](https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4)) requires no special hardware beyond a basic system with internet access, since inference is API-based. For **open-source models** (e.g., [**Llama 3.1 8B**](https://ai.meta.com/blog/meta-llama-3-1/)), local execution is possible on CPU but slow; for practical performance, a GPU with sufficient VRAM (per model specifications) is strongly recommended.
 
-For more details, please check the documentation [here](https://schema-miner.readthedocs.io/en/latest/).
+For more details, please check the documentation: [https://schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/).
 
 ## 🚀 Quick Start
 
@@ -97,7 +97,7 @@ If you use this repository in your research or applications, please cite the app
 ## 👥 Contact & Contributions
 
 We’d love to hear from you!
-Whether you're interested in collaborating on `schema miner pro` or have ideas to extend its capabilities, feel free to reach out:
+Whether you're interested in collaborating on `Schema-MinerPro` or have ideas to extend its capabilities, feel free to reach out:
 
 - **Collaboration inquiries:** Contact Jennifer D'Souza at jennifer.dsouza [at] tib.eu
 
