@@ -74,10 +74,10 @@ Below is the workflow diagram of Schema-Miner.
 Citing this Work
 ****************
 
-If you use this repository in your research or applications, please cite the appropriate paper(s):
+If you use this repository in your research or applications, please cite the following paper(s):
 
-Schema-Miner (schema discovery/mining only):
-------------------------------------------------
+**LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
+--------------------------------------------------------------------------------------------------------------
 
 Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
 **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**
@@ -102,8 +102,8 @@ BibTeX
     isbn      = {978-3-031-94578-6},
     }
 
-Schema Miner Pro (schema mining with QUDT grounding / ontology grounding):
-------------------------------------------------------------------------------
+**SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
+-----------------------------------------------------------------------------------------------------------------------------
 
 Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
 **SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**

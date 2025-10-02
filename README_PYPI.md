@@ -17,7 +17,7 @@
 
 <h3 align="center">SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h3>
 
-Schema-Miner is an open-source framework for scientific schema mining. It combines Large Language Models (LLMs) with human-in-the-loop refinement to extract, and semantically ground schema properties from unstructured text. Schema-Miner Pro extends this framework with an automated ontology-grounding component, aligning the schema with formal ontologies (e.g., [QUDT](https://www.qudt.org/pages/HomePage.html)). Documentation and usage guides are available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
+Schema-Miner Pro is an open-source framework for scientific schema mining and ontology grounding. It combines Large Language Models (LLMs) with human-in-the-loop refinement to extract and organize schema properties from unstructured text, and extends this process with an automated ontology-grounding component. Documentation and usage guides are available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
 
 ## 🧪 Installation
 
@@ -56,9 +56,9 @@ For a quick start, see the provided example notebooks highlighting the overall w
 
 ## 📚 Citing this Work
 
-If you use this repository in your research or applications, please cite the appropriate paper(s):
+If you use this repository in your research or applications, please cite the following paper(s):
 
-- Schema-Miner (schema discovery/mining only):
+- **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
   > Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
   > **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**
   > In *The Semantic Web – ESWC 2025*, Springer, Cham, pp. 244–261.
@@ -78,7 +78,7 @@ If you use this repository in your research or applications, please cite the app
     isbn      = {978-3-031-94578-6},
   }
   ```
-- Schema-Miner<sup>pro</sup> (schema mining with QUDT grounding / ontology grounding):
+- **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
   > Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
   > **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**
   > In *Semantic Web Journal.*
