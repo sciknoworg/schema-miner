@@ -3,10 +3,10 @@ import json
 import logging
 from pathlib import Path
 
-from langchain.agents import AgentExecutor, create_openai_tools_agent
-from langchain.schema import Document
-from langchain.text_splitter import TokenTextSplitter
-from langchain.tools import tool
+from langchain_classic.agents import AgentExecutor, create_openai_tools_agent
+from langchain_core.documents import Document
+from langchain_text_splitters import TokenTextSplitter
+from langchain_core.tools import tool
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
@@ -14,6 +14,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from schema_miner.config.envConfig import EnvConfig
 from schema_miner.config.llmRegistry import LLMRegistry
 from schema_miner.config.processConfig import ProcessConfig
+from schema_miner.config.cliConfig import CLIConfig
 from schema_miner.prompts.ontology_grounding import agent_qudt_prompt1, agent_qudt_prompt2
 from schema_miner.services.LLM_Inference.openai_llm_inference import Openai_LLM_Inference
 from schema_miner.services.ontology.ontology_manager import OntologyManager
@@ -103,21 +104,19 @@ def _inject_quantity_schema(schema: dict, key_path: list[str], ontology_template
     target["properties"] = copy.deepcopy(ontology_template)
 
 
-def agentic_qudt_grounding(llm_model_name: str, process_schema: dict | Path, result_file_path: str, save_schema: bool = False) -> dict | None:
+def agentic_qudt_grounding(process_schema: dict | Path, save_schema: bool = False) -> dict | None:
     """
     Ground a process schema with QUDT (QuantityKind and Unit) ontology using an agentic workflow powered by an LLM.
 
-    :param str llm_model_name: Name of the LLM model to use (e.g., "gpt-4o").
     :param dict | Path process_schema: Path to the JSON process schema to be grounded.
-    :param str result_file_path: Directory path where the grounded schema will be saved if `save_schema` is True.
     :param bool save_schema: Whether to save the grounded schema to disk.
     :returns dict | None: The modified (grounded) schema dictionary, or None if grounding fails.
     """
     logger = logging.getLogger(__name__)
-    logger.info(f"\nQUDT Ontology Grounding for a {ProcessConfig.Process_name} process schema Using Agentic Workflow")
+    logger.info(f"QUDT Ontology Grounding for a {ProcessConfig.Process_name} process schema Using Agentic Workflow")
 
     # Check for OpenAI Model
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(llm_model_name)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
     if llm_inference_class is not Openai_LLM_Inference:
         raise ValueError("Only OpenAI models are applicable for Agent-based Ontology grounding\n")
 
@@ -125,18 +124,18 @@ def agentic_qudt_grounding(llm_model_name: str, process_schema: dict | Path, res
     EnvConfig.validate_openai_api_key()
 
     # Read the QUDT Ontology (QuantityKind and Units)
-    logger.info("\nReading the QUDT Ontology (QuantityKind and Units) and creating their respective vector stores")
+    logger.debug("Reading the QUDT Ontology (QuantityKind and Units) and creating their respective vector stores")
     qudt_quantityKind_vecStore = _load_qudt_ontology("https://qudt.org/3.1.0/vocab/quantitykind")
     qudt_units_vecStore = _load_qudt_ontology("https://qudt.org/3.1.0/vocab/unit")
 
     # Read the process schema
-    logger.info("\nReading the process schema")
+    logger.info("Reading the schema...")
     schema = load_json_input(process_schema)
     if not schema:
         raise ValueError('Unable to load JSON Schema for Agent-based Ontology grounding\n')
 
     # Read the ontology template
-    logger.info("\nReading the Ontology Structure to be used by the LLM")
+    logger.debug("Reading the Ontology Structure to be used by the LLM")
     ontology = SchemaManager.get_schema("QUDT_quantity_schema.json")
 
     @tool
@@ -152,7 +151,7 @@ def agentic_qudt_grounding(llm_model_name: str, process_schema: dict | Path, res
         relevantQudtUnits = _search_semantic(query, qudt_units_vecStore)
 
         # Intialize the OpenAI Inference object
-        llm = Openai_LLM_Inference(llm_model_name, temperature=0)
+        llm = Openai_LLM_Inference(EnvConfig.LLM_MODEL, temperature=0)
 
         # Extract the QUDT entities
         var_dict = {
@@ -174,7 +173,7 @@ def agentic_qudt_grounding(llm_model_name: str, process_schema: dict | Path, res
 
     # Create an OpenAI Tool Agent
     llm = ChatOpenAI(
-        model=llm_model_name,
+        model=EnvConfig.LLM_MODEL,
         temperature=0,
         model_kwargs={"response_format": {"type": "json_object"}}
     )
@@ -201,9 +200,9 @@ def agentic_qudt_grounding(llm_model_name: str, process_schema: dict | Path, res
 
     # Optionally save extracted schema on disk
     if save_schema:
-        file_saved = save_json_file(result_file_path, f"{llm_model_name}.json", schema)
+        file_saved = save_json_file(CLIConfig.RESULTS_PATH, f"{EnvConfig.LLM_MODEL}.json", schema)
         if file_saved:
-            logger.info(f"JSON schema saved at location: {result_file_path}")
+            logger.info(f"JSON schema saved at location: {CLIConfig.RESULTS_PATH}")
 
     # Return the grounded schema
     return schema

@@ -5,14 +5,13 @@ from schema_miner.services.PDF_Parsers.docling_pdf_parser import Docling_PDF_Par
 from schema_miner.services.PDF_Parsers.pdf_parser import PDF_Parser
 
 
-def pdf_text_extractor(source_filepath: str, filename: str, destination_filepath: str | None = None, pdf_parser: PDF_Parser = Docling_PDF_Parser(), return_text: bool = False) -> None | str:
+def pdf_text_extractor(source_filename: str, destination_filepath: str | None = None, pdf_parser: PDF_Parser = Docling_PDF_Parser(), return_text: bool = False) -> None | str:
     """
     Extract text content from a PDF file and optionally save it to a Markdown file.
 
     This function parses a given PDF document using the provided or default parser. The extracted content is saved as a Markdown file in the specified destination directory. Optionally, the extracted text can also be returned.
 
-    :param str source_filepath: Path to the source directory containing the PDF file.
-    :param str filename: Name of the PDF file to be processed.
+    :param str source_filename: Path to the source PDF file to be processed.
     :param str destination_filepath: Path to the destination directory where the extracted text will be saved.
     :param PDF_Parser pdf_parser: A PDF parser instance. If None, a default parser (Docling_PDF_Parser) is used.
     :param bool, optional return_text: If True, returns the extracted text in addition to saving it. Defaults to False.
@@ -21,17 +20,17 @@ def pdf_text_extractor(source_filepath: str, filename: str, destination_filepath
     # Initialize the logger
     logger = logging.getLogger(__name__)
 
+    # Extract the filename from the source filepath
+    filename = os.path.basename(source_filename)
+
     # Validate file type
     if not filename.endswith(".pdf"):
         raise ValueError(f"Invalid file type: {filename}. Expected a PDF file.")
 
     logger.info(f"\nExtracting text from the PDF: {filename}")
 
-    # Extract text from the PDF file
-    complete_file_path = f"{source_filepath}/{filename}"
-
     # Parse the PDF Document
-    pdf_parser.parse_pdf(complete_file_path)
+    pdf_parser.parse_pdf(source_filename)
     logger.info("PDF parsed successfully")
 
     # Optionally, Export/Save the PDF Document as a Markdown File
@@ -67,5 +66,8 @@ def all_pdf_text_extraction(source_filepath: str, destination_filepath: str, pdf
         if not filename.endswith(".pdf"):
             continue
 
+        # Concatenate the source filepath and filename to get the complete path of the PDF file
+        pdf_file_path = os.path.join(source_filepath, filename)
+
         # Extract the text and save as markdown file
-        pdf_text_extractor(source_filepath, filename, destination_filepath, pdf_parser, return_text=False)
+        pdf_text_extractor(pdf_file_path, destination_filepath, pdf_parser, return_text=False)

@@ -13,6 +13,7 @@ class LLMRegistry:
         "gpt-4o": Openai_LLM_Inference,
         "gpt-4-turbo": Openai_LLM_Inference,
         "gpt-5": Openai_LLM_Inference,
+        "gpt-5-mini": Openai_LLM_Inference,
         "meta-llama-3.1-8b-instruct": SAIA_LLM_Inference,
         "meta-llama-3.1-70b-instruct": SAIA_LLM_Inference,
         "Qwen/Qwen2.5-0.5B-Instruct": HuggingFace_LLM_Inference,

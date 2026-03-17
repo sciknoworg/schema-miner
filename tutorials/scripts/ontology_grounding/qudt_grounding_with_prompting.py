@@ -3,6 +3,7 @@ import logging
 from pathlib import Path
 
 from schema_miner.config.processConfig import ProcessConfig
+from schema_miner.config.envConfig import EnvConfig
 from schema_miner.ontology_grounding.prompt_qudt_grounding import prompt_based_qudt_grounding
 
 # Configure logging
@@ -13,20 +14,12 @@ logging.basicConfig(
 if __name__ == "__main__":
 
     logger = logging.getLogger(__name__)
-    logger.info("\nLLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models")
-
-    # Add process name and process description whose schema have to be extracted
-    ProcessConfig.Process_name = "Atomic Layer Deposition"
-    ProcessConfig.Process_description = "An ALD process involves a series of controlled chemical reactions used to deposit thin films on a surface at an atomic level"
-
-    # Large Language Model (LLM) to be used for Schema Extraction
-    llm_model_name = "gpt-4o"
+    logger.info("LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models")
 
     # Ground the schema with QUDT Ontology
-    logger.info(f"\nPerforming LLM ({llm_model_name}) Inference to extract schema...")
+    logger.info(f"Performing LLM ({EnvConfig.LLM_MODEL}) Inference to extract schema...")
     process_schema = Path("../results/stage-3/Atomic-Layer-Deposition/experimental-schema/gpt-4o.json")
-    results_file_path = "../results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema"
-    schema = prompt_based_qudt_grounding(llm_model_name, process_schema, results_file_path, save_schema=True)
+    schema = prompt_based_qudt_grounding(process_schema, save_schema=True)
 
     # Display the final Process Schema
     logging.info(f"{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent = 2)}")

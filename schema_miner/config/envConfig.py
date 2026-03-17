@@ -8,6 +8,10 @@ class EnvConfig:
     # Loading the environment file
     load_dotenv()
 
+    # LLM Provider Configuration
+    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "OPENAI")
+    LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o")
+
     # OPENAI
     OPENAI_api_key = os.getenv("OPENAI_API_KEY")
     OPENAI_organization_id = os.getenv("OPENAI_ORGANIZATION_ID")

@@ -11,13 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from schema_miner import (
-    config,
-    ontology_grounding,
-    pdf_text_extractor,
-    schema_extractor,
-    schemas,
-)
+# from schema_miner import (
+#     config,
+#     ontology_grounding,
+#     pdf_text_extractor,
+#     schema_extractor,
+#     schemas,
+#     cli
+# )
 
 __all__ = [
     "schema_extractor",
@@ -25,4 +26,5 @@ __all__ = [
     "pdf_text_extractor",
     "schemas",
     "config",
+    "cli"
 ]
