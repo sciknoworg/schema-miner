@@ -5,6 +5,7 @@ from schema_miner.config.llmRegistry import LLMRegistry
 from schema_miner.config.processConfig import ProcessConfig
 from schema_miner.config.cliConfig import CLIConfig
 from schema_miner.config.envConfig import EnvConfig
+from schema_miner.pdf_text_extractor.extract_text import pdf_text_extractor
 from schema_miner.prompts.schema_extraction import prompt_template1, prompt_template2
 from schema_miner.services.LLM_Inference.inference_runner import llm_inference
 from schema_miner.utils.file_utils import load_json_input, load_text_input, save_json_file
@@ -29,7 +30,10 @@ def extract_schema_stage1(save_schema: bool = False) -> dict | None:
 
     # Read process specification document
     logger.info("Reading the process specification document...")
-    context = load_text_input(CLIConfig.STAGE1_SPECIFICATION_PATH)
+    if CLIConfig.STAGE1_SPECIFICATION_PATH.endswith(".pdf"):
+        context = pdf_text_extractor(CLIConfig.STAGE1_SPECIFICATION_PATH, return_text=True)
+    else:
+        context = load_text_input(CLIConfig.STAGE1_SPECIFICATION_PATH)
 
     # Extract process schema using LLM and process specification document
     logger.info(f"Performing LLM ({EnvConfig.LLM_MODEL}) Inference to extract schema...")
@@ -83,7 +87,10 @@ def extract_schema_stage2(initial_schema: dict | Path, expert_review: str | Path
 
     # Read the scientific paper
     logger.info("Reading the scientific paper...")
-    full_text = load_text_input(scientific_paper)
+    if scientific_paper.suffix.lower() == ".pdf":
+        full_text = pdf_text_extractor(scientific_paper, return_text=True)
+    else:
+        full_text = load_text_input(scientific_paper)
 
     # Extract the updated schema from the LLM
     logger.info("Calling the completion API of the model...")
@@ -140,7 +147,10 @@ def extract_schema_stage3(refined_schema: dict | Path, expert_review: str | Path
 
     # Read the scientific paper
     logger.info("Reading the scientific paper...")
-    full_text = load_text_input(scientific_paper)
+    if scientific_paper.suffix.lower() == ".pdf":
+        full_text = pdf_text_extractor(scientific_paper, return_text=True)
+    else:
+        full_text = load_text_input(scientific_paper)
 
     # Extract the updated schema from the LLM
     logger.info("Calling the completion API of the model...")

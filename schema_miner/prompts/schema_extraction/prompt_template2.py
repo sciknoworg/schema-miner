@@ -39,4 +39,5 @@ The schema should:
 1. Include all relevant properties.
 2. Use standard JSON schema format with appropriate data types, descriptions, and units where applicable.
 3. Group related parameters in nested objects as needed to reflect the {process_name} process structure.
+4. The schema should be consistent with the domain expert feedbacks when provided.
 """

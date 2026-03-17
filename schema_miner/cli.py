@@ -3,6 +3,7 @@ SCHEMA-MINER CLI: A Command-Line Interface for Schema Extraction from Scientific
 """
 
 # Python Standard Library Imports
+import json
 import logging
 from pathlib import Path
 import importlib.metadata
@@ -13,15 +14,15 @@ import typer
 
 # Schema-Miner Module Imports
 from schema_miner.config.cliConfig import CLIConfig
-from schema_miner.schema_extractor.extract_schema import extract_schema_stage1, extract_schema_stage2, extract_schema_stage3
-from schema_miner.ontology_grounding.prompt_qudt_grounding import prompt_based_qudt_grounding
-from schema_miner.ontology_grounding.agentic_qudt_grounding import agentic_qudt_grounding
 
 # Initialize the Typer app
 app = typer.Typer()
 
 # Initialize the logger
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
+logging.basicConfig(level=logging.WARNING, format="%(asctime)s - %(message)s")
+
+# Enable INFO level only for schema_miner modules
+logging.getLogger("schema_miner").setLevel(logging.INFO)
 
 def version_callback(value: bool) -> None:
     """
@@ -36,6 +37,19 @@ def version_callback(value: bool) -> None:
         # Display the version to the user and exit the program
         typer.echo(f"Schema Miner CLI Version: {version}")
         raise typer.Exit()
+    
+def _validate_json_schema(schema: str) -> None:
+    """
+    Validate that the provided schema present at the given path is a valid JSON schema.
+    Args:
+        schema (str): The file path to the JSON schema to validate.
+    """
+    try:
+        with open(schema, 'r') as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError) as e:
+        typer.secho(f"Invalid JSON schema file: {e}", fg=typer.colors.RED, bold=True)
+        raise typer.Exit(code=1)
 
 def _get_total_papers(stage: int) -> int:
     """
@@ -57,14 +71,38 @@ def _get_total_papers(stage: int) -> int:
         typer.secho(f"Papers path for stage {stage} is not a valid directory: {papers_path}", fg=typer.colors.RED, bold=True)
         raise typer.Exit(code=1)
 
-    # Validate that path contains any papers in text or markdown format
-    paper_files = list(papers_dir.glob("*.txt")) + list(papers_dir.glob("*.md"))
+    # Validate that path contains any papers in text, markdown and pdf format
+    paper_files = list(papers_dir.glob("*.txt")) + list(papers_dir.glob("*.md")) + list(papers_dir.glob("*.pdf"))
     if not paper_files:
         typer.secho(f"No paper files found in the specified papers path for stage {stage}: {papers_path}", fg=typer.colors.RED, bold=True)
         raise typer.Exit(code=1)
 
     # Return the total number of papers available in the dataset for the specified stage
     return len(paper_files)
+
+def _resolve_papers(papers: Optional[str]) -> Optional[int]:
+    """
+    Resolve the --papers argument to an integer batch size or None (meaning all papers).
+    Args:
+        papers (Optional[str]): The raw --papers value from the CLI.
+    Returns:
+        Optional[int]: Resolved batch size. 1 if not provided, None if 'all', or the integer value.
+    """
+    # If papers argument is not provided, default to 1 (one paper at a time)
+    if papers is None:
+        return 1
+    
+    # If 'all' is specified, return None to indicate that all papers should be processed in one batch
+    if papers.strip().lower() == "all":
+        return None
+    
+    # Validate that the papers argument is a positive integer
+    if not papers.isdigit() or int(papers) <= 0:
+        typer.secho("Error: --papers must be a positive integer or 'all'.", fg=typer.colors.RED, bold=True)
+        raise typer.Exit(code=1)
+    
+    # Return the integer value of papers
+    return int(papers)
 
 def _validate_input_arguments(stage: int, schema: Optional[str], expert_feedback: Optional[str], papers: Optional[int]) -> None:
     """
@@ -86,8 +124,8 @@ def _validate_input_arguments(stage: int, schema: Optional[str], expert_feedback
         if not Path(CLIConfig.STAGE1_SPECIFICATION_PATH).is_file():
             typer.secho(f"Specification document not found at path: {CLIConfig.STAGE1_SPECIFICATION_PATH}", fg=typer.colors.RED, bold=True)
             raise typer.Exit(code=1)
-        if not CLIConfig.STAGE1_SPECIFICATION_PATH.endswith(('.txt', '.md')):
-            typer.secho("Specification document should be a text file with .txt or .md extension.", fg=typer.colors.RED, bold=True)
+        if not CLIConfig.STAGE1_SPECIFICATION_PATH.endswith(('.txt', '.md', '.pdf')):
+            typer.secho("Specification document should be a text file with .txt, .md, or .pdf extension.", fg=typer.colors.RED, bold=True)
             raise typer.Exit(code=1)
 
     # Check 3: For stage 2 and stage 3, validate the schema_path
@@ -101,6 +139,9 @@ def _validate_input_arguments(stage: int, schema: Optional[str], expert_feedback
         if not schema.endswith('.json'):
             typer.secho("Schema file should be a JSON file with .json extension.", fg=typer.colors.RED, bold=True)
             raise typer.Exit(code=1)
+        
+        # Validate that the provided schema is a valid JSON schema
+        _validate_json_schema(schema)
 
     # Check 4: For stage 2 and stage 3, validate the expert_feedback which is optional but if provided should be either a text string or a valid text file path
     if stage in [2, 3] and expert_feedback:
@@ -133,10 +174,13 @@ def _run_stage_expert_feedback(stage: int, schema: str, expert_feedback: Optiona
         expert_feedback (Optional[str]): Expert feedback as text or path to a text file.
         papers (Optional[int]): The number of scientific papers to use in batches for stage 2 and stage 3.
     """
+    # Import the extract schema stage 2 and stage 3 functions
+    from schema_miner.schema_extractor.extract_schema import extract_schema_stage2, extract_schema_stage3
+
     # Collect the papers path based on the stage
     papers_path = CLIConfig.STAGE2_PAPERS_PATH if stage == 2 else CLIConfig.STAGE3_PAPERS_PATH
     papers_dir = Path(papers_path)
-    paper_files = list(papers_dir.glob("*.txt")) + list(papers_dir.glob("*.md"))
+    paper_files = list(papers_dir.glob("*.txt")) + list(papers_dir.glob("*.md")) + list(papers_dir.glob("*.pdf"))
 
     # If papers argument is not provided, set it to the total number of papers available in the dataset for the specified stage
     batch_size = papers if papers is not None else len(paper_files)
@@ -164,6 +208,9 @@ def _run_stage_expert_feedback(stage: int, schema: str, expert_feedback: Optiona
                 raise typer.Exit(code=1)
         typer.secho(f"Completed batch {batch_num + 1}/{len(batches)}\n", fg=typer.colors.GREEN, bold=True)
 
+        # Reset the expert feedback
+        expert_feedback = ""
+
         # After every batch except the last one, pause and prompt the user for feedback
         if batch_num < len(batches) - 1:
             typer.echo("─" * 50)
@@ -174,15 +221,21 @@ def _run_stage_expert_feedback(stage: int, schema: str, expert_feedback: Optiona
 
     typer.secho(f"Stage {stage} completed. Refined schemas saved to {CLIConfig.RESULTS_PATH}", fg=typer.colors.GREEN, bold=True)
 
-def _run_stage(stage: int, schema: Optional[str], expert_feedback: Optional[str], papers: Optional[int]) -> None:
+def _run_stage(stage: int, schema: Optional[str], expert_feedback: Optional[str], papers: Optional[str]) -> None:
     """
     Run the specified stage of SCHEMA-MINER with the optional expert feedback.
     Args:
         stage (int): The stage of schema extraction to execute (1, 2, or 3).
         schema (Optional[str]): Path to the initial schema for stage 2 and refined schema for stage 3
         expert_feedback (Optional[str]): Expert feedback as text or path to a text file.
-        papers (Optional[int]): The number of scientific papers to use in batches for stage 2 and stage 3.
+        papers (Optional[str]): The number of scientific papers to use in batches for stage 2 and stage 3. Default: 1 (one paper at a time). Use 'all' to process all papers in one batch.
     """
+    # Import the extract schema stage 1 function
+    from schema_miner.schema_extractor.extract_schema import extract_schema_stage1
+
+    # Resolve the papers argument to an integer batch size or None
+    papers = _resolve_papers(papers)
+
     # Validate the input arguments for the specified stage
     _validate_input_arguments(stage, schema, expert_feedback, papers)
 
@@ -202,6 +255,10 @@ def _run_ontology_grounding(ontology_grounding_method: str, schema: str) -> None
         ontology_grounding_method (str): The ontology grounding method to use: 'prompt' or 'agentic'.
         schema (str): Path to the process schema to be grounded.
     """
+    # Import the ontology grounding functions
+    from schema_miner.ontology_grounding.prompt_qudt_grounding import prompt_based_qudt_grounding
+    from schema_miner.ontology_grounding.agentic_qudt_grounding import agentic_qudt_grounding
+
     # Validate the ontology grounding method
     if ontology_grounding_method not in ['prompt', 'agentic']:
         typer.secho("Invalid ontology grounding method specified. Please choose 'prompt' or 'agentic'.", fg=typer.colors.RED, bold=True)
@@ -232,7 +289,7 @@ def main(
     ontology_grounding: Optional[str] = typer.Option(None, "--ontology-grounding", help="Ontology grounding method: 'prompt' or 'agentic'"),
     schema: Optional[str] = typer.Option(None, "--schema", help="Path to the initial schema for stage 2 and refined schema for stage 3, or process schema for ontology grounding."),
     expert_feedback: Optional[str] = typer.Option(None, "--expert-feedback", help="Expert feedback as text or path to a text file (stages 2 & 3 only)."),
-    papers: Optional[int] = typer.Option(None, "--papers", help="Number of scientific papers to use in batches for stage 2 and stage 3."),
+    papers: Optional[str] = typer.Option(None, "--papers", help="Numbers of papers per batch for stage 2 and stage 3. Default: 1 (one paper at a time). Use 'all' to process all papers in one batch."),
     version: Optional[bool] = typer.Option(None, "--version", callback=version_callback, is_eager=True, help="Show the version of the Schema Miner CLI and exit.")
 ):
     """
