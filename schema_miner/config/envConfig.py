@@ -30,6 +30,7 @@ class EnvConfig:
 
     # HuggingFace
     HUGGINGFACE_access_token = os.getenv("HuggingFace_Access_Token")
+    HUGGINGFACE_USE_LOCAL = os.getenv("HUGGINGFACE_USE_LOCAL", "False").lower() == "true"
 
     @staticmethod
     def validate_openai_api_key() -> bool:

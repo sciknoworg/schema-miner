@@ -1,11 +1,11 @@
 import logging
 import os
 
-from schema_miner.services.PDF_Parsers.docling_pdf_parser import Docling_PDF_Parser
+from schema_miner.services.PDF_Parsers.PyPDF_pdf_parser import PyPDF_PDF_Parser
 from schema_miner.services.PDF_Parsers.pdf_parser import PDF_Parser
 
 
-def pdf_text_extractor(source_filename: str, destination_filepath: str | None = None, pdf_parser: PDF_Parser = Docling_PDF_Parser(), return_text: bool = False) -> None | str:
+def pdf_text_extractor(source_filename: str, destination_filepath: str | None = None, pdf_parser: PDF_Parser = PyPDF_PDF_Parser(), return_text: bool = False) -> None | str:
     """
     Extract text content from a PDF file and optionally save it to a Markdown file.
 
@@ -27,7 +27,7 @@ def pdf_text_extractor(source_filename: str, destination_filepath: str | None = 
     if not filename.endswith(".pdf"):
         raise ValueError(f"Invalid file type: {filename}. Expected a PDF file.")
 
-    logger.info(f"\nExtracting text from the PDF: {filename}")
+    logger.info(f"Extracting text from the PDF: {filename}")
 
     # Parse the PDF Document
     pdf_parser.parse_pdf(source_filename)
@@ -35,17 +35,17 @@ def pdf_text_extractor(source_filename: str, destination_filepath: str | None = 
 
     # Optionally, Export/Save the PDF Document as a Markdown File
     if destination_filepath:
-        pdf_parser.export_as_markdown(destination_filepath)
+        pdf_parser.export_as_text(destination_filepath)
 
     # Optionally Return the content of the file
     if return_text:
-        return pdf_parser.parsed_data.document.export_to_markdown()
+        return pdf_parser.parsed_data
 
     # Return None if return_text is False
     return None
 
 
-def all_pdf_text_extraction(source_filepath: str, destination_filepath: str, pdf_parser: PDF_Parser = Docling_PDF_Parser()) -> None:
+def all_pdf_text_extraction(source_filepath: str, destination_filepath: str, pdf_parser: PDF_Parser = PyPDF_PDF_Parser()) -> None:
     """
     Extract text content from all PDF files in a source directory and save them as Markdown files.
 

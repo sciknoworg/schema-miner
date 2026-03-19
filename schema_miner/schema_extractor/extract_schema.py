@@ -26,7 +26,7 @@ def extract_schema_stage1(save_schema: bool = False) -> dict | None:
     logger.info("Stage 1: Initial Schema Mining")
 
     # Retrieve LLM inference class
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls()
 
     # Read process specification document
     logger.info("Reading the process specification document...")
@@ -73,7 +73,7 @@ def extract_schema_stage2(initial_schema: dict | Path, expert_review: str | Path
     logger.info("Stage 2: Preliminary Schema Refinement")
 
     # Retrieve LLM Inference Class
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls()
 
     # Read the initial schema from stage-1
     logger.info("Reading the schema...")
@@ -133,7 +133,7 @@ def extract_schema_stage3(refined_schema: dict | Path, expert_review: str | Path
     logger.info("Stage 3: Finalize Schema Refinement")
 
     # Retrieve LLM Inference Class
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls()
 
     # Read the initial schema from stage-1
     logger.info("Reading the schema...")

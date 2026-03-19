@@ -38,13 +38,21 @@ def llm_inference(llm_inference_obj: Type[LLM_Inference], llm_model_name: str, p
         # Saving the model response
         file_path = f"{result_file_path}/Intermediate-Responses/{llm_model_name}.txt"
         logger.debug(
-            f"\nWriting the model's response to the file at the specified location: {file_path}"
+            f"Writing the model's response to the file at the specified location: {file_path}"
         )
         write_text_file(file_path, model_output)
 
         # Extracting the updated schema
-        logger.debug("\nExtracting the JSON object from the model's output...")
+        logger.debug("Extracting the JSON object from the model's output...")
         schema = extract_json_schema(model_output, json_encl_expr=[("```json", "```"), ("```", "```")])
+
+        # If no schema, check for <think> </think> tags in the model output, and extract the JSON schema after the </think> tag
+        if not schema:
+            logger.debug("No JSON schema found in the model's output. Checking for <think> </think> tags to extract the schema...")
+            schema = model_output.split("</think>")[-1].strip() if "</think>" in model_output else model_output
+            schema = extract_json_schema(schema, json_encl_expr=[("```json", "```"), ("```", "```")])
+
+        # If still no schema, return None
         if not schema:
             logger.debug("Stopping the inference from the LLM...")
             return None

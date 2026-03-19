@@ -116,7 +116,7 @@ def agentic_qudt_grounding(process_schema: dict | Path, save_schema: bool = Fals
     logger.info(f"QUDT Ontology Grounding for a {ProcessConfig.Process_name} process schema Using Agentic Workflow")
 
     # Check for OpenAI Model
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls()
     if llm_inference_class is not Openai_LLM_Inference:
         raise ValueError("Only OpenAI models are applicable for Agent-based Ontology grounding\n")
 

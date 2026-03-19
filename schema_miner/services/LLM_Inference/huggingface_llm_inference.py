@@ -1,7 +1,9 @@
 import os
 
+import torch
 from langchain_core.output_parsers import StrOutputParser
-from langchain_huggingface import HuggingFaceEndpoint
+from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace, HuggingFacePipeline
+
 
 from schema_miner.services.LLM_Inference.LLM_inference import LLM_Inference
 
@@ -22,14 +24,45 @@ class HuggingFace_LLM_Inference(LLM_Inference):
         self.access_token = self.config.HUGGINGFACE_access_token
         os.environ["HUGGINGFACEHUB_API_TOKEN"] = self.access_token
 
-        # The Large Language Model to use for Inference
-        self.model = HuggingFaceEndpoint(
-            repo_id=self.model_name,
-            task="text-generation",
-            max_new_tokens=1024,
-            temperature=self.temperature,
-            truncate=True,
-        )
+        if self.config.HUGGINGFACE_USE_LOCAL:
+            self.logger.info(f"Using local HuggingFace model: {self.model_name} for LLM Inference")
+            from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+            if "Ministral-3" in self.model_name:
+                from transformers import Mistral3ForConditionalGeneration, MistralCommonBackend
+                tokenizer = MistralCommonBackend.from_pretrained(self.model_name, token = self.access_token)
+                model = Mistral3ForConditionalGeneration.from_pretrained(self.model_name, token = self.access_token, dtype=torch.bfloat16, device_map="auto")
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(self.model_name, token = self.access_token)
+                model = AutoModelForCausalLM.from_pretrained(self.model_name, token = self.access_token, dtype=torch.bfloat16, device_map="auto")
+            
+            # Create the text generation pipeline using the loaded model and tokenizer
+            pipe = pipeline(
+                "text-generation",
+                model=model,
+                tokenizer=tokenizer,
+                trust_remote_code=True,
+                max_new_tokens=4096,
+                temperature=self.temperature,
+                max_length=None,
+                do_sample=self.temperature > 0
+            )
+
+            # Initialize the HuggingFacePipeline with the created pipeline
+            self.model = HuggingFacePipeline(pipeline=pipe)
+        else:
+            self.logger.info(f"Using HuggingFace Inference API with model: {self.model_name} for LLM Inference")
+
+            # The Large Language Model to use for Inference
+            self.model = HuggingFaceEndpoint(
+                repo_id=self.model_name,
+                task="text-generation",
+                max_new_tokens=4096,
+                temperature=self.temperature
+            )
+
+        # Initialize the Chat Model with the specified HuggingFace model
+        self.chat_model = ChatHuggingFace(llm = self.model)
 
     def __str__(self):
         """
@@ -50,7 +83,7 @@ class HuggingFace_LLM_Inference(LLM_Inference):
             prompt = super().format_prompt_template(prompt_template, var_dict)
 
             # Invoking the model's completion API with the prompt
-            model_output = self.model.invoke(prompt.to_messages())
+            model_output = self.chat_model.invoke(prompt.to_messages())
 
             # Parsing the LLM's output to extract the final output
             model_output = StrOutputParser().invoke(model_output)

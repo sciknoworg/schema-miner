@@ -23,7 +23,7 @@ def prompt_based_qudt_grounding(process_schema: dict | Path, save_schema: bool =
     logger.info(f"QUDT Ontology Grounding for a {ProcessConfig.Process_name} process schema")
 
     # Retrieve LLM inference class
-    llm_inference_class = LLMRegistry.get_llm_Inference_cls(EnvConfig.LLM_MODEL)
+    llm_inference_class = LLMRegistry.get_llm_Inference_cls()
 
     # Read the process schema
     logger.info("Reading the schema...")
