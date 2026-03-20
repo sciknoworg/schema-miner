@@ -37,7 +37,7 @@ def extract_json_schema(text: str, json_encl_expr: list):
                 schema = json.loads("".join(matches))
                 break
             except Exception:
-                logger.debug(f"Exception occured while trying {expr} as the start and end expression")
+                logger.debug(f"Exception occured while trying {expr} as the start and end expression, trying the next expression...")
 
     # Returning the extracted schema or if not found: None
     return schema

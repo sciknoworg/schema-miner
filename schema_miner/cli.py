@@ -14,15 +14,17 @@ import typer
 
 # Schema-Miner Module Imports
 from schema_miner.config.cliConfig import CLIConfig
+from schema_miner.config.envConfig import EnvConfig
+from schema_miner.utils.file_utils import save_json_file
 
 # Initialize the Typer app
-app = typer.Typer()
+app = typer.Typer(pretty_exceptions_enable=False)
 
 # Initialize the logger
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s - %(message)s")
 
 # Enable INFO level only for schema_miner modules
-logging.getLogger("schema_miner").setLevel(logging.INFO)
+logging.getLogger("schema_miner").setLevel(logging.DEBUG)
 
 def version_callback(value: bool) -> None:
     """
@@ -202,10 +204,22 @@ def _run_stage_expert_feedback(stage: int, schema: str, expert_feedback: Optiona
         for paper_idx, paper_file in enumerate(batch):
             global_idx = batch_num * batch_size + paper_idx + 1
             typer.echo(f"Processing paper {global_idx}/{len(paper_files)}: {paper_file}")
+            
+            # Extract the updated schema from the LLM with the scientific paper and expert feedback as input
             schema = extract_schema_fn(schema, expert_feedback or "", paper_file, save_schema=True)
             if not schema:
-                typer.secho(f"Schema extraction failed for paper: {paper_file}", fg=typer.colors.RED, bold=True)
+                typer.secho("Schema extraction failed, please try again or check the logs for more details.", fg=typer.colors.RED, bold=True)
                 raise typer.Exit(code=1)
+            
+            # Save the refined schema after each paper is processed in the results path
+            path_safe_model_name = EnvConfig.LLM_MODEL.replace(':', '-').replace('/', '-')
+            intermediate_schema_path = f"{CLIConfig.RESULTS_PATH}/intermediate-schema/{path_safe_model_name}"
+            intermediate_schema_fname = f"schema_iter_{global_idx}.json"
+            filesaved = save_json_file(intermediate_schema_path, intermediate_schema_fname, schema)
+            if not filesaved:
+                typer.secho(f"Failed to save the intermediate schema for paper: {paper_file}", fg=typer.colors.RED, bold=True)
+                raise typer.Exit(code=1)
+
         typer.secho(f"Completed batch {batch_num + 1}/{len(batches)}\n", fg=typer.colors.GREEN, bold=True)
 
         # Reset the expert feedback
@@ -274,6 +288,9 @@ def _run_ontology_grounding(ontology_grounding_method: str, schema: str) -> None
     if not schema.endswith('.json'):
         typer.secho("Schema file should be a JSON file with .json extension.", fg=typer.colors.RED, bold=True)
         raise typer.Exit(code=1)
+    
+    # Validate that the provided schema is a valid JSON schema
+    _validate_json_schema(schema)
 
     # Initialize the Path object for the schema
     schema = Path(schema)

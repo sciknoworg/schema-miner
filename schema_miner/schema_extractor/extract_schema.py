@@ -45,7 +45,7 @@ def extract_schema_stage1(save_schema: bool = False) -> dict | None:
     schema = llm_inference(llm_inference_class, EnvConfig.LLM_MODEL, prompt_template1, var_dict, CLIConfig.RESULTS_PATH)
 
     # Optionally save extracted schema on disk
-    if save_schema:
+    if save_schema and schema:
         file_saved = save_json_file(CLIConfig.RESULTS_PATH, f"{EnvConfig.LLM_MODEL.replace(':', '-').replace('/', '-')}.json", schema)
         if file_saved:
             logger.info(f"JSON schema saved at location: {CLIConfig.RESULTS_PATH}")
@@ -87,7 +87,8 @@ def extract_schema_stage2(initial_schema: dict | Path, expert_review: str | Path
 
     # Read the scientific paper
     logger.info("Reading the scientific paper...")
-    if scientific_paper.suffix.lower() == ".pdf":
+    scientific_paper = scientific_paper.as_posix() if isinstance(scientific_paper, Path) else scientific_paper
+    if scientific_paper.endswith(".pdf"):
         full_text = pdf_text_extractor(scientific_paper, return_text=True)
     else:
         full_text = load_text_input(scientific_paper)
@@ -105,7 +106,7 @@ def extract_schema_stage2(initial_schema: dict | Path, expert_review: str | Path
     schema = llm_inference(llm_inference_class, EnvConfig.LLM_MODEL, prompt_template2, var_dict, CLIConfig.RESULTS_PATH)
 
     # Optionally save extracted schema on disk
-    if save_schema:
+    if save_schema and schema:
         file_saved = save_json_file(CLIConfig.RESULTS_PATH, f"{EnvConfig.LLM_MODEL.replace(':', '-').replace('/', '-')}.json", schema)
         if file_saved:
             logger.info(f"JSON schema updated with LLM: {EnvConfig.LLM_MODEL}")
@@ -147,7 +148,8 @@ def extract_schema_stage3(refined_schema: dict | Path, expert_review: str | Path
 
     # Read the scientific paper
     logger.info("Reading the scientific paper...")
-    if scientific_paper.suffix.lower() == ".pdf":
+    scientific_paper = scientific_paper.as_posix() if isinstance(scientific_paper, Path) else scientific_paper
+    if scientific_paper.endswith(".pdf"):
         full_text = pdf_text_extractor(scientific_paper, return_text=True)
     else:
         full_text = load_text_input(scientific_paper)
@@ -165,7 +167,7 @@ def extract_schema_stage3(refined_schema: dict | Path, expert_review: str | Path
     schema = llm_inference(llm_inference_class, EnvConfig.LLM_MODEL, prompt_template2, var_dict, CLIConfig.RESULTS_PATH)
 
     # Optionally save extracted schema on disk
-    if save_schema:
+    if save_schema and schema:
         file_saved = save_json_file(CLIConfig.RESULTS_PATH, f"{EnvConfig.LLM_MODEL.replace(':', '-').replace('/', '-')}.json", schema)
         if file_saved:
             logger.info(f"JSON schema updated with LLM: {EnvConfig.LLM_MODEL}")

@@ -42,7 +42,7 @@ class HuggingFace_LLM_Inference(LLM_Inference):
                 model=model,
                 tokenizer=tokenizer,
                 trust_remote_code=True,
-                max_new_tokens=4096,
+                max_new_tokens=8192,
                 temperature=self.temperature,
                 max_length=None,
                 do_sample=self.temperature > 0
@@ -57,7 +57,7 @@ class HuggingFace_LLM_Inference(LLM_Inference):
             self.model = HuggingFaceEndpoint(
                 repo_id=self.model_name,
                 task="text-generation",
-                max_new_tokens=4096,
+                max_new_tokens=8192,
                 temperature=self.temperature
             )
 

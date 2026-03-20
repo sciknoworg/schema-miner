@@ -35,13 +35,6 @@ def llm_inference(llm_inference_obj: Type[LLM_Inference], llm_model_name: str, p
         llm_model_name = llm_model_name.replace(":", "-")
         llm_model_name = llm_model_name.replace("/", "-")
 
-        # Saving the model response
-        file_path = f"{result_file_path}/Intermediate-Responses/{llm_model_name}.txt"
-        logger.debug(
-            f"Writing the model's response to the file at the specified location: {file_path}"
-        )
-        write_text_file(file_path, model_output)
-
         # Extracting the updated schema
         logger.debug("Extracting the JSON object from the model's output...")
         schema = extract_json_schema(model_output, json_encl_expr=[("```json", "```"), ("```", "```")])
