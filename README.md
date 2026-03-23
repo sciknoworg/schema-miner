@@ -266,7 +266,7 @@ Schema-Miner processes the papers iteratively, updating the schema after each pa
 
 ---
 
-### 🌐 Stage 4 — Ontology Grounding with QUDT
+### 🌐 Ontology Grounding with QUDT
 
 Semantically grounds the discovered schema against the [QUDT](https://www.qudt.org/pages/HomePage.html) (Quantities, Units, Dimensions, and Data Types) ontology.
 
