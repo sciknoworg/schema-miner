@@ -69,7 +69,7 @@ Select your LLM provider and model, then fill in **only** the credentials block 
 # Active provider — options: OPENAI | SAIA | OLLAMA | HUGGINGFACE
 # Use SAIA for any OpenAI-compatible endpoint (GWDG/SAIA, OpenRouter, etc.)
 LLM_PROVIDER = '<Your LLM provider here>'
-LLM_MODEL = '<Your model here>'                          # e.g. gpt-4o, gemma-3-27b-it
+LLM_MODEL = '<Your model here>'                          # e.g. mistral-large-3-675b-instruct-2512, gemma-3-27b-it
 
 # OpenAI
 OPENAI_API_KEY = '<your-openai-api-key>'
@@ -96,10 +96,10 @@ Schema-Miner supports **any service that exposes an OpenAI-compatible API** via 
 | Provider | `LLM_PROVIDER` value | Example models | Notes |
 |---|---|---|---|
 | OpenAI | `OPENAI` | `gpt-4o`, `o3-mini` | Requires `OPENAI_API_KEY` |
-| GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-235b-a22b` | OpenAI-compatible; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
-| OpenRouter | `SAIA` | `openai/gpt-5.2` | OpenAI-compatible; set `SAIA_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
+| GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-30b-a3b-instruct-2507` | OpenAI-compatible; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
+| OpenRouter | `SAIA` | `qwen/qwen3-235b-a22b-2507`, `anthropic/claude-sonnet-4.6` | OpenAI-compatible; set `SAIA_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
 | Ollama | `OLLAMA` | `llama3.2:3b`, `ministral-3:3b` | Local or remote server; no API key needed |
-| HuggingFace | `HUGGINGFACE` | `Qwen/Qwen3-4B-Instruct-2507` | Local GPU mode or serverless Inference API |
+| HuggingFace | `HUGGINGFACE` | `Qwen/Qwen3-4B-Instruct-2507` | Local GPU mode or serverless Inference API. Requires `HuggingFace_Access_Token` | 
 
 > [!NOTE]
 > **HuggingFace local mode** (`HUGGINGFACE_USE_LOCAL = True`) downloads and runs the model on your machine. A CUDA-compatible GPU is strongly recommended for models larger than 1B parameters. For CPU-only machines, use the **Inference API** (`HUGGINGFACE_USE_LOCAL = False`) instead.
@@ -207,27 +207,29 @@ Refines the Stage 1 schema using domain-expert feedback and a curated corpus of 
 **Prerequisites**: set `STAGE2_PAPERS_PATH` in `.env`; have a Stage 1 schema file available.
 
 ```bash
-# Basic — process papers one by one (default)
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json
+# Basic — process papers one by one (default) without initial expert feedback and prompt user for feedback after each paper
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json
 
-# With inline expert feedback
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json \
+# With inline expert feedback for the first batch, and prompt user for feedback after each subsequent paper
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json \
     --expert-feedback "Please add units for all temperature and pressure fields."
 
-# With expert feedback from a file
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json \
-    --expert-feedback data/stage-2/reviews/gpt-4o.txt
+# With expert feedback for the first batch, and prompt user for feedback after each subsequent paper
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json \
+    --expert-feedback data/stage-2/reviews/mistral-large-3-675b-instruct-2512.txt
 
-# Process papers in batches of 3
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers 3
+# Process papers in batches of 3, and NO expert feedback is provided for the first batch but user is prompted to provided feedback after each batch
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers 3
 
-# Process all papers in a single batch
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers all
+# Process all papers in a single batch with NO expert feedback
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers all
 
-# Process papers in batches of 3 with inline expert feedback
-schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers 3 \
+# Process papers in batches of 3 with inline expert feedback for the first batch, and prompt user for feedback after each subsequent batch
+schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers 3 \
     --expert-feedback "Please add units for all temperature and pressure fields."
 ```
+
+Schema-Miner iteratively processes the papers, updating the schema after each paper and optionally incorporating expert feedback. The intermediate schemas after each iteration and the final refined schema are saved to `RESULTS_PATH`.
 
 ---
 
@@ -238,27 +240,29 @@ Validates and finalises the schema using a larger, non-curated paper corpus and 
 **Prerequisites**: set `STAGE3_PAPERS_PATH` in `.env`; have a Stage 2 schema file available.
 
 ```bash
-# Basic
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json
+# Basic — process papers one by one (default) without initial expert feedback and prompt user for feedback after each paper
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json
 
-# With inline expert feedback
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json \
+# With inline expert feedback for the first batch, and prompt user for feedback after each subsequent paper
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json \
     --expert-feedback "Ensure all quantities reference standard SI units."
 
-# With expert feedback from a file
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json \
-    --expert-feedback data/stage-3/reviews/gpt-4o.txt
+# With expert feedback  for the first batch, and prompt user for feedback after each subsequent paper
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json \
+    --expert-feedback data/stage-3/reviews/mistral-large-3-675b-instruct-2512.txt
 
-# Process papers in batches of 5
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers 5
+# Process papers in batches of 5, and NO expert feedback is provided for the first batch but user is prompted to provided feedback after each batch
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers 5
 
-# Process all papers in a single batch
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers all
+# Process all papers in a single batch with NO expert feedback
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers all
 
-# Process papers in batches of 5 with inline expert feedback
-schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers 5 \
+# Process papers in batches of 5 with inline expert feedback for the first batch, and prompt user for feedback after each subsequent batch
+schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers 5 \
     --expert-feedback "Ensure all quantities reference standard SI units."
 ```
+
+Schema-Miner processes the papers iteratively, updating the schema after each paper and optionally incorporating expert feedback. The intermediate schemas after each iteration and the final refined schema are saved to `RESULTS_PATH`.
 
 ---
 
@@ -275,10 +279,10 @@ Two grounding methods are available:
 
 ```bash
 # Prompt-based grounding
-schema-miner --ontology-grounding prompt --schema results/stage-3/gpt-4o.json
+schema-miner --ontology-grounding prompt --schema results/stage-3/mistral-large-3-675b-instruct-2512.json
 
 # Agentic grounding (recommended)
-schema-miner --ontology-grounding agentic --schema results/stage-3/gpt-4o.json
+schema-miner --ontology-grounding agentic --schema results/stage-3/mistral-large-3-675b-instruct-2512.json
 ```
 
 The grounded schema is saved to `RESULTS_PATH`.
