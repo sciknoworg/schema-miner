@@ -34,25 +34,6 @@ Schema-Miner is a novel framework that leverages Large Language Models (LLMs) an
   Figure 1: Overview of the LLMs4SchemaDiscovery workflow implemented in the SCHEMA-MINER tool. Stage 1 generates an initial process schema using domain specifications, while Stage 2, refines this schema using a small, curated scientific corpus. In Stage 3, schema is further enriched using a larger, non-curated corpus. The final stage involves grounding the properties in formal ontologies.
 </p>
 
-## ⚙️ System Requirements
-
-The computational requirements for running this project vary depending on the model being used. If utilizing OpenAI models such as [**GPT-4o**](https://platform.openai.com/docs/models#gpt-4o) and [**GPT-4-turbo**](https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4), no specialized hardware is needed since inference is performed via API calls. A basic system with a stable internet connection is sufficient for executing API-based workflow.
-
-For users opting to run **open-source models** such as [**Llama 3.1 8B**](https://ai.meta.com/blog/meta-llama-3-1/) or other large-scale transformer-based models, local execution demands significantly higher computational resources. While these models can be executed on a CPU, inference times will be considerably longer. However, for efficient execution, a dedicated GPU with VRAM (specified by the model's documentation) is strongly recommended.
-
-While the hardware configuration can be adjusted based on the model size and performance needs, using a GPU significantly accelerates inference processes, reducing execution time drastically compared to CPU-only setups.
-
-### Experimental Configuration
-
-For our experiments, we used the following hardware setup:
-
-* **Processor:** 16-core CPU
-* **Memory:** 32 GB RAM
-* **GPU:** Intel Arc Graphics
-* **Models Used:**
-    * **Cloud-based:** GPT-4o and GPT-4-turbo (via OpenAI API)
-    * **Locally run:** Llama 3.1 8B
-
 ## 🧪 Installation
 
 Install the package directly from PyPI using ``pip``:
@@ -63,16 +44,114 @@ pip install schema-miner
 
 If you are working with the source code directly, install dependencies from [requirements.txt](requirements.txt):
 
-
 ```bash
 git clone https://github.com/sciknoworg/schema-miner.git
 cd schema-miner
 pip install -r requirements.txt
 ```
 
-## 🚀 Quick Start
+> [!IMPORTANT]
+> Before running schema-miner for the first time, configure your environment by copying `.env.example` to `.env` and filling in your values. See the [Configuration](#️-configuration) section below.
 
-For a quick start, see the provided example notebooks highlighting the overall workflows of the schema-miner.
+## ⚙️ Configuration
+
+Schema-Miner is configured entirely through a `.env` file in the project root. Copy the provided template and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+### 🤖 Model Configuration
+
+Select your LLM provider and model, then fill in **only** the credentials block for that provider:
+
+```ini
+# Active provider — options: OPENAI | SAIA | OLLAMA | HUGGINGFACE
+# Use SAIA for any OpenAI-compatible endpoint (GWDG/SAIA, OpenRouter, etc.)
+LLM_PROVIDER = '<Your LLM provider here>'
+LLM_MODEL = '<Your model here>'                          # e.g. gpt-4o, gemma-3-27b-it
+
+# OpenAI
+OPENAI_API_KEY = '<your-openai-api-key>'
+OPENAI_ORGANIZATION_ID = '<your-openai-organization-id>' # Optional, only needed if you have multiple organizations in OpenAI
+
+# SAIA / Any OpenAI-compatible endpoint
+# Schema-Miner supports any service exposing an OpenAI-compatible API.
+# Provide your API key and the base URL for your preferred provider.
+SAIA_API_KEY = '<your-api-key>'                         # SAIA key  OR  OpenRouter key 
+SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'   # GWDG/SAIA (Germany) | or use https://openrouter.ai/api/v1 for OpenRouter
+
+# Ollama  (leave blank if running locally on the same machine)
+OLLAMA_BASE_URL = '<OLLAMA Server Base URL>'
+
+# HuggingFace
+HuggingFace_Access_Token = '<your-huggingface-access-token>'
+HUGGINGFACE_USE_LOCAL = False                            # True = load model locally (GPU recommended) | False = use Inference API
+```
+
+#### Supported LLM Providers
+
+Schema-Miner supports **any service that exposes an OpenAI-compatible API** via the `SAIA` provider type — just supply your API key and the service's base URL.
+
+| Provider | `LLM_PROVIDER` value | Example models | Availability | Notes |
+|---|---|---|---|---|
+| OpenAI | `OPENAI` | `gpt-4o`, `o3-mini` | Requires `OPENAI_API_KEY` |
+| GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-235b-a22b` | OpenAI-compatible; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
+| OpenRouter | `SAIA` | `openai/gpt-5.2` | OpenAI-compatible; set `SAIA_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
+| Ollama | `OLLAMA` | `llama3.2:3b`, `ministral-3:3b` | Local or remote server; no API key needed |
+| HuggingFace | `HUGGINGFACE` | `Qwen/Qwen3-4B-Instruct-2507` | Local GPU mode or serverless Inference API |
+
+> [!NOTE]
+> **HuggingFace local mode** (`HUGGINGFACE_USE_LOCAL = True`) downloads and runs the model on your machine. A CUDA-compatible GPU is strongly recommended for models larger than 1B parameters. For CPU-only machines, use the **Inference API** (`HUGGINGFACE_USE_LOCAL = False`) instead.
+
+### 🔬 Process Configuration
+
+Define the scientific process whose schema you want to discover:
+
+```ini
+PROCESS_NAME = '<your-process-name>'
+PROCESS_DESCRIPTION = '<a brief description of the process>'
+```
+
+These values are injected into every LLM prompt as scientific context.
+
+### 📂 Data Paths
+
+Point schema-miner to your input documents. Only set the path for the stage you intend to run:
+
+```ini
+# Stage 1 — path to the process specification document (PDF or plain text)
+STAGE1_SPECS_PATH = 'data/stage-1/my-process/specification.pdf'
+
+# Stage 2 — directory containing curated research papers (PDF or plain text)
+STAGE2_PAPERS_PATH = 'data/stage-2/my-process/papers/'
+
+# Stage 3 — directory containing the broader paper corpus (PDF or plain text)
+STAGE3_PAPERS_PATH = 'data/stage-3/my-process/papers/'
+```
+
+### 📤 Output Configuration
+
+Set the directory where extracted schemas will be saved:
+
+```ini
+RESULTS_PATH = 'results/my-run/'
+```
+
+---
+
+## 🚀 Usage
+
+Schema-Miner Pro supports two usage modes:
+
+1. **Python SDK** — programmatic access via function calls, ideal for notebooks and custom workflows
+2. **CLI** — command-line interface for direct stage execution without writing any Python
+
+---
+
+## 📓 Python SDK
+
+For a quick start with the Python SDK, see the provided example notebooks:
 
 <div align="center">
 
@@ -83,134 +162,126 @@ For a quick start, see the provided example notebooks highlighting the overall w
 
 </div>
 
-##  🧑‍💻 Schema-miner<sup>pro</sup> Tool Usage
+---
 
-Schema-Miner enables schema discovery and refinement through a 3-stage pipeline (Stage 1 to 3) powered by LLMs, domain expertise, and scientific literature. Schema-Miner<sup>pro</sup> extends this pipeline with an automated ontology-grounding component (Stage 4), performing multi-step reasoning and semantic alignment to formal ontologies, while preserving human-in-the-loop validation.
+## 🖥️ CLI Reference
 
-### 🛠️ Configuration
-Before running schema-miner, configure your environment:
+Schema-Miner exposes a `schema-miner` command after installation. All configuration is read from the `.env` file — no Python code required.
 
-```python
-from schema_miner.config.envConfig import EnvConfig
-
-# OpenAI Keys
-EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
-EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
-
-# Ollama
-EnvConfig.OLLAMA_base_url = '<Ollama Base URL or empty if Ollama running locally>'
-
-# HuggingFace
-EnvConfig.HUGGINGFACE_access_token = '<Your huggingface access token>'
+```
+schema-miner [OPTIONS]
 ```
 
-### 📂 Data Setup
-Before running schema-miner, we need to tell schema-miner where to find:
+### Options
 
-- **Domain specification document(s)** → used for initial schema mining
-- **Curated corpus** (high-quality literature) → used for refinement
-- **Broader corpus** (larger set of papers) → used for final validation
+| Option | Values | Required when | Description |
+|---|---|---|---|
+| `--stage` | `1`, `2`, `3` | Mutually exclusive with `--ontology-grounding` | Run a schema extraction stage |
+| `--ontology-grounding` | `prompt`, `agentic` | Mutually exclusive with `--stage` | Run ontology grounding |
+| `--schema` | `<path>` | Stages 2, 3, and ontology grounding | Path to the input JSON schema file |
+| `--expert-feedback` | `<text or path>` | Optional (stages 2 & 3) | Inline review text, or path to a `.txt` / `.md` file |
+| `--papers` | `N` or `all` | Optional (stages 2 & 3) | Number of papers to process per batch (default: `1`) |
+| `--version` | — | — | Display the installed version and exit |
+| `--help` | — | — | Show possible options and exit |
 
-```python
-# Process Specification for Stage 1
-process_specification_filepath = '../data/stage-1/Atomic-Layer-Deposition/Experimental-Usecase'
-process_specification_filename = 'ALD-Process-Development.pdf'
+---
 
-# Small curated corpus of scientific papers
-scientific_paper_stage2_dir = '../data/stage-2/Atomic-Layer-Deposition/research-papers/experimental-usecase'
+### 🧩 Stage 1 — Initial Schema Mining
 
-# Bigger corpus of scientific papers
-scientific_paper_stage3_dir = '../data/stage-3/Atomic-Layer-Deposition/research-papers/experimental_usecase'
+Generates an initial JSON schema from a process specification document using the configured LLM.
+
+**Prerequisite**: set `STAGE1_SPECS_PATH` in `.env` (PDF or plain text file).
+
+```bash
+schema-miner --stage 1
 ```
 
-### 🧪 Process Setup
-Initialize the process name and description whose schema has to be extracted
+Schema-Miner reads the specification document, queries the LLM, and saves the resulting JSON schema to `RESULTS_PATH`.
 
-```python
-from schema_miner.config.processConfig import ProcessConfig
-ProcessConfig.Process_name = "Atomic Layer Deposition"
-ProcessConfig.Process_description = "An ALD process involves a series of controlled chemical reactions used to deposit thin films on a surface at an atomic level"
+---
+
+### 🔄 Stage 2 — Preliminary Schema Refinement
+
+Refines the Stage 1 schema using domain-expert feedback and a curated corpus of scientific papers.
+
+**Prerequisites**: set `STAGE2_PAPERS_PATH` in `.env`; have a Stage 1 schema file available.
+
+```bash
+# Basic — process papers one by one (default)
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json
+
+# With inline expert feedback
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json \
+    --expert-feedback "Please add units for all temperature and pressure fields."
+
+# With expert feedback from a file
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json \
+    --expert-feedback data/stage-2/reviews/gpt-4o.txt
+
+# Process papers in batches of 3
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers 3
+
+# Process all papers in a single batch
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers all
+
+# Process papers in batches of 3 with inline expert feedback
+schema-miner --stage 2 --schema results/stage-1/gpt-4o.json --papers 3 \
+    --expert-feedback "Please add units for all temperature and pressure fields."
 ```
 
-### 🧩 Stage 1 – Initial Schema Mining
+---
 
-Generate an initial JSON schema from a process specification document using a preferred LLM.
+### 🏁 Stage 3 — Final Schema Refinement
 
-```python
-import json
-import logging
-from pathlib import Path
-from schema_miner.pdf_text_extractor import pdf_text_extractor
-from schema_miner.schema_extractor.extract_schema import extract_schema_stage1
+Validates and finalises the schema using a larger, non-curated paper corpus and expert review, ensuring generalisability and semantic robustness.
 
-# Choose LLM
-llm_model_name = 'gpt-4o'
+**Prerequisites**: set `STAGE3_PAPERS_PATH` in `.env`; have a Stage 2 schema file available.
 
-# Input process specification
-process_specification = pdf_text_extractor(process_specification_filepath, process_specification_filename, return_text = True)
+```bash
+# Basic
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json
 
-# Extract schema
-results_file_path = "./results/stage-1/Atomic-Layer-Deposition/experimental-schema"
-schema = extract_schema_stage1(llm_model_name, process_specification, results_file_path, save_schema = True)
+# With inline expert feedback
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json \
+    --expert-feedback "Ensure all quantities reference standard SI units."
+
+# With expert feedback from a file
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json \
+    --expert-feedback data/stage-3/reviews/gpt-4o.txt
+
+# Process papers in batches of 5
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers 5
+
+# Process all papers in a single batch
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers all
+
+# Process papers in batches of 5 with inline expert feedback
+schema-miner --stage 3 --schema results/stage-2/gpt-4o.json --papers 5 \
+    --expert-feedback "Ensure all quantities reference standard SI units."
 ```
 
-### 🔄 Stage 2 – Preliminary Schema Refinement
+---
 
-Refine the Stage 1 schema using scientific literature and expert feedback.
+### 🌐 Stage 4 — Ontology Grounding with QUDT
 
-```python
-from schema_miner.schema_extractor.extract_schema import extract_schema_stage2
+Semantically grounds the discovered schema against the [QUDT](https://www.qudt.org/pages/HomePage.html) (Quantities, Units, Dimensions, and Data Types) ontology.
 
-# Input Initial Schema, Expert Feedback and Scientific Literature
-schema = Path("./results/stage-1/Atomic-Layer-Deposition/experimental-schema/gpt-4o.json")
-expert_review = Path("./data/stage-2/Atomic-Layer-Deposition/domain-expert-reviews/experimental-usecase/method-1/gpt-4o.txt")
-scientific_paper = pdf_text_extractor(scientific_paper_stage2_dir, '1 Groner et al.pdf', return_text = True)
+Two grounding methods are available:
 
-# Refine schema
-results_file_path = "./results/stage-2/Atomic-Layer-Deposition/experimental-schema"
-schema = extract_schema_stage2(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
+| Method | `--ontology-grounding` value | Description |
+|---|---|---|
+| Prompt-based | `prompt` | Single LLM call per schema field; fast and lightweight |
+| Agentic | `agentic` | Multi-step reasoning with lexical heuristics and semantic similarity search; higher accuracy |
+
+```bash
+# Prompt-based grounding
+schema-miner --ontology-grounding prompt --schema results/stage-3/gpt-4o.json
+
+# Agentic grounding (recommended)
+schema-miner --ontology-grounding agentic --schema results/stage-3/gpt-4o.json
 ```
 
-### 🏁 Stage 3 – Final Schema Refinement
-
-Validate and finalize the schema using a larger corpus of research papers and expert review, ensuring generalizability and semantic robustness.
-
-```python
-from schema_miner.schema_extractor.extract_schema import extract_schema_stage3
-
-# Input Schema, Expert Feedback and Scientific Literature
-schema = Path("./results/stage-2/Atomic-Layer-Deposition/experimental-schema/gpt-4o.json")
-expert_review = Path("./data/stage-3/Atomic-Layer-Deposition/domain-expert-reviews/experimental-usecase/Experiment-1/1a/gpt-4o.txt")
-scientific_paper = pdf_text_extractor(scientific_paper_stage3_dir, '1-Mattinen et al.pdf', return_text = True)
-
-# Finalize schema
-results_file_path = "./results/stage-3/Atomic-Layer-Deposition/experimental-schema"
-schema = extract_schema_stage3(llm_model_name, schema, expert_review, scientific_paper, results_file_path, save_schema = True)
-
-# View Final Schema
-logging.info(f"{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent=2)}")
-```
-
-### 🌐 Stage 4 – Ontology Grounding with QUDT
-
-Once a process schema is extracted, it can be semantically grounded using the [QUDT](https://www.qudt.org/pages/HomePage.html) (Quantities, Units, Dimensions, and Data Types) Ontology.
-
-The grounding workflow uses either LLM prompting or an agentic LLM approach to align schema fields with QUDT concepts. Following is an example of an agent based qudt grounding.
-
-```python
-from schema_miner.ontology_grounding.agentic_qudt_grounding import agentic_qudt_grounding
-
-# Select LLM for grounding
-llm_model_name = 'gpt-4o'
-
-# Ground the schema with QUDT Ontology
-process_schema = Path('./results/Ideal Schema/Atomic-Layer-Deposition/experimental-ideal-schema.json')
-results_file_path = "./results/qudt-grounded/Atomic-Layer-Deposition/experimental-schema"
-schema = agentic_qudt_grounding(llm_model_name, process_schema, results_file_path, save_schema = True)
-
-# Display grounded schema
-logging.info(f'{ProcessConfig.Process_name} Schema:\n{json.dumps(schema, indent = 2)}')
-```
+The grounded schema is saved to `RESULTS_PATH`.
 
 ## 📚 Citing this Work
 
