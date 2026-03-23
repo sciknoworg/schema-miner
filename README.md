@@ -93,8 +93,8 @@ HUGGINGFACE_USE_LOCAL = False                            # True = load model loc
 
 Schema-Miner supports **any service that exposes an OpenAI-compatible API** via the `SAIA` provider type — just supply your API key and the service's base URL.
 
-| Provider | `LLM_PROVIDER` value | Example models | Availability | Notes |
-|---|---|---|---|---|
+| Provider | `LLM_PROVIDER` value | Example models | Notes |
+|---|---|---|---|
 | OpenAI | `OPENAI` | `gpt-4o`, `o3-mini` | Requires `OPENAI_API_KEY` |
 | GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-235b-a22b` | OpenAI-compatible; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
 | OpenRouter | `SAIA` | `openai/gpt-5.2` | OpenAI-compatible; set `SAIA_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
