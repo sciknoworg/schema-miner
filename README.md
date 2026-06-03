@@ -319,12 +319,16 @@ If you use this repository in your research or applications, please cite the fol
 
   ### 📌 BibTeX
   ```bibtex
-  @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    title     = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
-    journal = {Semantic Web Journal},
-    year      = {2025},
-  }
+	@article{sadruddin2026schema,
+	  title={Schema-miner pro: Agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow},
+	  author={Sadruddin, Sameer and D’Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+	  journal={Semantic Web},
+	  volume={17},
+	  number={3},
+	  pages={22104968261431521},
+	  year={2026},
+	  publisher={SAGE Publications Sage UK: London, England}
+	}
   ```
 
 ## 👥 Contact & Contributions
