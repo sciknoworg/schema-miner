@@ -120,6 +120,13 @@ h3 {
   margin: 24px auto 34px;
 }
 
+.top-resource-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(100%, 880px);
+  gap: 10px;
+}
+
 .resource-row.left {
   justify-content: flex-start;
   margin: 18px 0 0;
@@ -146,10 +153,18 @@ h3 {
   white-space: normal;
 }
 
-.pill::before {
+.top-resource-row .pill {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+.brand-icon,
+.resource-row.left .pill::before {
   display: inline-grid;
   width: 19px;
   height: 19px;
+  flex: 0 0 19px;
   place-items: center;
   border-radius: 50%;
   color: #fff;
@@ -158,24 +173,68 @@ h3 {
   line-height: 1;
 }
 
-.pill.paper::before {
-  content: "DOI";
+.brand-icon {
+  fill: currentColor;
+}
+
+.text-icon {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.pill.paper {
+  border-color: rgba(201, 54, 63, 0.22);
+  background: linear-gradient(180deg, #fffafa, #fdecee);
+}
+
+.pill.paper .brand-icon,
+.resource-row.left .pill.paper::before {
+  color: #fff;
   background: var(--red);
 }
 
-.pill.code::before,
-.pill.data::before {
-  content: "GH";
+.resource-row.left .pill.paper::before {
+  content: "DOI";
+}
+
+.pill.code {
+  border-color: rgba(37, 42, 51, 0.22);
+  background: linear-gradient(180deg, #ffffff, #edf0f4);
+}
+
+.pill.code .brand-icon,
+.resource-row.left .pill.code::before,
+.resource-row.left .pill.data::before {
+  color: #fff;
   background: #252a33;
 }
 
-.pill.docs::before {
-  content: "D";
+.resource-row.left .pill.code::before,
+.resource-row.left .pill.data::before {
+  content: "GH";
+}
+
+.pill.docs {
+  border-color: rgba(40, 105, 200, 0.23);
+  background: linear-gradient(180deg, #f8fbff, #eaf2ff);
+}
+
+.pill.docs .brand-icon,
+.resource-row.left .pill.docs::before {
+  color: #fff;
   background: var(--blue);
 }
 
-.pill.cite::before {
-  content: "C";
+.resource-row.left .pill.docs::before {
+  content: "D";
+}
+
+.pill.scischema {
+  border-color: rgba(23, 143, 154, 0.25);
+  background: linear-gradient(180deg, #f7ffff, #e7f6f3);
+}
+
+.pill.scischema .brand-icon {
+  color: #fff;
   background: var(--teal);
 }
 
@@ -457,6 +516,10 @@ footer p {
     padding-top: 34px;
   }
 
+  .top-resource-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   h1 {
     font-size: 1.85rem;
   }
@@ -511,6 +574,10 @@ footer p {
 
   .resource-row {
     justify-content: stretch;
+  }
+
+  .top-resource-row {
+    grid-template-columns: 1fr;
   }
 
   .pill,
