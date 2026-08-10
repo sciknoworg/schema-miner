@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SCHEMA-MINERpro</title>
+    <meta
+      name="description"
+      content="SCHEMA-MINERpro: agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow."
+    >
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
+    <link rel="stylesheet" href="css/styles.css?v=20260806-paper-page">
+    <script src="js/main.js?v=20260806-copy-citation" defer></script>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <p class="venue">Semantic Web, 2026</p>
+        <h1>SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding Over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h1>
+        <p class="authors">
+          <a href="https://github.com/sciknoworg/schema-miner" rel="noopener">Sameer Sadruddin</a><sup>1,*</sup>,
+          Jennifer D&#39;Souza<sup>1,*</sup>,
+          Eleni Poupaki<sup>2</sup>,
+          Alex Watkins<sup>3</sup>,
+          Bora Karasulu<sup>3</sup>,
+          S&ouml;ren Auer<sup>1,4</sup>,
+          Adrie Mackus<sup>2</sup>, and
+          Erwin Kessels<sup>2</sup>
+        </p>
+        <p class="affiliations">
+          <sup>1</sup>TIB Leibniz Information Centre for Science and Technology &nbsp;
+          <sup>2</sup>Eindhoven University of Technology &nbsp;
+          <sup>3</sup>University of Warwick &nbsp;
+          <sup>4</sup>L3S Research Center, Leibniz University of Hannover
+        </p>
+        <p class="note">* Equal contribution</p>
+
+        <nav class="resource-row" aria-label="Project resources">
+          <a class="pill paper" href="assets/schema-minerpro.pdf?v=20260806-paper">PDF</a>
+          <a class="pill code" href="https://github.com/sciknoworg/schema-miner" rel="noopener">Code</a>
+          <a class="pill data" href="https://github.com/sciknoworg/schema-miner/tree/main/data" rel="noopener">Data</a>
+          <a class="pill hf" href="https://huggingface.co/spaces/SciKnowOrg/schema-miner" rel="noopener">Hugging Face</a>
+          <a class="pill docs" href="https://schema-miner.readthedocs.io/en/latest/" rel="noopener">Docs</a>
+          <a class="pill cite" href="#citation">Citation</a>
+        </nav>
+
+        <figure class="main-figure">
+          <img src="assets/workflow.svg?v=20260806-workflow" alt="Three-stage LLMs4SchemaDiscovery workflow followed by ontology grounding.">
+          <figcaption>
+            Overview of the LLMs4SchemaDiscovery workflow: initial schema mining, preliminary refinement with curated literature and expert feedback, final refinement with a broader corpus, and ontology grounding.
+          </figcaption>
+        </figure>
+      </header>
+
+      <section class="section narrow" id="abstract">
+        <h2>Abstract</h2>
+        <p>
+          Scientific processes are often described in free text, making it difficult to represent and reason over them computationally. We present SCHEMA-MINER<sup>pro</sup>, a human-in-the-loop framework that automatically extracts and grounds structured schemas from scientific literature. Our approach combines large language models for schema extraction with an agent-based system that aligns extracted elements to external ontologies through interpretable, multi-step reasoning. The agent leverages lexical heuristics, semantic similarity, and expert feedback to ensure accurate grounding. We demonstrate the framework on two semiconductor manufacturing workflows, atomic layer deposition and atomic layer etching, mapping process parameters and outputs to the QUDT ontology. By producing ontology-aligned, semantically precise schemas, SCHEMA-MINER<sup>pro</sup> lays the groundwork for machine-actionable scientific knowledge and automated reasoning across disciplines.
+        </p>
+      </section>
+
+      <section class="section wide" id="benchmark">
+        <div class="section-copy">
+          <h2>Benchmark And Dataset</h2>
+          <p>
+            SCHEMA-MINER<sup>pro</sup> evaluates schema discovery and ontology grounding across atomic layer deposition (ALD) and atomic layer etching (ALE), covering both experimental and simulation literature. The repository contains process specifications, curated and broader paper corpora, generated schemas, expert-guided refinements, and ideal grounded schemas for comparison and reuse.
+          </p>
+        </div>
+
+        <div class="figure-grid">
+          <figure>
+            <img src="assets/agent-grounding.png?v=20260806-agent" alt="Agentic ontology grounding workflow using lexical search, FAISS semantic search, LLM calls, and expert validation.">
+            <figcaption>
+              The grounding agent checks schema properties against ontology terms, uses FAISS-backed semantic search for ambiguous cases, and returns ontology-aligned metadata for expert validation.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="assets/quantity-schema.png?v=20260806-quantity" alt="QUDT quantity schema connecting quantity value, quantity kind, and unit.">
+            <figcaption>
+              Quantity schema used to connect extracted physical properties to QUDT quantity kinds, numerical values, and units.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section wide" id="tasks">
+        <div class="section-copy">
+          <h2>Task Descriptions</h2>
+          <p>
+            The workflow can be read as four evaluation tasks. Each task has a clear input, output, and validation signal, allowing systems or users to inspect progress from raw scientific text to ontology-grounded schemas.
+          </p>
+        </div>
+
+        <div class="task-grid">
+          <article class="task-card">
+            <h3>Initial Schema Mining</h3>
+            <p>Generate a first JSON schema from a process specification document.</p>
+            <dl>
+              <dt>Input</dt>
+              <dd>Process name, process description, and specification PDF or text.</dd>
+              <dt>Output</dt>
+              <dd>Initial schema with candidate scientific process properties.</dd>
+              <dt>Metric</dt>
+              <dd>Property coverage and expert review.</dd>
+            </dl>
+            <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
+            <a href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/quickstart.html" rel="noopener">Run Stage 1</a>
+          </article>
+
+          <article class="task-card">
+            <h3>Preliminary Refinement</h3>
+            <p>Refine the initial schema using a small expert-curated scientific corpus.</p>
+            <dl>
+              <dt>Input</dt>
+              <dd>Stage 1 schema, curated papers, and optional expert feedback.</dd>
+              <dt>Output</dt>
+              <dd>Updated schema with corrected, added, or merged properties.</dd>
+              <dt>Metric</dt>
+              <dd>ROUGE-L, BLEU, BERTScore, and expert feedback.</dd>
+            </dl>
+            <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
+            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-2" rel="noopener">View Stage 2 Results</a>
+          </article>
+
+          <article class="task-card">
+            <h3>Final Refinement</h3>
+            <p>Generalize and validate the schema against a larger, non-curated corpus.</p>
+            <dl>
+              <dt>Input</dt>
+              <dd>Stage 2 schema and broader ALD or ALE literature collection.</dd>
+              <dt>Output</dt>
+              <dd>Final schema designed to remain consistent across process variants.</dd>
+              <dt>Metric</dt>
+              <dd>Cross-model schema similarity and domain expert validation.</dd>
+            </dl>
+            <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
+            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-3" rel="noopener">View Stage 3 Results</a>
+          </article>
+
+          <article class="task-card">
+            <h3>Ontology Grounding</h3>
+            <p>Ground schema properties to formal ontology concepts and units.</p>
+            <dl>
+              <dt>Input</dt>
+              <dd>Final schema and QUDT ontology terms.</dd>
+              <dt>Output</dt>
+              <dd>Ontology-aligned schema with quantity kind, unit, and URI metadata.</dd>
+              <dt>Metric</dt>
+              <dd>Correct grounding after lexical lookup, semantic search, and expert review.</dd>
+            </dl>
+            <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
+            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema" rel="noopener">View Grounded Schemas</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section wide" id="results">
+        <div class="section-copy">
+          <h2>Results Snapshot</h2>
+          <p>
+            The evaluation compares schemas generated by GPT-4o, GPT-4-turbo, and LLaMA 3.1 (8B) across refinement stages. Quantitative metrics capture schema variance, while qualitative review identifies model stability and grounding quality.
+          </p>
+        </div>
+
+        <div class="results-layout">
+          <div class="table-card">
+            <table>
+              <caption>Representative Stage 3 Experimental Schema Similarity</caption>
+              <thead>
+                <tr>
+                  <th>Use case</th>
+                  <th>Model pair</th>
+                  <th>ROUGE-L</th>
+                  <th>BERT-F1</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALD</td>
+                  <td>GPT-4o vs GPT-4-turbo</td>
+                  <td>0.3690</td>
+                  <td>0.8046</td>
+                </tr>
+                <tr>
+                  <td>ALE</td>
+                  <td>GPT-4o vs GPT-4-turbo</td>
+                  <td>0.3552</td>
+                  <td>0.7631</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="metric-note">Primary quantitative metrics: ROUGE-L, BLEU, and BERTScore. See the paper for the complete cross-stage matrices.</p>
+          </div>
+
+          <div class="finding-card">
+            <h3>Qualitative Findings</h3>
+            <p>
+              For ALD, GPT-4o and LLaMA 3.1 (8B) maintained the most coherent schema structures across refinement stages. For ALE, GPT-4o and GPT-4-turbo were the most reliable at capturing the process structure. The hybrid grounding strategy reduced unnecessary LLM calls by using direct ontology lookups before semantic search.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section wide" id="resources">
+        <div class="resource-panel">
+          <div>
+            <h2>Submit And Resources</h2>
+            <p>
+              Evaluate your system by running SCHEMA-MINER<sup>pro</sup> on the released ALD and ALE specifications, literature corpora, and ideal schemas. The Hugging Face interface also supports interactive schema extraction and refinement without local setup.
+            </p>
+            <div class="resource-row left">
+              <a class="pill code" href="https://github.com/sciknoworg/schema-miner/tree/main/data" rel="noopener">GitHub Dataset</a>
+              <a class="pill code" href="https://github.com/sciknoworg/schema-miner/tree/main/results" rel="noopener">Results</a>
+              <a class="pill hf" href="https://huggingface.co/spaces/SciKnowOrg/schema-miner" rel="noopener">Evaluate In Browser</a>
+              <a class="pill docs" href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/installation.html" rel="noopener">Install Guide</a>
+            </div>
+          </div>
+          <aside class="contact-box" aria-label="Community and contact">
+            <h3>Community</h3>
+            <p>
+              Collaboration inquiries: Jennifer D&#39;Souza, jennifer.dsouza [at] tib.eu.
+            </p>
+            <p>
+              Development questions: open an issue or contact Sameer Sadruddin, sameer.sadruddin [at] tib.eu.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section narrow" id="citation">
+        <div class="citation-heading">
+          <h2>Citation</h2>
+          <button class="copy-button" type="button" data-copy-target="bibtex">Copy BibTeX</button>
+        </div>
+        <pre><code id="bibtex">@article{sadruddin2026schema,
+  title = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding Over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
+  author = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+  journal = {Semantic Web},
+  volume = {17},
+  number = {3},
+  pages = {22104968261431521},
+  year = {2026},
+  doi = {10.1177/22104968261431521}
+}</code></pre>
+        <p class="citation-links">
+          Paper DOI:
+          <a href="https://doi.org/10.1177/22104968261431521" rel="noopener">10.1177/22104968261431521</a>.
+          Related ESWC 2025 paper:
+          <a href="assets/schema-miner.pdf?v=20260806-prior-paper">LLMs4SchemaDiscovery</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Website source/design inspired by the Nerfies project page template:
+        <a href="https://github.com/nerfies/nerfies.github.io" rel="noopener">https://github.com/nerfies/nerfies.github.io</a>
+      </p>
+      <p>SCHEMA-MINER<sup>pro</sup> is released under the MIT License.</p>
+    </footer>
+  </body>
+</html>

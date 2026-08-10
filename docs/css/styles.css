@@ -1,0 +1,524 @@
+:root {
+  color-scheme: light;
+  --ink: #18212f;
+  --muted: #5c6678;
+  --line: #dce2ea;
+  --paper: #ffffff;
+  --soft: #f7f9fb;
+  --soft-blue: #f2f7fc;
+  --red: #c9363f;
+  --teal: #178f9a;
+  --blue: #2869c8;
+  --gold: #d69c15;
+  --shadow: 0 10px 28px rgba(22, 34, 51, 0.08);
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, #f9fbfd 0, #ffffff 360px),
+    var(--paper);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+a {
+  color: #1f5fae;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+main {
+  width: 100%;
+}
+
+.hero,
+.section,
+footer {
+  margin: 0 auto;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.hero {
+  max-width: 1080px;
+  padding-top: 54px;
+  text-align: center;
+}
+
+.venue {
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  max-width: 980px;
+  margin: 0 auto 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.35rem;
+  font-weight: 650;
+  line-height: 1.14;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.7rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.authors,
+.affiliations,
+.note {
+  max-width: 920px;
+  margin: 0 auto;
+  color: var(--muted);
+}
+
+.authors {
+  color: #263244;
+  font-size: 1.02rem;
+}
+
+.affiliations {
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.note {
+  margin-top: 5px;
+  font-size: 0.85rem;
+}
+
+.resource-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  margin: 24px auto 34px;
+}
+
+.resource-row.left {
+  justify-content: flex-start;
+  margin: 18px 0 0;
+}
+
+.pill,
+.copy-button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid rgba(28, 41, 57, 0.15);
+  border-radius: 999px;
+  padding: 7px 14px;
+  color: #152033;
+  background: linear-gradient(180deg, #ffffff, #f3f6fa);
+  box-shadow: 0 5px 14px rgba(22, 34, 51, 0.08);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  white-space: normal;
+}
+
+.pill::before {
+  display: inline-grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pill.paper::before {
+  content: "PDF";
+  background: var(--red);
+}
+
+.pill.code::before,
+.pill.data::before {
+  content: "GH";
+  background: #252a33;
+}
+
+.pill.hf::before {
+  content: "HF";
+  color: #4c3300;
+  background: #f2c64d;
+}
+
+.pill.docs::before {
+  content: "D";
+  background: var(--blue);
+}
+
+.pill.cite::before {
+  content: "C";
+  background: var(--teal);
+}
+
+.pill:hover,
+.copy-button:hover,
+.table-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(28, 41, 57, 0.28);
+  box-shadow: 0 9px 22px rgba(22, 34, 51, 0.12);
+}
+
+figure {
+  margin: 0;
+}
+
+figcaption {
+  max-width: 880px;
+  margin: 12px auto 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.main-figure {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.main-figure img,
+.figure-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.main-figure img {
+  padding: 18px;
+}
+
+.section {
+  padding-top: 66px;
+}
+
+.narrow {
+  max-width: 860px;
+}
+
+.wide {
+  max-width: 1080px;
+}
+
+.section-copy {
+  max-width: 820px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.section p:first-child,
+.section-copy p:first-child {
+  margin-top: 0;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.task-card,
+.table-card,
+.finding-card,
+.contact-box {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 5px 18px rgba(22, 34, 51, 0.06);
+}
+
+.task-card {
+  padding: 20px;
+}
+
+.task-card p {
+  margin: 0 0 12px;
+}
+
+.task-card dl {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 6px 12px;
+  margin: 14px 0;
+  font-size: 0.92rem;
+}
+
+.task-card dt {
+  color: #293449;
+  font-weight: 750;
+}
+
+.task-card dd {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.task-card .example {
+  border-left: 3px solid #8aa4c6;
+  padding-left: 11px;
+  color: #3d4859;
+  font-size: 0.92rem;
+}
+
+.task-card a {
+  font-weight: 700;
+}
+
+.results-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.table-card,
+.finding-card {
+  padding: 18px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+caption {
+  margin-bottom: 12px;
+  color: #293449;
+  font-weight: 750;
+  text-align: left;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 8px;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+th {
+  color: #3a4658;
+  background: var(--soft-blue);
+  font-size: 0.83rem;
+  text-transform: uppercase;
+}
+
+td:last-child,
+th:last-child,
+td:nth-last-child(2),
+th:nth-last-child(2) {
+  text-align: right;
+}
+
+.metric-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.finding-card {
+  background: linear-gradient(180deg, #ffffff, #f6fbfa);
+}
+
+.resource-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  gap: 22px;
+  align-items: start;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+}
+
+.contact-box {
+  padding: 18px;
+  background: #fcfdf8;
+}
+
+.contact-box p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.citation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.copy-button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+pre {
+  margin: 16px 0 0;
+  border: 1px solid #243043;
+  border-radius: var(--radius);
+  padding: 18px;
+  overflow-x: auto;
+  color: #e7edf7;
+  background: #101827;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.citation-links {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+footer {
+  max-width: 860px;
+  padding-top: 52px;
+  padding-bottom: 42px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+footer p {
+  margin: 0 0 8px;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    padding-top: 34px;
+  }
+
+  h1 {
+    font-size: 1.85rem;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+  }
+
+  .hero,
+  .section,
+  footer {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .main-figure img {
+    padding: 10px;
+  }
+
+  .figure-grid,
+  .task-grid,
+  .results-layout,
+  .resource-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .task-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .citation-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  td:last-child,
+  th:last-child,
+  td:nth-last-child(2),
+  th:nth-last-child(2) {
+    text-align: left;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.55rem;
+  }
+
+  .resource-row {
+    justify-content: stretch;
+  }
+
+  .pill,
+  .copy-button {
+    width: 100%;
+  }
+
+  pre {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pill,
+  .copy-button,
+  .table-card {
+    transition: none;
+  }
+
+  .pill:hover,
+  .copy-button:hover,
+  .table-card:hover {
+    transform: none;
+  }
+}
