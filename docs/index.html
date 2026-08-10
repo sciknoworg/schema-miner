@@ -9,7 +9,7 @@
       content="SCHEMA-MINERpro: agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260806-paper-page">
+    <link rel="stylesheet" href="css/styles.css?v=20260810-workflow-sections">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -59,97 +59,116 @@
         </p>
       </section>
 
-      <section class="section wide" id="benchmark">
+      <section class="section wide" id="workflow">
         <div class="section-copy">
-          <h2>Benchmark And Dataset</h2>
+          <h2>Workflow Description</h2>
           <p>
-            SCHEMA-MINER<sup>pro</sup> evaluates schema discovery and ontology grounding across atomic layer deposition (ALD) and atomic layer etching (ALE), covering both experimental and simulation literature. The repository contains process specifications, curated and broader paper corpora, generated schemas, expert-guided refinements, and ideal grounded schemas for comparison and reuse.
+            SCHEMA-MINER<sup>pro</sup> progresses through four stages, moving from a process specification to a refined, ontology-grounded scientific schema. Each stage has a defined input, output, and validation signal so that experts can inspect and guide the workflow.
           </p>
         </div>
 
-        <div class="figure-grid">
-          <figure>
-            <img src="assets/agent-grounding.png?v=20260806-agent" alt="Agentic ontology grounding workflow using lexical search, FAISS semantic search, LLM calls, and expert validation.">
-            <figcaption>
-              The grounding agent checks schema properties against ontology terms, uses FAISS-backed semantic search for ambiguous cases, and returns ontology-aligned metadata for expert validation.
-            </figcaption>
-          </figure>
-          <figure>
-            <img src="assets/quantity-schema.png?v=20260806-quantity" alt="QUDT quantity schema connecting quantity value, quantity kind, and unit.">
-            <figcaption>
-              Quantity schema used to connect extracted physical properties to QUDT quantity kinds, numerical values, and units.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="section wide" id="tasks">
-        <div class="section-copy">
-          <h2>Task Descriptions</h2>
-          <p>
-            The workflow can be read as four evaluation tasks. Each task has a clear input, output, and validation signal, allowing systems or users to inspect progress from raw scientific text to ontology-grounded schemas.
-          </p>
-        </div>
-
-        <div class="task-grid">
-          <article class="task-card">
-            <h3>Initial Schema Mining</h3>
-            <p>Generate a first JSON schema from a process specification document.</p>
-            <dl>
+        <div class="workflow-steps">
+          <article class="workflow-step">
+            <div class="workflow-step-heading">
+              <p class="stage-label">Stage 1</p>
+              <h3>Initial Schema Mining</h3>
+            </div>
+            <div class="workflow-step-body">
+              <div class="workflow-summary">
+                <p>Generate a first JSON schema from a process specification document.</p>
+                <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
+                <a href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/quickstart.html" rel="noopener">Run Stage 1</a>
+              </div>
+              <dl class="workflow-details">
               <dt>Input</dt>
               <dd>Process name, process description, and specification PDF or text.</dd>
               <dt>Output</dt>
               <dd>Initial schema with candidate scientific process properties.</dd>
-              <dt>Metric</dt>
+              <dt>Validation</dt>
               <dd>Property coverage and expert review.</dd>
-            </dl>
-            <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
-            <a href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/quickstart.html" rel="noopener">Run Stage 1</a>
+              </dl>
+            </div>
           </article>
 
-          <article class="task-card">
-            <h3>Preliminary Refinement</h3>
-            <p>Refine the initial schema using a small expert-curated scientific corpus.</p>
-            <dl>
+          <article class="workflow-step">
+            <div class="workflow-step-heading">
+              <p class="stage-label">Stage 2</p>
+              <h3>Preliminary Refinement</h3>
+            </div>
+            <div class="workflow-step-body">
+              <div class="workflow-summary">
+                <p>Refine the initial schema using a small expert-curated scientific corpus.</p>
+                <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
+                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-2" rel="noopener">View Stage 2 Results</a>
+              </div>
+              <dl class="workflow-details">
               <dt>Input</dt>
               <dd>Stage 1 schema, curated papers, and optional expert feedback.</dd>
               <dt>Output</dt>
               <dd>Updated schema with corrected, added, or merged properties.</dd>
-              <dt>Metric</dt>
+              <dt>Validation</dt>
               <dd>ROUGE-L, BLEU, BERTScore, and expert feedback.</dd>
-            </dl>
-            <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
-            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-2" rel="noopener">View Stage 2 Results</a>
+              </dl>
+            </div>
           </article>
 
-          <article class="task-card">
-            <h3>Final Refinement</h3>
-            <p>Generalize and validate the schema against a larger, non-curated corpus.</p>
-            <dl>
+          <article class="workflow-step">
+            <div class="workflow-step-heading">
+              <p class="stage-label">Stage 3</p>
+              <h3>Final Refinement</h3>
+            </div>
+            <div class="workflow-step-body">
+              <div class="workflow-summary">
+                <p>Generalize and validate the schema against a larger, non-curated corpus.</p>
+                <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
+                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-3" rel="noopener">View Stage 3 Results</a>
+              </div>
+              <dl class="workflow-details">
               <dt>Input</dt>
               <dd>Stage 2 schema and broader ALD or ALE literature collection.</dd>
               <dt>Output</dt>
               <dd>Final schema designed to remain consistent across process variants.</dd>
-              <dt>Metric</dt>
+              <dt>Validation</dt>
               <dd>Cross-model schema similarity and domain expert validation.</dd>
-            </dl>
-            <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
-            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-3" rel="noopener">View Stage 3 Results</a>
+              </dl>
+            </div>
           </article>
 
-          <article class="task-card">
-            <h3>Ontology Grounding</h3>
-            <p>Ground schema properties to formal ontology concepts and units.</p>
-            <dl>
+          <article class="workflow-step workflow-step-grounding">
+            <div class="workflow-step-heading">
+              <p class="stage-label">Stage 4</p>
+              <h3>Ontology Grounding</h3>
+            </div>
+            <div class="workflow-step-body">
+              <div class="workflow-summary">
+                <p>Ground schema properties to formal ontology concepts and units.</p>
+                <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
+                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema" rel="noopener">View Grounded Schemas</a>
+              </div>
+              <dl class="workflow-details">
               <dt>Input</dt>
               <dd>Final schema and QUDT ontology terms.</dd>
               <dt>Output</dt>
               <dd>Ontology-aligned schema with quantity kind, unit, and URI metadata.</dd>
-              <dt>Metric</dt>
+              <dt>Validation</dt>
               <dd>Correct grounding after lexical lookup, semantic search, and expert review.</dd>
-            </dl>
-            <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
-            <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema" rel="noopener">View Grounded Schemas</a>
+              </dl>
+            </div>
+
+            <div class="grounding-figures">
+              <figure>
+                <img src="assets/agent-grounding.png?v=20260806-agent" alt="Agentic ontology grounding workflow using lexical search, FAISS semantic search, LLM calls, and expert validation.">
+                <figcaption>
+                  The grounding agent checks schema properties against ontology terms, uses FAISS-backed semantic search for ambiguous cases, and returns ontology-aligned metadata for expert validation.
+                </figcaption>
+              </figure>
+              <figure>
+                <img src="assets/quantity-schema.png?v=20260806-quantity" alt="QUDT quantity schema connecting quantity value, quantity kind, and unit.">
+                <figcaption>
+                  Quantity schema used to connect extracted physical properties to QUDT quantity kinds, numerical values, and units.
+                </figcaption>
+              </figure>
+            </div>
           </article>
         </div>
       </section>

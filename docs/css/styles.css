@@ -211,7 +211,7 @@ figcaption {
 }
 
 .main-figure img,
-.figure-grid img {
+.grounding-figures img {
   display: block;
   width: 100%;
   height: auto;
@@ -248,20 +248,6 @@ figcaption {
   margin-top: 0;
 }
 
-.figure-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-.task-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.task-card,
 .table-card,
 .finding-card,
 .contact-box {
@@ -271,42 +257,80 @@ figcaption {
   box-shadow: 0 5px 18px rgba(22, 34, 51, 0.06);
 }
 
-.task-card {
-  padding: 20px;
+.workflow-steps {
+  border-top: 1px solid var(--line);
 }
 
-.task-card p {
-  margin: 0 0 12px;
+.workflow-step {
+  padding: 34px 0 38px;
+  border-bottom: 1px solid var(--line);
 }
 
-.task-card dl {
+.workflow-step-heading {
+  margin-bottom: 18px;
+}
+
+.workflow-step-heading h3 {
+  margin: 3px 0 0;
+  font-size: 1.35rem;
+}
+
+.stage-label {
+  margin: 0;
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.workflow-step-body {
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
-  gap: 6px 12px;
-  margin: 14px 0;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px 54px;
+  align-items: start;
+}
+
+.workflow-summary p {
+  margin: 0 0 13px;
+}
+
+.workflow-details {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 8px 14px;
+  margin: 0;
   font-size: 0.92rem;
 }
 
-.task-card dt {
+.workflow-details dt {
   color: #293449;
   font-weight: 750;
 }
 
-.task-card dd {
+.workflow-details dd {
   margin: 0;
   color: var(--muted);
   overflow-wrap: anywhere;
 }
 
-.task-card .example {
+.workflow-step .example {
   border-left: 3px solid #8aa4c6;
   padding-left: 11px;
   color: #3d4859;
   font-size: 0.92rem;
 }
 
-.task-card a {
+.workflow-step a {
   font-weight: 700;
+}
+
+.grounding-figures {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+  align-items: start;
 }
 
 .results-layout {
@@ -458,14 +482,14 @@ footer p {
     padding: 10px;
   }
 
-  .figure-grid,
-  .task-grid,
+  .grounding-figures,
+  .workflow-step-body,
   .results-layout,
   .resource-panel {
     grid-template-columns: 1fr;
   }
 
-  .task-card dl {
+  .workflow-details {
     grid-template-columns: 1fr;
   }
 
