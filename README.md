@@ -15,23 +15,14 @@
 
 </div>
 
-<h3 align="center">SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h3>
+<h3 align="center">Scientific Schema Mining and Ontology Grounding with Large Language Models</h3>
 
-This is an open-source implementation of Schema-Miner<sup>pro</sup>.
-
-## 📋 Schema-miner<sup>pro</sup> Overview
-
-Schema-Miner is a novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance the schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text and refines schemas with expert input [ESWC Proceedings](https://link.springer.com/chapter/10.1007/978-3-031-94578-6_14). Schema-Miner<sup>pro</sup> extends Schema-Miner with an ontology grounding component powered by agentic AI. It performs multi-step reasoning using lexical heuristics and semantic similarity search, and grounds schema elements in formal ontologies (e.g., [QUDT](https://www.qudt.org/pages/HomePage.html)). Comprehensive documentation for Schema-Miner Pro, including detailed guides and examples, is available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
-
-> [!NOTE]
-> **Schema-Miner** implements a three-stage pipeline for schema discovery and refinement without ontology grounding (see Figure 1). **Schema-Miner Pro** extends this pipeline by grounding the discovered schemas to formal ontologies.
+Schema-Miner is an open-source Python package and command-line tool for mining structured scientific schemas from process specifications and research literature. It supports iterative human-in-the-loop schema refinement and optional ontology grounding.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sciknoworg/schema-miner/refs/heads/main/assets/LLM4SchemaMining%20-%20Workflow%20design.svg" height="300">
-</p>
-
-<p align="center">
-  Figure 1: Overview of the LLMs4SchemaDiscovery workflow implemented in the SCHEMA-MINER tool. Stage 1 generates an initial process schema using domain specifications, while Stage 2, refines this schema using a small, curated scientific corpus. In Stage 3, schema is further enriched using a larger, non-curated corpus. The final stage involves grounding the properties in formal ontologies.
+  <a href="https://sciknoworg.github.io/schema-miner/">Project Website</a> •
+  <a href="https://schema-miner.readthedocs.io/en/latest/">Documentation</a> •
+  <a href="https://pypi.org/project/schema-miner/">PyPI</a>
 </p>
 
 ## 🧪 Installation
