@@ -4,6 +4,7 @@
 
 <div align="center">
 
+[![Project Website](https://img.shields.io/badge/Project%20Website-GitHub%20Pages-2f80ed?logo=githubpages&logoColor=white)](https://sciknoworg.github.io/schema-miner/)
 [![PyPI - Version](https://img.shields.io/pypi/v/schema-miner)](https://pypi.org/project/schema-miner/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/schema-miner)](https://pepy.tech/projects/schema-miner)
 [![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)](https://github.com/sciknoworg/schema-miner/blob/main/MAINTENANCE.md)
@@ -18,12 +19,6 @@
 <h3 align="center">Scientific Schema Mining and Ontology Grounding with Large Language Models</h3>
 
 Schema-Miner is an open-source Python package and command-line tool for mining structured scientific schemas from process specifications and research literature. It supports iterative human-in-the-loop schema refinement and optional ontology grounding.
-
-<p align="center">
-  <a href="https://sciknoworg.github.io/schema-miner/">Project Website</a> •
-  <a href="https://schema-miner.readthedocs.io/en/latest/">Documentation</a> •
-  <a href="https://pypi.org/project/schema-miner/">PyPI</a>
-</p>
 
 ## 🧪 Installation
 
