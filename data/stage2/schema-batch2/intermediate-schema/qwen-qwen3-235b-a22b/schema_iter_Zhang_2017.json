@@ -1,0 +1,374 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MetalOrganicCageSynthesisSchema",
+    "type": "object",
+    "description": "JSON schema representing the Metal-Organic Cage (MOC) synthesis process",
+    "required": [
+        "moc_properties",
+        "components",
+        "process_parameters",
+        "characterization",
+        "functional_properties",
+        "structural_properties"
+    ],
+    "properties": {
+        "moc_properties": {
+            "type": "object",
+            "description": "Chemical formula and naming convention for the MOC",
+            "required": [
+                "formula",
+                "name"
+            ],
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "Chemical formula in [MxLy]n[counter_ion]-n format. Stoichiometry defines geometry."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Common identifier (e.g., 'MOC 1' or 'Cage 1')"
+                },
+                "metal_count": {
+                    "type": "integer",
+                    "description": "Number of metal ions in the MOC structure"
+                },
+                "ligand_count": {
+                    "type": "integer",
+                    "description": "Number of organic ligands in the MOC structure"
+                },
+                "cavity_volume": {
+                    "type": "number",
+                    "description": "Volume of the MOC cavity in \u00c5\u00b3 (may vary by isomer)"
+                },
+                "cavity_hydrophobicity": {
+                    "type": "boolean",
+                    "description": "Indicates if the cavity is hydrophobic"
+                }
+            }
+        },
+        "components": {
+            "type": "object",
+            "description": "Chemical components used in synthesis",
+            "required": [
+                "metal_sources",
+                "ligands",
+                "counter_ions",
+                "template_anions"
+            ],
+            "properties": {
+                "metal_sources": {
+                    "type": "object",
+                    "description": "Metal ion donor compound",
+                    "required": [
+                        "name",
+                        "chemical_formula",
+                        "purity",
+                        "source"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number"
+                        },
+                        "source": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "ligands": {
+                    "type": "object",
+                    "description": "Organic linker molecule",
+                    "required": [
+                        "name",
+                        "chemical_formula",
+                        "purity",
+                        "source",
+                        "synthesis_needed"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number"
+                        },
+                        "source": {
+                            "type": "string"
+                        },
+                        "synthesis_needed": {
+                            "type": "boolean"
+                        },
+                        "synthesis_steps": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "action": {
+                                        "type": "string"
+                                    },
+                                    "parameters": {
+                                        "type": "object",
+                                        "properties": {
+                                            "temperature": {
+                                                "type": "number"
+                                            },
+                                            "time": {
+                                                "type": "number"
+                                            },
+                                            "solvent": {
+                                                "type": "string"
+                                            },
+                                            "pressure": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "value": {
+                                                        "type": "number"
+                                                    },
+                                                    "vacuum": {
+                                                        "type": "boolean"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "temperature",
+                                            "time",
+                                            "solvent",
+                                            "pressure"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "action",
+                                    "parameters"
+                                ]
+                            },
+                            "description": "Reaction steps if ligand requires pre-synthesis"
+                        }
+                    }
+                },
+                "counter_ions": {
+                    "type": "object",
+                    "description": "Charge-balancing ion source",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number"
+                        },
+                        "source": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "template_anions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "role": {
+                                "type": "string",
+                                "description": "Template function in structural adaptation"
+                            }
+                        }
+                    },
+                    "description": "Anions used as structural templates during self-assembly"
+                }
+            }
+        },
+        "process_parameters": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "step_number": {
+                        "type": "integer"
+                    },
+                    "action": {
+                        "type": "string"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "temperature": {
+                                "type": "number"
+                            },
+                            "time": {
+                                "type": "number"
+                            },
+                            "solvent": {
+                                "type": "string"
+                            },
+                            "pressure": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "vacuum": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "reaction_medium": {
+                                "type": "string",
+                                "description": "Aqueous or organic phase"
+                            }
+                        },
+                        "required": [
+                            "temperature",
+                            "time",
+                            "solvent",
+                            "pressure",
+                            "reaction_medium"
+                        ]
+                    }
+                },
+                "required": [
+                    "step_number",
+                    "action",
+                    "parameters"
+                ]
+            },
+            "description": "Sequential synthesis steps with environmental controls"
+        },
+        "characterization": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "Analytical methods used",
+                "required": [
+                    "technique",
+                    "description",
+                    "data"
+                ],
+                "properties": {
+                    "technique": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "structural_properties": {
+            "type": "object",
+            "description": "Geometric and spatial arrangement details",
+            "properties": {
+                "geometry": {
+                    "type": "string"
+                },
+                "chirality": {
+                    "type": "string"
+                },
+                "symmetry": {
+                    "type": "string"
+                },
+                "isomer_type": {
+                    "type": "string",
+                    "description": "Structural isomer classification (e.g., T-symmetric, C3-symmetric)"
+                },
+                "adaptation_mechanism": {
+                    "type": "string",
+                    "description": "Response mechanism to guest size/shape"
+                }
+            }
+        },
+        "functional_properties": {
+            "type": "object",
+            "properties": {
+                "host_guest": {
+                    "type": "object",
+                    "properties": {
+                        "present": {
+                            "type": "boolean"
+                        },
+                        "guests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "molecule_name": {
+                                        "type": "string"
+                                    },
+                                    "chemical_formula": {
+                                        "type": "string"
+                                    },
+                                    "interaction_type": {
+                                        "type": "string",
+                                        "description": "Binding mechanism (e.g., hydrogen bonding, electrostatic)"
+                                    },
+                                    "binding_constant": {
+                                        "type": "number"
+                                    },
+                                    "stoichiometry": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        },
+                        "anion_binding_hierarchy": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Ranked list of anion binding affinities"
+                        }
+                    }
+                },
+                "shape_memory": {
+                    "type": "boolean",
+                    "description": "Indicates structural memory during guest exchange"
+                },
+                "interconversion_kinetics": {
+                    "type": "object",
+                    "properties": {
+                        "activation_energy": {
+                            "type": "number"
+                        },
+                        "equilibrium_ratio": {
+                            "type": "string"
+                        }
+                    },
+                    "description": "Kinetic parameters for isomer transitions"
+                }
+            }
+        },
+        "yield": {
+            "type": "number",
+            "description": "Percentage yield of the MOC synthesis"
+        },
+        "scale": {
+            "type": "number",
+            "description": "Reaction scale in mmol"
+        },
+        "crystallisation_method": {
+            "type": "string"
+        },
+        "purification_method": {
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,617 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/moc-synthesis.json",
+    "title": "Metal-Organic Cage (MOC) Synthesis Process",
+    "description": "A comprehensive JSON schema representing the synthesis, characterization, and properties of Metal-Organic Cages (MOCs), including reactants, process parameters, characterization methods, host-guest behavior, and additional properties.",
+    "type": "object",
+    "properties": {
+        "moc_type": {
+            "type": "object",
+            "description": "Describes the molecular formula and stoichiometry of the Metal-Organic Cage, typically expressed as [MxLy]n[counter_ion]-n. Includes metal ion(s), ligand(s), counter-ion(s), and stoichiometric ratios.",
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "The chemical formula of the MOC, e.g., [Zn6L4]4+ or [Pd4L6]6+.",
+                    "examples": [
+                        "[Zn6L4]4+",
+                        "[Pd4L6]6+",
+                        "[Cu8L4]8+"
+                    ]
+                },
+                "stoichiometry": {
+                    "type": "object",
+                    "description": "The molar ratio of metal ions (M) to ligands (L) used in the synthesis, which determines the cage geometry.",
+                    "properties": {
+                        "metal_to_ligand_ratio": {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "minimum": 0.001,
+                                "description": "Molar ratio of metal ion to ligand (M:L). For example, [Zn6L4] implies a 6:4 ratio."
+                            },
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "description": "Array of two numbers: [moles of metal, moles of ligand] used in the reaction."
+                        },
+                        "charge_balance": {
+                            "type": "string",
+                            "description": "Charge of the cage complex, e.g., 4+ or 6+.",
+                            "examples": [
+                                "4+",
+                                "6+",
+                                "2-"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "metal_to_ligand_ratio",
+                        "charge_balance"
+                    ]
+                },
+                "designation": {
+                    "type": "string",
+                    "description": "Common name or identifier used in literature (e.g., 'Cage 1', 'MOC-1'), often used for referencing in publications.",
+                    "examples": [
+                        "Cage 1",
+                        "MOC-1",
+                        "Zn6L4-Cage"
+                    ]
+                }
+            },
+            "required": [
+                "formula",
+                "stoichiometry",
+                "designation"
+            ]
+        },
+        "reactants": {
+            "type": "object",
+            "description": "Details of the starting materials used in the MOC synthesis.",
+            "properties": {
+                "metal_source": {
+                    "type": "object",
+                    "description": "The source of the metal ion used in the cage formation.",
+                    "properties": {
+                        "compound": {
+                            "type": "string",
+                            "description": "Chemical name or formula of the metal salt (e.g., Zn(NO3)2\u00b76H2O, PdCl2)."
+                        },
+                        "purity": {
+                            "type": "string",
+                            "description": "Purity level of the metal salt (e.g., 99%, ACS grade, analytical grade)."
+                        },
+                        "supplier": {
+                            "type": "string",
+                            "description": "Supplier or manufacturer of the metal salt."
+                        }
+                    },
+                    "required": [
+                        "compound"
+                    ]
+                },
+                "ligand": {
+                    "type": "object",
+                    "description": "The organic multitopic ligand used in self-assembly.",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Common or IUPAC name of the ligand (e.g., 1,3,5-tris(4-pyridyl)benzene)."
+                        },
+                        "formula": {
+                            "type": "string",
+                            "description": "Chemical formula of the ligand (e.g., C18H12N6)."
+                        },
+                        "purity": {
+                            "type": "string",
+                            "description": "Purity level of the ligand (e.g., 95%, >98%, HPLC grade)."
+                        },
+                        "supplier": {
+                            "type": "string",
+                            "description": "Supplier or manufacturer of the ligand."
+                        },
+                        "synthesis_required": {
+                            "type": "boolean",
+                            "description": "Whether the ligand must be synthesized in-house or is commercially available.",
+                            "default": false
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "formula"
+                    ]
+                },
+                "counter_ion_source": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical compound providing the counter-ion (e.g., NaBF4, Cl-)."
+                            },
+                            "role": {
+                                "type": "string",
+                                "enum": [
+                                    "charge balancing",
+                                    "solubility enhancement",
+                                    "crystallization aid"
+                                ],
+                                "description": "Purpose of the counter-ion source in the synthesis."
+                            },
+                            "amount": {
+                                "type": "number",
+                                "description": "Moles or mass of counter-ion source added.",
+                                "units": "mol"
+                            }
+                        },
+                        "required": [
+                            "compound"
+                        ]
+                    },
+                    "description": "List of counter-ion sources used to balance the charge of the MOC complex."
+                }
+            },
+            "required": [
+                "metal_source",
+                "ligand"
+            ]
+        },
+        "reactants_synthesis": {
+            "type": "object",
+            "description": "Details about the synthesis of the ligand if it was not commercially available.",
+            "properties": {
+                "ligand_synthesis_steps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "step": {
+                                "type": "integer",
+                                "description": "Sequential step number in the ligand synthesis (e.g., 1, 2, 3)."
+                            },
+                            "reaction": {
+                                "type": "string",
+                                "description": "Description of the chemical reaction (e.g., 'Aldol condensation between aldehyde and amine')."
+                            },
+                            "reagents": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "description": "List of reagents used in this step."
+                            },
+                            "solvent": {
+                                "type": "string",
+                                "description": "Solvent used in the step."
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "Temperature of the reaction in degrees Celsius.",
+                                "units": "\u00b0C"
+                            },
+                            "time": {
+                                "type": "number",
+                                "description": "Duration of the reaction in hours.",
+                                "units": "h"
+                            },
+                            "yield": {
+                                "type": "number",
+                                "description": "Yield of the intermediate product in percentage.",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "units": "%"
+                            },
+                            "purification_method": {
+                                "type": "string",
+                                "description": "Method used to purify the intermediate (e.g., column chromatography, recrystallization)."
+                            }
+                        },
+                        "required": [
+                            "step",
+                            "reaction"
+                        ]
+                    }
+                },
+                "final_ligand_purity": {
+                    "type": "string",
+                    "description": "Final purity of the synthesized ligand after purification (e.g., >98% by 1H NMR)."
+                }
+            },
+            "required": [
+                "ligand_synthesis_steps"
+            ]
+        },
+        "process_parameters": {
+            "type": "object",
+            "description": "The procedural steps and conditions used during the MOC synthesis.",
+            "properties": {
+                "mixing": {
+                    "type": "object",
+                    "description": "Conditions under which reactants are combined.",
+                    "properties": {
+                        "solvent": {
+                            "type": "string",
+                            "description": "Solvent used for mixing (e.g., CH3CN, DMSO, MeOH)."
+                        },
+                        "volume": {
+                            "type": "number",
+                            "description": "Total volume of the reaction mixture.",
+                            "units": "mL"
+                        },
+                        "order_of_addition": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Sequence in which reactants are added (e.g., 'metal first, then ligand')."
+                        }
+                    },
+                    "required": [
+                        "solvent",
+                        "volume"
+                    ]
+                },
+                "reaction_steps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "step": {
+                                "type": "integer",
+                                "description": "Sequential step number in the synthesis process."
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "Brief description of the step (e.g., 'Heated at 60\u00b0C for 24 h')."
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "Temperature during this step in degrees Celsius.",
+                                "units": "\u00b0C"
+                            },
+                            "time": {
+                                "type": "number",
+                                "description": "Duration of the step in hours.",
+                                "units": "h"
+                            },
+                            "atmosphere": {
+                                "type": "string",
+                                "enum": [
+                                    "air",
+                                    "inert (N2)",
+                                    "inert (Ar)",
+                                    "vacuum"
+                                ],
+                                "description": "Atmosphere under which the step is performed."
+                            },
+                            "pressure": {
+                                "type": "number",
+                                "description": "Pressure applied during the step (if applicable).",
+                                "units": "Pa"
+                            },
+                            "additional_notes": {
+                                "type": "string",
+                                "description": "Any additional observations or modifications during the step."
+                            }
+                        },
+                        "required": [
+                            "step",
+                            "description"
+                        ]
+                    }
+                },
+                "workup": {
+                    "type": "object",
+                    "description": "Post-reaction procedures to isolate the MOC.",
+                    "properties": {
+                        "filtration": {
+                            "type": "boolean",
+                            "description": "Whether filtration was used to remove insoluble byproducts."
+                        },
+                        "solvent_evaporation": {
+                            "type": "object",
+                            "description": "Details about solvent removal.",
+                            "properties": {
+                                "method": {
+                                    "type": "string",
+                                    "enum": [
+                                        "rotary evaporation",
+                                        "vacuum drying",
+                                        "lyophilization"
+                                    ],
+                                    "description": "Method used to remove solvent."
+                                },
+                                "temperature": {
+                                    "type": "number",
+                                    "description": "Temperature during solvent removal (if applicable).",
+                                    "units": "\u00b0C"
+                                },
+                                "pressure": {
+                                    "type": "number",
+                                    "description": "Pressure during vacuum-based removal.",
+                                    "units": "Pa"
+                                }
+                            }
+                        },
+                        "crystallization": {
+                            "type": "object",
+                            "description": "Conditions used to grow crystals for X-ray analysis.",
+                            "properties": {
+                                "method": {
+                                    "type": "string",
+                                    "enum": [
+                                        "diffusion",
+                                        "vapor diffusion",
+                                        "slow evaporation",
+                                        "layering"
+                                    ],
+                                    "description": "Crystallization technique used."
+                                },
+                                "solvent_pair": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Pair of solvents used in vapor diffusion or layering (e.g., [CH3CN, hexane])."
+                                },
+                                "time": {
+                                    "type": "number",
+                                    "description": "Duration of crystallization in days.",
+                                    "units": "d"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "mixing",
+                "reaction_steps"
+            ]
+        },
+        "characterisation": {
+            "type": "object",
+            "description": "Methods used to confirm the identity, structure, and purity of the synthesized MOC.",
+            "properties": {
+                "techniques": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "method": {
+                                "type": "string",
+                                "enum": [
+                                    "NMR (1H, 13C, 15N)",
+                                    "Mass Spectrometry (ESI-MS, MALDI-TOF)",
+                                    "PXRD (Powder X-ray Diffraction)",
+                                    "IR (Infrared Spectroscopy)",
+                                    "DOSY (Diffusion-Ordered NMR)",
+                                    "UV-Vis",
+                                    "TGA (Thermogravimetric Analysis)",
+                                    "EA (Elemental Analysis)",
+                                    "X-ray Crystallography",
+                                    "FT-IR",
+                                    "Cyclic Voltammetry",
+                                    "BET Surface Area Analysis"
+                                ],
+                                "description": "Analytical technique used."
+                            },
+                            "conditions": {
+                                "type": "object",
+                                "description": "Specific conditions under which the measurement was performed.",
+                                "properties": {
+                                    "temperature": {
+                                        "type": "number",
+                                        "description": "Temperature during measurement (if applicable).",
+                                        "units": "\u00b0C"
+                                    },
+                                    "solvent": {
+                                        "type": "string",
+                                        "description": "Solvent used in the measurement (e.g., CDCl3, DMSO-d6)."
+                                    },
+                                    "instrument": {
+                                        "type": "string",
+                                        "description": "Name or model of the instrument used."
+                                    },
+                                    "resolution": {
+                                        "type": "string",
+                                        "description": "Resolution or spectral quality (e.g., high-resolution, low-resolution)."
+                                    }
+                                }
+                            },
+                            "results": {
+                                "type": "object",
+                                "description": "Key results or observations from the technique.",
+                                "properties": {
+                                    "peak_assignment": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Assignment of key peaks or signals (e.g., '\u03b4 = 8.5 ppm, aromatic protons')."
+                                    },
+                                    "mz_value": {
+                                        "type": "number",
+                                        "description": "Mass-to-charge ratio observed in MS (if applicable).",
+                                        "units": "m/z"
+                                    },
+                                    "crystal_structure": {
+                                        "type": "string",
+                                        "description": "Description of the crystal structure (e.g., 'triclinic, space group P-1')."
+                                    },
+                                    "purity": {
+                                        "type": "number",
+                                        "description": "Purity estimated from the technique (e.g., 95% by NMR).",
+                                        "minimum": 0,
+                                        "maximum": 100,
+                                        "units": "%"
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "method"
+                        ]
+                    }
+                },
+                "confirmation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "NMR and MS match expected formula",
+                            "PXRD pattern matches simulated pattern",
+                            "X-ray crystallography confirms cage geometry",
+                            "DOSY confirms molecular weight and aggregation state"
+                        ],
+                        "description": "Summary of how the MOC identity was confirmed."
+                    }
+                }
+            },
+            "required": [
+                "techniques"
+            ]
+        },
+        "host_guest_properties": {
+            "type": "object",
+            "description": "Properties related to the ability of the MOC to bind small molecules (guests) in its cavity.",
+            "properties": {
+                "guest_molecules": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "guest": {
+                                "type": "string",
+                                "description": "Name or formula of the guest molecule (e.g., CO2, CH4, H2O)."
+                            },
+                            "binding_affinity": {
+                                "type": "number",
+                                "description": "Binding constant (K) or association constant (Ka) in M\u207b\u00b9.",
+                                "units": "M\u207b\u00b9"
+                            },
+                            "stoichiometry": {
+                                "type": "string",
+                                "description": "Molar ratio of guest to cage (e.g., 1:1, 2:1)."
+                            },
+                            "method": {
+                                "type": "string",
+                                "enum": [
+                                    "NMR titration",
+                                    "UV-Vis titration",
+                                    "Isothermal Titration Calorimetry (ITC)",
+                                    "Gas adsorption"
+                                ],
+                                "description": "Method used to determine guest binding."
+                            },
+                            "conditions": {
+                                "type": "object",
+                                "properties": {
+                                    "temperature": {
+                                        "type": "number",
+                                        "description": "Temperature during binding experiment.",
+                                        "units": "\u00b0C"
+                                    },
+                                    "solvent": {
+                                        "type": "string",
+                                        "description": "Solvent used in the binding experiment."
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "guest"
+                        ]
+                    }
+                },
+                "applications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Potential applications of the MOC based on host-guest behavior (e.g., gas storage, sensing, catalysis, drug delivery)."
+                    }
+                }
+            }
+        },
+        "others": {
+            "type": "object",
+            "description": "Additional properties, stability, and characterization data not covered elsewhere.",
+            "properties": {
+                "stability": {
+                    "type": "object",
+                    "description": "Stability of the MOC under various conditions.",
+                    "properties": {
+                        "thermal_stability": {
+                            "type": "object",
+                            "properties": {
+                                "onset_temperature": {
+                                    "type": "number",
+                                    "description": "Temperature at which decomposition begins (TGA onset).",
+                                    "units": "\u00b0C"
+                                },
+                                "decomposition_temperature": {
+                                    "type": "number",
+                                    "description": "Temperature at which significant mass loss occurs.",
+                                    "units": "\u00b0C"
+                                }
+                            }
+                        },
+                        "chemical_stability": {
+                            "type": "string",
+                            "description": "Stability in different solvents or pH (e.g., stable in CH3CN, decomposes in acidic conditions)."
+                        },
+                        "long_term_stability": {
+                            "type": "string",
+                            "description": "Observations on stability over time (e.g., 'stable for 6 months at room temperature')."
+                        }
+                    }
+                },
+                "physical_properties": {
+                    "type": "object",
+                    "properties": {
+                        "conductivity": {
+                            "type": "number",
+                            "description": "Electrical conductivity of the MOC (if applicable).",
+                            "units": "S/cm"
+                        },
+                        "BET_surface_area": {
+                            "type": "number",
+                            "description": "Brunauer\u2013Emmett\u2013Teller surface area of the MOC (if porous).",
+                            "units": "m\u00b2/g"
+                        },
+                        "pore_volume": {
+                            "type": "number",
+                            "description": "Total pore volume of the MOC.",
+                            "units": "cm\u00b3/g"
+                        },
+                        "crystallinity": {
+                            "type": "string",
+                            "enum": [
+                                "high",
+                                "moderate",
+                                "low",
+                                "amorphous"
+                            ],
+                            "description": "Degree of crystallinity observed (e.g., from PXRD)."
+                        }
+                    }
+                },
+                "stereochemistry": {
+                    "type": "string",
+                    "description": "Description of stereochemical features (e.g., 'chiral cage with P-helicity', 'achiral, symmetric structure')."
+                },
+                "additional_notes": {
+                    "type": "string",
+                    "description": "Any other relevant observations or remarks about the MOC."
+                }
+            }
+        }
+    },
+    "required": [
+        "moc_type",
+        "reactants",
+        "process_parameters",
+        "characterisation"
+    ],
+    "additionalProperties": false
+}

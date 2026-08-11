@@ -1,33 +1,19 @@
-FEEDBACK:
-Surprisingly comprehensive for an 8B model. Includes unique and valuable properties: feedstock "contaminants" and "preprocessing", reactor "material" and "heat_transfer", and "performance_metrics" (carbon_conversion_efficiency, energy_efficiency, selectivity).
+Method 1	
 
-Property Merging: No merging needed. The 8-property structure is well-organized.
+"1. There is some redundancy between moc_type.formula and the more granular breakdown into metal_ions, ligands, and counter_ions. While both are useful, the schema could define a clearer relationship to avoid inconsistency. 
 
-Missing Properties: (1) No carrier gas flow rate. (2) Product quality metrics (HHV, viscosity, density) not explicitly captured. (3) No feedstock particle size or moisture content properties. (4) Mass balance closure should be explicitly tracked.
+process_parameters.steps.conditions contains repeated structures (temperature, pressure, time) that could be abstracted into a reusable “conditions” definition. 
 
-Adequacy of Descriptions: Clear with practical examples. The catalyst "activation_method" and "loading" properties are important and well-defined. The "reproducibility_notes" under process_metadata is useful.
+Minor overlap also exists between other_properties.adsorption and host_guest_properties in terms of functional performance, which could be partially unified.
 
-JSON SNIPPETS:
-Add product quality:
-```json
-"product_quality": {
-    "type": "object",
-    "properties": {
-        "hhv_mj_per_kg": {"type": "number", "description": "Higher heating value of liquid oil (typically 37-45 MJ/kg)"},
-        "chlorine_ppm": {"type": "number", "description": "Chlorine content in liquid product"},
-        "density": {"type": "number", "description": "Density of liquid oil in g/mL"}
-    }
-}
-```
+2. The schema is logically structured but could benefit from clearer higher-level grouping. metadata and moc_type together form a “cage_identity” block. reactants and process_parameters naturally group into a “synthesis_protocol” unit. Meanwhile, characterization, host_guest_properties, and other_properties could be grouped under a “post_synthesis_characterization” or “evaluation” block to clearly separate synthesis from analysis and application.
 
-Add mass balance:
-```json
-"mass_balance_closure": {
-    "type": "number",
-    "description": "Sum of liquid + gas + char yields (%). Should be ~100% within experimental error.",
-    "minimum": 90, "maximum": 105
-}
-```
+3.Missing Properties: 
+stoichiometric ratios in the reaction mixture
+reaction scale 
+Purification methods 
 
-ADDITIONAL COMMENTS:
-One of the best schemas from the smaller models. The inclusion of feedstock contaminants and preprocessing reflects real-world considerations. The performance_metrics section matches mistral-large, suggesting consistent model family behavior. The "agitation" under operating_conditions is unique and relevant for stirred batch reactors.
+topology (e.g., cage geometry, connectivity), types of metals and coordination environment are not explicitly defined
+
+4. The descriptions are generally clear, detailed, and more standardized than previous schemas, especially with consistent use of units and nested condition objects. However, some flexibility may introduce ambiguity (e.g., free-text results in characterization, loosely defined parameters). The balance between structured fields and free text could be improved for better interoperability.
+The 3D spatial considerations of sterics, i.e. chair vs boat, is not required."

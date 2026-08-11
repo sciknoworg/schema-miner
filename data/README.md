@@ -28,4 +28,4 @@ data/
     └── schema-batch2/
 ```
 
-The specific process selected is `Catalytic Pyrolysis of Mixed Plastic Waste`. This is one of the founding processes of https://scischema.org/
+The specific process selected is `Metal Organic Cages Synthesis`. This is one of the founding processes of https://scischema.org/ . Note that for stage2 we have deliberately reduced the papers per batch from 5 to just 2 for faster processing times. Same for stage3 we have deliberately reduced the papers from 25 per batch to 3 per batch for faster notebook processing. Ideally this is best run as a job launched directly on the GPU server.

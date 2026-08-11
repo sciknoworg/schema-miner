@@ -1,0 +1,1117 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/moc-synthesis.json",
+    "title": "Metal-Organic Cages (MOC) Synthesis Process",
+    "description": "A comprehensive JSON schema representing the synthesis, characterization, and properties of Metal-Organic Cages (MOCs), including reactants, process parameters, characterization methods, host-guest behavior, recycling, and material properties. Designed for reproducibility, modularity, and alignment with chemical best practices. Incorporates insights from research literature and domain expert feedback to improve consistency, reduce redundancy, and enhance extensibility. This version integrates findings from recent research on stereocontrolled self-assembly and chiroptical functionality in Cu(I)-based helicate-bridged cages.",
+    "type": "object",
+    "required": [
+        "moc_type",
+        "synthesis",
+        "characterisation",
+        "host_guest_properties",
+        "material_properties"
+    ],
+    "properties": {
+        "moc_type": {
+            "type": "object",
+            "description": "The chemical formula, designation, and structural composition of the Metal-Organic Cage (MOC), including metal ions, ligands, stoichiometry, counterions, symmetry, and cavity volume. Unified representation of structural composition with standardized stoichiometric counts and net charge. Includes stereochemical descriptors for chiral cages.",
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "The chemical formula of the MOC, e.g., [Cu12L4]12+ or [Fe8L12]16+.",
+                    "example": "[Cu12L4]12+"
+                },
+                "designation": {
+                    "type": "string",
+                    "description": "Common name or identifier used in literature (e.g., 'Cage 1', 'MOC-Cu12L4-Helicate').",
+                    "example": "MOC-Cu12L4-Helicate"
+                },
+                "composition": {
+                    "type": "object",
+                    "description": "Unified representation of the stoichiometric composition of the MOC, including metal and ligand counts, net charge, and metal-to-ligand ratio. Serves as a central reference for both structural and functional stoichiometry.",
+                    "properties": {
+                        "metal": {
+                            "type": "number",
+                            "description": "Number of metal ions (M) in the cage unit.",
+                            "minimum": 1,
+                            "example": 12
+                        },
+                        "ligand": {
+                            "type": "number",
+                            "description": "Number of ligand molecules (L) in the cage unit.",
+                            "minimum": 1,
+                            "example": 4
+                        },
+                        "charge": {
+                            "type": "number",
+                            "description": "Net charge of the cage complex (e.g., +4, -2, +12).",
+                            "example": 12
+                        },
+                        "metal_to_ligand_ratio": {
+                            "type": "array",
+                            "description": "Stoichiometric ratio of metal to ligand in the cage, expressed as [metal_count, ligand_count]. The first element corresponds to the number of metal ions; the second to the number of ligand molecules.",
+                            "items": {
+                                "type": "number",
+                                "minimum": 1
+                            },
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "example": [
+                                12,
+                                4
+                            ]
+                        }
+                    },
+                    "required": [
+                        "metal",
+                        "ligand",
+                        "charge",
+                        "metal_to_ligand_ratio"
+                    ]
+                },
+                "counter_ion": {
+                    "type": "string",
+                    "description": "Counterion used to balance the charge of the cage complex (e.g., Cl\u207b, BF\u2084\u207b, NO\u2083\u207b, ClO\u2084\u207b).",
+                    "example": "OTf-"
+                },
+                "symmetry": {
+                    "type": "string",
+                    "description": "Point group symmetry of the cage (e.g., Th, O, C2v, D3h, T). Reflects stereochemical arrangement and structural regularity.",
+                    "example": "T"
+                },
+                "cavity_volume": {
+                    "type": "number",
+                    "description": "Volume of the internal cavity (in \u00c5\u00b3), derived from crystallographic or computational data.",
+                    "unit": "\u00c5\u00b3",
+                    "example": 344
+                },
+                "stereochemistry": {
+                    "type": "object",
+                    "description": "Detailed description of the stereochemical configuration of the cage, including chirality, helical handedness, and enantiomeric excess (ee) if applicable.",
+                    "properties": {
+                        "chirality": {
+                            "type": "string",
+                            "enum": [
+                                "achiral",
+                                "chiral",
+                                "racemic",
+                                "enantiopure"
+                            ],
+                            "description": "Overall chirality of the cage (e.g., achiral, chiral, racemic, enantiopure).",
+                            "example": "chiral"
+                        },
+                        "helical_handedness": {
+                            "type": "string",
+                            "enum": [
+                                "P",
+                                "M",
+                                "P6-1",
+                                "M6-1"
+                            ],
+                            "description": "Helical handedness of the cage corners (e.g., P, M, P6-1, M6-1), particularly relevant for helicate-bridged cages.",
+                            "example": "P6-1"
+                        },
+                        "enantiomeric_excess": {
+                            "type": "number",
+                            "description": "Enantiomeric excess (ee) of the cage, measured by chiral NMR or CD spectroscopy (in %).",
+                            "unit": "%",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "example": 29
+                        },
+                        "chiral_induction_method": {
+                            "type": "string",
+                            "description": "Method used to induce stereocontrol during synthesis (e.g., addition of chiral additive like BINOL).",
+                            "example": "Addition of (S)-BINOL during self-assembly"
+                        },
+                        "chiral_memory": {
+                            "type": "boolean",
+                            "description": "Indicates whether the cage retains its stereochemical configuration after removal of chiral inducer (e.g., due to cooperative locking).",
+                            "example": true
+                        }
+                    },
+                    "required": [
+                        "chirality"
+                    ]
+                }
+            },
+            "required": [
+                "formula",
+                "designation",
+                "composition"
+            ]
+        },
+        "synthesis": {
+            "type": "object",
+            "description": "Comprehensive description of the MOC synthesis process, including reactants, reaction protocol (with stages), and workup. All synthesis-related elements are grouped into a single, coherent unit for clarity and reproducibility. The reaction protocol replaces redundant 'reaction_conditions' and 'procedure' by integrating conditions into a staged timeline.",
+            "properties": {
+                "reactants": {
+                    "type": "object",
+                    "description": "All reactants used in the synthesis, including metal sources, ligands, counterion sources, and chiral inducers, with standardized stoichiometric quantities.",
+                    "properties": {
+                        "metal_source": {
+                            "type": "object",
+                            "description": "The source compound of the metal ion used in the synthesis.",
+                            "properties": {
+                                "compound": {
+                                    "type": "string",
+                                    "description": "Chemical name or formula of the metal salt (e.g., Cu(CH3CN)4OTf, Pd(NO3)2\u00b72H2O).",
+                                    "example": "Cu(CH3CN)4OTf"
+                                },
+                                "purity": {
+                                    "type": "string",
+                                    "description": "Purity of the metal salt (e.g., 98%, ACS grade, HPLC grade).",
+                                    "example": "99%"
+                                },
+                                "supplier": {
+                                    "type": "string",
+                                    "description": "Supplier or manufacturer of the metal salt.",
+                                    "example": "Sigma-Aldrich"
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "description": "Amount of metal source used in the synthesis (in moles or grams).",
+                                    "example": 0.012
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "mol",
+                                        "g",
+                                        "mmol"
+                                    ],
+                                    "description": "Unit of amount (mol, g, mmol)."
+                                }
+                            },
+                            "required": [
+                                "compound"
+                            ]
+                        },
+                        "ligand": {
+                            "type": "object",
+                            "description": "The organic ligand (L) used in the self-assembly process.",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "Common or IUPAC name of the ligand (e.g., 2,7,14-triaminotriptycene, 8-aminoquinaldine).",
+                                    "example": "2,7,14-triaminotriptycene"
+                                },
+                                "formula": {
+                                    "type": "string",
+                                    "description": "Chemical formula of the ligand.",
+                                    "example": "C18H18N6"
+                                },
+                                "purity": {
+                                    "type": "string",
+                                    "description": "Purity of the ligand (e.g., 95%, HPLC grade).",
+                                    "example": "95%"
+                                },
+                                "supplier": {
+                                    "type": "string",
+                                    "description": "Supplier or manufacturer of the ligand.",
+                                    "example": "TCI Chemicals"
+                                },
+                                "synthesis_required": {
+                                    "type": "boolean",
+                                    "description": "Indicates whether the ligand must be pre-synthesized (true) or is commercially available (false).",
+                                    "default": false
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "description": "Amount of ligand used in the synthesis (in moles or grams).",
+                                    "example": 0.004
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "mol",
+                                        "g",
+                                        "mmol"
+                                    ],
+                                    "description": "Unit of amount (mol, g, mmol)."
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "formula"
+                            ]
+                        },
+                        "counter_ion_source": {
+                            "type": "array",
+                            "description": "List of compounds used to supply counterions (e.g., NaNO3, HNO3, NaClO4).",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "compound": {
+                                        "type": "string",
+                                        "description": "Chemical name or formula of the counterion source.",
+                                        "example": "NaOTf"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "description": "Amount of counterion source added (in moles or grams).",
+                                        "example": 0.012
+                                    },
+                                    "unit": {
+                                        "type": "string",
+                                        "enum": [
+                                            "mol",
+                                            "g",
+                                            "mmol"
+                                        ],
+                                        "description": "Unit of amount (mol, g, mmol)."
+                                    }
+                                },
+                                "required": [
+                                    "compound",
+                                    "amount",
+                                    "unit"
+                                ]
+                            }
+                        },
+                        "chiral_inducer": {
+                            "type": "object",
+                            "description": "Chiral additive used to control stereochemistry during self-assembly (e.g., (R)-BINOL, (S)-BINOL).",
+                            "properties": {
+                                "compound": {
+                                    "type": "string",
+                                    "description": "Name or formula of the chiral inducer (e.g., (R)-1,1\u2032-bi-2-naphthol).",
+                                    "example": "(R)-BINOL"
+                                },
+                                "amount": {
+                                    "type": "number",
+                                    "description": "Amount of chiral inducer added (in moles or grams).",
+                                    "example": 0.005
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "mol",
+                                        "g",
+                                        "mmol"
+                                    ],
+                                    "description": "Unit of amount (mol, g, mmol)."
+                                },
+                                "equivalents": {
+                                    "type": "number",
+                                    "description": "Number of equivalents relative to the metal source.",
+                                    "example": 50
+                                },
+                                "role": {
+                                    "type": "string",
+                                    "enum": [
+                                        "stereocontrol",
+                                        "templating",
+                                        "ligand exchange"
+                                    ],
+                                    "description": "Role of the chiral inducer in the assembly process.",
+                                    "example": "stereocontrol via ligand exchange"
+                                }
+                            },
+                            "required": [
+                                "compound",
+                                "amount",
+                                "unit"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "metal_source",
+                        "ligand"
+                    ]
+                },
+                "reaction_protocol": {
+                    "type": "object",
+                    "description": "Integrated reaction protocol combining global conditions and stage-specific steps. Each stage can override global defaults. This replaces the redundant 'reaction_conditions' and 'procedure' objects.",
+                    "properties": {
+                        "global_conditions": {
+                            "type": "object",
+                            "description": "Default conditions applied to all stages unless overridden.",
+                            "properties": {
+                                "temperature": {
+                                    "type": "number",
+                                    "description": "Default reaction temperature in degrees Celsius.",
+                                    "unit": "\u00b0C",
+                                    "minimum": -273.15,
+                                    "example": 50
+                                },
+                                "solvent": {
+                                    "type": "string",
+                                    "description": "Default solvent used in the reaction.",
+                                    "example": "Acetonitrile"
+                                },
+                                "atmosphere": {
+                                    "type": "string",
+                                    "enum": [
+                                        "air",
+                                        "inert",
+                                        "vacuum",
+                                        "N2",
+                                        "Ar"
+                                    ],
+                                    "description": "Default atmosphere under which the reaction is performed.",
+                                    "example": "N2"
+                                },
+                                "concentration": {
+                                    "type": "number",
+                                    "description": "Total concentration of reactants in the reaction mixture (in M or mg/mL).",
+                                    "unit": "M",
+                                    "example": 0.01
+                                }
+                            },
+                            "required": [
+                                "temperature",
+                                "solvent"
+                            ]
+                        },
+                        "stages": {
+                            "type": "array",
+                            "description": "Sequential stages of the synthesis process. Each stage may override global conditions.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "stage": {
+                                        "type": "integer",
+                                        "description": "Sequential stage number in the synthesis process.",
+                                        "minimum": 1,
+                                        "example": 1
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Textual description of the stage (e.g., 'Mix Cu(CH3CN)4OTf and ligand in acetonitrile at 50\u00b0C').",
+                                        "example": "Mix Cu(CH3CN)4OTf and ligand in acetonitrile at 50\u00b0C for 24 h"
+                                    },
+                                    "temperature": {
+                                        "type": "number",
+                                        "description": "Temperature during this stage in degrees Celsius (overrides global if specified).",
+                                        "unit": "\u00b0C",
+                                        "minimum": -273.15,
+                                        "example": 50
+                                    },
+                                    "time": {
+                                        "type": "number",
+                                        "description": "Duration of this stage in hours.",
+                                        "unit": "h",
+                                        "minimum": 0,
+                                        "example": 24
+                                    },
+                                    "solvent": {
+                                        "type": "string",
+                                        "description": "Solvent used in this stage (overrides global if specified).",
+                                        "example": "Acetonitrile"
+                                    },
+                                    "pressure": {
+                                        "type": "number",
+                                        "description": "Pressure during the stage (if applicable), in Pascals (Pa).",
+                                        "unit": "Pa",
+                                        "minimum": 0,
+                                        "example": 101325
+                                    },
+                                    "atmosphere": {
+                                        "type": "string",
+                                        "enum": [
+                                            "air",
+                                            "inert",
+                                            "vacuum",
+                                            "N2",
+                                            "Ar"
+                                        ],
+                                        "description": "Atmosphere under which the stage was performed (overrides global if specified).",
+                                        "example": "N2"
+                                    },
+                                    "additional_notes": {
+                                        "type": "string",
+                                        "description": "Any additional details about the stage (e.g., 'stirred magnetically', 'filtered through syringe filter').",
+                                        "example": "Stirred at 600 rpm"
+                                    }
+                                },
+                                "required": [
+                                    "stage",
+                                    "description"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "global_conditions",
+                        "stages"
+                    ]
+                },
+                "workup": {
+                    "type": "object",
+                    "description": "Post-reaction procedures used to isolate and purify the MOC, including solvent removal, purification, yield, concentration, and storage.",
+                    "properties": {
+                        "solvent_removal": {
+                            "type": "string",
+                            "description": "Method used to remove solvent (e.g., rotary evaporation, vacuum drying, dialysis).",
+                            "example": "Rotary evaporation under vacuum"
+                        },
+                        "purification_method": {
+                            "type": "string",
+                            "description": "Method used to purify the final product (e.g., column chromatography, recrystallization, dialysis, size exclusion).",
+                            "example": "Column chromatography (SiO2, CH2Cl2/MeOH)"
+                        },
+                        "yield": {
+                            "type": "number",
+                            "description": "Yield of the MOC synthesis in percentage.",
+                            "unit": "%",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "example": 75
+                        },
+                        "concentration": {
+                            "type": "number",
+                            "description": "Concentration of the MOC in the final solution (in mg/mL or M).",
+                            "unit": "mg/mL",
+                            "example": 1.2
+                        },
+                        "final_solvent": {
+                            "type": "string",
+                            "description": "Solvent in which the purified MOC is stored or used for further experiments.",
+                            "example": "CDCl3"
+                        },
+                        "chiral_inducer_removal": {
+                            "type": "string",
+                            "description": "Method used to remove the chiral inducer (e.g., washing with ethyl acetate, diethyl ether).",
+                            "example": "Washed with ethyl acetate and diethyl ether"
+                        }
+                    },
+                    "required": [
+                        "solvent_removal",
+                        "purification_method",
+                        "yield"
+                    ]
+                }
+            },
+            "required": [
+                "reactants",
+                "reaction_protocol",
+                "workup"
+            ]
+        },
+        "characterisation": {
+            "type": "array",
+            "description": "Methods used to confirm the identity, structure, and purity of the synthesized MOC. Each entry follows a modular structure: technique \u2192 parameters \u2192 outputs \u2192 interpretation.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "technique": {
+                        "type": "string",
+                        "enum": [
+                            "NMR",
+                            "Mass Spectrometry",
+                            "PXRD",
+                            "IR",
+                            "DOSY",
+                            "UV-Vis",
+                            "TGA",
+                            "EA",
+                            "X-ray Crystallography",
+                            "ESI-MS",
+                            "MALDI-TOF",
+                            "FTIR",
+                            "Cryo-EM",
+                            "SAXS",
+                            "CD",
+                            "CPL"
+                        ],
+                        "description": "Analytical technique used for characterization.",
+                        "example": "X-ray Crystallography"
+                    },
+                    "instrument": {
+                        "type": "string",
+                        "description": "Name or model of the instrument used.",
+                        "example": "Agilent 6140 LC-MS"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "description": "Specific conditions under which the measurement was performed.",
+                        "properties": {
+                            "temperature": {
+                                "type": "number",
+                                "description": "Temperature during measurement (\u00b0C).",
+                                "unit": "\u00b0C",
+                                "example": 25
+                            },
+                            "solvent": {
+                                "type": "string",
+                                "description": "Solvent used in the measurement.",
+                                "example": "CDCl3"
+                            },
+                            "concentration": {
+                                "type": "number",
+                                "description": "Concentration of the sample (in mg/mL or M).",
+                                "unit": "mg/mL",
+                                "example": 1.5
+                            },
+                            "resolution": {
+                                "type": "string",
+                                "description": "Resolution or quality of the data (e.g., 'high resolution', 'low resolution').",
+                                "example": "high resolution"
+                            }
+                        },
+                        "required": [
+                            "temperature",
+                            "solvent"
+                        ]
+                    },
+                    "results": {
+                        "type": "string",
+                        "description": "Key result or observation from the technique (e.g., 'Peak at m/z = 1245.3 [M+H]+').",
+                        "example": "Peak at m/z = 1245.3 [M+H]+"
+                    },
+                    "interpretation": {
+                        "type": "string",
+                        "description": "Interpretation of the result in the context of MOC identity or structure.",
+                        "example": "Confirmed the formation of the [Cu12L4]12+ cage via molecular ion peak"
+                    }
+                },
+                "required": [
+                    "technique",
+                    "instrument",
+                    "parameters",
+                    "results"
+                ]
+            }
+        },
+        "host_guest_properties": {
+            "type": "object",
+            "description": "Properties related to the ability of the MOC to bind small molecules (guests), including binding stoichiometry, affinity, solvent-dependent behavior, structural adaptation, and applications.",
+            "properties": {
+                "guests_bound": {
+                    "type": "array",
+                    "description": "List of guest molecules that the MOC can encapsulate, including binding mode, affinity, stoichiometry, method, solvent, temperature, and structural adaptation.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "molecule": {
+                                "type": "string",
+                                "description": "Name or formula of the guest molecule (e.g., CO2, H2, CH4, PFOS, ferrocene).",
+                                "example": "1-hexylsulfonate"
+                            },
+                            "binding_mode": {
+                                "type": "string",
+                                "description": "How the guest binds (e.g., 'encapsulated in cavity', 'surface adsorption', 'ion exchange', '\u03c0\u2013\u03c0 stacking').",
+                                "example": "encapsulated in cavity via ion exchange"
+                            },
+                            "binding_affinity": {
+                                "type": "number",
+                                "description": "Binding constant (K) or association constant (Ka) in M\u207b\u00b9 or M\u207b\u00b2 (depending on stoichiometry).",
+                                "unit": "M\u207b\u00b9",
+                                "example": 1000
+                            },
+                            "stoichiometry": {
+                                "type": "string",
+                                "description": "Molar ratio of guest to cage (e.g., 1:1, 2:1, 4:1).",
+                                "example": "1:1"
+                            },
+                            "method": {
+                                "type": "string",
+                                "description": "Method used to determine guest binding (e.g., NMR titration, ITC, DOSY, cyclic voltammetry, UV-Vis).",
+                                "example": "NMR titration and DOSY"
+                            },
+                            "solvent": {
+                                "type": "string",
+                                "description": "Solvent in which the binding interaction was observed (e.g., acetonitrile, cyclohexane).",
+                                "example": "Acetonitrile"
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "Temperature at which binding was studied (\u00b0C).",
+                                "unit": "\u00b0C",
+                                "example": 25
+                            },
+                            "structural_adaptation": {
+                                "type": "object",
+                                "description": "Details about structural changes in the cage in response to guest size/shape, including isomerism and interconversion dynamics.",
+                                "properties": {
+                                    "isomers_present": {
+                                        "type": "array",
+                                        "description": "List of cage isomers observed (e.g., T-1, C3-1).",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "T-1"
+                                        }
+                                    },
+                                    "interconversion_rate": {
+                                        "type": "string",
+                                        "description": "Kinetic description of isomer interconversion (e.g., 'slow exchange on NMR time scale', 'equilibrium reached after 2 weeks').",
+                                        "example": "Slow exchange on NMR time scale"
+                                    },
+                                    "shape_memory": {
+                                        "type": "boolean",
+                                        "description": "Indicates whether a shape memory effect was observed during guest displacement (i.e., rapid guest exchange with slow structural rearrangement).",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "molecule",
+                            "binding_mode",
+                            "stoichiometry",
+                            "method"
+                        ]
+                    }
+                },
+                "applications": {
+                    "type": "array",
+                    "description": "Potential applications of the MOC based on host-guest behavior.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Gas storage",
+                            "Gas separation",
+                            "Catalysis",
+                            "Drug delivery",
+                            "Sensing",
+                            "Molecular recognition",
+                            "Environmental remediation",
+                            "Ion transport",
+                            "Nanoparticle templation",
+                            "Circularly polarized luminescence"
+                        ],
+                        "example": "Circularly polarized luminescence"
+                    }
+                },
+                "recycling": {
+                    "type": "object",
+                    "description": "Details about the recovery and reuse of the MOC after guest binding.",
+                    "properties": {
+                        "procedure": {
+                            "type": "string",
+                            "description": "Description of the recycling process (e.g., dissolution in CH3CN, addition of tetrabutylammonium nitrate).",
+                            "example": "Dissolve the precipitate in CH3CN, add tetrabutylammonium nitrate to recover the MOC"
+                        },
+                        "cycles": {
+                            "type": "integer",
+                            "description": "Number of successful recycling cycles demonstrated.",
+                            "minimum": 1,
+                            "example": 3
+                        },
+                        "recovery_yield": {
+                            "type": "number",
+                            "description": "Percentage of MOC recovered after recycling cycles.",
+                            "unit": "%",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "example": 94.5
+                        },
+                        "purity_check": {
+                            "type": "string",
+                            "description": "Method used to confirm the purity of the recovered MOC (e.g., 1H NMR, 19F NMR, ESI-MS).",
+                            "example": "1H NMR in D2O matched authentic sample; 19F NMR showed no PFOS signal"
+                        }
+                    },
+                    "required": [
+                        "procedure",
+                        "cycles",
+                        "recovery_yield",
+                        "purity_check"
+                    ]
+                }
+            },
+            "required": [
+                "guests_bound",
+                "applications",
+                "recycling"
+            ]
+        },
+        "material_properties": {
+            "type": "object",
+            "description": "Other measurable physical and chemical properties of the MOC, including stability, porosity, electronic behavior, stereochemistry, and structural dynamics.",
+            "properties": {
+                "stability": {
+                    "type": "object",
+                    "description": "Stability of the MOC under various conditions.",
+                    "properties": {
+                        "thermal_stability": {
+                            "type": "number",
+                            "description": "Temperature at which the MOC begins to decompose (\u00b0C).",
+                            "unit": "\u00b0C",
+                            "example": 320
+                        },
+                        "chemical_stability": {
+                            "type": "string",
+                            "description": "Stability in different solvents or pH conditions (e.g., 'stable in DMF, decomposes in water').",
+                            "example": "Stable in acetonitrile and chloroform; decomposes in water"
+                        },
+                        "long_term_stability": {
+                            "type": "string",
+                            "description": "Stability over time (e.g., 'stable for >6 months at room temperature').",
+                            "example": "Stable for >1 year at 4\u00b0C"
+                        }
+                    },
+                    "required": [
+                        "thermal_stability",
+                        "chemical_stability",
+                        "long_term_stability"
+                    ]
+                },
+                "physical_properties": {
+                    "type": "object",
+                    "description": "Other measurable physical properties of the MOC.",
+                    "properties": {
+                        "conductivity": {
+                            "type": "number",
+                            "description": "Electrical conductivity of the MOC (in S/cm).",
+                            "unit": "S/cm",
+                            "example": 1.2e-06
+                        },
+                        "BET_surface_area": {
+                            "type": "number",
+                            "description": "Brunauer\u2013Emmett\u2013Teller (BET) surface area (in m\u00b2/g).",
+                            "unit": "m\u00b2/g",
+                            "example": 1200
+                        },
+                        "porosity": {
+                            "type": "number",
+                            "description": "Total pore volume (in cm\u00b3/g).",
+                            "unit": "cm\u00b3/g",
+                            "example": 0.65
+                        },
+                        "crystallinity": {
+                            "type": "string",
+                            "enum": [
+                                "crystalline",
+                                "amorphous",
+                                "semi-crystalline"
+                            ],
+                            "description": "Crystalline nature of the material."
+                        },
+                        "cavity_volume": {
+                            "type": "number",
+                            "description": "Volume of the internal cavity (in \u00c5\u00b3).",
+                            "unit": "\u00c5\u00b3",
+                            "example": 344
+                        }
+                    },
+                    "required": [
+                        "BET_surface_area",
+                        "porosity",
+                        "crystallinity",
+                        "cavity_volume"
+                    ]
+                },
+                "stereochemistry": {
+                    "type": "string",
+                    "description": "Description of the stereochemistry of the cage (e.g., 'chiral cage with P-helicity', 'achiral, symmetric', 'T-symmetrical').",
+                    "example": "T-symmetrical"
+                },
+                "structural_dynamics": {
+                    "type": "object",
+                    "description": "Information about dynamic behavior of the cage framework, including isomer interconversion and flexibility.",
+                    "properties": {
+                        "flexibility": {
+                            "type": "string",
+                            "description": "Description of cage flexibility (e.g., 'highly flexible due to methylene linkers', 'rigid framework').",
+                            "example": "Highly flexible due to methylene groups between phenyl rings and azaphosphatrane nitrogen atoms"
+                        },
+                        "isomer_interconversion": {
+                            "type": "object",
+                            "description": "Kinetic and thermodynamic details of cage isomer interconversion.",
+                            "properties": {
+                                "mechanism": {
+                                    "type": "string",
+                                    "description": "Proposed mechanism of isomer interconversion (e.g., 'face inversion via Fe\u2013N bond disruption').",
+                                    "example": "Face inversion via disruption of Cu\u2013N linkages"
+                                },
+                                "activation_energy": {
+                                    "type": "number",
+                                    "description": "Free energy of activation (\u0394G\u2021) for isomer interconversion (in kJ/mol).",
+                                    "unit": "kJ/mol",
+                                    "example": 105
+                                },
+                                "equilibrium_ratio": {
+                                    "type": "string",
+                                    "description": "Thermodynamic equilibrium ratio between isomers (e.g., '5:95', '90:10').",
+                                    "example": "5:95"
+                                }
+                            }
+                        }
+                    }
+                },
+                "optical_properties": {
+                    "type": "object",
+                    "description": "Chiroptical and photophysical properties of the MOC, including circular dichroism (CD) and circularly polarized luminescence (CPL).",
+                    "properties": {
+                        "circular_dichroism": {
+                            "type": "object",
+                            "description": "CD spectrum characteristics, including Cotton effect and spectral range.",
+                            "properties": {
+                                "cotton_effect": {
+                                    "type": "string",
+                                    "description": "Description of the CD Cotton effect (e.g., 'negative Cotton effect at 400 nm').",
+                                    "example": "Negative Cotton effect at 400 nm"
+                                },
+                                "spectral_range": {
+                                    "type": "string",
+                                    "description": "Wavelength range of CD measurement (e.g., 350\u2013450 nm).",
+                                    "example": "350\u2013450 nm"
+                                }
+                            }
+                        },
+                        "circularly_polarized_luminescence": {
+                            "type": "object",
+                            "description": "CPL properties, including dissymmetry factor and emission characteristics.",
+                            "properties": {
+                                "dissymmetry_factor": {
+                                    "type": "number",
+                                    "description": "Dissymmetry factor (|g_lum|) of the CPL emission.",
+                                    "example": 0.001
+                                },
+                                "emission_wavelength": {
+                                    "type": "number",
+                                    "description": "Centered emission wavelength (in nm).",
+                                    "unit": "nm",
+                                    "example": 610
+                                },
+                                "quantum_yield": {
+                                    "type": "number",
+                                    "description": "Absolute quantum yield (QY) of the emission.",
+                                    "unit": "%",
+                                    "example": 30
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "stability",
+                "physical_properties",
+                "stereochemistry"
+            ]
+        },
+        "additional_notes": {
+            "type": "string",
+            "description": "Any other relevant information not covered in other sections, including limitations, future work, experimental nuances, solvent-dependent behavior, structural adaptation phenomena, and chiral memory effects.",
+            "example": "The MOC exhibits solvent-dependent host-guest chemistry: 1-hexylsulfonate binds in acetonitrile, while perfluoro-1-hexanesulfonate binds weakly due to electron-deficient character. The cage shows strong chiral memory due to cooperative locking by 48 N \u2192 Cu(I) bonds. The use of (R)-BINOL during synthesis leads to M6-1 enantiomer, while (S)-BINOL leads to P6-1."
+        }
+    },
+    "examples": [
+        {
+            "moc_type": {
+                "formula": "[Cu12L4]12+",
+                "designation": "MOC-Cu12L4-Helicate",
+                "composition": {
+                    "metal": 12,
+                    "ligand": 4,
+                    "charge": 12,
+                    "metal_to_ligand_ratio": [
+                        12,
+                        4
+                    ]
+                },
+                "counter_ion": "OTf-",
+                "symmetry": "T",
+                "cavity_volume": 344,
+                "stereochemistry": {
+                    "chirality": "chiral",
+                    "helical_handedness": "P6-1",
+                    "enantiomeric_excess": 29,
+                    "chiral_induction_method": "Addition of (S)-BINOL during self-assembly",
+                    "chiral_memory": true
+                }
+            },
+            "synthesis": {
+                "reactants": {
+                    "metal_source": {
+                        "compound": "Cu(CH3CN)4OTf",
+                        "purity": "99%",
+                        "supplier": "Sigma-Aldrich",
+                        "amount": 0.012,
+                        "unit": "mol"
+                    },
+                    "ligand": {
+                        "name": "2,7,14-triaminotriptycene",
+                        "formula": "C18H18N6",
+                        "purity": "95%",
+                        "supplier": "TCI Chemicals",
+                        "synthesis_required": false,
+                        "amount": 0.004,
+                        "unit": "mol"
+                    },
+                    "counter_ion_source": [
+                        {
+                            "compound": "NaOTf",
+                            "amount": 0.012,
+                            "unit": "mol"
+                        }
+                    ],
+                    "chiral_inducer": {
+                        "compound": "(S)-BINOL",
+                        "amount": 0.005,
+                        "unit": "mol",
+                        "equivalents": 50,
+                        "role": "stereocontrol via ligand exchange"
+                    }
+                },
+                "reaction_protocol": {
+                    "global_conditions": {
+                        "temperature": 50,
+                        "solvent": "Acetonitrile",
+                        "atmosphere": "N2",
+                        "concentration": 0.01
+                    },
+                    "stages": [
+                        {
+                            "stage": 1,
+                            "description": "Mix Cu(CH3CN)4OTf and ligand in acetonitrile at 50\u00b0C for 24 h",
+                            "temperature": 50,
+                            "time": 24,
+                            "solvent": "Acetonitrile",
+                            "atmosphere": "N2"
+                        },
+                        {
+                            "stage": 2,
+                            "description": "Remove solvent in vacuo",
+                            "pressure": 100,
+                            "atmosphere": "vacuum"
+                        }
+                    ]
+                },
+                "workup": {
+                    "solvent_removal": "Rotary evaporation under vacuum",
+                    "purification_method": "Column chromatography (SiO2, CH2Cl2/MeOH)",
+                    "yield": 75,
+                    "concentration": 1.2,
+                    "final_solvent": "CDCl3",
+                    "chiral_inducer_removal": "Washed with ethyl acetate and diethyl ether"
+                }
+            },
+            "characterisation": [
+                {
+                    "technique": "X-ray Crystallography",
+                    "instrument": "Diamond Light Source (I19)",
+                    "parameters": {
+                        "temperature": 25,
+                        "solvent": "MeCN",
+                        "concentration": 0.01,
+                        "resolution": "high resolution"
+                    },
+                    "results": "Structure of [Cu12L4]12+ confirmed with T symmetry and HT helicates",
+                    "interpretation": "High symmetry and head-to-tail helicate configuration observed"
+                },
+                {
+                    "technique": "ESI-MS",
+                    "instrument": "Agilent 6140 LC-MS",
+                    "parameters": {
+                        "temperature": 25,
+                        "solvent": "CDCl3",
+                        "concentration": 1.5,
+                        "resolution": "high resolution"
+                    },
+                    "results": "Peaks at +12, +11, +10 corresponding to M12L4 with triflimide counterions",
+                    "interpretation": "Confirmed formation of the M12L4 cage"
+                },
+                {
+                    "technique": "CD",
+                    "instrument": "JASCO J-1500",
+                    "parameters": {
+                        "temperature": 25,
+                        "solvent": "Acetonitrile",
+                        "concentration": 1e-05,
+                        "resolution": "high resolution"
+                    },
+                    "results": "Negative Cotton effect from 350 to 450 nm",
+                    "interpretation": "Confirmed chiral induction via (S)-BINOL"
+                },
+                {
+                    "technique": "CPL",
+                    "instrument": "JASCO J-1500",
+                    "parameters": {
+                        "temperature": 25,
+                        "solvent": "Acetonitrile",
+                        "concentration": 1e-05,
+                        "resolution": "high resolution"
+                    },
+                    "results": "Dissymmetry factor |g_lum| = 0.001",
+                    "interpretation": "Confirmed circularly polarized luminescence from chiral helicate corners"
+                }
+            ],
+            "host_guest_properties": {
+                "guests_bound": [
+                    {
+                        "molecule": "1-hexylsulfonate",
+                        "binding_mode": "encapsulated in cavity via ion exchange",
+                        "binding_affinity": 1000,
+                        "stoichiometry": "1:1",
+                        "method": "NMR titration and DOSY",
+                        "solvent": "Acetonitrile",
+                        "temperature": 25,
+                        "structural_adaptation": {
+                            "isomers_present": [
+                                "T-1"
+                            ],
+                            "interconversion_rate": "slow exchange on NMR time scale",
+                            "shape_memory": true
+                        }
+                    },
+                    {
+                        "molecule": "perfluoro-1-hexanesulfonate",
+                        "binding_mode": "encapsulated in cavity via ion exchange",
+                        "binding_affinity": 100,
+                        "stoichiometry": "1:1",
+                        "method": "NMR titration and DOSY",
+                        "solvent": "Acetonitrile",
+                        "temperature": 25,
+                        "structural_adaptation": {
+                            "isomers_present": [
+                                "T-1"
+                            ],
+                            "interconversion_rate": "slow exchange on NMR time scale",
+                            "shape_memory": true
+                        }
+                    }
+                ],
+                "applications": [
+                    "Environmental remediation",
+                    "Molecular recognition",
+                    "Circularly polarized luminescence"
+                ],
+                "recycling": {
+                    "procedure": "Dissolve the precipitate in CH3CN, add tetrabutylammonium nitrate to recover the MOC",
+                    "cycles": 3,
+                    "recovery_yield": 94.5,
+                    "purity_check": "1H NMR in D2O matched authentic sample; 19F NMR showed no PFOS signal"
+                }
+            },
+            "material_properties": {
+                "stability": {
+                    "thermal_stability": 320,
+                    "chemical_stability": "Stable in acetonitrile and chloroform; decomposes in water",
+                    "long_term_stability": "Stable for >1 year at 4\u00b0C"
+                },
+                "physical_properties": {
+                    "conductivity": 1.2e-06,
+                    "BET_surface_area": 1200,
+                    "porosity": 0.65,
+                    "crystallinity": "crystalline",
+                    "cavity_volume": 344
+                },
+                "stereochemistry": "T-symmetrical",
+                "structural_dynamics": {
+                    "flexibility": "Highly flexible due to methylene groups between phenyl rings and azaphosphatrane nitrogen atoms",
+                    "isomer_interconversion": {
+                        "mechanism": "Face inversion via disruption of Cu\u2013N linkages",
+                        "activation_energy": 105,
+                        "equilibrium_ratio": "5:95"
+                    }
+                },
+                "optical_properties": {
+                    "circular_dichroism": {
+                        "cotton_effect": "Negative Cotton effect at 400 nm",
+                        "spectral_range": "350\u2013450 nm"
+                    },
+                    "circularly_polarized_luminescence": {
+                        "dissymmetry_factor": 0.001,
+                        "emission_wavelength": 610,
+                        "quantum_yield": 30
+                    }
+                }
+            },
+            "additional_notes": "The MOC exhibits solvent-dependent host-guest chemistry: 1-hexylsulfonate binds in acetonitrile, while perfluoro-1-hexanesulfonate binds weakly due to electron-deficient character. The cage shows strong chiral memory due to cooperative locking by 48 N \u2192 Cu(I) bonds. The use of (R)-BINOL during synthesis leads to M6-1 enantiomer, while (S)-BINOL leads to P6-1."
+        }
+    ]
+}
