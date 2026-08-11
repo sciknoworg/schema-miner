@@ -1,0 +1,34 @@
+FEEDBACK:
+This is one of the most comprehensive schemas, with excellent coverage of the process. The inclusion of metadata (studyId, author, DOI, keywords) is valuable for research reproducibility and database integration. The catalyst properties (particleSize, surfaceArea, activationMethod) are excellent domain-specific additions.
+
+Property Merging: No significant merging needed. The separation of "reactionConditions" and "reactor" is acceptable, though "atmosphere" could logically belong in either.
+
+Property Grouping: The separation of "productYields" and "productComposition" into two distinct objects is excellent for structured data extraction from papers. The "totalYield" under productYields for mass balance verification is a thoughtful addition.
+
+Missing Properties: (1) Feedstock preprocessing/pretreatment (shredding, drying, washing) is missing — critical for real waste streams like DKR-350 or MBT outputs. (2) Catalyst characterization methods (BET, NH3-TPD, XRD, SEM) should be explicitly listed, not just surface area. (3) Product quality properties (HHV 37-45 MJ/kg, viscosity, density, chlorine content in ppm) are missing. (4) No property for carrier gas flow rate. (5) Contaminant tracking (chlorine, heavy metals) is absent — critical for real mixed plastic waste including PVC and multilayer packaging.
+
+Adequacy of Descriptions: Descriptions are clear and comprehensive. The "moistureContent" and "source" properties under feedstock are excellent additions not seen in other schemas.
+
+JSON SNIPPETS:
+Add feedstock preprocessing:
+```json
+"preprocessing": {
+    "type": "array",
+    "items": {"type": "string", "enum": ["mechanical sorting", "shredding", "dry-washing", "drying"]},
+    "description": "Pretreatment steps applied to feedstock before pyrolysis"
+}
+```
+
+Add contaminant tracking under feedstock:
+```json
+"contaminants": {
+    "type": "object",
+    "properties": {
+        "chlorine_ppm": {"type": "number", "description": "Chlorine content in ppm"},
+        "heavy_metals": {"type": "array", "items": {"type": "string"}, "description": "Heavy metals detected (e.g., Pb, Cd, Zn)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+Best overall schema among the 12 models together with qwen3-235b-a22b. The camelCase naming convention (reactionConditions, productYields) differs from other schemas using snake_case — should be standardized for consistency. The metadata section with DOI is very useful for linking to source publications.

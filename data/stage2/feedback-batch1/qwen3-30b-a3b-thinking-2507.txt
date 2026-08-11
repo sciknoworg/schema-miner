@@ -1,0 +1,71 @@
+FEEDBACK:
+The schema shows good improvement from Stage 1. The feedstock structure has been correctly merged into a single object with types, composition, and preparation arrays. The residence_time maximum has been raised to 120 minutes. Catalyst characterization (BET_surface_area, NH3_TPD, XRD, SEM) now has a dedicated object. Product composition includes structured compound-concentration pairs for both liquid and gas fractions. Product quality (HHV, viscosity) and mass balance closure are present.
+
+Property Merging: The catalyst_characterization is a separate top-level object rather than nested inside the catalyst object — these should be merged. Having catalyst properties at the top level alongside feedstock, reactor, and process_parameters creates an inconsistent hierarchy.
+
+Property Grouping: The grouping across feedstock, catalyst, reactor, process_parameters, product_yields, product_composition, product_quality, mass_balance_closure, analytical_methods, metadata, and operational_scale is mostly logical. Moving catalyst_characterization inside catalyst would improve consistency.
+
+Missing Properties: (1) Metadata is minimal (study_id and DOI only) — missing author and publication year. (2) No feedstock contaminant tracking (chlorine_ppm, heavy metals) — critical for PVC-containing waste. (3) No feedstock particle size or moisture content. (4) The analytical_methods enum is still restrictive — missing GCxGC-FID/MS, BET, NH3-TPD, SEM, bomb calorimetry, ASTM fuel tests. (5) Product quality is missing density and chlorine content of the liquid product.
+
+Adequacy of Descriptions: Clear and include helpful constraint notes ("Sum of proportions must equal 1.0", "Sum must be ≤100%"). Temperature maximum should be raised from 600°C to 700°C.
+
+JSON SNIPPETS:
+Nest catalyst_characterization inside catalyst:
+```json
+"catalyst": {
+    "type": "object",
+    "properties": {
+        "type": {"type": "string"},
+        "to_feed_ratio": {"type": "number", "minimum": 0.01, "maximum": 10},
+        "characterization": {
+            "type": "object",
+            "properties": {
+                "BET_surface_area": {"type": "number", "description": "BET surface area (m²/g)"},
+                "NH3_TPD": {"type": "object", "description": "Acidity data from NH3-TPD"},
+                "XRD": {"type": "string", "description": "XRD analysis description"},
+                "SEM": {"type": "string", "description": "SEM morphological description"}
+            }
+        }
+    },
+    "required": ["type", "to_feed_ratio"]
+}
+```
+
+Add feedstock contaminants:
+```json
+"contaminants": {
+    "type": "object",
+    "properties": {
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in feedstock (ppm)"},
+        "heavy_metals": {"type": "array", "items": {"type": "string"}, "description": "Heavy metals detected (e.g., Pb, Cd, Zn, Cu)"}
+    }
+}
+```
+
+Expand analytical methods enum:
+```json
+"analytical_methods": {
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["GC-MS", "GC-FID", "GCxGC-FID/MS", "FTIR", "TGA", "NMR", "DSC", "XRD", "BET", "NH3-TPD", "SEM", "bomb calorimetry", "ASTM D2887", "ASTM D4868", "ASTM D4294"]
+    },
+    "minItems": 1
+}
+```
+
+Expand product quality:
+```json
+"product_quality": {
+    "type": "object",
+    "properties": {
+        "HHV": {"type": "number", "minimum": 25, "maximum": 50, "description": "Higher Heating Value of liquid product (MJ/kg)"},
+        "viscosity": {"type": "number", "minimum": 0, "description": "Viscosity of liquid product (cP)"},
+        "density": {"type": "number", "minimum": 0, "description": "Density of liquid product (g/mL)"},
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in liquid product (ppm)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+Good structural improvement from Stage 1. Moving catalyst_characterization inside the catalyst object is the main structural fix needed. The two main content gaps are feedstock contaminants (chlorine, heavy metals) and the expanded analytical methods enum. The mass_balance_closure minimum of 90% is appropriate and should be kept.

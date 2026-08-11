@@ -1,0 +1,48 @@
+FEEDBACK:
+The schema remains the strongest overall and has incorporated the key Batch 1 feedback. Carrier gas flow rate is correctly included inside process_conditions.carrier_gas with both type and flow_rate. The experimental_setup has been simplified with number_of_replicates. All other unique features (catalyst deactivation, char composition, liquid_quality) are retained.
+
+Property Merging: No merging needed. Structure remains excellent.
+
+Property Grouping: The separation of feedstock, catalyst, process_conditions, experimental_setup, yields, product_composition, characterization, and metadata continues to be the best design among all 12 schemas.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Temperature minimum was suggested to be raised from 250°C to 300°C in Batch 1 feedback — it is still 250°C. Catalytic pyrolysis does not practically occur below 300°C and the lower bound should reflect this. (2) Temperature maximum was suggested to be lowered from 800°C to 700°C in Batch 1 — it is now 900°C, which has increased rather than decreased. No papers in the corpus report catalytic pyrolysis of mixed plastic waste above 700°C. (3) The feedstock.composition patternProperties regex (^(PE|PP|PS|PET|PVC|[A-Z]{2,4})$) was flagged in Batch 1 as incorrectly rejecting LDPE, HDPE, EPS, HIPS, and MLP — this has not been corrected and will still reject these valid polymer types.
+
+Missing Properties — NEW: (4) The gas product compound enum is too restrictive (H2, CH4, C2H4, C2H6, C3H6, C3H8, C4H10 only) — CO and CO2 appear in several batch 2 papers and should be added.
+
+Adequacy of Descriptions: Scientifically the most precise of all 12 schemas. The catalyst deactivation properties (coke_formation_rate, deactivation_mechanism, reusability_cycles) and char composition (carbon_content, ash_content, catalyst_content) are uniquely valuable.
+
+JSON SNIPPETS:
+Fix temperature range (previously requested — range is now wider than before):
+```json
+"temperature": {
+    "type": "number",
+    "description": "Operating temperature range for thermal degradation",
+    "unit": "°C",
+    "minimum": 300,
+    "maximum": 700
+}
+```
+
+Relax feedstock composition pattern (previously requested):
+```json
+"composition": {
+    "type": "object",
+    "description": "Relative proportions of polymer types in input stream (sum must equal 1.0).",
+    "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+    }
+}
+```
+
+Expand gas product compound enum (new):
+```json
+"compound": {
+    "type": "string",
+    "enum": ["H2", "CH4", "C2H4", "C2H6", "C3H6", "C3H8", "C4H10", "CO", "CO2", "other"]
+}
+```
+
+ADDITIONAL COMMENTS:
+The temperature range has actually moved in the wrong direction — it is now 250-900°C when Batch 1 feedback requested 300-700°C. This must be corrected for Stage 3. The feedstock composition regex restriction is a persistent issue that was raised in Batch 1 and is still blocking valid polymer types. These two issues are the top priorities for Stage 3 alongside the gas compound enum expansion.

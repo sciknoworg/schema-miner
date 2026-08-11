@@ -1,0 +1,28 @@
+FEEDBACK:
+The schema has incorporated both items requested in Batch 2 feedback. TGA has been added to the catalyst_characterization enum. Char composition (carbon_content_pct, ash_content_pct, chlorine_ppm) has been added as char_composition under outputs and is listed as required. All four product quality metrics (hhv_mj_per_kg, viscosity, density, chlorine_ppm) remain correctly present.
+
+Property Merging: No merging needed.
+
+Property Grouping: Separation of metadata, analytical_methods, feedstock, catalyst, reactor, process_conditions, and outputs is logical. Char_composition is correctly placed alongside yield_distribution and product_composition inside outputs.
+
+Missing Properties: None. Both items from Batch 2 feedback have been resolved.
+
+Adequacy of Descriptions: Clear. The catalyst_morphology with physical forms (powder, pellet, granule, monolithic, supported) and the inert_gas_purity field are unique and valuable additions that must be retained. However, catalyst_morphology remains listed as required alongside type — many papers do not report morphology and this will cause valid instances to fail validation. This should be made optional.
+
+JSON SNIPPETS:
+Make catalyst_morphology optional:
+```json
+"catalyst": {
+    "required": ["type"],
+    "properties": {
+        "type": {"type": "string"},
+        "catalyst_morphology": {
+            "type": "string",
+            "enum": ["powder", "pellet", "granule", "monolithic", "supported"]
+        }
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+This model has shown the clearest improvement trajectory among the smaller models. The only remaining issue is making catalyst_morphology optional - a one-line fix for Stage 3 Batch 2.

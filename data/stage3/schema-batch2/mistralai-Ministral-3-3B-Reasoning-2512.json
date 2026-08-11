@@ -1,0 +1,329 @@
+{
+    "type": "object",
+    "properties": {
+        "metadata": {
+            "type": "object",
+            "required": [
+                "study_id",
+                "author",
+                "doi"
+            ],
+            "properties": {
+                "study_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the study"
+                },
+                "author": {
+                    "type": "string",
+                    "description": "Researcher or institution conducting the experiment"
+                },
+                "doi": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Digital Object Identifier for the research paper"
+                }
+            }
+        },
+        "feedstock": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Categories of polymeric material in the feedstock (e.g., PE, PP, PS, PET)"
+                    }
+                },
+                "composition": {
+                    "type": "object",
+                    "properties": {
+                        "polymer_types": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "type",
+                                    "quantity",
+                                    "unit"
+                                ],
+                                "minItems": 1,
+                                "maxItems": 5,
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Polymer type (e.g., PE, PP)"
+                                    },
+                                    "quantity": {
+                                        "type": "number",
+                                        "minimum": 0.1,
+                                        "maximum": 100,
+                                        "description": "Relative proportion of polymer type (as fraction or percentage)"
+                                    },
+                                    "unit": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fraction",
+                                            "percentage"
+                                        ],
+                                        "description": "Unit of measurement for polymer proportions"
+                                    }
+                                }
+                            },
+                            "contaminants": {
+                                "type": "object",
+                                "properties": {
+                                    "chlorine_ppm": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "description": "Concentration of chlorine in feedstock (ppm)"
+                                    },
+                                    "heavy_metals": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Types of heavy metals present (e.g., Cd, Pb, Hg)"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "preprocessing": {
+                            "type": "object",
+                            "properties": {
+                                "method": {
+                                    "type": "string",
+                                    "description": "Preprocessing technique (e.g., grinding, washing)"
+                                },
+                                "conditions": {
+                                    "type": "object",
+                                    "properties": {
+                                        "temperature": {
+                                            "type": "number",
+                                            "unit": "\u00b0C",
+                                            "minimum": 25,
+                                            "maximum": 100,
+                                            "description": "Temperature for preprocessing"
+                                        },
+                                        "time": {
+                                            "type": "number",
+                                            "unit": "min",
+                                            "minimum": 1,
+                                            "maximum": 60,
+                                            "description": "Duration of preprocessing"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "feedstock.type"
+                        ]
+                    },
+                    "catalyst": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "Catalytic material used (e.g., zeolites, FCC catalysts)"
+                            },
+                            "to_feed_ratio": {
+                                "type": "number",
+                                "minimum": 0.1,
+                                "maximum": 5,
+                                "unit": "mass ratio (catalyst:feedstock)",
+                                "description": "Mass ratio of catalyst to feedstock"
+                            }
+                        }
+                    },
+                    "reactor": {
+                        "type": "object",
+                        "properties": {
+                            "configuration": {
+                                "type": "string",
+                                "description": "Reactor design (e.g., fixed-bed, fluidized-bed)"
+                            },
+                            "scale": {
+                                "type": "string",
+                                "enum": [
+                                    "laboratory",
+                                    "pilot",
+                                    "industrial"
+                                ],
+                                "description": "Experimental scale"
+                            }
+                        }
+                    },
+                    "process_conditions": {
+                        "type": "object",
+                        "properties": {
+                            "temperature": {
+                                "type": "number",
+                                "unit": "\u00b0C",
+                                "minimum": 300,
+                                "maximum": 700,
+                                "description": "Operating temperature (300-700\u00b0C)"
+                            },
+                            "heating_rate": {
+                                "type": "number",
+                                "unit": "\u00b0C/min",
+                                "description": "Rate of temperature increase"
+                            },
+                            "residence_time": {
+                                "type": "number",
+                                "unit": "s",
+                                "minimum": 10,
+                                "maximum": 3600,
+                                "description": "Duration of reaction (10-3600 s)"
+                            },
+                            "atmosphere": {
+                                "type": "string",
+                                "enum": [
+                                    "nitrogen",
+                                    "argon",
+                                    "hydrogen"
+                                ],
+                                "description": "Gaseous environment within the reactor"
+                            }
+                        }
+                    },
+                    "products": {
+                        "type": "object",
+                        "properties": {
+                            "liquid_yield": {
+                                "type": "number",
+                                "unit": "%",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Proportion of liquid fraction generated (0-100%)"
+                            },
+                            "gas_yield": {
+                                "type": "number",
+                                "unit": "%",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Proportion of gaseous products formed (0-100%)"
+                            },
+                            "char_yield": {
+                                "type": "number",
+                                "unit": "%",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Proportion of solid carbonaceous residue (char) (0-100%)"
+                            },
+                            "composition": {
+                                "type": "object",
+                                "properties": {
+                                    "liquid_fraction": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "compound",
+                                                "quantity"
+                                            ],
+                                            "minItems": 1,
+                                            "maxItems": 5,
+                                            "properties": {
+                                                "compound": {
+                                                    "type": "string",
+                                                    "description": "Chemical compound in liquid fraction (e.g., olefins, alkanes)"
+                                                },
+                                                "quantity": {
+                                                    "type": "number",
+                                                    "minimum": 0.1,
+                                                    "maximum": 100,
+                                                    "unit": "fraction",
+                                                    "description": "Relative proportion of compound"
+                                                }
+                                            }
+                                        },
+                                        "gas_fraction": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "required": [
+                                                    "compound",
+                                                    "quantity"
+                                                ],
+                                                "minItems": 1,
+                                                "maxItems": 5,
+                                                "properties": {
+                                                    "compound": {
+                                                        "type": "string",
+                                                        "description": "Chemical compound in gas fraction (e.g., CO, H2)"
+                                                    },
+                                                    "quantity": {
+                                                        "type": "number",
+                                                        "minimum": 0.1,
+                                                        "maximum": 100,
+                                                        "unit": "mole fraction or mass fraction",
+                                                        "description": "Relative proportion of compound"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "quality": {
+                                        "type": "object",
+                                        "properties": {
+                                            "hhv": {
+                                                "type": "number",
+                                                "unit": "kJ/g",
+                                                "minimum": 0,
+                                                "maximum": 10000,
+                                                "description": "Higher heating value of liquid products"
+                                            },
+                                            "viscosity": {
+                                                "type": "number",
+                                                "unit": "mPa\u00b7s",
+                                                "minimum": 1,
+                                                "maximum": 2000,
+                                                "description": "Viscosity of liquid products"
+                                            }
+                                        }
+                                    },
+                                    "analytical_methods": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "GC-MS",
+                                                "GC-FID",
+                                                "FTIR",
+                                                "TGA",
+                                                "BET",
+                                                "NH3-TPD",
+                                                "XRD",
+                                                "SEM",
+                                                "bomb calorimetry"
+                                            ],
+                                            "description": "Experimental techniques used to analyze feedstock and products"
+                                        }
+                                    },
+                                    "mass_balance_closure": {
+                                        "type": "number",
+                                        "unit": "%",
+                                        "minimum": 80,
+                                        "maximum": 120,
+                                        "description": "Sum of liquid + gas + char yields as percentage (must be verified for mass balance)"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "feedstock.type",
+                                "catalyst.type",
+                                "reactor.configuration",
+                                "process_conditions.temperature",
+                                "products.liquid_yield",
+                                "products.gas_yield",
+                                "products.char_yield",
+                                "analytical_methods",
+                                "mass_balance_closure"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

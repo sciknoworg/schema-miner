@@ -1,0 +1,63 @@
+FEEDBACK:
+The schema remains stable and well-structured. Feedstock contaminants, catalyst characterization methods, structured product composition, product quality, and mass balance closure are all correctly maintained from Batch 1.
+
+Property Merging: No merging needed. The structure is clean and consistent.
+
+Property Grouping: Appropriate throughout. The analysis section remains as an object with a methods array inside rather than a flat top-level array, which is slightly inconsistent with other schemas.
+
+Missing Properties - PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Temperature maximum of 600°C was flagged in Batch 1 as too low - the batch 2 papers include experiments at 650°C. Still not raised to 700°C. (2) Char composition (carbon_content_pct, ash_content_pct) was requested in Batch 1 and is still absent from the products section — it is consistently reported in both batch 1 and batch 2 papers. (3) Feedstock particle size and moisture content were requested in Batch 1 and remain absent -- both are reported in several batch 2 papers. (4) The DOI format restriction ("format": "uri") was flagged in Batch 1 as rejecting plain DOI strings — this has not been corrected and will still reject entries like "10.1016/j.jhazmat.2024.132456" without the full URL prefix.
+
+Missing Properties - NEW: (5) No char sub-object in product composition (liquid and gas arrays are present but char has no structured entry alongside them).
+
+Adequacy of Descriptions: Clear and concise. The expanded analytical methods enum and catalyst characterization methods array are well-designed and correctly maintained.
+
+
+JSON SNIPPETS:
+Raise temperature maximum (previously requested):
+```json
+"temperature": {
+    "type": "number",
+    "description": "Operating temperature in degrees Celsius.",
+    "minimum": 300,
+    "maximum": 700
+}
+```
+
+Add char composition to products (previously requested):
+```json
+"char_composition": {
+    "type": "object",
+    "description": "Properties of the solid residue (char).",
+    "properties": {
+        "carbon_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Fixed carbon content of char (wt%)"},
+        "ash_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Ash content of char (wt%)"},
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in char (ppm)"}
+    }
+}
+```
+
+Add feedstock particle size and moisture content (previously requested):
+```json
+"particle_size_mm": {
+    "type": "number",
+    "minimum": 0,
+    "description": "Average particle size of the feedstock in millimeters (mm)."
+},
+"moisture_content_pct": {
+    "type": "number",
+    "minimum": 0,
+    "maximum": 100,
+    "description": "Moisture content of the feedstock (wt%)."
+}
+```
+
+Fix DOI format to accept plain strings (previously requested):
+```json
+"doi": {
+    "type": "string",
+    "description": "Digital Object Identifier for the study (e.g., 10.1016/j.jhazmat.2024.132456). Accepts plain DOI strings without URL prefix."
+}
+```
+
+ADDITIONAL COMMENTS:
+Four items explicitly requested in Batch 1 feedback remain unresolved: temperature ceiling, char composition, feedstock particle size/moisture, and DOI format. These are recurring requests that must be addressed in Stage 3. The schema is otherwise reliable and well-maintained.

@@ -1,0 +1,34 @@
+FEEDBACK:
+Well-structured schema with unique features like "performance_metrics" (conversion_efficiency, energy_efficiency, catalyst_lifetime) that no other model captures. The "feedstock_preparation" property under feedstock is also unique and important.
+
+Property Merging: The reactor object contains "reaction_conditions" as a sub-object with temperature, heating_rate, residence_time, atmosphere, pressure. This deep nesting is logical but may make data extraction harder. Consider keeping conditions at a higher level.
+
+Property Grouping: The analytical_methods section with separate feedstock/liquid/gas/solid analysis subsections is well-designed and reflects laboratory practice.
+
+Missing Properties: (1) Feedstock composition should be required (currently only plastic_types is required). (2) No explicit property for carrier gas flow rate. (3) Operational scale should be required, not optional. (4) The catalyst_properties sub-object (surface_area, pore_volume, acidity) is excellent — should add characterization methods (BET, NH3-TPD, XRD, SEM) to document how these were measured.
+
+Adequacy of Descriptions: Clear and well-written. The "solid_residue_analysis" under products is a good addition for char characterization.
+
+JSON SNIPPETS:
+Add catalyst characterization methods:
+```json
+"characterization_methods": {
+    "type": "array",
+    "items": {"type": "string", "enum": ["BET", "NH3-TPD", "XRD", "SEM", "FT-IR", "TGA", "ICP-OES"]},
+    "description": "Analytical techniques used to characterize catalyst properties"
+}
+```
+
+Add contaminant tracking:
+```json
+"contaminants": {
+    "type": "object",
+    "properties": {
+        "chlorine_ppm": {"type": "number", "description": "Chlorine content from PVC-containing feedstock"},
+        "heavy_metals": {"type": "array", "items": {"type": "string"}, "description": "Heavy metals in char (Pb, Cd, Zn, Cu)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+The "performance_metrics" section is unique and valuable — conversion_efficiency, energy_efficiency, and catalyst_lifetime are increasingly reported in modern pyrolysis studies. However, few required properties (only feedstock, catalyst, reactor, products) means the schema is very permissive and may lead to incomplete data entries.

@@ -1,0 +1,46 @@
+FEEDBACK:
+This remains one of the top schemas alongside qwen3-235b-a22b. Stage 1 feedback has been well incorporated: feedstock contaminants (chlorine_ppm, heavy_metals), catalyst characterization methods (BET, NH3-TPD, XRD, SEM, EDS, FTIR, NMR), activationMethod, product quality (HHV, viscosity, density, chlorine content), and gas quality metrics (HHV, CO2 content, sulfur content) are all now present. The analyticalMethods array requiring technique, sample, and result fields per entry is the most rigorous analytical tracking design among all schemas.
+
+Property Merging: No significant merging needed. The camelCase naming convention is maintained consistently throughout, which is acceptable as long as it is uniform.
+
+Property Grouping: The separation of productYields, productComposition, and productQuality into three distinct objects is excellent for structured data extraction from papers. The inertGasFlowRate and carrierGasFlowRate are both present in the reactor object — these likely refer to the same thing and should be unified into a single carrierGasFlowRate field.
+
+Missing Properties: (1) Feedstock preprocessing is still the main remaining gap — this is the only significant missing property. (2) Feedstock moistureContent is currently required, but many papers do not report it — consider making it optional. (3) Char composition properties (carbon_content, ash_content, chlorine_ppm in char) are absent but consistently reported in the batch papers.
+
+Adequacy of Descriptions: Clear and comprehensive. The feedstock source property (post-consumer, industrial, sorted, unsorted) is a unique and valuable addition. Gas quality metrics (CO2 content, sulfur content) are unique to this schema and scientifically valuable.
+
+JSON SNIPPETS:
+Add feedstock preprocessing (most critical missing property):
+```json
+"preprocessing": {
+    "type": "array",
+    "description": "Pretreatment steps applied to feedstock before pyrolysis.",
+    "items": {
+        "type": "string",
+        "enum": ["mechanical sorting", "shredding", "dry-washing", "drying", "size reduction", "washing"]
+    }
+}
+```
+
+Make moistureContent optional and unify carrier gas:
+```json
+"feedstock": {
+    "required": ["type", "composition", "source"]
+}
+```
+
+Add char composition to productComposition:
+```json
+"char": {
+    "type": "object",
+    "description": "Properties of the solid residue (char).",
+    "properties": {
+        "carbon_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Fixed carbon content of char (wt%)"},
+        "ash_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Ash content of char (wt%)"},
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in char (ppm)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+N/A

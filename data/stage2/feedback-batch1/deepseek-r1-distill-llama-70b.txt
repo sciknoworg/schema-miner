@@ -1,0 +1,81 @@
+FEEDBACK:
+The schema has improved significantly from Stage 1. The critical liquid_yield range error (40-80%) has been corrected to 0-100%, feedstock preparation is now present, the catalyst type enum has been expanded (natural zeolites, clay catalysts, MOF-derived, gamma-alumina, red mud), product quality (HHV, viscosity, density, chlorine_content) has been added, mass balance closure is now a numeric field, metadata is present, and the analytical methods enum has been greatly expanded.
+
+Property Merging: No merging needed. The structure is clean and logical.
+
+Property Grouping: The analysis section is a separate object with a "methods" array inside, while a simpler top-level array would be more consistent with other schemas. Consider flattening to a direct array under "analysis". The product composition object uses additionalProperties with string values, which is too loose — liquid and gas compounds should each be a separate structured array.
+
+Missing Properties: (1) Catalyst characterization techniques (BET, NH3-TPD, XRD, SEM) are captured as numeric values (BET_surface_area, acidity) but a "characterization_methods" array tracking which techniques were used is absent. (2) No carrier gas flow rate property. (3) Feedstock contaminant tracking (chlorine in feedstock, heavy metals) is absent — only chlorine in the liquid product is tracked. (4) The feedstock composition uses a 0-1 fraction scale while yields use 0-100 percentage — these should be standardized to percentages throughout.
+
+Adequacy of Descriptions: Adequate but brief. The DOI field uses "format": "uri" which is correct but many DOIs are provided without the full URL prefix — consider accepting plain DOI strings as well.
+
+JSON SNIPPETS:
+Add characterization methods to catalyst:
+```json
+"characterization_methods": {
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["BET", "NH3-TPD", "XRD", "SEM", "FT-IR", "TGA", "ICP-OES"]
+    },
+    "description": "Analytical techniques used to characterize the catalyst"
+}
+```
+
+Fix feedstock composition to percentage scale:
+```json
+"composition": {
+    "type": "object",
+    "description": "Relative proportion of polymer types as mass percentages (0-100). Sum should equal 100.",
+    "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+    }
+}
+```
+
+Fix product composition to structured format:
+```json
+"composition": {
+    "type": "object",
+    "properties": {
+        "liquid": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "compound": {"type": "string"},
+                    "concentration_wt_pct": {"type": "number", "minimum": 0, "maximum": 100}
+                },
+                "required": ["compound"]
+            }
+        },
+        "gas": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "compound": {"type": "string"},
+                    "concentration_vol_pct": {"type": "number", "minimum": 0, "maximum": 100}
+                },
+                "required": ["compound"]
+            }
+        }
+    }
+}
+```
+
+Add feedstock contaminants:
+```json
+"contaminants": {
+    "type": "object",
+    "properties": {
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine in feedstock from PVC (ppm)"},
+        "heavy_metals": {"type": "array", "items": {"type": "string"}, "description": "Heavy metals detected (e.g., Pb, Cd, Zn)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+Fixing the liquid_yield range was the most critical improvement and it has been correctly applied. The remaining priority is standardizing the composition scale (fraction vs percentage) and adding the catalyst characterization methods array. The structured product composition is essential for systematic data extraction from GC-MS results in the batch papers.

@@ -1,0 +1,45 @@
+FEEDBACK:
+The schema has fully resolved the two regressions flagged in Batch 2. Feedstock preprocessing is correctly restored as a structured array of enumerated strings. Feedstock contaminants are correctly restored as a structured object with chlorine_ppm and heavy_metals array. Char composition (carbon_content_pct, ash_content_pct) has been added under outputs.yields.char_composition.
+
+Property Merging: No merging needed.
+
+Property Grouping: Structure is appropriate. Performance_metrics, reactor material, agitation, and heat_transfer remain unique and valuable properties that are correctly preserved.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) The temperature.final maximum remains at 800°C — lowering it to 700°C was requested in Batch 2 and has not been applied. (2) Product quality still requires hhv_mj_per_kg, viscosity, and density — making only hhv_mj_per_kg required and the other two optional was requested in Batch 2 and has not been applied.
+
+Adequacy of Descriptions: Clear and practical. The agitation, reactor material, and heat_transfer properties remain unique contributions that add real scientific value and must be preserved. The reactor configuration enum uses underscore notation (fixed_bed, fluidized_bed) while all other schemas and the literature use hyphenated notation (fixed-bed, fluidized-bed) — this should be standardized.
+
+JSON SNIPPETS:
+Fix temperature maximum (previously requested):
+```json
+"final": {
+    "type": "number",
+    "minimum": 300,
+    "maximum": 700,
+    "description": "Final reaction temperature (°C). Maximum for catalytic pyrolysis of mixed plastic waste is 700°C."
+}
+```
+
+Reduce product_quality required fields (previously requested):
+```json
+"product_quality": {
+    "required": ["hhv_mj_per_kg"],
+    "properties": {
+        "hhv_mj_per_kg": {"type": "number", "minimum": 25, "maximum": 50},
+        "viscosity": {"type": "number", "minimum": 0},
+        "density": {"type": "number", "minimum": 0},
+        "chlorine_ppm": {"type": ["number", "null"], "minimum": 0}
+    }
+}
+```
+
+Standardize reactor configuration enum:
+```json
+"configuration": {
+    "type": "string",
+    "enum": ["fixed-bed", "fluidized-bed", "batch", "continuous", "microwave", "other"]
+}
+```
+
+ADDITIONAL COMMENTS:
+Two items from Batch 2 remain unresolved: temperature maximum and product_quality required fields. Both are straightforward fixes. The regression restorations are correctly applied and must be maintained.

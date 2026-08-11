@@ -1,0 +1,419 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "CatalyticPyrolysisProcess",
+    "description": "Complete schema for Catalytic Pyrolysis of Mixed Plastic Waste process. All yields must sum to \u2264100% (liquid+gas+char). Feedstock composition proportions must sum to 1.0. Mass balance closure should be \u226590% for valid experiments.",
+    "type": "object",
+    "properties": {
+        "feedstock": {
+            "type": "object",
+            "properties": {
+                "types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "List of polymer types present in the feedstock (e.g., ['PE', 'PP', 'PET']). Derived from composition data."
+                },
+                "composition": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "polymer": {
+                                "type": "string",
+                                "description": "Specific polymer type (e.g., 'PE', 'PP')"
+                            },
+                            "proportion": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1,
+                                "description": "Weight fraction of polymer in feedstock (0.0-1.0). Sum of all proportions must equal 1.0."
+                            }
+                        },
+                        "required": [
+                            "polymer",
+                            "proportion"
+                        ]
+                    },
+                    "description": "Composition of feedstock as weight fractions of each polymer type. Sum of proportions must equal 1.0."
+                },
+                "preparation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "mechanical sorting",
+                            "shredding",
+                            "dry-washing",
+                            "drying"
+                        ]
+                    },
+                    "description": "Preprocessing steps applied to feedstock (e.g., shredding, drying)."
+                },
+                "contaminants": {
+                    "type": "object",
+                    "properties": {
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in feedstock (ppm). Critical for PVC-containing waste streams."
+                        },
+                        "heavy_metals": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Heavy metals detected in feedstock (e.g., ['Pb', 'Cd', 'Zn', 'Cu'])."
+                        }
+                    },
+                    "description": "Contaminant levels in feedstock (chlorine and heavy metals)."
+                },
+                "particle_size": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Average particle size of feedstock (mm).",
+                    "units": "mm"
+                },
+                "moisture_content": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Moisture content of feedstock (percentage by weight).",
+                    "units": "%"
+                }
+            },
+            "required": [
+                "types",
+                "composition"
+            ],
+            "description": "Feedstock properties including polymer types, composition, preprocessing, contaminants, particle size, and moisture content."
+        },
+        "catalyst": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Catalyst material (e.g., 'Zeolite Y', 'FCC catalyst', 'Ni/ZSM-5')."
+                },
+                "to_feed_ratio": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 10,
+                    "description": "Mass ratio of catalyst to plastic feedstock (e.g., 0.5 for 0.5:1 ratio)."
+                },
+                "characterization": {
+                    "type": "object",
+                    "properties": {
+                        "BET_surface_area": {
+                            "type": "number",
+                            "description": "BET surface area (m\u00b2/g)."
+                        },
+                        "NH3_TPD": {
+                            "type": "object",
+                            "description": "Acidity data from NH3-TPD (e.g., acid site density)."
+                        },
+                        "XRD": {
+                            "type": "string",
+                            "description": "XRD analysis description (e.g., crystallinity, phase identification)."
+                        },
+                        "SEM": {
+                            "type": "string",
+                            "description": "SEM image description or key morphological features."
+                        }
+                    },
+                    "description": "Catalyst characterization data (BET, NH3-TPD, XRD, SEM)."
+                }
+            },
+            "required": [
+                "type",
+                "to_feed_ratio"
+            ],
+            "description": "Catalyst properties including type, mass ratio to feedstock, and characterization data."
+        },
+        "reactor": {
+            "type": "object",
+            "properties": {
+                "configuration": {
+                    "type": "string",
+                    "enum": [
+                        "fixed-bed",
+                        "fluidized-bed",
+                        "batch",
+                        "continuous"
+                    ],
+                    "description": "Reactor design type (e.g., fluidized-bed for better heat transfer)."
+                },
+                "atmosphere": {
+                    "type": "string",
+                    "enum": [
+                        "nitrogen",
+                        "argon",
+                        "hydrogen",
+                        "inert"
+                    ],
+                    "description": "Gaseous environment during reaction (e.g., nitrogen for inert conditions)."
+                }
+            },
+            "required": [
+                "configuration",
+                "atmosphere"
+            ],
+            "description": "Reactor configuration and operating atmosphere."
+        },
+        "process_parameters": {
+            "type": "object",
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "minimum": 300,
+                    "maximum": 700,
+                    "description": "Reaction temperature in degrees Celsius (\u00b0C). Typical range: 300-700\u00b0C."
+                },
+                "heating_rate": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "description": "Rate of temperature increase in degrees Celsius per minute (\u00b0C/min)."
+                },
+                "residence_time": {
+                    "type": "number",
+                    "minimum": 0.1,
+                    "maximum": 120,
+                    "description": "Duration of reaction in minutes. Typical range: 30-120 min for batch systems."
+                },
+                "pressure": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Operating pressure (bar)."
+                },
+                "carrier_gas_flow_rate": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Flow rate of carrier gas (L/min)."
+                }
+            },
+            "required": [
+                "temperature",
+                "heating_rate",
+                "residence_time"
+            ],
+            "description": "Core thermal, temporal, and environmental parameters of the pyrolysis process."
+        },
+        "product_yields": {
+            "type": "object",
+            "properties": {
+                "liquid": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Liquid product yield as percentage of initial feedstock mass (typically 40-80%)."
+                },
+                "gas": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Gaseous product yield as percentage of initial feedstock mass."
+                },
+                "char": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Solid residue (char) yield as percentage of initial feedstock mass."
+                }
+            },
+            "required": [
+                "liquid",
+                "gas",
+                "char"
+            ],
+            "description": "Yields of primary products as percentages of initial feedstock mass. Sum must be \u2264100%."
+        },
+        "product_composition": {
+            "type": "object",
+            "properties": {
+                "liquid": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical compound name (e.g., 'benzene', 'dodecane')."
+                            },
+                            "concentration": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Concentration in liquid fraction as percentage."
+                            }
+                        },
+                        "required": [
+                            "compound",
+                            "concentration"
+                        ]
+                    },
+                    "description": "Main chemical compounds in liquid product fraction with concentrations."
+                },
+                "gas": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical compound name (e.g., 'methane', 'ethylene')."
+                            },
+                            "concentration": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Concentration in gas fraction as percentage."
+                            }
+                        },
+                        "required": [
+                            "compound",
+                            "concentration"
+                        ]
+                    },
+                    "description": "Main chemical compounds in gaseous product fraction with concentrations."
+                },
+                "char": {
+                    "type": "object",
+                    "description": "Key properties of the char residue (solid residue).",
+                    "properties": {
+                        "carbon_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Fixed carbon content in char (wt%)."
+                        },
+                        "ash_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Ash content in char (wt%)."
+                        },
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in char (ppm)."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "liquid",
+                "gas"
+            ],
+            "description": "Chemical composition of liquid and gas products (as arrays of compounds), and key properties of char (carbon content, ash content, chlorine content)."
+        },
+        "product_quality": {
+            "type": "object",
+            "properties": {
+                "HHV": {
+                    "type": "number",
+                    "minimum": 25,
+                    "maximum": 50,
+                    "description": "Higher Heating Value (MJ/kg) of liquid product."
+                },
+                "viscosity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Viscosity (cP) of liquid product at standard temperature."
+                },
+                "density": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Density (g/mL) of liquid product.",
+                    "units": "g/mL"
+                },
+                "chlorine_ppm": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Chlorine content in liquid product (ppm).",
+                    "units": "ppm"
+                }
+            },
+            "description": "Key quality metrics for liquid product (HHV, viscosity, density, chlorine content)."
+        },
+        "mass_balance_closure": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Mass balance closure percentage (100% = all mass accounted for). Minimum 90% for valid experiments."
+        },
+        "analytical_methods": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "GC-MS",
+                    "GC-FID",
+                    "GCxGC-FID/MS",
+                    "FTIR",
+                    "TGA",
+                    "NMR",
+                    "DSC",
+                    "XRD",
+                    "BET",
+                    "NH3-TPD",
+                    "SEM",
+                    "bomb calorimetry",
+                    "ASTM D2887",
+                    "ASTM D4868",
+                    "ASTM D4294"
+                ]
+            },
+            "minItems": 1,
+            "description": "Standard analytical techniques used for characterization (e.g., GC-MS for liquid composition)."
+        },
+        "metadata": {
+            "type": "object",
+            "required": [
+                "author",
+                "doi"
+            ],
+            "properties": {
+                "study_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the experimental study."
+                },
+                "doi": {
+                    "type": "string",
+                    "description": "Digital Object Identifier for the publication."
+                },
+                "author": {
+                    "type": "string",
+                    "description": "Author(s) of the study."
+                },
+                "publication_year": {
+                    "type": "integer",
+                    "minimum": 1990,
+                    "maximum": 2030,
+                    "description": "Year of publication."
+                }
+            },
+            "description": "Study metadata including identifier, publication reference, author, and publication year."
+        },
+        "operational_scale": {
+            "type": "string",
+            "enum": [
+                "laboratory",
+                "pilot",
+                "industrial"
+            ],
+            "description": "Scale of operation (laboratory: <1 kg/h, pilot: 1-100 kg/h, industrial: >100 kg/h)."
+        }
+    },
+    "required": [
+        "feedstock",
+        "catalyst",
+        "reactor",
+        "process_parameters",
+        "product_yields",
+        "product_composition",
+        "analytical_methods",
+        "operational_scale"
+    ]
+}

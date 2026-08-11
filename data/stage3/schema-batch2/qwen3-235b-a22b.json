@@ -1,0 +1,542 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Catalytic Pyrolysis of Mixed Plastic Waste Process Schema",
+    "description": "Comprehensive schema for representing catalytic pyrolysis processes converting mixed plastic waste into valuable products. Captures feedstock characteristics, process parameters, catalyst specifications, and output metrics with domain-specific constraints.",
+    "type": "object",
+    "required": [
+        "feedstock",
+        "catalyst",
+        "process_conditions",
+        "yields",
+        "metadata"
+    ],
+    "properties": {
+        "feedstock": {
+            "type": "object",
+            "description": "Input plastic waste characteristics determining degradation mechanisms and product distribution",
+            "required": [
+                "type",
+                "composition"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Primary category of polymeric material (e.g., 'mixed', 'PE', 'PP', 'PS', 'PET'). 'mixed' indicates heterogeneous input requiring composition specification.",
+                    "enum": [
+                        "mixed",
+                        "PE",
+                        "PP",
+                        "PS",
+                        "PET",
+                        "PVC",
+                        "LDPE",
+                        "HDPE",
+                        "EPS",
+                        "HIPS",
+                        "MLP",
+                        "other"
+                    ]
+                },
+                "composition": {
+                    "type": "object",
+                    "description": "Relative proportions of polymer types in input stream (sum must equal 1.0). Required when type='mixed'. Keys can be any valid polymer abbreviation (e.g., PE, LDPE, HIPS).",
+                    "additionalProperties": {
+                        "type": "number",
+                        "description": "Proportion of specific polymer type (0.0-1.0)",
+                        "minimum": 0,
+                        "maximum": 1
+                    },
+                    "minProperties": 2,
+                    "examples": [
+                        {
+                            "PE": 0.45,
+                            "PP": 0.35,
+                            "PS": 0.2
+                        }
+                    ]
+                },
+                "moisture_content": {
+                    "type": "number",
+                    "description": "Moisture percentage in feedstock by mass",
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "particle_size": {
+                    "type": "object",
+                    "description": "Size distribution of shredded plastic feedstock",
+                    "properties": {
+                        "d10": {
+                            "type": "number",
+                            "description": "10th percentile particle size",
+                            "unit": "mm"
+                        },
+                        "d50": {
+                            "type": "number",
+                            "description": "Median particle size",
+                            "unit": "mm"
+                        },
+                        "d90": {
+                            "type": "number",
+                            "description": "90th percentile particle size",
+                            "unit": "mm"
+                        }
+                    },
+                    "required": [
+                        "d50"
+                    ]
+                },
+                "preprocessing": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "mechanical sorting",
+                            "shredding",
+                            "dry-washing",
+                            "drying",
+                            "size reduction"
+                        ]
+                    },
+                    "description": "Feedstock pretreatment steps applied before pyrolysis"
+                },
+                "contaminants": {
+                    "type": "object",
+                    "description": "Critical impurities in real-world mixed plastic waste affecting product quality and catalyst stability",
+                    "properties": {
+                        "chlorine_content_ppm": {
+                            "type": "number",
+                            "description": "Chlorine concentration in feedstock (ppm), especially relevant for PVC-containing waste",
+                            "minimum": 0
+                        },
+                        "heavy_metals_ppm": {
+                            "type": "object",
+                            "description": "Concentrations of toxic heavy metals in feedstock",
+                            "patternProperties": {
+                                "^(Pb|Cd|Hg|Cr|As)$": {
+                                    "type": "number",
+                                    "description": "Heavy metal concentration (ppm)",
+                                    "minimum": 0
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            }
+        },
+        "catalyst": {
+            "type": "object",
+            "description": "Catalytic materials governing cracking pathways and product selectivity",
+            "required": [
+                "type",
+                "ratio"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Catalyst classification (e.g., 'zeolite', 'FCC', 'mesoporous', 'metal-oxide')",
+                    "enum": [
+                        "zeolite",
+                        "FCC",
+                        "mesoporous",
+                        "metal-oxide",
+                        "acidic",
+                        "bifunctional",
+                        "other"
+                    ]
+                },
+                "subtype": {
+                    "type": "string",
+                    "description": "Specific catalyst formulation (e.g., 'HZSM-5', 'Y-zeolite', 'Al-MCM-41')",
+                    "minLength": 2
+                },
+                "ratio": {
+                    "type": "number",
+                    "description": "Mass ratio of catalyst to plastic feedstock",
+                    "minimum": 0,
+                    "exclusiveMinimum": false
+                },
+                "activation_method": {
+                    "type": "string",
+                    "description": "Pre-treatment method (e.g., 'calcination', 'acid-washing', 'impregnation')"
+                },
+                "reusability_cycles": {
+                    "type": "integer",
+                    "description": "Number of regeneration cycles before significant deactivation",
+                    "minimum": 0
+                },
+                "deactivation_mechanism": {
+                    "type": "string",
+                    "description": "Primary reason for catalyst performance loss (e.g., coking, sintering, poisoning)",
+                    "enum": [
+                        "coking",
+                        "sintering",
+                        "poisoning",
+                        "leaching",
+                        "pore_blockage",
+                        "thermal_degradation",
+                        "other"
+                    ]
+                },
+                "coke_formation_rate": {
+                    "type": "number",
+                    "description": "Rate of carbon deposition on catalyst during operation (wt% per cycle or per hour)",
+                    "unit": "wt%",
+                    "minimum": 0
+                }
+            }
+        },
+        "process_conditions": {
+            "type": "object",
+            "description": "Operational parameters controlling reaction kinetics and product distribution",
+            "required": [
+                "reactor_configuration",
+                "temperature",
+                "residence_time",
+                "atmosphere"
+            ],
+            "properties": {
+                "reactor_configuration": {
+                    "type": "string",
+                    "description": "Reactor design influencing heat/mass transfer and scalability",
+                    "enum": [
+                        "fixed-bed",
+                        "fluidized-bed",
+                        "rotary-kiln",
+                        "screw-conveyor",
+                        "batch",
+                        "continuous"
+                    ]
+                },
+                "temperature": {
+                    "type": "number",
+                    "description": "Operating temperature range for thermal degradation",
+                    "unit": "\u00b0C",
+                    "minimum": 300,
+                    "maximum": 700
+                },
+                "heating_rate": {
+                    "type": "number",
+                    "description": "Rate of temperature increase during pyrolysis",
+                    "unit": "\u00b0C/min",
+                    "minimum": 0.1,
+                    "default": 10
+                },
+                "residence_time": {
+                    "type": "number",
+                    "description": "Duration feedstock remains under reaction conditions",
+                    "unit": "seconds",
+                    "minimum": 1,
+                    "default": 60
+                },
+                "atmosphere": {
+                    "type": "string",
+                    "description": "Reactor gas environment controlling oxidative conditions",
+                    "enum": [
+                        "nitrogen",
+                        "argon",
+                        "hydrogen",
+                        "vacuum",
+                        "steam"
+                    ]
+                },
+                "pressure": {
+                    "type": "number",
+                    "description": "Absolute pressure within reactor",
+                    "unit": "kPa",
+                    "default": 101.325
+                },
+                "carrier_gas": {
+                    "type": "object",
+                    "description": "Inert or reactive gas used to sweep volatiles and maintain atmosphere",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Name of carrier gas",
+                            "enum": [
+                                "nitrogen",
+                                "argon",
+                                "hydrogen",
+                                "steam"
+                            ]
+                        },
+                        "flow_rate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Volumetric flow rate of carrier gas in mL/min.",
+                            "unit": "mL/min"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "flow_rate"
+                    ]
+                }
+            }
+        },
+        "experimental_setup": {
+            "type": "object",
+            "description": "Contextual information about process implementation scale and validation",
+            "properties": {
+                "scale": {
+                    "type": "string",
+                    "description": "Technology readiness level of implementation",
+                    "enum": [
+                        "laboratory",
+                        "pilot",
+                        "demonstration",
+                        "industrial"
+                    ]
+                },
+                "number_of_replicates": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Number of experimental repetitions"
+                },
+                "validation_method": {
+                    "type": "string",
+                    "description": "Approach for process verification (optional)"
+                }
+            }
+        },
+        "yields": {
+            "type": "object",
+            "description": "Mass distribution of primary output fractions relative to input feedstock",
+            "required": [
+                "liquid",
+                "gas",
+                "char"
+            ],
+            "properties": {
+                "liquid": {
+                    "type": "number",
+                    "description": "Liquid oil yield (primary product stream)",
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "default": 60
+                },
+                "gas": {
+                    "type": "number",
+                    "description": "Gaseous product yield (typically C1-C4 hydrocarbons)",
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "char": {
+                    "type": "number",
+                    "description": "Solid carbonaceous residue yield",
+                    "unit": "%",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "mass_balance_closure": {
+                    "type": "number",
+                    "description": "Percentage accounting for all mass outputs (should be 95-105%)",
+                    "unit": "%",
+                    "minimum": 80,
+                    "maximum": 120
+                }
+            }
+        },
+        "product_composition": {
+            "type": "object",
+            "description": "Chemical characterization of output fractions",
+            "properties": {
+                "liquid": {
+                    "type": "array",
+                    "description": "Major compounds in liquid fraction (by GC-MS analysis)",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical compound name (e.g., 'benzene', 'toluene')"
+                            },
+                            "carbon_range": {
+                                "type": "string",
+                                "description": "Hydrocarbon chain length (e.g., 'C6-C10', 'C11-C20')",
+                                "pattern": "^C[0-9]+(-C[0-9]+)?$"
+                            },
+                            "proportion": {
+                                "type": "number",
+                                "description": "Relative abundance in liquid fraction",
+                                "unit": "%",
+                                "minimum": 0,
+                                "maximum": 100
+                            }
+                        },
+                        "required": [
+                            "compound",
+                            "proportion"
+                        ]
+                    }
+                },
+                "gas": {
+                    "type": "array",
+                    "description": "Major components in gaseous fraction",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "enum": [
+                                    "H2",
+                                    "CH4",
+                                    "C2H4",
+                                    "C2H6",
+                                    "C3H6",
+                                    "C3H8",
+                                    "C4H10",
+                                    "CO",
+                                    "CO2",
+                                    "other"
+                                ],
+                                "description": "Chemical species in gaseous product"
+                            },
+                            "proportion": {
+                                "type": "number",
+                                "description": "Volume percentage in dry gas",
+                                "unit": "%",
+                                "minimum": 0,
+                                "maximum": 100
+                            }
+                        },
+                        "required": [
+                            "compound",
+                            "proportion"
+                        ]
+                    }
+                },
+                "char": {
+                    "type": "object",
+                    "description": "Solid residue properties",
+                    "properties": {
+                        "carbon_content": {
+                            "type": "number",
+                            "description": "Fixed carbon percentage by mass",
+                            "unit": "%"
+                        },
+                        "ash_content": {
+                            "type": "number",
+                            "description": "Inorganic residue percentage",
+                            "unit": "%"
+                        },
+                        "catalyst_content": {
+                            "type": "number",
+                            "description": "Embedded catalyst material percentage",
+                            "unit": "%"
+                        }
+                    }
+                },
+                "liquid_quality": {
+                    "type": "object",
+                    "description": "Physical and energetic properties of liquid pyrolysis oil",
+                    "properties": {
+                        "hhv_mj_per_kg": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 50,
+                            "description": "Higher heating value (typically 37-45 MJ/kg for pyrolysis oils)",
+                            "unit": "MJ/kg"
+                        },
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "description": "Chlorine content in liquid product (ppm)",
+                            "minimum": 0
+                        },
+                        "density_g_per_ml": {
+                            "type": "number",
+                            "description": "Density of liquid oil",
+                            "unit": "g/mL"
+                        },
+                        "viscosity_cst": {
+                            "type": "number",
+                            "description": "Kinematic viscosity of pyrolysis oil at specified temperature",
+                            "unit": "cSt",
+                            "minimum": 0
+                        }
+                    }
+                }
+            }
+        },
+        "characterization": {
+            "type": "object",
+            "description": "Analytical methods for feedstock and product validation",
+            "properties": {
+                "feedstock_analysis": {
+                    "type": "array",
+                    "description": "Techniques for input material characterization",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "FTIR",
+                            "DSC",
+                            "TGA",
+                            "GPC",
+                            "elemental_analysis"
+                        ]
+                    }
+                },
+                "product_analysis": {
+                    "type": "array",
+                    "description": "Techniques for output characterization",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "GC-MS",
+                            "GC-FID",
+                            "NMR",
+                            "simulated_distillation",
+                            "proximate_analysis",
+                            "bomb_calorimetry",
+                            "ASTM D2887",
+                            "ASTM D4868"
+                        ]
+                    }
+                },
+                "catalyst_analysis": {
+                    "type": "array",
+                    "description": "Catalyst characterization methods",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "XRD",
+                            "BET",
+                            "NH3-TPD",
+                            "XPS",
+                            "SEM-EDS"
+                        ]
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "type": "object",
+            "required": [
+                "reference"
+            ],
+            "description": "Process documentation and provenance information",
+            "properties": {
+                "process_name": {
+                    "type": "string",
+                    "description": "Unique identifier for the process record"
+                },
+                "reference": {
+                    "type": "string",
+                    "description": "Source citation (DOI, patent number, or report ID)."
+                },
+                "date_conducted": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date of experiment execution"
+                },
+                "research_institution": {
+                    "type": "string",
+                    "description": "Affiliation conducting the process"
+                }
+            }
+        }
+    }
+}

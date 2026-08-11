@@ -1,0 +1,50 @@
+FEEDBACK:
+Concise and clean schema with 6 well-defined top-level properties, all required. However, the schema is too minimal for comprehensive catalytic pyrolysis characterization.
+
+Property Merging: No merging needed, the current structure is clean.
+
+Missing Properties: (1) No metadata section (study ID, author, DOI). (2) No feedstock preprocessing/pretreatment — critical for real waste streams. (3) No catalyst characterization (BET surface area, NH3-TPD acidity, XRD, SEM). (4) Product quality properties (HHV 37-45 MJ/kg, viscosity, density, chlorine content) are absent. (5) The analytical methods enum is too restrictive — only GC-MS, FTIR, TGA. Missing GC-FID, GCxGC-FID/MS, BET, NH3-TPD, XRD, SEM, bomb calorimetry, ASTM fuel tests. (6) No carrier gas flow rate. (7) No pressure property. (8) CRITICAL: The liquid_yield has minimum=40, maximum=80 — this is incorrect. Real catalytic pyrolysis of mixed waste including multilayer packaging can yield as low as 13% liquid (Sivagami et al. 2022) or higher than 80% in optimized LDPE systems. These constraints should be 0-100. (9) The catalyst type enum (zeolites, FCC, metal-supported) is too narrow — missing clay catalysts (montmorillonite, kaolin, sepiolite), natural zeolites, MOF-derived catalysts, gamma-alumina, red mud. (10) No mass balance closure property.
+
+Adequacy of Descriptions: Adequate but brief. Product composition using additionalProperties with string values is too loose.
+
+JSON SNIPPETS:
+Fix liquid_yield range (CRITICAL):
+```json
+"liquid_yield": {
+    "type": "number",
+    "description": "Proportion of liquid fraction generated, as a percentage of initial mass.",
+    "minimum": 0,
+    "maximum": 100
+}
+```
+
+Add feedstock preparation:
+```json
+"preparation": {
+    "type": "array",
+    "items": {"type": "string", "enum": ["mechanical sorting", "shredding", "dry-washing", "drying"]},
+    "description": "Feedstock pretreatment steps applied before pyrolysis"
+}
+```
+
+Expand catalyst type enum:
+```json
+"type": {
+    "type": "string",
+    "enum": ["zeolites", "natural zeolites", "FCC", "metal-supported", "clay catalysts", "MOF-derived", "gamma-alumina", "red mud", "other"],
+    "description": "Catalytic material applied (e.g., ZSM-5, montmorillonite, MIL-53-derived)"
+}
+```
+
+Add mass balance:
+```json
+"mass_balance_closure": {
+    "type": "number",
+    "description": "Sum of liquid + gas + char yields as percentage. Should equal ~100% within experimental error.",
+    "minimum": 90,
+    "maximum": 105
+}
+```
+
+ADDITIONAL COMMENTS:
+The hardcoded liquid yield range of 40-80% is the most critical issue — it would reject valid experimental data from multilayer packaging pyrolysis (13% liquid) and some optimized single-polymer systems (>80%). This must be changed to 0-100. The catalyst enum is too narrow for the diversity of catalysts used in mixed plastic waste pyrolysis research.

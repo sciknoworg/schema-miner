@@ -1,0 +1,58 @@
+FEEDBACK:
+The schema has incorporated three of the five items requested in Batch 2 feedback. Catalyst characterization has been moved inside the catalyst object as a characterization array. Metadata now requires author and doi. The analytical_characterization.methods array now has a proper enum with standard techniques. Char composition (carbon_content_pct, ash_content_pct) is correctly present under products as a required field.
+
+Property Merging: No merging needed.
+
+Property Grouping: Grouping is appropriate. The catalyst.characterization placement is now correct.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Density and chlorine_ppm of the liquid product were requested in Batch 2 — product_quality still only requires hhv and viscosity; density and chlorine_ppm are present but still not required. (2) The carrier_gas_type and carrier_gas_flow_rate remain as separate top-level fields rather than grouped inside a carrier_gas object nested in process_parameters or reactor — this structural issue was flagged in Batch 2 and remains unresolved.
+
+Adequacy of Descriptions: Generally clear. The char_composition addition is a good improvement. The mass_balance_closure has maximum 100, which is too restrictive since experimental closure can legitimately exceed 100% due to measurement uncertainty — the maximum should be raised to at least 110.
+
+JSON SNIPPETS:
+Make density and chlorine_ppm required in product_quality (previously requested):
+```json
+"product_quality": {
+    "type": "object",
+    "properties": {
+        "hhv": {"type": "number", "minimum": 25, "maximum": 50},
+        "viscosity": {"type": "number"},
+        "density": {"type": "number", "minimum": 0},
+        "chlorine_ppm": {"type": "number", "minimum": 0}
+    },
+    "required": ["hhv", "viscosity", "density", "chlorine_ppm"]
+}
+```
+
+Group carrier gas fields inside process_parameters (previously requested):
+```json
+"process_parameters": {
+    "type": "object",
+    "properties": {
+        "temperature": {"type": "number", "minimum": 300, "maximum": 700},
+        "heating_rate": {"type": "number", "minimum": 0},
+        "residence_time": {"type": "number", "minimum": 0},
+        "atmosphere": {"type": "string"},
+        "carrier_gas": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "enum": ["nitrogen", "argon", "hydrogen", "helium"]},
+                "flow_rate": {"type": "number", "minimum": 0, "description": "Flow rate in L/min."}
+            }
+        }
+    }
+}
+```
+
+Fix mass_balance_closure maximum:
+```json
+"mass_balance_closure": {
+    "type": "number",
+    "description": "Mass balance closure percentage.",
+    "minimum": 0,
+    "maximum": 110
+}
+```
+
+ADDITIONAL COMMENTS:
+Two items explicitly requested in Batch 2 remain unresolved: product_quality required fields and carrier gas grouping. These must be prioritized for Stage 3 Batch 2. The analytical methods enum is now one of the most complete among all schemas and must be preserved.

@@ -1,0 +1,33 @@
+FEEDBACK:
+The schema has incorporated three of the four previously requested items from Batch 2 feedback. Analysis is now listed under required. Temperature minimum has been corrected to 300°C. Mass balance closure maximum has been raised to 110. Char composition (carbon_content_pct, ash_content_pct, chlorine_ppm) has been added under outputs.
+
+Property Merging: No merging needed. Structure is logical and well-maintained.
+
+Property Grouping: Product composition, quality, mass balance, and char composition are all correctly nested inside outputs. The feedstock type enum continues to be the most domain-complete among all 12 schemas (LDPE, HDPE, EPS, HIPS, PVC, MLP) and must be preserved.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) The carrier_gas_flow_rate description still says "mL/min or L/min" — clarifying to a single unit was requested in Batch 2 and has not been resolved.
+
+Adequacy of Descriptions: Clear. The feedstock contaminant fields, ASTM standards in the analysis enum, and product quality section are all well-designed and must be preserved. The temperature field has minimum 300 but no maximum defined — a maximum of 700°C should be added to prevent unrealistic values passing validation.
+
+JSON SNIPPETS:
+Resolve carrier gas unit ambiguity (previously requested):
+```json
+"carrier_gas_flow_rate": {
+    "type": "number",
+    "description": "Flow rate of carrier gas (e.g., nitrogen) in mL/min.",
+    "minimum": 0
+}
+```
+
+Add temperature maximum:
+```json
+"temperature": {
+    "type": "number",
+    "description": "Reaction temperature in Celsius (°C). Typical range for catalytic pyrolysis: 300-700°C.",
+    "minimum": 300,
+    "maximum": 700
+}
+```
+
+ADDITIONAL COMMENTS:
+This schema is among the strongest. One item from Batch 2 remains: carrier gas unit clarification. The feedstock type enum is uniquely complete and must be preserved exactly as implemented for Stage 3 Batch 2.

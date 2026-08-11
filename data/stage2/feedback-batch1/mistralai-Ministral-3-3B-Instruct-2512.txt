@@ -1,0 +1,64 @@
+FEEDBACK:
+The schema shows limited improvement from Stage 1. The overall structure remains similar with the same key issues persisting. Some positive additions are visible — the catalyst composition sub-object (metal_oxide, zeolite_type, active_species) is a creative and domain-relevant addition not seen in other schemas.
+
+Property Merging: The catalyst "catalyst_form" property (fixed-bed, fluidized-bed, powder, pellet, monolithic) conflates catalyst physical morphology with reactor type — should be renamed "catalyst_morphology" and limited to physical forms only (powder, pellet, monolithic, granule). Heating_rate appears both in reactor.temperature.ramp_rate and process_parameters.heating_rate — this redundancy should be resolved by keeping it only in process_parameters.
+
+Property Grouping: All thermal conditions (temperature, heating_rate, residence_time) should be consolidated in a single process_conditions object rather than split between reactor and process_parameters. This is the main structural issue.
+
+Missing Properties: (1) Mass balance closure is still absent — this is a critical property for experimental validation. (2) No feedstock contaminant tracking (chlorine_ppm, heavy metals). (3) No carrier gas flow rate. (4) Product quality (HHV, viscosity, density) is absent — liquid products only capture compound name and yield percentage. (5) Catalyst characterization methods (BET, NH3-TPD, XRD, SEM) are still not tracked.
+
+Adequacy of Descriptions: Clear. The temperature object with initial/final/ramp_rate is creative but non-standard — most papers report a single final temperature value. Consider simplifying to a single temperature field.
+
+JSON SNIPPETS:
+Add mass balance closure:
+```json
+"mass_balance_closure": {
+    "type": "number",
+    "description": "Sum of liquid + gas + char yields as percentage. Should be ~100% within experimental error.",
+    "minimum": 80,
+    "maximum": 120
+}
+```
+
+Add product quality:
+```json
+"product_quality": {
+    "type": "object",
+    "properties": {
+        "hhv_mj_per_kg": {"type": "number", "minimum": 25, "maximum": 50, "description": "Higher heating value of liquid oil (MJ/kg)"},
+        "viscosity": {"type": "number", "minimum": 0, "description": "Viscosity of liquid oil (cP)"},
+        "density": {"type": "number", "minimum": 0, "description": "Density of liquid oil (g/mL)"},
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in liquid product (ppm)"}
+    }
+}
+```
+
+Add catalyst characterization:
+```json
+"catalyst_characterization": {
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["BET", "NH3-TPD", "XRD", "SEM", "FT-IR", "TGA"]
+    },
+    "description": "Methods used to characterize catalyst properties (surface area, acidity, crystallinity, morphology)"
+}
+```
+
+Consolidate process conditions:
+```json
+"process_conditions": {
+    "type": "object",
+    "properties": {
+        "temperature_c": {"type": "number", "minimum": 300, "maximum": 700},
+        "heating_rate_c_min": {"type": "number", "minimum": 0},
+        "residence_time_min": {"type": "number", "minimum": 0},
+        "atmosphere": {"type": "string", "enum": ["nitrogen", "argon", "hydrogen", "other"]},
+        "carrier_gas_flow_rate": {"type": "number", "minimum": 0, "description": "Flow rate in mL/min"}
+    },
+    "required": ["temperature_c", "atmosphere"]
+}
+```
+
+ADDITIONAL COMMENTS:
+The three most critical additions are: mass balance closure, product quality metrics, and catalyst characterization methods. The split of heating_rate between reactor.temperature.ramp_rate and process_parameters.heating_rate is a structural inconsistency that should be resolved by keeping all thermal conditions in one place.

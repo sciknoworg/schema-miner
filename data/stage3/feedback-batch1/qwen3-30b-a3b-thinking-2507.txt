@@ -1,0 +1,42 @@
+FEEDBACK:
+The schema has incorporated three of the four items requested in Batch 2 feedback. Char composition (carbon_content_pct, ash_content_pct, chlorine_ppm) has been added to product_composition. Metadata now requires author and doi. Feedstock preparation is no longer required.
+
+Property Merging: No merging needed.
+
+Property Grouping: Catalyst characterization remains correctly nested inside the catalyst object. The separation of reactor, process_parameters, product_yields, product_composition, product_quality, and analytical_methods is clean.
+
+Missing Properties - PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) The catalyst.characterization.NH3_TPD field is still an unstructured object with no sub-properties or units — converting acidity to a numeric field with unit µmol NH3/g was requested in Batch 2 and has not been applied.
+
+Adequacy of Descriptions: Clear with good constraint notes. The product_quality section with HHV, viscosity, density, and chlorine_ppm is complete and correctly implemented. The mass balance description noting "Minimum 90% for valid experiments" is scientifically accurate and should be retained. 
+
+JSON SNIPPETS:
+Convert NH3_TPD to numeric acidity field (previously requested):
+```json
+"characterization": {
+    "type": "object",
+    "properties": {
+        "BET_surface_area": {"type": "number", "description": "BET surface area (m²/g).", "minimum": 0},
+        "NH3_TPD_acidity": {
+            "type": "number",
+            "description": "Total acid site density from NH3-TPD (µmol NH3/g).",
+            "unit": "µmol/g",
+            "minimum": 0
+        },
+        "XRD": {"type": "string", "description": "XRD analysis description."},
+        "SEM": {"type": "string", "description": "SEM image description or key morphological features."}
+    }
+}
+```
+
+Fix mass_balance_closure maximum:
+```json
+"mass_balance_closure": {
+    "type": "number",
+    "minimum": 0,
+    "maximum": 110,
+    "description": "Mass balance closure percentage. Minimum 90% for valid experiments."
+}
+```
+
+ADDITIONAL COMMENTS:
+N/A

@@ -1,0 +1,82 @@
+FEEDBACK:
+The schema shows significant improvement from Batch 1. Metadata, feedstock preprocessing (structured with method and parameters), feedstock contaminants (with element enum and concentration_ppm), catalyst characterization methods, product quality, and a comprehensive analytical methods enum are all now present.
+
+Property Merging: No merging needed.
+
+Property Grouping: Operating conditions remain inside reactor.operational_conditions rather than in a separate process_conditions object — separating hardware from operating parameters was requested in Batch 1 and has not been done.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Separating operating conditions (temperature, heating_rate, residence_time, atmosphere) into a standalone process_conditions object was requested in Batch 1 — these are still inside reactor.operational_conditions. (2) Feedstock composition has a structural JSON Schema error — "percentage" is defined as a number type with additionalProperties inside it, which is invalid. This was flagged in Batch 1 and has not been corrected. (3) Product composition stores compound names only as plain strings without concentrations — adding compound-concentration pairs was requested in Batch 1 and has not been applied. (4) A simple mass_balance_closure percentage field was requested in Batch 1 — the schema has a mass_balance object (input_mass, output_mass, losses) but no simple percentage closure field, which is how it is universally reported in the literature.
+
+Missing Properties — NEW: (5) No char composition (carbon_content_pct, ash_content_pct) in the products section — consistently reported in batch 2 papers.
+
+Adequacy of Descriptions: Clear. The contaminant tracking with element enum (Cd, Pb, Cr, Ni, Zn) and concentration_ppm is the most precise design among all 12 schemas and must be preserved.
+
+JSON SNIPPETS:
+Fix feedstock composition structure (previously requested):
+```json
+"composition": {
+    "type": "object",
+    "description": "Relative proportions of polymer types as mass percentages (0-100). Sum should equal 100.",
+    "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+    }
+}
+```
+
+Add mass balance closure percentage (previously requested):
+```json
+"mass_balance_closure_pct": {
+    "type": "number",
+    "minimum": 80,
+    "maximum": 120,
+    "description": "Sum of liquid + gas + char yields as percentage. Should be ~100% within experimental error."
+}
+```
+
+Fix product composition to include concentrations (previously requested):
+```json
+"composition": {
+    "type": "object",
+    "properties": {
+        "liquid_compounds": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "compound": {"type": "string"},
+                    "concentration_wt_pct": {"type": "number", "minimum": 0, "maximum": 100}
+                },
+                "required": ["compound"]
+            }
+        },
+        "gaseous_compounds": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "compound": {"type": "string"},
+                    "concentration_vol_pct": {"type": "number", "minimum": 0, "maximum": 100}
+                },
+                "required": ["compound"]
+            }
+        }
+    }
+}
+```
+
+Add char composition (new):
+```json
+"char_composition": {
+    "type": "object",
+    "properties": {
+        "carbon_content_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "ash_content_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "chlorine_ppm": {"type": "number", "minimum": 0}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+Four items requested in Batch 1 remain unresolved: operating conditions separation, feedstock composition structure, product composition concentrations, and mass balance closure percentage. The contaminant tracking design is uniquely valuable and must be preserved. The mass_balance object (input_mass, output_mass, recovery_efficiency) is also unique and should be kept alongside the new closure percentage field.

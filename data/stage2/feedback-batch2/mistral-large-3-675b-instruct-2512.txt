@@ -1,0 +1,44 @@
+FEEDBACK:
+The schema continues to be one of the most sophisticated, retaining unique features like performance_metrics, solid_residue_analysis, and the multi-level analytical_methods split by sample type. Process conditions are now correctly separated with carrier gas flow rate included and temperature extended to 700°C.
+
+Property Merging: No merging needed. Structure is well-organized and unique in splitting analytical methods by sample type.
+
+Property Grouping: Separation of feedstock, catalyst, reactor, process_conditions, products, analytical_methods, and performance_metrics is clean and logical.
+
+Missing Properties — PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Feedstock composition was requested to be made required in Batch 1 — only plastic_types is still required; composition percentages remain optional. (2) Operational scale was requested to be made required in Batch 1 — it is still optional inside process_metadata. (3) Liquid_analysis enum expansion (GC-FID, GCxGC-FID/MS, simulated distillation, bomb calorimetry) was requested in Batch 1 — liquid_analysis still only accepts GC-MS, FTIR, NMR, simulated_distillation, and "other". GC-FID and GCxGC are still missing. (4) Reactor atmosphere (reaction_atmosphere) was requested to be required in Batch 1 — it is still optional inside process_conditions.
+
+Missing Properties: Feedstock particle size and moisture content are absent — both reported in batch 2 papers.
+
+Adequacy of Descriptions: Clear and well-written. The solid_residue_analysis (carbon_content, ash_content, contaminants) is the most complete char characterization of all schemas and must be preserved.
+
+JSON SNIPPETS:
+Make composition and operational scale required (previously requested):
+```json
+"feedstock": {
+    "required": ["plastic_types", "composition"]
+},
+"process_metadata": {
+    "required": ["operational_scale"]
+}
+```
+
+Make reaction_atmosphere required in process_conditions (previously requested):
+```json
+"process_conditions": {
+    "required": ["temperature_c", "reaction_atmosphere"]
+}
+```
+
+Expand liquid_analysis enum (previously requested):
+```json
+"liquid_analysis": {
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["GC-MS", "GC-FID", "GCxGC-FID/MS", "FTIR", "NMR", "simulated_distillation", "bomb calorimetry", "ASTM D2887", "ASTM D4868", "other"]
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+Four items requested in Batch 1 remain unresolved: feedstock composition required, operational scale required, liquid_analysis enum expansion, and reaction_atmosphere required. These are all straightforward additions. The performance_metrics and multi-level analytical_methods structure are unique to this schema and must be preserved for Stage 3.

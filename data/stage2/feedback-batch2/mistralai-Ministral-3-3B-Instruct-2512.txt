@@ -1,0 +1,40 @@
+FEEDBACK:
+The schema shows improvement. The catalyst_morphology property is correctly renamed and limited to physical forms. A separate process_conditions object has been added, consolidating thermal parameters. Product quality and feedstock contaminants are now present. Mass balance closure is included under outputs.
+
+Property Merging: No merging needed. The temperature/heating_rate redundancy between reactor and process_parameters has been resolved - this was the main structural fix requested in Batch 1.
+
+Property Grouping: Separation of metadata, analytical_methods, feedstock, catalyst, reactor, process_conditions, and outputs is logical.
+
+Missing Properties - PREVIOUSLY REQUESTED AND STILL NOT INCORPORATED: (1) Catalyst characterization methods (BET, NH3-TPD, XRD, SEM) were requested in Batch 1 as a dedicated array,  they are now present as catalyst_characterization inside catalyst, which is the correct placement. However, TGA is missing from the enum. This was requested specifically in Batch 1. (2) Mass balance closure was requested in Batch 1 - it is now present inside outputs, which is correct. However, the minimum is 80 and maximum is 120, which is appropriate. This has been resolved. (3) Product quality (HHV, viscosity, density, chlorine_ppm) was requested in Batch 1 - all four are now present. This has been resolved. Good progress.
+
+Missing Properties - PREVIOUSLY REQUESTED IN BATCH 1 AND STILL ABSENT: Char composition (carbon_content_pct, ash_content_pct) was requested in Batch 1 and is still absent from outputs.
+
+Adequacy of Descriptions: Clear. The catalyst_morphology with correct physical forms (powder, pellet, granule, monolithic, supported) is well-designed and must be retained.
+
+JSON SNIPPETS:
+Add TGA to catalyst characterization (previously requested):
+```json
+"catalyst_characterization": {
+    "type": "array",
+    "items": {
+        "type": "string",
+        "enum": ["BET", "NH3-TPD", "XRD", "SEM", "FT-IR", "TGA"]
+    }
+}
+```
+
+Add char composition to outputs (previously requested):
+```json
+"char_composition": {
+    "type": "object",
+    "description": "Properties of the solid char residue.",
+    "properties": {
+        "carbon_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Fixed carbon content of char (wt%)"},
+        "ash_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Ash content of char (wt%)"},
+        "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in char (ppm)"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+This model has shown the clearest improvement trajectory among the 3B models. Most Batch 1 requests have been addressed - the two remaining items are TGA in catalyst characterization (previously requested) and char composition (previously requested). 

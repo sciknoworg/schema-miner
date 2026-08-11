@@ -1,0 +1,35 @@
+FEEDBACK:
+Excellent schema with the strongest domain awareness of all 12 models. The inclusion of "mass_balance_closure" under yields is a critical property for experimental validation that most other schemas miss entirely. The "characterization" section with separate subsections for feedstock, product, and catalyst analysis is the best design among all schemas.
+
+Property Merging: No merging needed. The current grouping is logical and well-structured.
+
+Property Grouping: The three-level characterization (feedstock_analysis, product_analysis, catalyst_analysis) is ideal and reflects how characterization is actually reported in the catalytic pyrolysis literature. The product_composition object with separate liquid, gas, and char subsections is thorough.
+
+Missing Properties: (1) Feedstock preprocessing/pretreatment method is missing. (2) Carrier gas flow rate is not captured. (3) Product quality metrics (HHV, viscosity, density) could be added under product_composition. (4) Catalyst "reusability_cycles" is an excellent addition but should also include deactivation mechanism and coke formation rate. (5) No explicit property for contaminants (chlorine, heavy metals) which are critical for real mixed plastic waste containing PVC and multilayer packaging.
+
+Adequacy of Descriptions: Descriptions are the most scientifically precise of all 12 schemas. The "feedstock" description mentioning "degradation mechanisms and product distribution" shows genuine domain understanding.
+
+JSON SNIPPETS:
+Add feedstock preprocessing:
+```json
+"preprocessing": {
+    "type": "array",
+    "items": {"type": "string", "enum": ["mechanical sorting", "shredding", "dry-washing", "drying", "size reduction"]},
+    "description": "Feedstock pretreatment steps applied before pyrolysis"
+}
+```
+
+Add product quality under product_composition:
+```json
+"liquid_quality": {
+    "type": "object",
+    "properties": {
+        "hhv_mj_per_kg": {"type": "number", "minimum": 0, "maximum": 50, "description": "Higher heating value (typically 37-45 MJ/kg for pyrolysis oils)"},
+        "chlorine_ppm": {"type": "number", "description": "Chlorine content in liquid product (ppm)"},
+        "density_g_per_ml": {"type": "number", "description": "Density of liquid oil"}
+    }
+}
+```
+
+ADDITIONAL COMMENTS:
+N/A

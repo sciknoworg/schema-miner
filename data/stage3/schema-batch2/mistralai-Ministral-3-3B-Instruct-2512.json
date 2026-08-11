@@ -1,0 +1,423 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Catalytic Pyrolysis of Mixed Plastic Waste Process",
+    "description": "A comprehensive schema for capturing all parameters, inputs, and outputs of catalytic pyrolysis of mixed plastic waste, including feedstock, catalysts, reactor conditions, process parameters, analytical methods, and product yields (liquid, gas, char).",
+    "type": "object",
+    "properties": {
+        "metadata": {
+            "type": "object",
+            "description": "Metadata about the experimental study or process run.",
+            "properties": {
+                "study_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the study or process run."
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date when the experiment was conducted (YYYY-MM-DD format)."
+                },
+                "researcher": {
+                    "type": "string",
+                    "description": "Name or affiliation of the researcher(s) conducting the experiment."
+                },
+                "operational_scale": {
+                    "enum": [
+                        "laboratory",
+                        "pilot",
+                        "industrial"
+                    ],
+                    "description": "Scale at which the process is conducted (laboratory, pilot, industrial)."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Location where the experiment was conducted (e.g., lab, pilot plant, facility)."
+                }
+            },
+            "required": [
+                "study_id",
+                "date",
+                "researcher",
+                "operational_scale"
+            ]
+        },
+        "analytical_methods": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "GC-MS",
+                    "GC-FID",
+                    "GCxGC",
+                    "FTIR",
+                    "TGA",
+                    "BET",
+                    "NH3-TPD",
+                    "XRD",
+                    "SEM",
+                    "bomb calorimetry",
+                    "ASTM fuel tests",
+                    "XRF",
+                    "ICP-OES",
+                    "GC-TCD"
+                ],
+                "description": "Experimental techniques used for feedstock/product characterization."
+            },
+            "description": "List of analytical methods employed for characterization."
+        },
+        "feedstock": {
+            "type": "object",
+            "description": "Details about the plastic feedstock used in the process.",
+            "properties": {
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "PE",
+                            "PP",
+                            "PS",
+                            "PET",
+                            "PVC",
+                            "mixed",
+                            "other"
+                        ]
+                    },
+                    "description": "Categories of polymeric materials in the feedstock (e.g., PE, PP, PET)."
+                },
+                "composition": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Percentage of a specific polymer type in the feedstock."
+                    },
+                    "description": "Composition of the feedstock by polymer type (percentage by weight)."
+                },
+                "pre-treatment": {
+                    "type": "string",
+                    "description": "Type of pre-treatment applied to the feedstock (e.g., grinding, washing, drying, shredding, size reduction)."
+                },
+                "contaminants": {
+                    "type": "object",
+                    "properties": {
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in feedstock (ppm)."
+                        },
+                        "heavy_metals": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "Concentration of heavy metals (e.g., Pb, Hg) in ppm."
+                            }
+                        }
+                    },
+                    "description": "Contaminant levels in the feedstock."
+                },
+                "feedstock_mass_kg": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Total mass of feedstock used in kilograms (kg)."
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "catalyst": {
+            "type": "object",
+            "description": "Details about the catalyst used during pyrolysis.",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Type of catalyst (e.g., zeolites, FCC catalysts, metal-supported systems, heterogeneous catalysts)."
+                },
+                "catalyst_morphology": {
+                    "type": "string",
+                    "enum": [
+                        "powder",
+                        "pellet",
+                        "granule",
+                        "monolithic",
+                        "supported"
+                    ],
+                    "description": "Physical form or morphology of the catalyst (excludes reactor types)."
+                },
+                "composition": {
+                    "type": "object",
+                    "properties": {
+                        "metal_oxide": {
+                            "type": "string",
+                            "description": "Type of metal oxide (e.g., alumina, silica, titania, zeolite)."
+                        },
+                        "zeolite_type": {
+                            "type": "string",
+                            "description": "Type of zeolite (e.g., ZSM-5, HY, beta, mordenite)."
+                        },
+                        "active_species": {
+                            "type": "string",
+                            "description": "Active catalytic species (e.g., metal nanoparticles, acidic sites, acidity level)."
+                        }
+                    },
+                    "description": "Chemical composition details of the catalyst."
+                },
+                "catalyst_to_feedstock_ratio": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Mass ratio of catalyst to feedstock (e.g., 1:10, expressed as kg catalyst/kg feedstock)."
+                },
+                "catalyst_characterization": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "BET",
+                            "NH3-TPD",
+                            "XRD",
+                            "SEM",
+                            "FT-IR",
+                            "TGA"
+                        ]
+                    },
+                    "description": "Methods used to characterize catalyst properties (surface area, acidity, crystallinity, morphology, thermal stability)."
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "reactor": {
+            "type": "object",
+            "description": "Configuration and operational details of the reactor.",
+            "properties": {
+                "configuration": {
+                    "type": "string",
+                    "description": "Reactor design (e.g., fixed-bed, fluidized-bed, batch, continuous)."
+                },
+                "pressure": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Operating pressure in Pascals (Pa). Default: atmospheric (~101,325 Pa)."
+                },
+                "heating_element_type": {
+                    "type": "string",
+                    "description": "Type of heating element (e.g., electrical resistance, induction, infrared)."
+                }
+            },
+            "required": [
+                "configuration"
+            ]
+        },
+        "process_conditions": {
+            "type": "object",
+            "description": "Thermal and operational parameters of the pyrolysis process.",
+            "properties": {
+                "temperature_c": {
+                    "type": "number",
+                    "minimum": 300,
+                    "maximum": 700,
+                    "description": "Operating temperature in \u00b0C."
+                },
+                "heating_rate_c_min": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Heating rate in \u00b0C/min."
+                },
+                "residence_time_min": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Residence time of feedstock in the reactor (min)."
+                },
+                "atmosphere": {
+                    "type": "string",
+                    "enum": [
+                        "nitrogen",
+                        "argon",
+                        "hydrogen",
+                        "inert",
+                        "oxidizing",
+                        "other"
+                    ],
+                    "description": "Primary atmosphere in the reactor (inert gases typically used for pyrolysis)."
+                },
+                "carrier_gas_flow_rate": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Flow rate of carrier gas in mL/min (for fluidized-bed reactors)."
+                },
+                "inert_gas_purity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Purity percentage of inert gas used (e.g., 99.99% nitrogen)."
+                }
+            },
+            "required": [
+                "temperature_c",
+                "atmosphere"
+            ]
+        },
+        "outputs": {
+            "type": "object",
+            "description": "Yields and compositions of products generated during pyrolysis.",
+            "properties": {
+                "yield_distribution": {
+                    "type": "object",
+                    "properties": {
+                        "liquid_yield": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Percentage of liquid fraction (e.g., 45%)."
+                        },
+                        "gas_yield": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Percentage of gaseous fraction (e.g., 35%)."
+                        },
+                        "char_yield": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Percentage of solid char residue (e.g., 20%)."
+                        }
+                    },
+                    "description": "Proportions of liquid, gaseous, and solid products."
+                },
+                "mass_balance_closure": {
+                    "type": "number",
+                    "minimum": 80,
+                    "maximum": 120,
+                    "description": "Sum of liquid + gas + char yields as percentage. Should be approximately 100% within experimental error."
+                },
+                "product_composition": {
+                    "type": "object",
+                    "properties": {
+                        "liquid_products": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "compound": {
+                                        "type": "string",
+                                        "description": "Chemical compound (e.g., benzene, toluene)."
+                                    },
+                                    "yield": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "description": "Percentage yield of the compound."
+                                    },
+                                    "properties": {
+                                        "type": "object",
+                                        "properties": {
+                                            "boiling_point": {
+                                                "type": "number",
+                                                "description": "Boiling point of the compound in \u00b0C."
+                                            },
+                                            "density": {
+                                                "type": "number",
+                                                "description": "Density of the compound in g/mL."
+                                            }
+                                        },
+                                        "description": "Additional properties of the compound."
+                                    }
+                                },
+                                "required": [
+                                    "compound",
+                                    "yield"
+                                ]
+                            },
+                            "description": "List of liquid products and their yields."
+                        },
+                        "gas_products": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "compound": {
+                                        "type": "string",
+                                        "description": "Chemical compound (e.g., methane, ethylene)."
+                                    },
+                                    "yield": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "description": "Percentage yield of the compound."
+                                    },
+                                    "properties": {
+                                        "type": "object",
+                                        "properties": {
+                                            "molar_mass": {
+                                                "type": "number",
+                                                "description": "Molar mass of the compound in g/mol."
+                                            },
+                                            "critical_temperature": {
+                                                "type": "number",
+                                                "description": "Critical temperature of the compound in \u00b0C."
+                                            }
+                                        },
+                                        "description": "Additional properties of the compound."
+                                    }
+                                },
+                                "required": [
+                                    "compound",
+                                    "yield"
+                                ]
+                            },
+                            "description": "List of gas products and their yields."
+                        }
+                    },
+                    "required": [
+                        "liquid_products",
+                        "gas_products"
+                    ]
+                },
+                "char_composition": {
+                    "type": "object",
+                    "properties": {
+                        "carbon_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Fixed carbon content of char (wt%)."
+                        },
+                        "ash_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Ash content of char (wt%)."
+                        },
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in char (ppm)."
+                        }
+                    },
+                    "description": "Properties of the solid char residue."
+                }
+            },
+            "required": [
+                "yield_distribution",
+                "product_composition",
+                "char_composition"
+            ]
+        },
+        "notes": {
+            "type": "string",
+            "description": "Additional notes or observations about the process run."
+        }
+    },
+    "required": [
+        "metadata",
+        "analytical_methods",
+        "feedstock",
+        "catalyst",
+        "reactor",
+        "process_conditions",
+        "outputs"
+    ]
+}

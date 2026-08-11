@@ -1,0 +1,58 @@
+FEEDBACK:
+The schema has improved considerably from Stage 1, now including a dedicated reactor object (configuration + scale) properly separated from process_parameters, catalyst characterization methods (BET, NH3-TPD, XRD, SEM, FT-IR), structured product composition with compound-concentration pairs for both liquid and gas fractions, product quality (HHV, viscosity), mass balance closure as a numeric field, pressure, and carrier gas flow rate.
+
+Property Merging: No merging needed. The separation of reactor and process_parameters is now correct following Stage 1 feedback.
+
+Property Grouping: The feedstock_preprocessing property exists at the top level rather than nested inside the feedstock object — it should be moved inside feedstock for logical consistency. All other groupings are appropriate.
+
+Missing Properties: (1) Metadata is still minimal (experiment_id and date only) — author and DOI are essential for ORKG integration. (2) Feedstock contaminant tracking (chlorine ppm, heavy metals) is absent — critical for real mixed plastic waste with PVC. (3) No char composition properties (carbon content, ash content), which are consistently reported in the batch papers. (4) The catalyst_characterization enum is missing TGA, which is commonly used for coke quantification on spent catalysts.
+
+Adequacy of Descriptions: Generally clear. The product quality requires HHV with a minimum of 37 MJ/kg — this is too high for mixed plastic waste oils containing PET or PVC fractions and should be lowered to 25 MJ/kg or removed. Temperature maximum should be raised from 600°C to 700°C.
+
+JSON SNIPPETS:
+Move preprocessing inside feedstock and add contaminants:
+```json
+"feedstock": {
+    "type": "object",
+    "properties": {
+        "type": {"type": "string"},
+        "composition": {"type": "object"},
+        "preprocessing": {
+            "type": "array",
+            "items": {"type": "string", "enum": ["mechanical sorting", "shredding", "dry-washing", "drying", "size reduction"]}
+        },
+        "contaminants": {
+            "type": "object",
+            "properties": {
+                "chlorine_ppm": {"type": "number", "minimum": 0, "description": "Chlorine content in feedstock (ppm)"},
+                "heavy_metals": {"type": "array", "items": {"type": "string"}}
+            }
+        }
+    }
+}
+```
+
+Fix HHV minimum:
+```json
+"hhv": {
+    "type": "number",
+    "description": "Higher heating value of the liquid product (MJ/kg). Typical range for pyrolysis oils: 25-45 MJ/kg.",
+    "minimum": 25,
+    "maximum": 50
+}
+```
+
+Add char composition:
+```json
+"char_composition": {
+    "type": "object",
+    "properties": {
+        "carbon_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Fixed carbon content of char (wt%)"},
+        "ash_content_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "Ash content of char (wt%)"}
+    },
+    "description": "Elemental composition of the solid residue (char)."
+}
+```
+
+ADDITIONAL COMMENTS:
+The separation of reactor configuration and process parameters is now correct and follows the Stage 1 feedback. The main structural issue remaining is that feedstock_preprocessing is a top-level property rather than inside the feedstock object. The HHV minimum of 37 MJ/kg would exclude valid data points from PVC-containing or PET-containing feedstocks and must be lowered.

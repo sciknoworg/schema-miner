@@ -1,0 +1,611 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/catalytic-pyrolysis-mixed-plastic-waste.json",
+    "title": "Catalytic Pyrolysis of Mixed Plastic Waste Process",
+    "description": "A comprehensive JSON schema representing the catalytic pyrolysis process for mixed plastic waste, capturing input feedstock, process parameters, reactor configuration, product yields, product quality, analytical methods, and contaminant tracking. Designed for data interoperability, reproducibility, and integration with research databases and knowledge graphs. Follows standardized naming conventions and incorporates domain expert feedback for completeness and consistency.",
+    "type": "object",
+    "required": [
+        "feedstock",
+        "catalyst",
+        "reactor",
+        "reactionConditions",
+        "productYields",
+        "productComposition",
+        "analyticalMethods",
+        "metadata"
+    ],
+    "properties": {
+        "feedstock": {
+            "type": "object",
+            "description": "Details about the plastic feedstock used in the process, including composition, source, preprocessing, and contaminant content.",
+            "required": [
+                "type",
+                "composition"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "PE",
+                        "PP",
+                        "PS",
+                        "PET",
+                        "PVC",
+                        "PMMA",
+                        "PC",
+                        "Mixed Plastic Waste"
+                    ],
+                    "description": "The primary polymer category or mixture of polymers used as input. Determines degradation mechanisms and product distribution."
+                },
+                "composition": {
+                    "type": "array",
+                    "description": "Relative proportions of individual polymer types in the feedstock, expressed as mass percentages. Must sum to 100%.",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "polymer",
+                            "massPercentage"
+                        ],
+                        "properties": {
+                            "polymer": {
+                                "type": "string",
+                                "enum": [
+                                    "PE",
+                                    "PP",
+                                    "PS",
+                                    "PET",
+                                    "PVC",
+                                    "PMMA",
+                                    "PC",
+                                    "Other"
+                                ],
+                                "description": "Name of the polymer type present in the feedstock."
+                            },
+                            "massPercentage": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100,
+                                "description": "Mass fraction of the polymer in the feedstock, expressed as a percentage of total feedstock mass."
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                },
+                "source": {
+                    "type": "string",
+                    "description": "Origin or collection method of the plastic waste (e.g., post-consumer, industrial, sorted, unsorted). Optional, as many studies do not report explicit source details."
+                },
+                "moistureContent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Moisture content of the feedstock in weight percent (wt%). Affects heating efficiency and reaction kinetics. Optional as not all studies report it.",
+                    "unit": "wt%"
+                },
+                "preprocessing": {
+                    "type": "array",
+                    "description": "List of pretreatment steps applied to the feedstock before pyrolysis to prepare it for processing. Critical for real-world waste streams such as DKR-350 or mechanically-biologically treated (MBT) outputs.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "mechanical sorting",
+                            "shredding",
+                            "dry-washing",
+                            "drying",
+                            "size reduction",
+                            "washing"
+                        ],
+                        "description": "Pretreatment method applied to the feedstock (e.g., shredding to reduce particle size, drying to reduce moisture)."
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                },
+                "contaminants": {
+                    "type": "object",
+                    "description": "Quantitative and qualitative data on hazardous contaminants present in the feedstock, essential for environmental and safety assessments.",
+                    "properties": {
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Total chlorine content in the feedstock, measured in parts per million (ppm). Critical due to PVC and multilayer packaging."
+                        },
+                        "heavy_metals": {
+                            "type": "array",
+                            "description": "List of heavy metals detected in the feedstock, including their elemental names (e.g., Pb, Cd, Zn, Cr).",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "Pb",
+                                    "Cd",
+                                    "Zn",
+                                    "Cr",
+                                    "Cu",
+                                    "Ni",
+                                    "As",
+                                    "Hg",
+                                    "Other"
+                                ],
+                                "description": "Elemental name of the heavy metal detected."
+                            },
+                            "uniqueItems": true
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "catalyst": {
+            "type": "object",
+            "description": "Information about the catalytic material used to enhance cracking and selectivity, including physical and chemical characteristics.",
+            "required": [
+                "type",
+                "ratio"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Zeolite Y",
+                        "Zeolite ZSM-5",
+                        "FCC Catalyst",
+                        "Metal-Modified Zeolites",
+                        "Mesoporous Silica",
+                        "Alumina",
+                        "Silica-Alumina",
+                        "Ni/Al2O3",
+                        "Co/MoS2",
+                        "Other"
+                    ],
+                    "description": "The chemical or structural class of the catalyst used. Influences cracking pathways and product selectivity."
+                },
+                "ratio": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Mass ratio of catalyst to plastic feedstock (catalyst:feed). Affects conversion efficiency and product distribution.",
+                    "unit": "mass ratio (catalyst:feed)"
+                },
+                "particleSize": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Average particle size of the catalyst, typically in micrometers (\u00b5m). Affects surface area and mass transfer.",
+                    "unit": "\u00b5m"
+                },
+                "surfaceArea": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Specific surface area of the catalyst, measured in m\u00b2/g. Influences active site availability.",
+                    "unit": "m\u00b2/g"
+                },
+                "activationMethod": {
+                    "type": "string",
+                    "enum": [
+                        "Calcination",
+                        "Ion Exchange",
+                        "Impregnation",
+                        "Hydrothermal",
+                        "None",
+                        "Other"
+                    ],
+                    "description": "Method used to activate or prepare the catalyst prior to use."
+                },
+                "characterizationMethods": {
+                    "type": "array",
+                    "description": "Analytical techniques used to characterize the catalyst\u2019s physical and chemical properties before use.",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "BET",
+                            "NH3-TPD",
+                            "XRD",
+                            "SEM",
+                            "EDS",
+                            "FTIR",
+                            "NMR",
+                            "Other"
+                        ],
+                        "description": "Technique used to characterize the catalyst (e.g., BET for surface area, NH3-TPD for acidity, XRD for crystallinity)."
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                }
+            },
+            "additionalProperties": false
+        },
+        "reactor": {
+            "type": "object",
+            "description": "Details about the reactor configuration and operational setup, including scale, volume, pressure, and gas flow.",
+            "required": [
+                "configuration",
+                "scale"
+            ],
+            "properties": {
+                "configuration": {
+                    "type": "string",
+                    "enum": [
+                        "Fixed-bed",
+                        "Fluidized-bed",
+                        "Batch",
+                        "Continuous",
+                        "Rotary Kiln",
+                        "Screw Reactor",
+                        "Other"
+                    ],
+                    "description": "Physical design and flow regime of the reactor. Influences heat transfer, mass transfer, and scalability."
+                },
+                "scale": {
+                    "type": "string",
+                    "enum": [
+                        "Laboratory",
+                        "Pilot",
+                        "Industrial"
+                    ],
+                    "description": "Experimental or operational scale of the process. Impacts reproducibility and real-world applicability."
+                },
+                "volume": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Reactor volume in liters (L). Used to contextualize process scale.",
+                    "unit": "L"
+                },
+                "pressure": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Operating pressure inside the reactor, typically in kilopascals (kPa). May affect reaction kinetics and phase behavior.",
+                    "unit": "kPa"
+                },
+                "carrierGasFlowRate": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Flow rate of the carrier gas (e.g., nitrogen, argon) used to transport vapors through the reactor and condensation system, in standard liters per minute (SLM). Unifies inert and carrier gas roles.",
+                    "unit": "SLM"
+                }
+            },
+            "additionalProperties": false
+        },
+        "reactionConditions": {
+            "type": "object",
+            "description": "Thermal and kinetic conditions during the pyrolysis reaction, including temperature, heating rate, residence time, and atmosphere.",
+            "required": [
+                "temperature",
+                "heatingRate",
+                "residenceTime"
+            ],
+            "properties": {
+                "temperature": {
+                    "type": "number",
+                    "minimum": 200,
+                    "maximum": 800,
+                    "description": "Operating temperature at which thermal degradation occurs. Primary driver of reaction kinetics and product yield distribution.",
+                    "unit": "\u00b0C"
+                },
+                "heatingRate": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Rate at which temperature is increased during the process, in degrees Celsius per minute (\u00b0C/min). Affects polymer breakdown pathways and secondary product formation.",
+                    "unit": "\u00b0C/min"
+                },
+                "residenceTime": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Duration for which the feedstock and intermediates remain under reaction conditions, in minutes (min). Influences conversion extent and secondary cracking.",
+                    "unit": "min"
+                },
+                "atmosphere": {
+                    "type": "string",
+                    "enum": [
+                        "Nitrogen",
+                        "Argon",
+                        "Hydrogen",
+                        "Vacuum",
+                        "Air (not recommended)",
+                        "Inert",
+                        "Other"
+                    ],
+                    "description": "Gaseous environment within the reactor. Determines oxidative conditions and can modify reaction pathways. Hydrogen may enable hydrocracking. 'Inert' is a generic option for unspecified inert gases like N\u2082 or Ar."
+                }
+            },
+            "additionalProperties": false
+        },
+        "productYields": {
+            "type": "object",
+            "description": "Quantitative output of the pyrolysis process, expressed as mass percentages of initial feedstock.",
+            "required": [
+                "liquid",
+                "gas",
+                "char"
+            ],
+            "properties": {
+                "liquid": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Mass yield of liquid product (pyrolysis oil), expressed as a percentage of initial feedstock mass. Primary performance indicator.",
+                    "unit": "%"
+                },
+                "gas": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Mass yield of gaseous products (e.g., H2, CH4, C2H4, CO, CO2), expressed as a percentage of initial feedstock mass.",
+                    "unit": "%"
+                },
+                "char": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Mass yield of solid carbonaceous residue (char), expressed as a percentage of initial feedstock mass. Reflects incomplete degradation and catalyst effects.",
+                    "unit": "%"
+                },
+                "totalYield": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Sum of liquid, gas, and char yields. Should ideally be close to 100% (accounting for measurement error).",
+                    "unit": "%",
+                    "readOnly": true
+                }
+            },
+            "additionalProperties": false
+        },
+        "productComposition": {
+            "type": "object",
+            "description": "Chemical composition of the liquid and gaseous products, identified via analytical techniques.",
+            "properties": {
+                "liquid": {
+                    "type": "array",
+                    "description": "List of major chemical compounds identified in the liquid product fraction.",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "compound",
+                            "concentration"
+                        ],
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical name or identifier (e.g., benzene, toluene, xylene, naphthalene, alkanes, alkenes)."
+                            },
+                            "concentration": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "Concentration of the compound in the liquid product, typically in weight percent (wt%) or area percent (area%).",
+                                "unit": "wt% or area%"
+                            },
+                            "classification": {
+                                "type": "string",
+                                "enum": [
+                                    "Aromatic",
+                                    "Aliphatic",
+                                    "Cyclic",
+                                    "Oxygenated",
+                                    "Nitrogenated",
+                                    "Sulfur-containing",
+                                    "Other"
+                                ],
+                                "description": "Chemical class of the compound."
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "gas": {
+                    "type": "array",
+                    "description": "List of major gaseous compounds identified in the gas fraction.",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "compound",
+                            "concentration"
+                        ],
+                        "properties": {
+                            "compound": {
+                                "type": "string",
+                                "description": "Chemical name or formula (e.g., CH4, C2H4, H2, CO, CO2, C3H6)."
+                            },
+                            "concentration": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "Concentration of the gas in the product stream, typically in volume percent (vol%) or mole percent (mol%).",
+                                "unit": "vol% or mol%"
+                            },
+                            "heatingValue": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "Higher heating value (HHV) of the gas mixture or individual component, in megajoules per kilogram (MJ/kg). Note: This field refers to the mixture or representative component; individual component HHV is rarely reported.",
+                                "unit": "MJ/kg"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "char": {
+                    "type": "object",
+                    "description": "Properties of the solid residue (char) produced during pyrolysis.",
+                    "properties": {
+                        "carbon_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Fixed carbon content of the char, expressed as weight percent (wt%). Indicates carbonization level.",
+                            "unit": "wt%"
+                        },
+                        "ash_content_pct": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Inorganic residue (ash) content of the char, expressed as weight percent (wt%). Reflects mineral impurities.",
+                            "unit": "wt%"
+                        },
+                        "chlorine_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in the char, measured in parts per million (ppm). Indicates accumulation of chlorine from PVC or additives.",
+                            "unit": "ppm"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "productQuality": {
+            "type": "object",
+            "description": "Key quality indicators of the pyrolysis products, essential for evaluating usability in chemical or energy applications.",
+            "properties": {
+                "liquid": {
+                    "type": "object",
+                    "description": "Physical and chemical quality parameters of the pyrolysis oil.",
+                    "properties": {
+                        "higherHeatingValue": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Higher heating value (HHV) of the pyrolysis oil, in megajoules per kilogram (MJ/kg). Typical range: 37\u201345 MJ/kg.",
+                            "unit": "MJ/kg"
+                        },
+                        "viscosity": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Dynamic viscosity of the liquid product at a specified temperature (e.g., 40\u00b0C), in centipoise (cP).",
+                            "unit": "cP"
+                        },
+                        "density": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Density of the liquid product at a specified temperature (e.g., 20\u00b0C), in grams per milliliter (g/mL).",
+                            "unit": "g/mL"
+                        },
+                        "chlorineContent_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Chlorine content in the pyrolysis oil, measured in parts per million (ppm). Indicates contamination from PVC or additives.",
+                            "unit": "ppm"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "gas": {
+                    "type": "object",
+                    "description": "Quality parameters of the gaseous product stream.",
+                    "properties": {
+                        "higherHeatingValue": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Higher heating value (HHV) of the gas mixture, in megajoules per kilogram (MJ/kg).",
+                            "unit": "MJ/kg"
+                        },
+                        "carbonDioxideContent": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Volume percentage of CO2 in the gas stream, which affects energy content and emissions.",
+                            "unit": "vol%"
+                        },
+                        "sulfurContent_ppm": {
+                            "type": "number",
+                            "minimum": 0,
+                            "description": "Total sulfur content in the gas, measured in parts per million (ppm). Important for downstream processing and environmental compliance.",
+                            "unit": "ppm"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "analyticalMethods": {
+            "type": "array",
+            "description": "List of experimental techniques used to characterize feedstock, catalyst, and products. Each method entry may include optional results for flexibility in data extraction from literature.",
+            "items": {
+                "type": "object",
+                "required": [
+                    "technique",
+                    "sample"
+                ],
+                "properties": {
+                    "technique": {
+                        "type": "string",
+                        "enum": [
+                            "GC-MS",
+                            "FTIR",
+                            "TGA",
+                            "DSC",
+                            "NMR",
+                            "GC-FID",
+                            "LC-MS",
+                            "XRD",
+                            "BET",
+                            "SEM",
+                            "EDS",
+                            "Other"
+                        ],
+                        "description": "Analytical method used (e.g., gas chromatography\u2013mass spectrometry, Fourier-transform infrared spectroscopy)."
+                    },
+                    "sample": {
+                        "type": "string",
+                        "enum": [
+                            "Feedstock",
+                            "Liquid Product",
+                            "Gas Product",
+                            "Char Residue",
+                            "Catalyst (before)",
+                            "Catalyst (after)"
+                        ],
+                        "description": "The material being analyzed."
+                    },
+                    "result": {
+                        "type": "string",
+                        "description": "Key finding or measured value from the analysis (optional). Not required for data extraction from literature; can be omitted if unavailable."
+                    },
+                    "instrumentModel": {
+                        "type": "string",
+                        "description": "Model or manufacturer of the instrument used (optional)."
+                    },
+                    "conditions": {
+                        "type": "object",
+                        "description": "Specific operating conditions for the analysis (e.g., temperature ramp, carrier gas).",
+                        "additionalProperties": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "minItems": 1
+        },
+        "metadata": {
+            "type": "object",
+            "description": "Additional contextual metadata about the experiment or study.",
+            "properties": {
+                "studyId": {
+                    "type": "string",
+                    "description": "Unique identifier for the study or experiment (e.g., DOI, internal ID)."
+                },
+                "author": {
+                    "type": "string",
+                    "description": "Name of the researcher or research group responsible."
+                },
+                "publicationYear": {
+                    "type": "integer",
+                    "minimum": 1900,
+                    "maximum": 2100,
+                    "description": "Year of publication or data collection."
+                },
+                "doi": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Digital Object Identifier (DOI) linking to the original publication."
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Keywords related to the study (e.g., 'plastic recycling', 'catalytic pyrolysis', 'mixed waste')."
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}
