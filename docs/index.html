@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260811-workflow-tutorials">
+    <link rel="stylesheet" href="css/styles.css?v=20260811-workflow-io">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -83,6 +83,10 @@
           </article>
         </div>
 
+        <p class="workflow-data-note">
+          <strong>File naming:</strong> tutorial outputs use a model-specific <code>&lt;model&gt;</code> stem such as <code>mistralai-Ministral-3-8B-Instruct-2512</code>, <code>qwen3-30b-a3b-instruct-2507</code>, or <code>qwen3-235b-a22b</code>. Stage 2 and Stage 3 detect available <code>batchN/</code> folders and write matching <code>schema-batchN/</code>, <code>feedback-batchN/</code>, and log files.
+        </p>
+
         <div class="workflow-steps">
           <article class="workflow-step">
             <div class="workflow-step-heading">
@@ -95,12 +99,14 @@
                 <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
               </div>
               <dl class="workflow-details">
-              <dt>Input</dt>
-              <dd>Process name, process description, and specification PDF or text.</dd>
-              <dt>Output</dt>
-              <dd>Initial schema with candidate scientific process properties.</dd>
-              <dt>Validation</dt>
-              <dd>Property coverage and expert review.</dd>
+              <dt>Input variables</dt>
+              <dd><code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>; provider credentials such as <code>HuggingFace_Access_Token</code> or <code>SAIA_API_KEY</code>/<code>SAIA_BASE_URL</code>.</dd>
+              <dt>Input files</dt>
+              <dd><code>data/stage1/process.txt</code> with <code>process name:</code> and <code>process description:</code>, plus <code>data/stage1/process-description.pdf</code>.</dd>
+              <dt>Output files</dt>
+              <dd><code>data/stage1/schema/&lt;model&gt;.json</code> and <code>data/stage1/schema/stage1.log</code>.</dd>
+              <dt>Review files</dt>
+              <dd><code>data/stage1/feedback/&lt;model&gt;.txt</code> stores expert feedback used as input to Stage 2.</dd>
               </dl>
             </div>
           </article>
@@ -116,12 +122,14 @@
                 <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
               </div>
               <dl class="workflow-details">
-              <dt>Input</dt>
-              <dd>Stage 1 schema, curated papers, and optional expert feedback.</dd>
-              <dt>Output</dt>
-              <dd>Updated schema with corrected, added, or merged properties.</dd>
-              <dt>Validation</dt>
-              <dd>ROUGE-L, BLEU, BERTScore, and expert feedback.</dd>
+              <dt>Input variables</dt>
+              <dd><code>batch</code>, <code>available_batches</code>, <code>schema_path</code>, <code>feedback_path</code>, <code>papers_dir</code>, and <code>results_dir</code>, alongside the provider/model variables from Stage 1.</dd>
+              <dt>Input files</dt>
+              <dd>For <code>batch1</code>: <code>data/stage1/schema/&lt;model&gt;.json</code>, <code>data/stage1/feedback/&lt;model&gt;.txt</code>, and <code>data/stage2/batch1/*.pdf</code>. For <code>batchN</code> where <code>N &gt; 1</code>: <code>data/stage2/schema-batch{N-1}/&lt;model&gt;.json</code>, <code>data/stage2/feedback-batch{N-1}/&lt;model&gt;.txt</code>, and <code>data/stage2/batchN/*.pdf</code>.</dd>
+              <dt>Output files</dt>
+              <dd><code>data/stage2/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage2/schema-batchN/stage2-batchN.log</code>, and per-paper intermediate files under <code>data/stage2/schema-batchN/intermediate-schema/&lt;model&gt;/</code>.</dd>
+              <dt>Review files</dt>
+              <dd><code>data/stage2/feedback-batchN/&lt;model&gt;.txt</code> records expert review for the next Stage 2 batch or the Stage 3 starting point.</dd>
               </dl>
             </div>
           </article>
@@ -137,12 +145,14 @@
                 <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
               </div>
               <dl class="workflow-details">
-              <dt>Input</dt>
-              <dd>Stage 2 schema and broader ALD or ALE literature collection.</dd>
-              <dt>Output</dt>
-              <dd>Final schema designed to remain consistent across process variants.</dd>
-              <dt>Validation</dt>
-              <dd>Cross-model schema similarity and domain expert validation.</dd>
+              <dt>Input variables</dt>
+              <dd><code>batch</code>, <code>available_batches</code>, <code>schema_path</code>, <code>feedback_path</code>, <code>papers_dir</code>, and <code>results_dir</code>; Stage 3 resolves the latest reviewed Stage 2 checkpoint for its first batch.</dd>
+              <dt>Input files</dt>
+              <dd>For <code>batch1</code>: latest matching <code>data/stage2/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage2/feedback-batchN/&lt;model&gt;.txt</code>, and <code>data/stage3/batch1/*.pdf</code>. For <code>batchN</code> where <code>N &gt; 1</code>: <code>data/stage3/schema-batch{N-1}/&lt;model&gt;.json</code>, <code>data/stage3/feedback-batch{N-1}/&lt;model&gt;.txt</code>, and <code>data/stage3/batchN/*.pdf</code>.</dd>
+              <dt>Output files</dt>
+              <dd><code>data/stage3/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage3/schema-batchN/stage3-batchN.log</code>, and per-paper intermediate files under <code>data/stage3/schema-batchN/intermediate-schema/&lt;model&gt;/</code>.</dd>
+              <dt>Review files</dt>
+              <dd><code>data/stage3/feedback-batchN/&lt;model&gt;.txt</code> is needed only when another refinement batch follows; the final schema is the input to ontology grounding.</dd>
               </dl>
             </div>
           </article>
@@ -158,12 +168,14 @@
                 <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
               </div>
               <dl class="workflow-details">
-              <dt>Input</dt>
-              <dd>Final schema and QUDT ontology terms.</dd>
-              <dt>Output</dt>
-              <dd>Ontology-aligned schema with quantity kind, unit, and URI metadata.</dd>
+              <dt>Input variables</dt>
+              <dd><code>--ontology-grounding</code> set to <code>prompt</code> or <code>agentic</code>, <code>--schema</code> pointing to the final schema JSON, and <code>RESULTS_PATH</code> for the grounded output directory.</dd>
+              <dt>Input files</dt>
+              <dd>A final schema such as <code>data/stage3/schema-batch2/&lt;model&gt;.json</code> or a benchmark schema from <code>results/stage-3/.../*.json</code>, plus QUDT/OLS ontology terms retrieved during grounding.</dd>
+              <dt>Output files</dt>
+              <dd>Ontology-aligned JSON saved under <code>RESULTS_PATH</code>; reference outputs include <code>results/Ideal Schema/Atomic-Layer-Deposition/*-with-qudt.json</code> and <code>results/Ideal Schema/Atomic-Layer-Etching/*-with-qudt.json</code>.</dd>
               <dt>Validation</dt>
-              <dd>Correct grounding after lexical lookup, semantic search, and expert review.</dd>
+              <dd>Expert review verifies lexical matches, FAISS semantic matches, QUDT quantity kinds, units, URI metadata, and any LLM-assisted grounding decisions.</dd>
               </dl>
             </div>
 
