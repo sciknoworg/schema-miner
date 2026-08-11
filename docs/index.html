@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260811-workflow-io">
+    <link rel="stylesheet" href="css/styles.css?v=20260811-cli-docs">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -194,6 +194,97 @@
               </figure>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section class="section wide" id="cli">
+        <div class="section-copy">
+          <h2>CLI Usage</h2>
+          <p>
+            The <code>schema-miner</code> command runs the same staged workflow from an environment file. Configure the provider, process metadata, stage data paths, and output directory in <code>.env</code>, then run one stage at a time.
+          </p>
+        </div>
+
+        <div class="cli-layout">
+          <article class="cli-card cli-commands">
+            <h3>Typical command sequence</h3>
+            <pre><code># Stage 1: initial schema mining from a process specification
+schema-miner --stage 1
+
+# Stage 2: preliminary refinement with curated papers and optional feedback
+schema-miner --stage 2 --schema results/stage-1/&lt;model&gt;.json --papers 3 \
+    --expert-feedback data/stage-2/reviews/&lt;model&gt;.txt
+
+# Stage 3: final refinement with a broader paper corpus
+schema-miner --stage 3 --schema results/stage-2/&lt;model&gt;.json --papers all
+
+# Stage 4: QUDT ontology grounding
+schema-miner --ontology-grounding agentic --schema results/stage-3/&lt;model&gt;.json</code></pre>
+            <p class="cli-note">
+              <code>--papers</code> accepts a positive integer batch size or <code>all</code>. If omitted, stages 2 and 3 process one paper per batch and prompt for feedback between batches.
+            </p>
+          </article>
+
+          <article class="cli-card">
+            <h3>Provider and environment variables</h3>
+            <table class="cli-table">
+              <thead>
+                <tr>
+                  <th>Run mode</th>
+                  <th>Required variables</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Hugging Face local GPU</td>
+                  <td><code>LLM_PROVIDER=HUGGINGFACE</code>, <code>LLM_MODEL</code>, <code>HuggingFace_Access_Token</code>, <code>HUGGINGFACE_USE_LOCAL=True</code></td>
+                </tr>
+                <tr>
+                  <td>KISSKI SAIA</td>
+                  <td><code>LLM_PROVIDER=SAIA</code>, <code>LLM_MODEL</code>, <code>SAIA_API_KEY</code>, <code>SAIA_BASE_URL=https://chat-ai.academiccloud.de/v1</code></td>
+                </tr>
+                <tr>
+                  <td>OpenRouter</td>
+                  <td><code>LLM_PROVIDER=SAIA</code>, <code>LLM_MODEL</code>, <code>SAIA_API_KEY</code>, <code>SAIA_BASE_URL=https://openrouter.ai/api/v1</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <div class="cli-card cli-files">
+          <h3>Inputs, outputs, and applicable files</h3>
+          <table class="cli-table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Inputs</th>
+                <th>Outputs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stage 1</td>
+                <td><code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>, <code>STAGE1_SPECS_PATH</code> pointing to a <code>.txt</code>, <code>.md</code>, or <code>.pdf</code> process specification.</td>
+                <td>Initial JSON schema and logs under <code>RESULTS_PATH</code>.</td>
+              </tr>
+              <tr>
+                <td>Stage 2</td>
+                <td><code>STAGE2_PAPERS_PATH</code> curated paper directory, <code>--schema</code> Stage 1 JSON, optional <code>--expert-feedback</code>, optional <code>--papers</code>.</td>
+                <td>Refined schema, logs, and <code>RESULTS_PATH/intermediate-schema/&lt;model&gt;/schema_iter_N.json</code>.</td>
+              </tr>
+              <tr>
+                <td>Stage 3</td>
+                <td><code>STAGE3_PAPERS_PATH</code> broader paper directory, <code>--schema</code> Stage 2 JSON, optional <code>--expert-feedback</code>, optional <code>--papers</code>.</td>
+                <td>Final refined schema, logs, and per-paper intermediate schemas under <code>RESULTS_PATH</code>.</td>
+              </tr>
+              <tr>
+                <td>Ontology grounding</td>
+                <td><code>--ontology-grounding prompt</code> or <code>agentic</code>, plus <code>--schema</code> pointing to the final JSON schema.</td>
+                <td>QUDT-grounded JSON schema saved under <code>RESULTS_PATH</code>.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
