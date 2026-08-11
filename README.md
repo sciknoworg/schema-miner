@@ -142,25 +142,38 @@ RESULTS_PATH = 'results/my-run/'
 
 ## 🚀 Usage
 
-Schema-Miner Pro supports two usage modes:
+Schema-Miner can be used in two ways:
 
-1. **Python SDK** — programmatic access via function calls, ideal for notebooks and custom workflows
-2. **CLI** — command-line interface for direct stage execution without writing any Python
+1. **Interactive tutorial notebooks** — guided, end-to-end workflows for running Schema-Miner with different LLM providers and incorporating expert feedback between refinement steps
+2. **CLI** — command-line interface for direct execution of the Schema-Miner workflow
 
 ---
 
-## 📓 Python SDK
+## 📓 Tutorial Notebooks
 
-For a quick start with the Python SDK, see the provided example notebooks:
+For a quick start, choose the tutorial corresponding to your preferred LLM provider:
 
 <div align="center">
 
-|  | Notebook |
-| --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1 | [Schema Mining With LLMs and expert Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_with_LLMs_and_expert_example.ipynb) |
-| 2 | [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb) |
+|  | Tutorial | Inference | Example Model | GPU Required |
+| --- | --- | --- | --- | --- |
+| 1 | [Hugging Face — Local GPU](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb) | Local | `mistralai/Ministral-3-8B-Instruct-2512` | Yes |
+| 2 | [SAIA](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb) | Remote API | `qwen3-30b-a3b-instruct-2507` | No |
+| 3 | [OpenRouter](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb) | Remote API | `qwen/qwen3-235b-a22b` | No |
 
 </div>
+
+Each tutorial demonstrates the complete three-stage human-in-the-loop workflow:
+
+1. **Stage 1 — Initial Schema Mining**
+2. **Stage 2 — Preliminary Schema Refinement**
+3. **Stage 3 — Final Schema Refinement**
+
+Stages 2 and 3 support iterative processing over one or more batches of scientific papers, allowing expert feedback to be incorporated between successive schema-refinement runs.
+
+### Additional Example
+
+- [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb)
 
 ---
 
