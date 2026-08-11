@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260810-button-alignment">
+    <link rel="stylesheet" href="css/styles.css?v=20260811-workflow-tutorials">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -59,6 +59,30 @@
           </p>
         </div>
 
+        <div class="workflow-tutorials" aria-label="Workflow tutorial notebooks">
+          <article class="tutorial-card tutorial-card-hf">
+            <p class="tutorial-provider">Hugging Face GPU</p>
+            <h3>Local model notebook</h3>
+            <p>Run the three-stage workflow with a local Hugging Face model on a CUDA-enabled GPU.</p>
+            <p class="tutorial-meta">Example model: mistralai/Ministral-3-3B-Instruct-2512</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+          <article class="tutorial-card tutorial-card-saia">
+            <p class="tutorial-provider">KISSKI SAIA</p>
+            <h3>Academic Cloud API notebook</h3>
+            <p>Run the workflow through the SAIA OpenAI-compatible endpoint without a local GPU.</p>
+            <p class="tutorial-meta">Endpoint: chat-ai.academiccloud.de/v1</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+          <article class="tutorial-card tutorial-card-openrouter">
+            <p class="tutorial-provider">OpenRouter</p>
+            <h3>Remote API notebook</h3>
+            <p>Run the same staged workflow with OpenRouter through Schema-Miner's SAIA-compatible backend.</p>
+            <p class="tutorial-meta">Endpoint: openrouter.ai/api/v1</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+        </div>
+
         <div class="workflow-steps">
           <article class="workflow-step">
             <div class="workflow-step-heading">
@@ -69,7 +93,6 @@
               <div class="workflow-summary">
                 <p>Generate a first JSON schema from a process specification document.</p>
                 <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
-                <a href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/quickstart.html" rel="noopener">Run Stage 1</a>
               </div>
               <dl class="workflow-details">
               <dt>Input</dt>
@@ -91,7 +114,6 @@
               <div class="workflow-summary">
                 <p>Refine the initial schema using a small expert-curated scientific corpus.</p>
                 <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
-                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-2" rel="noopener">View Stage 2 Results</a>
               </div>
               <dl class="workflow-details">
               <dt>Input</dt>
@@ -113,7 +135,6 @@
               <div class="workflow-summary">
                 <p>Generalize and validate the schema against a larger, non-curated corpus.</p>
                 <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
-                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/stage-3" rel="noopener">View Stage 3 Results</a>
               </div>
               <dl class="workflow-details">
               <dt>Input</dt>
@@ -135,7 +156,6 @@
               <div class="workflow-summary">
                 <p>Ground schema properties to formal ontology concepts and units.</p>
                 <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
-                <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema" rel="noopener">View Grounded Schemas</a>
               </div>
               <dl class="workflow-details">
               <dt>Input</dt>
