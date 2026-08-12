@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 ## ⚙️ Configuration
 
-Schema-Miner is configured entirely through a `.env` file in the project root. Copy the provided template and fill in your values:
+Schema-Miner is configured through a `.env` file in the project root. Copy the provided template and fill in your values:
 
 ```bash
 cp .env.example .env
@@ -47,7 +47,7 @@ cp .env.example .env
 
 ### 🤖 Model Configuration
 
-Select your LLM provider and model, then fill in the credentials block for that provider:
+Select your LLM provider and model, then fill in **only** the credentials block for your chosen provider. The rest can be left empty.
 
 ```ini
 # Active provider — options: OPENAI | SAIA | OPENROUTER | OLLAMA | HUGGINGFACE
