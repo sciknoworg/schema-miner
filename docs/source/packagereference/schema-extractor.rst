@@ -1,5 +1,5 @@
-Schema Extractor
-****************
+Schema Mining
+*************
 
 The schema extractor is the core three-stage workflow in ``schema-miner``. It
 uses a configured LLM to move from an expert-written process specification to a
@@ -13,33 +13,55 @@ For complete command-line setup, see the repository
 Shared Configuration
 ====================
 
-Before running any extraction stage, configure the provider and process context
-in ``.env``:
+Before running any extraction stage, configure ``schema-miner`` from a
+project-level ``.env`` file. Start from the repository
+`.env.example <https://github.com/sciknoworg/schema-miner/blob/main/.env.example>`_
+and fill in the provider block for the backend you want to use.
 
-.. list-table::
-   :header-rows: 1
-   :widths: 28 72
+.. code-block:: text
 
-   * - Variable
-     - Purpose
-   * - ``LLM_PROVIDER``
-     - Selects the inference backend, for example ``OPENAI``, ``SAIA``,
-       ``OPENROUTER``, ``OLLAMA``, or ``HUGGINGFACE``.
-   * - ``LLM_MODEL``
-     - Selects the model used for schema extraction and refinement.
-   * - ``PROCESS_NAME``
-     - Names the scientific process being mined.
-   * - ``PROCESS_DESCRIPTION``
-     - Gives the model short domain context for interpreting the process,
-       papers, feedback, and schema properties.
-   * - ``RESULTS_PATH``
-     - Directory where each stage writes generated schemas, logs, and
-       intermediate outputs.
+   # -- Active LLM provider --
+   # Options: OPENAI, SAIA, OLLAMA, HUGGINGFACE, OPENROUTER
+   # Use SAIA for any OpenAI-compatible endpoint.
+   LLM_PROVIDER = '<Your LLM provider here>'
+   LLM_MODEL = '<Your model here>'
 
-The provider-specific credential variables, such as ``OPENAI_API_KEY``,
-``SAIA_API_KEY``, ``OPENROUTER_API_KEY``, or
-``HuggingFace_Access_Token``, are also read from ``.env``. Use
-``.env.example`` in the repository as the starting template.
+   # -- OpenAI --
+   OPENAI_API_KEY = 'Your OpenAI API key'
+   OPENAI_ORGANIZATION_ID = 'Your OpenAI Organization ID'  # Optional
+
+   # -- SAIA / OpenAI-compatible endpoint --
+   SAIA_API_KEY = 'Your API key'
+   SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'
+
+   # -- Ollama --
+   OLLAMA_BASE_URL = 'OLLAMA Server Base URL'
+
+   # -- Hugging Face --
+   HuggingFace_Access_Token = 'HuggingFace access token'
+   HUGGINGFACE_USE_LOCAL = False
+
+   # -- OpenRouter --
+   OPENROUTER_API_KEY = 'Your OpenRouter API key'
+   OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
+
+   # -- Process configuration --
+   PROCESS_NAME = 'Your process name here'
+   PROCESS_DESCRIPTION = 'Your process description here'
+
+   # -- Data path configuration --
+   STAGE1_SPECS_PATH = 'Path to the process specification document for stage 1'
+   STAGE2_PAPERS_PATH = 'Path to the directory containing research papers for stage 2'
+   STAGE3_PAPERS_PATH = 'Path to the directory containing research papers for stage 3'
+
+   # -- Output path configuration --
+   RESULTS_PATH = 'Path to the directory where results will be saved'
+
+``LLM_PROVIDER`` and ``LLM_MODEL`` select the inference backend. The
+``PROCESS_NAME`` and ``PROCESS_DESCRIPTION`` variables define the scientific
+process being mined and are reused across all stages. Each stage reads only the
+stage-specific input path it needs, while generated schemas, logs, and
+intermediate outputs are written under ``RESULTS_PATH``.
 
 CLI Options
 ===========
