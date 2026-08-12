@@ -76,54 +76,53 @@ Citing this Work
 
 If you use this repository in your research or applications, please cite the following paper(s):
 
-**LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
---------------------------------------------------------------------------------------------------------------
+1. **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
 
-Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
-**LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**
-In *The Semantic Web – ESWC 2025*, Springer, Cham, pp. 244–261.
-`https://doi.org/10.1007/978-3-031-94578-6_14 <https://doi.org/10.1007/978-3-031-94578-6_14>`_
+   Sameer Sadruddin, Jennifer D'Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
+   **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**
+   In *The Semantic Web - ESWC 2025*, Springer, Cham, pp. 244-261.
+   `https://doi.org/10.1007/978-3-031-94578-6_14 <https://doi.org/10.1007/978-3-031-94578-6_14>`_
 
+   **BibTeX**
 
-BibTeX
-------
+   .. code-block:: bibtex
 
-.. code-block:: text
+      @InProceedings{10.1007/978-3-031-94578-6_14,
+        author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Babaei Giglou, Hamed and Rula, Anisa and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+        editor    = {Curry, Edward and Acosta, Maribel and Poveda-Villal{\'o}n, Maria and van Erp, Marieke and Ojo, Adegboyega and Hose, Katja and Shimizu, Cogan and Lisena, Pasquale},
+        title     = {LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models},
+        booktitle = {The Semantic Web},
+        year      = {2025},
+        publisher = {Springer Nature Switzerland},
+        address   = {Cham},
+        pages     = {244--261},
+        isbn      = {978-3-031-94578-6},
+      }
 
-    @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Babaei Giglou, Hamed and Rula, Anisa and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    editor    = {Curry, Edward and Acosta, Maribel and Poveda-Villal{\'o}n, Maria and van Erp, Marieke and Ojo, Adegboyega and Hose, Katja and Shimizu, Cogan and Lisena, Pasquale},
-    title     = {LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models},
-    booktitle = {The Semantic Web},
-    year      = {2025},
-    publisher = {Springer Nature Switzerland},
-    address   = {Cham},
-    pages     = {244--261},
-    isbn      = {978-3-031-94578-6},
-    }
+2. **SCHEMA-MINER**\ :sup:`pro`: **Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
 
-**SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
------------------------------------------------------------------------------------------------------------------------------
+   Sameer Sadruddin, Jennifer D'Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
+   **SCHEMA-MINER**\ :sup:`pro`: **Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**
+   In *Semantic Web Journal.*
+   `https://www.semantic-web-journal.net/system/files/swj3871.pdf <https://www.semantic-web-journal.net/system/files/swj3871.pdf>`_
 
-Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
-**SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**
-In *Semantic Web Journal.*
-`https://www.semantic-web-journal.net/system/files/swj3871.pdf <https://www.semantic-web-journal.net/system/files/swj3871.pdf>`_
+   **BibTeX**
 
-BibTeX
-------
+   .. code-block:: bibtex
 
-.. code-block:: text
-
-    @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    title     = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
-    journal = {Semantic Web Journal},
-    year      = {2025},
-    }
+      @article{sadruddin2026schema,
+        title={Schema-miner pro: Agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow},
+        author={Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+        journal={Semantic Web},
+        volume={17},
+        number={3},
+        pages={22104968261431521},
+        year={2026},
+        publisher={SAGE Publications Sage UK: London, England}
+      }
 
 License
-**********
+*******
 
 This project is open source and distributed under the terms of the **MIT License**.
 
