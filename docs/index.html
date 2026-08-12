@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-tutorial-dividers">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-short-workflow">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -55,67 +55,20 @@
         <div class="section-copy">
           <h2>Workflow Description</h2>
           <p>
-            <code>schema-miner</code><sup>pro</sup> progresses through four stages, moving from a process specification to a refined, ontology-grounded scientific schema. Each stage has a defined input, output, and validation signal so that experts can inspect and guide the workflow.
+            <code>schema-miner</code><sup>pro</sup> is a human-in-the-loop workflow for turning scientific process descriptions and literature into ontology-grounded schemas. This page summarizes the research workflow; for installation, configuration, and command-line usage, see the <a href="https://github.com/sciknoworg/schema-miner#readme" rel="noopener">software README</a>.
           </p>
         </div>
 
-        <div class="workflow-context">
-          <h3>Shared workflow variables</h3>
-          <ol>
-            <li><code>LLM_PROVIDER</code> and <code>LLM_MODEL</code> select the inference backend and model.</li>
-            <li><code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> initialize the scientific process being mined.</li>
-          </ol>
-          <p>
-            These four input variables apply to every stage of the workflow. They are part of what makes <code>schema-miner</code> plug-and-play over LLM providers and scientific processes. The normal starting point is to declare these variables in the project-level <code>.env</code> file.
-          </p>
-          <a class="env-example-link" href="https://github.com/sciknoworg/schema-miner/blob/main/.env.example" rel="noopener">View .env.example</a>
-        </div>
-
-        <div class="workflow-steps">
+        <div class="workflow-steps workflow-steps-text">
           <article class="workflow-step">
             <div class="workflow-step-heading">
               <p class="stage-label">Stage 1</p>
               <h3>Initial Schema Mining</h3>
             </div>
-            <div class="workflow-step-body">
-              <div class="workflow-summary">
-                <p>Generate a first JSON schema from a process specification document.</p>
-                <p class="example"><strong>Example:</strong> ALD specifications produce top-level fields for reactants, process conditions, film properties, safety, and stability.</p>
-              </div>
-              <dl class="workflow-details">
-              <dt>Configuration examples</dt>
-              <dd>
-                <div class="usage-scenarios">
-                  <div class="file-example">
-                    <p><strong><code>.env</code> entries:</strong> the usual configuration for a single process run.</p>
-                    <pre><code>PROCESS_NAME = [name the process]
-PROCESS_DESCRIPTION = [short 2 or 3 sentence description of the process]
-STAGE1_SPECS_PATH = [path to the process specification file]
-RESULTS_PATH = [path where the output schema and log will be stored]</code></pre>
-                  </div>
-                  <div class="file-example">
-                    <p><strong>Python or batch override:</strong> for many processes, a script can read <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process.txt" rel="noopener"><code>data/stage1/process.txt</code></a> and set <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> before invoking the same command.</p>
-                  </div>
-                </div>
-              </dd>
-              <dt>Stage input variables</dt>
-              <dd>
-                <ul class="file-list">
-                  <li><code>STAGE1_SPECS_PATH</code> points to the expert-written process specification used to start schema mining, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process-description.pdf" rel="noopener"><code>data/stage1/process-description.pdf</code></a>.</li>
-                  <li>For batch runs over many processes, <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process.txt" rel="noopener"><code>data/stage1/process.txt</code></a> can initialize <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> before each run.</li>
-                </ul>
-              </dd>
-              <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the directory where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/schema" rel="noopener"><code>data/stage1/schema/[model-name].json</code></a> and <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/schema" rel="noopener"><code>data/stage1/schema/stage1.log</code></a> are written; for example, <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/schema/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></a>.</dd>
-              <dt>CLI tags</dt>
-              <dd><code>--stage 1</code>.</dd>
-              <dt>Command line usage scenarios</dt>
-              <dd>
-                <pre class="workflow-command"><code>schema-miner --stage 1</code></pre>
-              </dd>
-              <dt>Expert feedback</dt>
-              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/feedback" rel="noopener"><code>data/stage1/feedback/[model-name].txt</code></a> stores expert feedback used as input to Stage 2.</dd>
-              </dl>
+            <div class="workflow-summary">
+              <p>
+                The workflow begins with a compact process specification written by a domain expert. An LLM uses this specification to draft an initial JSON schema that captures core entities and properties, such as materials, parameters, measurements, and process outputs.
+              </p>
             </div>
           </article>
 
@@ -124,61 +77,10 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <p class="stage-label">Stage 2</p>
               <h3>Preliminary Refinement</h3>
             </div>
-            <div class="workflow-step-body">
-              <div class="workflow-summary">
-                <p>Refine the initial schema using a small expert-curated scientific corpus.</p>
-                <p class="example"><strong>Example:</strong> Feedback can request missing units, merge duplicate properties, or reorganize nested process fields.</p>
-              </div>
-              <dl class="workflow-details">
-              <dt>Stage input variables</dt>
-              <dd>
-                <ul class="file-list">
-                  <li><code>STAGE2_PAPERS_PATH</code> points to the curated seed-paper directory, for example <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/batch1" rel="noopener"><code>data/stage2/batch1</code></a> with papers such as <code>Bairagya_2024.pdf</code> and <code>Browne_2013.pdf</code>. Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</li>
-                  <li>The first paper starts from the Stage 1 schema supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/schema/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
-                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/feedback" rel="noopener"><code>data/stage1/feedback/[model-name].txt</code></a>.</li>
-                </ul>
-              </dd>
-              <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the Stage 2 batch output directory, where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1" rel="noopener"><code>data/stage2/schema-batchN/[model-name].json</code></a>, <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1" rel="noopener"><code>data/stage2/schema-batchN/stage2-batchN.log</code></a>, and intermediate schemas under <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1/intermediate-schema" rel="noopener"><code>data/stage2/schema-batchN/intermediate-schema/[model-name]/</code></a> are written.</dd>
-              <dt>CLI tags</dt>
-              <dd>
-                <ul class="file-list">
-                  <li><code>--stage 2</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</li>
-                  <li><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, <code>schema-miner</code> creates five batches and asks for updated expert feedback after each batch. With <code>--papers all</code>, all available papers are processed together in one run, reusing the expert feedback provided at the beginning without reprompting between papers.</li>
-                </ul>
-              </dd>
-              <dt>Command line usage scenarios</dt>
-              <dd>
-                <div class="usage-scenarios">
-                  <div class="command-scenario">
-                    <p class="scenario-title">Default: process one paper per batch.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 2 \
-    --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Add expert feedback directly on the command line.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 2 \
-    --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
-    --expert-feedback "Please add units for all temperature and pressure fields."</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Read expert feedback from a file and process all available papers in one run.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 2 \
-    --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
-    --expert-feedback data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt \
-    --papers all</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Choose an explicit paper batch size.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 2 \
-    --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
-    --papers 2</code></pre>
-                  </div>
-                </div>
-              </dd>
-              <dt>Expert feedback</dt>
-              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/feedback-batch1" rel="noopener"><code>data/stage2/feedback-batchN/[model-name].txt</code></a> records expert feedback for the next Stage 2 batch or the Stage 3 starting point; for example, <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt" rel="noopener"><code>data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt</code></a>.</dd>
-              </dl>
+            <div class="workflow-summary">
+              <p>
+                The draft schema is refined with a small, high-quality corpus of domain-relevant scientific papers. Domain experts review the intermediate schema and provide feedback, helping the model add missing properties, clarify descriptions, merge duplicates, and align terminology with the literature.
+              </p>
             </div>
           </article>
 
@@ -187,61 +89,10 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <p class="stage-label">Stage 3</p>
               <h3>Final Refinement</h3>
             </div>
-            <div class="workflow-step-body">
-              <div class="workflow-summary">
-                <p>Generalize and validate the schema against a larger, non-curated corpus.</p>
-                <p class="example"><strong>Example:</strong> Stage 3 separates ALD growth behavior fields such as growth per cycle and nucleation period.</p>
-              </div>
-              <dl class="workflow-details">
-              <dt>Stage input variables</dt>
-              <dd>
-                <ul class="file-list">
-                  <li><code>STAGE3_PAPERS_PATH</code> points to the extended-corpus directory, for example <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/batch1" rel="noopener"><code>data/stage3/batch1</code></a> with papers such as <code>1-s2.0-S0022286025034994-main.pdf</code>. Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</li>
-                  <li>The first Stage 3 paper starts from the refined Stage 2 schema supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
-                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/feedback-batch2" rel="noopener"><code>data/stage2/feedback-batch2/[model-name].txt</code></a>.</li>
-                </ul>
-              </dd>
-              <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the Stage 3 batch output directory, where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1" rel="noopener"><code>data/stage3/schema-batchN/[model-name].json</code></a>, <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1" rel="noopener"><code>data/stage3/schema-batchN/stage3-batchN.log</code></a>, and intermediate schemas under <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1/intermediate-schema" rel="noopener"><code>data/stage3/schema-batchN/intermediate-schema/[model-name]/</code></a> are written.</dd>
-              <dt>CLI tags</dt>
-              <dd>
-                <ul class="file-list">
-                  <li><code>--stage 3</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</li>
-                  <li><code>--papers N</code> again controls the batch size. For example, <code>--papers 3</code> processes three papers at a time, writes an updated schema for that batch, and then expects the feedback file to be reviewed before the next batch continues refinement. With <code>--papers all</code>, the extended-corpus papers are processed together and the initial expert feedback is reused throughout that run without reprompting.</li>
-                </ul>
-              </dd>
-              <dt>Command line usage scenarios</dt>
-              <dd>
-                <div class="usage-scenarios">
-                  <div class="command-scenario">
-                    <p class="scenario-title">Default: process one paper per batch.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 3 \
-    --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Add expert feedback directly on the command line.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 3 \
-    --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
-    --expert-feedback "Ensure all quantities reference standard SI units."</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Read expert feedback from a file and process the extended corpus in one run.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 3 \
-    --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
-    --expert-feedback data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt \
-    --papers all</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Choose an explicit paper batch size.</p>
-                    <pre class="workflow-command"><code>schema-miner --stage 3 \
-    --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
-    --papers 3</code></pre>
-                  </div>
-                </div>
-              </dd>
-              <dt>Expert feedback</dt>
-              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/feedback-batch1" rel="noopener"><code>data/stage3/feedback-batchN/[model-name].txt</code></a> is used when another refinement batch follows; the final Stage 3 schema is the input to ontology grounding.</dd>
-              </dl>
+            <div class="workflow-summary">
+              <p>
+                A broader and more heterogeneous corpus is then used to test whether the schema remains stable across different reporting styles, process variants, and edge cases. This stage improves generalizability while preserving the domain structure established in the earlier stages.
+              </p>
             </div>
           </article>
 
@@ -250,42 +101,10 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <p class="stage-label">Stage 4</p>
               <h3>Ontology Grounding</h3>
             </div>
-            <div class="workflow-step-body">
-              <div class="workflow-summary">
-                <p>Ground schema properties to formal ontology concepts and units.</p>
-                <p class="example"><strong>Example:</strong> Temperature maps to a QUDT temperature quantity kind, while dosing time may be revised to domain-preferred units.</p>
-              </div>
-              <dl class="workflow-details">
-              <dt>Stage input variables</dt>
-              <dd>
-                <ul class="file-list">
-                  <li>The final refined schema is supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
-                  <li><code>--ontology-grounding</code> selects <code>prompt</code> or <code>agentic</code> grounding.</li>
-                  <li>Shared <code>.env</code> variables such as <code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, and <code>PROCESS_DESCRIPTION</code> provide the model and process context.</li>
-                </ul>
-              </dd>
-              <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the directory where ontology-aligned JSON is written, typically as <code>[schema-name]-with-qudt.json</code>; reference outputs include <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema/Atomic-Layer-Deposition" rel="noopener"><code>results/Ideal Schema/Atomic-Layer-Deposition/*-with-qudt.json</code></a> and <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema/Atomic-Layer-Etching" rel="noopener"><code>results/Ideal Schema/Atomic-Layer-Etching/*-with-qudt.json</code></a>.</dd>
-              <dt>CLI tags</dt>
-              <dd><code>--ontology-grounding prompt</code> or <code>--ontology-grounding agentic</code>, plus <code>--schema</code>.</dd>
-              <dt>Command line usage scenarios</dt>
-              <dd>
-                <div class="usage-scenarios">
-                  <div class="command-scenario">
-                    <p class="scenario-title">Prompt-based grounding.</p>
-                    <pre class="workflow-command"><code>schema-miner --ontology-grounding prompt \
-    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  </div>
-                  <div class="command-scenario">
-                    <p class="scenario-title">Agentic grounding with ontology lookup and semantic search.</p>
-                    <pre class="workflow-command"><code>schema-miner --ontology-grounding agentic \
-    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  </div>
-                </div>
-              </dd>
-              <dt>Validation</dt>
-              <dd>Expert review verifies lexical matches, FAISS semantic matches, QUDT quantity kinds, units, URI metadata, and any LLM-assisted grounding decisions.</dd>
-              </dl>
+            <div class="workflow-summary">
+              <p>
+                The final schema is aligned with formal ontology concepts so that extracted properties become machine-actionable. The grounding agent first checks for direct lexical matches, then uses FAISS-based semantic search and LLM reasoning for ambiguous properties. Domain experts validate the resulting quantity kinds, units, URIs, and grounding decisions.
+              </p>
             </div>
 
             <div class="grounding-figures">
