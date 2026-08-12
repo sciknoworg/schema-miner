@@ -1,5 +1,35 @@
 """
-SCHEMA-MINER CLI: A Command-Line Interface for Schema Extraction from Scientific Literature. This CLI allows users to execute different stages of the SCHEMA-MINER pipeline, including initial schema extraction, schema refinement with expert feedback, and ontology grounding. Users can specify the stage to run, provide expert feedback, and choose the ontology grounding method. The CLI also includes a version option to display the current version of the tool.
+SCHEMA-MINER CLI: run schema mining, human-in-the-loop refinement, and ontology
+grounding from the command line.
+
+Before running, copy .env.example to .env and set:
+
+  LLM_PROVIDER, LLM_MODEL, PROCESS_NAME, PROCESS_DESCRIPTION, RESULTS_PATH
+
+Provider credentials are also read from .env:
+
+  OPENAI: OPENAI_API_KEY
+  KISSKI SAIA: LLM_PROVIDER=SAIA, SAIA_API_KEY,
+               SAIA_BASE_URL=https://chat-ai.academiccloud.de/v1
+  OpenRouter: LLM_PROVIDER=SAIA, SAIA_API_KEY,
+              SAIA_BASE_URL=https://openrouter.ai/api/v1
+  Hugging Face: LLM_PROVIDER=HUGGINGFACE, HuggingFace_Access_Token,
+                HUGGINGFACE_USE_LOCAL
+
+Stage data paths are read from .env:
+
+  STAGE1_SPECS_PATH: process specification file (.txt, .md, or .pdf)
+  STAGE2_PAPERS_PATH: curated Stage 2 paper directory (.txt, .md, .pdf)
+  STAGE3_PAPERS_PATH: broader Stage 3 paper directory (.txt, .md, .pdf)
+
+Typical workflow:
+
+  schema-miner --stage 1
+  schema-miner --stage 2 --schema results/stage-1/<model>.json --papers 3
+  schema-miner --stage 3 --schema results/stage-2/<model>.json --papers all
+  schema-miner --ontology-grounding agentic --schema results/stage-3/<model>.json
+
+All generated schemas and intermediate outputs are saved under RESULTS_PATH.
 """
 
 # Python Standard Library Imports
@@ -302,15 +332,39 @@ def _run_ontology_grounding(ontology_grounding_method: str, schema: str) -> None
 
 @app.command()
 def main(
-    stage: Optional[int] = typer.Option(None, "--stage", help="Specify the stage of schema extraction to execute (1, 2, or 3)."),
-    ontology_grounding: Optional[str] = typer.Option(None, "--ontology-grounding", help="Ontology grounding method: 'prompt' or 'agentic'"),
-    schema: Optional[str] = typer.Option(None, "--schema", help="Path to the initial schema for stage 2 and refined schema for stage 3, or process schema for ontology grounding."),
-    expert_feedback: Optional[str] = typer.Option(None, "--expert-feedback", help="Expert feedback as text or path to a text file (stages 2 & 3 only)."),
-    papers: Optional[str] = typer.Option(None, "--papers", help="Numbers of papers per batch for stage 2 and stage 3. Default: 1 (one paper at a time). Use 'all' to process all papers in one batch."),
+    stage: Optional[int] = typer.Option(None, "--stage", help="Run a schema extraction stage: 1 = initial schema mining, 2 = preliminary refinement, 3 = final refinement."),
+    ontology_grounding: Optional[str] = typer.Option(None, "--ontology-grounding", help="Run ontology grounding instead of a stage. Values: 'prompt' or 'agentic'. Requires --schema."),
+    schema: Optional[str] = typer.Option(None, "--schema", help="Input JSON schema path. Required for stages 2 and 3, and for ontology grounding."),
+    expert_feedback: Optional[str] = typer.Option(None, "--expert-feedback", help="Optional expert feedback for stages 2 and 3, either inline text or a .txt/.md file path."),
+    papers: Optional[str] = typer.Option(None, "--papers", help="Stage 2/3 batch size. Omit for one paper per batch; use a positive integer or 'all'."),
     version: Optional[bool] = typer.Option(None, "--version", callback=version_callback, is_eager=True, help="Show the version of the Schema Miner CLI and exit.")
 ):
     """
-    SCHEMA-MINER CLI: A Command-Line Interface for Schema Extraction from Scientific Literature. This CLI allows users to execute different stages of the SCHEMA-MINER pipeline, including initial schema extraction, schema refinement with expert feedback, and ontology grounding. Users can specify the stage to run, provide expert feedback, and choose the ontology grounding method. The CLI also includes a version option to display the current version of the tool.
+    Run one SCHEMA-MINER workflow step.
+
+    Configure the run in .env before using this command. Required variables are
+    LLM_PROVIDER, LLM_MODEL, PROCESS_NAME, PROCESS_DESCRIPTION, and RESULTS_PATH.
+    Provider credentials are also loaded from .env: OPENAI_API_KEY for OpenAI,
+    SAIA_API_KEY plus SAIA_BASE_URL for KISSKI SAIA or OpenRouter, or
+    HuggingFace_Access_Token plus HUGGINGFACE_USE_LOCAL for Hugging Face.
+
+    Data inputs are stage-specific. Stage 1 reads STAGE1_SPECS_PATH, a process
+    specification file in .txt, .md, or .pdf format. Stage 2 reads
+    STAGE2_PAPERS_PATH and requires --schema pointing to the Stage 1 JSON
+    schema. Stage 3 reads STAGE3_PAPERS_PATH and requires --schema pointing to
+    the Stage 2 JSON schema. Stages 2 and 3 may also receive --expert-feedback
+    as inline text or a .txt/.md file path, and --papers as a batch size or
+    'all'. Ontology grounding requires --ontology-grounding prompt|agentic and
+    --schema pointing to the final JSON schema.
+
+    Typical workflow:
+      schema-miner --stage 1
+      schema-miner --stage 2 --schema results/stage-1/<model>.json --papers 3
+      schema-miner --stage 3 --schema results/stage-2/<model>.json --papers all
+      schema-miner --ontology-grounding agentic --schema results/stage-3/<model>.json
+
+    Outputs, including intermediate schemas, refined schemas, grounded schemas,
+    and logs, are saved under RESULTS_PATH.
     """
 
     # Guard 1: Validate that at least one of stage or ontology_grounding is provided

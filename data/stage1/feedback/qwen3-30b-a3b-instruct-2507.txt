@@ -1,0 +1,14 @@
+Method 1	
+
+"1. There is some redundancy between moc_type.stoichiometry and elements that implicitly appear in formula and downstream fields (e.g., binding stoichiometry in host–guest). Could consider merging stoichiometric representations into a single unified “composition” object that captures both structural (MxLy) and functional ratios in a consistent format. Similarly, reaction_conditions and per-step temperature/duration fields partially duplicate information.
+
+2. Several natural higher-level units emerge. First, all synthesis-related elements (reactants, reaction_conditions, steps, workup) could be grouped into a single “synthesis” or “procedure” object to better reflect how chemists conceptualize experiments. 
+
+The characterisation.results section could be reorganized into a more modular “technique → parameters → outputs → interpretation” structure, rather than technique-specific hardcoding (NMR, MS, PXRD, etc.) if they are being expanded on, although just mentioning the name of the techniques is enough. Third, in the others section, properties like stability, porosity, and surface area could be grouped under a broader “material_properties” unit, separating them from more application-facing host–guest behavior.
+
+3. Missing properties:
+yield
+concentration
+stoichiometric quantities
+
+4. Overall, the schema is well-structured and aligns closely with how chemists conceptualize MOC synthesis and analysis. The main improvement areas are normalization (reducing duplicated representations), increasing modularity (especially in characterization), and strengthening support for reproducibility and data traceability. Making the schema more extensible—particularly by avoiding hardcoded technique-specific fields—would also improve it across different MOCs."

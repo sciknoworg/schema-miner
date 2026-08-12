@@ -1,0 +1,19 @@
+Method 1	
+
+"1. There is some redundancy between moc_type.formula and the more granular breakdown into metal_ions, ligands, and counter_ions. While both are useful, the schema could define a clearer relationship to avoid inconsistency. 
+
+process_parameters.steps.conditions contains repeated structures (temperature, pressure, time) that could be abstracted into a reusable “conditions” definition. 
+
+Minor overlap also exists between other_properties.adsorption and host_guest_properties in terms of functional performance, which could be partially unified.
+
+2. The schema is logically structured but could benefit from clearer higher-level grouping. metadata and moc_type together form a “cage_identity” block. reactants and process_parameters naturally group into a “synthesis_protocol” unit. Meanwhile, characterization, host_guest_properties, and other_properties could be grouped under a “post_synthesis_characterization” or “evaluation” block to clearly separate synthesis from analysis and application.
+
+3.Missing Properties: 
+stoichiometric ratios in the reaction mixture
+reaction scale 
+Purification methods 
+
+topology (e.g., cage geometry, connectivity), types of metals and coordination environment are not explicitly defined
+
+4. The descriptions are generally clear, detailed, and more standardized than previous schemas, especially with consistent use of units and nested condition objects. However, some flexibility may introduce ambiguity (e.g., free-text results in characterization, loosely defined parameters). The balance between structured fields and free text could be improved for better interoperability.
+The 3D spatial considerations of sterics, i.e. chair vs boat, is not required."

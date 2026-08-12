@@ -1,0 +1,266 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MetalOrganicCageSynthesisSchema",
+    "type": "object",
+    "description": "JSON schema representing the Metal-Organic Cage (MOC) synthesis process with catalytic applications",
+    "required": [
+        "moc_properties",
+        "components",
+        "process_parameters",
+        "characterization",
+        "functional_properties",
+        "structural_properties"
+    ],
+    "properties": {
+        "moc_properties": {
+            "type": "object",
+            "description": "Chemical formula and structural characteristics of MOC",
+            "required": [
+                "formula",
+                "name",
+                "structural_type"
+            ],
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "Chemical formula in [MxLy]n[counter_ion]-n format. Stoichiometry defines geometry."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Common identifier (e.g., 'MOC 1' or 'Cage 1')"
+                },
+                "structural_type": {
+                    "type": "string",
+                    "description": "Structural classification (e.g., sandwich, cyclic interlocking)"
+                },
+                "metal_ratio": {
+                    "type": "string",
+                    "description": "Metal ion stoichiometry (e.g., Zn:Tb = 3:2)"
+                },
+                "coordination_mode": {
+                    "type": "string",
+                    "description": "Key coordination patterns (e.g., \u03bc\u2083-\u03ba\u00b2O1:\u03baO2:\u03baN2:\u03baO5)"
+                },
+                "cavity_volume": {
+                    "type": "number",
+                    "description": "Volume of the MOC cavity in \u00c5\u00b3 (varies by isomer)"
+                },
+                "solvent_effect": {
+                    "type": "string",
+                    "description": "Solvent-induced structural changes (e.g., acetonitrile \u2192 methanol transition)"
+                }
+            }
+        },
+        "components": {
+            "type": "object",
+            "description": "Chemical components used in synthesis",
+            "required": [
+                "metal_sources",
+                "ligands",
+                "counter_ions",
+                "template_anions"
+            ],
+            "properties": {
+                "metal_sources": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "purity": {
+                                "type": "number"
+                            },
+                            "source": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "ligands": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "purity": {
+                                "type": "number"
+                            },
+                            "source": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "counter_ions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "template_anions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "role": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process_parameters": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "step_number": {
+                        "type": "integer"
+                    },
+                    "action": {
+                        "type": "string"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "temperature": {
+                                "type": "number"
+                            },
+                            "time": {
+                                "type": "number"
+                            },
+                            "solvent": {
+                                "type": "string"
+                            },
+                            "pressure": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "vacuum": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "reaction_medium": {
+                                "type": "string"
+                            },
+                            "catalyst_loading": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "temperature",
+                            "time",
+                            "solvent",
+                            "pressure",
+                            "reaction_medium"
+                        ]
+                    }
+                },
+                "required": [
+                    "step_number",
+                    "action",
+                    "parameters"
+                ]
+            }
+        },
+        "characterization": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Analytical techniques used (e.g., PXRD, IR, TGA)"
+            }
+        },
+        "structural_properties": {
+            "type": "object",
+            "properties": {
+                "geometry": {
+                    "type": "string"
+                },
+                "symmetry": {
+                    "type": "string"
+                },
+                "metal_stereochemistry": {
+                    "type": "string"
+                },
+                "ligand_conformation": {
+                    "type": "string"
+                }
+            }
+        },
+        "functional_properties": {
+            "type": "object",
+            "properties": {
+                "catalytic_activity": {
+                    "type": "object",
+                    "properties": {
+                        "substrate_scope": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "turnover_number": {
+                            "type": "number"
+                        },
+                        "yield": {
+                            "type": "number"
+                        },
+                        "reaction_conditions": {
+                            "type": "object",
+                            "properties": {
+                                "temperature": {
+                                    "type": "number"
+                                },
+                                "pressure": {
+                                    "type": "number"
+                                },
+                                "time": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                "thermal_stability": {
+                    "type": "object",
+                    "properties": {
+                        "decomposition_temp": {
+                            "type": "number"
+                        },
+                        "solvent_resistance": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

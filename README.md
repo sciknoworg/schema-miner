@@ -4,35 +4,19 @@
 
 <div align="center">
 
+[![Project Website](https://img.shields.io/badge/Project%20Website-GitHub%20Pages-2f80ed?logo=githubpages&logoColor=white)](https://sciknoworg.github.io/schema-miner/)
 [![PyPI - Version](https://img.shields.io/pypi/v/schema-miner)](https://pypi.org/project/schema-miner/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/schema-miner)](https://pepy.tech/projects/schema-miner)
 [![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)](https://github.com/sciknoworg/schema-miner/blob/main/MAINTENANCE.md)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
 [![DOI](https://zenodo.org/badge/900734076.svg)](https://doi.org/10.5281/zenodo.14781824)
 [![Read the Docs](https://img.shields.io/badge/Read%20the%20Docs-8CA1AF?logo=readthedocs&logoColor=fff)](https://schema-miner.readthedocs.io/en/latest/)
 
 </div>
 
-<h3 align="center">SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h3>
+<h3 align="center">Scientific Schema Mining and Ontology Grounding with Large Language Models</h3>
 
-This is an open-source implementation of Schema-Miner<sup>pro</sup>.
-
-## 📋 Schema-miner<sup>pro</sup> Overview
-
-Schema-Miner is a novel framework that leverages Large Language Models (LLMs) and continuous human feedback to automate and enhance the schema mining task. Through an iterative process, the framework uses LLMs to extract and organize properties from unstructured text and refines schemas with expert input [ESWC Proceedings](https://link.springer.com/chapter/10.1007/978-3-031-94578-6_14). Schema-Miner<sup>pro</sup> extends Schema-Miner with an ontology grounding component powered by agentic AI. It performs multi-step reasoning using lexical heuristics and semantic similarity search, and grounds schema elements in formal ontologies (e.g., [QUDT](https://www.qudt.org/pages/HomePage.html)). Comprehensive documentation for Schema-Miner Pro, including detailed guides and examples, is available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
-
-> [!NOTE]
-> **Schema-Miner** implements a three-stage pipeline for schema discovery and refinement without ontology grounding (see Figure 1). **Schema-Miner Pro** extends this pipeline by grounding the discovered schemas to formal ontologies.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/sciknoworg/schema-miner/refs/heads/main/assets/LLM4SchemaMining%20-%20Workflow%20design.svg" height="300">
-</p>
-
-<p align="center">
-  Figure 1: Overview of the LLMs4SchemaDiscovery workflow implemented in the SCHEMA-MINER tool. Stage 1 generates an initial process schema using domain specifications, while Stage 2, refines this schema using a small, curated scientific corpus. In Stage 3, schema is further enriched using a larger, non-curated corpus. The final stage involves grounding the properties in formal ontologies.
-</p>
+Schema-Miner is an open-source Python package and command-line tool for mining structured scientific schemas from process specifications and research literature. It supports iterative human-in-the-loop schema refinement and optional ontology grounding.
 
 ## 🧪 Installation
 
@@ -148,25 +132,38 @@ Schemas are saved at path `RESULTS_PATH/<model>.json`, where `<model>` is `LLM_M
 
 ## 🚀 Usage
 
-Schema-Miner Pro supports two usage modes:
+Schema-Miner can be used in two ways:
 
-1. **Python SDK** — programmatic access via function calls, ideal for notebooks and custom workflows
-2. **CLI** — command-line interface for direct stage execution without writing any Python
+1. **Interactive tutorial notebooks** — guided, end-to-end workflows for running Schema-Miner with different LLM providers and incorporating expert feedback between refinement steps
+2. **CLI** — command-line interface for direct execution of the Schema-Miner workflow
 
 ---
 
-## 📓 Python SDK
+## 📓 Tutorial Notebooks
 
-For a quick start with the Python SDK, see the provided example notebooks:
+For a quick start, choose the tutorial corresponding to your preferred LLM provider:
 
 <div align="center">
 
-|  | Notebook |
-| --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1 | [Schema Mining With LLMs and expert Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_with_LLMs_and_expert_example.ipynb) |
-| 2 | [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb) |
+|  | Tutorial | Inference | Example Model | GPU Required |
+| --- | --- | --- | --- | --- |
+| 1 | [Hugging Face — Local GPU](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb) | Local | `mistralai/Ministral-3-8B-Instruct-2512` | Yes |
+| 2 | [SAIA](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb) | Remote API | `qwen3-30b-a3b-instruct-2507` | No |
+| 3 | [OpenRouter](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb) | Remote API | `qwen/qwen3-235b-a22b` | No |
 
 </div>
+
+Each tutorial demonstrates the complete three-stage human-in-the-loop workflow:
+
+1. **Stage 1 — Initial Schema Mining**
+2. **Stage 2 — Preliminary Schema Refinement**
+3. **Stage 3 — Final Schema Refinement**
+
+Stages 2 and 3 support iterative processing over one or more batches of scientific papers, allowing expert feedback to be incorporated between successive schema-refinement runs.
+
+### Additional Example
+
+- [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb)
 
 ---
 
@@ -325,12 +322,16 @@ If you use this repository in your research or applications, please cite the fol
 
   ### 📌 BibTeX
   ```bibtex
-  @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    title     = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
-    journal = {Semantic Web Journal},
-    year      = {2025},
-  }
+	@article{sadruddin2026schema,
+	  title={Schema-miner pro: Agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow},
+	  author={Sadruddin, Sameer and D’Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+	  journal={Semantic Web},
+	  volume={17},
+	  number={3},
+	  pages={22104968261431521},
+	  year={2026},
+	  publisher={SAGE Publications Sage UK: London, England}
+	}
   ```
 
 ## 👥 Contact & Contributions

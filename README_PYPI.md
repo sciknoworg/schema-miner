@@ -1,5 +1,5 @@
 <p align="center">
-<img width="450" src="https://github.com/sciknoworg/schema-miner/blob/main/assets/schema-miner-pro-logo.jpg?raw=true" alt="schema-miner pro logo" />
+<img width="420" src="https://github.com/sciknoworg/schema-miner/blob/main/assets/schema-miner-pro-logo.jpg?raw=true" alt="schema-miner pro logo" />
 </p>
 
 <div align="center">
@@ -7,28 +7,30 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/schema-miner)](https://pypi.org/project/schema-miner/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/schema-miner)](https://pepy.tech/projects/schema-miner)
 [![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)](https://github.com/sciknoworg/schema-miner/blob/main/MAINTENANCE.md)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
-[![DOI](https://zenodo.org/badge/900734076.svg)](https://doi.org/10.5281/zenodo.14781824)
 [![Read the Docs](https://img.shields.io/badge/Read%20the%20Docs-8CA1AF?logo=readthedocs&logoColor=fff)](https://schema-miner.readthedocs.io/en/latest/)
 
 </div>
 
-<h3 align="center">SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow</h3>
+<h3 align="center">SCHEMA-MINER<sup>pro</sup>: Scientific Schema Mining and Ontology Grounding with LLMs</h3>
 
-Schema-Miner Pro is an open-source framework for scientific schema mining and ontology grounding. It combines Large Language Models (LLMs) with human-in-the-loop refinement to extract and organize schema properties from unstructured text, and extends this process with an automated ontology-grounding component. Documentation and usage guides are available at [schema-miner.readthedocs.io](https://schema-miner.readthedocs.io/en/latest/).
+Schema-Miner is a command-line and Python package for mining scientific JSON schemas from process specifications and research literature. It supports a human-in-the-loop workflow for schema refinement and an ontology-grounding step that enriches schema fields with QUDT quantity and unit metadata.
 
-## 🧪 Installation
+Use this PyPI page for installation and CLI orientation. For the full workflow, figures, notebooks, and project background, see:
 
-Install the package directly from PyPI using ``pip``:
+- Project page: [https://sciknoworg.github.io/schema-miner/](https://sciknoworg.github.io/schema-miner/)
+- Documentation: [https://schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/)
+- Source code: [https://github.com/sciknoworg/schema-miner](https://github.com/sciknoworg/schema-miner)
+
+## Installation
 
 ```bash
 pip install schema-miner
 ```
 
-If you are working with the source code directly, install dependencies from [requirements.txt](https://github.com/sciknoworg/schema-miner/blob/main/requirements.txt):
+Schema-Miner requires Python 3.12 or newer.
 
+To install from source:
 
 ```bash
 git clone https://github.com/sciknoworg/schema-miner.git
@@ -36,82 +38,244 @@ cd schema-miner
 pip install -r requirements.txt
 ```
 
-## ⚙️ System Requirements
-Running with OpenAI models (e.g., [**GPT-4o**](https://platform.openai.com/docs/models#gpt-4o), [**GPT-4-turbo**](https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4)) requires no special hardware beyond a basic system with internet access, since inference is API-based. For **open-source models** (e.g., [**Llama 3.1 8B**](https://ai.meta.com/blog/meta-llama-3-1/)), local execution is possible on CPU but slow; for practical performance, a GPU with sufficient VRAM (per model specifications) is strongly recommended.
+## Minimal Configuration
 
-For more details, please check the documentation: [https://schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/).
+Copy the example environment file and edit it:
 
-## 🚀 Quick Start
+```bash
+cp .env.example .env
+```
 
-For a quick start, see the provided example notebooks highlighting the overall workflows of the schema-miner.
+Required workflow settings:
 
-<div align="center">
+```ini
+LLM_PROVIDER = "SAIA"      # OPENAI, SAIA, OLLAMA, or HUGGINGFACE
+LLM_MODEL = "qwen3-30b-a3b-instruct-2507"
 
-|  | Notebook |
-| --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1 | [Schema Mining With LLMs and expert Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_with_LLMs_and_expert_example.ipynb) |
-| 2 | [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb) |
+PROCESS_NAME = "Atomic Layer Deposition"
+PROCESS_DESCRIPTION = "Layer-by-layer thin film growth process."
 
-</div>
+STAGE1_SPECS_PATH = "data/stage1/process-description.pdf"
+STAGE2_PAPERS_PATH = "data/stage2/"
+STAGE3_PAPERS_PATH = "data/stage3/"
+RESULTS_PATH = "results/my-run/"
+```
 
-## 📚 Citing this Work
+Provider credentials:
 
-If you use this repository in your research or applications, please cite the following paper(s):
+| Provider | Set in `.env` |
+| --- | --- |
+| OpenAI | `LLM_PROVIDER=OPENAI`, `OPENAI_API_KEY` |
+| KISSKI SAIA / GWDG | `LLM_PROVIDER=SAIA`, `SAIA_API_KEY`, `SAIA_BASE_URL=https://chat-ai.academiccloud.de/v1` |
+| OpenRouter | `LLM_PROVIDER=SAIA`, `SAIA_API_KEY`, `SAIA_BASE_URL=https://openrouter.ai/api/v1` |
+| Ollama | `LLM_PROVIDER=OLLAMA`, optional `OLLAMA_BASE_URL` |
+| Hugging Face | `LLM_PROVIDER=HUGGINGFACE`, `HuggingFace_Access_Token`, `HUGGINGFACE_USE_LOCAL` |
 
-- **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models**
-  > Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Hamed Babaei Giglou, Anisa Rula, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
-  > **LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models.**
-  > In *The Semantic Web – ESWC 2025*, Springer, Cham, pp. 244–261.
-  > [https://doi.org/10.1007/978-3-031-94578-6_14](https://doi.org/10.1007/978-3-031-94578-6_14)
+## CLI Quick Start
 
-  ### 📌 BibTeX
-  ```bibtex
-  @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Babaei Giglou, Hamed and Rula, Anisa and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    editor    = {Curry, Edward and Acosta, Maribel and Poveda-Villal{\'o}n, Maria and van Erp, Marieke and Ojo, Adegboyega and Hose, Katja and Shimizu, Cogan and Lisena, Pasquale},
-    title     = {LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models},
-    booktitle = {The Semantic Web},
-    year      = {2025},
-    publisher = {Springer Nature Switzerland},
-    address   = {Cham},
-    pages     = {244--261},
-    isbn      = {978-3-031-94578-6},
-  }
-  ```
-- **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
-  > Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
-  > **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**
-  > In *Semantic Web Journal.*
-  > [https://www.semantic-web-journal.net/system/files/swj3871.pdf](https://www.semantic-web-journal.net/system/files/swj3871.pdf)
+Run one workflow step at a time:
 
-  ### 📌 BibTeX
-  ```bibtex
-  @InProceedings{10.1007/978-3-031-94578-6_14,
-    author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-    title     = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
-    journal = {Semantic Web Journal},
-    year      = {2025},
-  }
-  ```
+```bash
+# Stage 1: generate an initial schema from the process specification
+schema-miner --stage 1
 
-## 👥 Contact & Contributions
+# Stage 2: refine with a curated paper corpus and optional expert feedback
+schema-miner --stage 2 --schema results/stage-1/<model>.json --papers 3
 
-We’d love to hear from you!
-Whether you're interested in collaborating on `Schema-MinerPro` or have ideas to extend its capabilities, feel free to reach out:
+# Stage 3: finalize with a broader paper corpus
+schema-miner --stage 3 --schema results/stage-2/<model>.json --papers all
 
-- **Collaboration inquiries:** Contact Jennifer D'Souza at jennifer.dsouza [at] tib.eu
+# Ontology grounding: enrich the final schema with QUDT metadata
+schema-miner --ontology-grounding agentic --schema results/stage-3/<model>.json
+```
 
-- **Development questions or bug reports:** Please [open an issue](https://github.com/sciknoworg/schema-miner/issues) right here in the repository or get in touch with the lead developer Sameer Sadruddin at sameer.sadruddin [at] tib.eu
+Common options:
 
-Let’s build better schema-mining tools—together!
+| Option | Meaning |
+| --- | --- |
+| `--stage 1` | Initial schema mining from `STAGE1_SPECS_PATH`. |
+| `--stage 2` | Preliminary refinement using `STAGE2_PAPERS_PATH`; requires `--schema`. |
+| `--stage 3` | Final refinement using `STAGE3_PAPERS_PATH`; requires `--schema`. |
+| `--schema <path>` | Input JSON schema for stages 2, 3, or ontology grounding. |
+| `--expert-feedback <text-or-file>` | Optional feedback for stages 2 and 3. |
+| `--papers <N|all>` | Paper batch size for stages 2 and 3. |
+| `--ontology-grounding prompt` | Prompt-based QUDT grounding. |
+| `--ontology-grounding agentic` | Agentic QUDT grounding with lexical and semantic lookup. |
 
-## 📃 License
+Generated schemas, intermediate outputs, grounded schemas, and logs are written under `RESULTS_PATH`.
 
-This work is licensed under a [MIT License](https://github.com/sciknoworg/schema-miner/blob/main/LICENSE.txt)
+## CLI Usage Scenarios
 
-## 🔗 Links
-Source Code: [https://github.com/sciknoworg/schema-miner](https://github.com/sciknoworg/schema-miner)
+### Check the Installed CLI
 
-Documentation: [https://schema-miner.readthedocs.io/en/latest/](https://schema-miner.readthedocs.io/en/latest/)
+```bash
+schema-miner --help
+schema-miner --version
+```
 
-Issues: [https://github.com/sciknoworg/schema-miner/issues](https://github.com/sciknoworg/schema-miner/issues)
+### Scenario 1: Initial Schema Mining
+
+Use this when you have a process specification and want the first JSON schema.
+
+Required `.env` values:
+
+- `PROCESS_NAME`
+- `PROCESS_DESCRIPTION`
+- `STAGE1_SPECS_PATH`
+- `RESULTS_PATH`
+- LLM provider and credentials
+
+Run:
+
+```bash
+schema-miner --stage 1
+```
+
+The command reads `STAGE1_SPECS_PATH` and writes the initial schema to `RESULTS_PATH`.
+
+### Scenario 2: Preliminary Refinement
+
+Use this when you have a Stage 1 schema and a small curated paper corpus.
+
+Required inputs:
+
+- `STAGE2_PAPERS_PATH` in `.env`
+- `--schema` pointing to the Stage 1 JSON schema
+
+Run one paper per batch:
+
+```bash
+schema-miner --stage 2 --schema results/stage-1/<model>.json
+```
+
+Run with inline expert feedback for the first batch:
+
+```bash
+schema-miner --stage 2 --schema results/stage-1/<model>.json \
+    --expert-feedback "Add units for temperature and pressure fields."
+```
+
+Run with expert feedback from a file:
+
+```bash
+schema-miner --stage 2 --schema results/stage-1/<model>.json \
+    --expert-feedback data/stage-2/reviews/<model>.txt
+```
+
+Run papers in fixed-size batches:
+
+```bash
+schema-miner --stage 2 --schema results/stage-1/<model>.json --papers 3
+```
+
+Run all curated papers in one batch:
+
+```bash
+schema-miner --stage 2 --schema results/stage-1/<model>.json --papers all
+```
+
+### Scenario 3: Final Refinement
+
+Use this when you have a Stage 2 schema and a broader validation/refinement corpus.
+
+Required inputs:
+
+- `STAGE3_PAPERS_PATH` in `.env`
+- `--schema` pointing to the Stage 2 JSON schema
+
+Run one paper per batch:
+
+```bash
+schema-miner --stage 3 --schema results/stage-2/<model>.json
+```
+
+Run with inline expert feedback:
+
+```bash
+schema-miner --stage 3 --schema results/stage-2/<model>.json \
+    --expert-feedback "Ensure measurable properties use standard SI units."
+```
+
+Run with expert feedback from a file:
+
+```bash
+schema-miner --stage 3 --schema results/stage-2/<model>.json \
+    --expert-feedback data/stage-3/reviews/<model>.txt
+```
+
+Run papers in fixed-size batches:
+
+```bash
+schema-miner --stage 3 --schema results/stage-2/<model>.json --papers 5
+```
+
+Run all broader-corpus papers in one batch:
+
+```bash
+schema-miner --stage 3 --schema results/stage-2/<model>.json --papers all
+```
+
+### Scenario 4: Ontology Grounding
+
+Use this when you have a final schema and want QUDT quantity/unit grounding.
+
+Prompt-based grounding:
+
+```bash
+schema-miner --ontology-grounding prompt --schema results/stage-3/<model>.json
+```
+
+Agentic grounding:
+
+```bash
+schema-miner --ontology-grounding agentic --schema results/stage-3/<model>.json
+```
+
+### Scenario 5: Provider-Specific Runs
+
+The CLI command stays the same across providers; only `.env` changes.
+
+KISSKI SAIA:
+
+```ini
+LLM_PROVIDER = "SAIA"
+LLM_MODEL = "qwen3-30b-a3b-instruct-2507"
+SAIA_API_KEY = "<your-saia-key>"
+SAIA_BASE_URL = "https://chat-ai.academiccloud.de/v1"
+```
+
+OpenRouter:
+
+```ini
+LLM_PROVIDER = "SAIA"
+LLM_MODEL = "qwen/qwen3-235b-a22b"
+SAIA_API_KEY = "<your-openrouter-key>"
+SAIA_BASE_URL = "https://openrouter.ai/api/v1"
+```
+
+Hugging Face local GPU:
+
+```ini
+LLM_PROVIDER = "HUGGINGFACE"
+LLM_MODEL = "mistralai/Ministral-3-8B-Instruct-2512"
+HuggingFace_Access_Token = "<your-huggingface-token>"
+HUGGINGFACE_USE_LOCAL = True
+```
+
+## Tutorial Notebooks
+
+| Notebook | Inference mode |
+| --- | --- |
+| [Hugging Face local GPU](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb) | Local model |
+| [KISSKI SAIA](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb) | Remote OpenAI-compatible API |
+| [OpenRouter](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb) | Remote OpenAI-compatible API |
+
+## Contact
+
+Collaboration inquiries: Jennifer D'Souza, jennifer.dsouza [at] tib.eu.
+
+Development questions or bug reports: [open an issue](https://github.com/sciknoworg/schema-miner/issues) or contact Sameer Sadruddin, sameer.sadruddin [at] tib.eu.
+
+## License
+
+Schema-Miner is released under the [MIT License](https://github.com/sciknoworg/schema-miner/blob/main/LICENSE.txt).

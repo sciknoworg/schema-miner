@@ -1,0 +1,255 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MetalOrganicCageSynthesisSchema",
+    "type": "object",
+    "description": "JSON schema representing the Metal-Organic Cage (MOC) synthesis process",
+    "required": [
+        "moc_type",
+        "reactants",
+        "process_parameters",
+        "characterization"
+    ],
+    "properties": {
+        "moc_type": {
+            "type": "object",
+            "description": "Chemical formula and naming convention for the MOC",
+            "required": [
+                "formula",
+                "name"
+            ],
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "Chemical formula in [MxLy]n[counter_ion]-n format. Stoichiometry defines geometry."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Common identifier (e.g., 'MOC 1' or 'Cage 1')"
+                }
+            }
+        },
+        "reactants": {
+            "type": "object",
+            "description": "Chemical components used in synthesis",
+            "required": [
+                "metal_ion_source",
+                "ligand",
+                "counter_ion_source"
+            ],
+            "properties": {
+                "metal_ion_source": {
+                    "type": "object",
+                    "description": "Metal ion donor compound",
+                    "required": [
+                        "name",
+                        "chemical_formula",
+                        "purity",
+                        "source"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number",
+                            "description": "Percentage purity (e.g., 99.9)"
+                        },
+                        "source": {
+                            "type": "string",
+                            "description": "Supplier or synthesis origin"
+                        }
+                    }
+                },
+                "ligand": {
+                    "type": "object",
+                    "description": "Organic linker molecule",
+                    "required": [
+                        "name",
+                        "chemical_formula",
+                        "purity",
+                        "source",
+                        "synthesis_needed"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number"
+                        },
+                        "source": {
+                            "type": "string"
+                        },
+                        "synthesis_needed": {
+                            "type": "boolean"
+                        },
+                        "synthesis_steps": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Reaction steps if ligand requires pre-synthesis"
+                        }
+                    }
+                },
+                "counter_ion_source": {
+                    "type": "object",
+                    "description": "Charge-balancing ion source",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "chemical_formula": {
+                            "type": "string"
+                        },
+                        "purity": {
+                            "type": "number"
+                        },
+                        "source": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "process_parameters": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "Sequential synthesis steps",
+                "required": [
+                    "step_number",
+                    "action",
+                    "temperature",
+                    "time",
+                    "solvent",
+                    "pressure"
+                ],
+                "properties": {
+                    "step_number": {
+                        "type": "integer"
+                    },
+                    "action": {
+                        "type": "string",
+                        "description": "Detailed procedural instruction"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "description": "Reaction temperature in Celsius"
+                    },
+                    "time": {
+                        "type": "number",
+                        "description": "Duration in hours"
+                    },
+                    "solvent": {
+                        "type": "string"
+                    },
+                    "pressure": {
+                        "type": "object",
+                        "description": "Pressure conditions",
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "description": "Pascals unit"
+                            },
+                            "vacuum": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "characterization": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "Analytical methods used",
+                "required": [
+                    "technique",
+                    "description",
+                    "data"
+                ],
+                "properties": {
+                    "technique": {
+                        "type": "string",
+                        "description": "Method name (e.g., NMR)"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Experimental parameters"
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": "Results or file references"
+                    }
+                }
+            }
+        },
+        "host_guest_properties": {
+            "type": "object",
+            "description": "Guest molecule encapsulation capabilities",
+            "properties": {
+                "present": {
+                    "type": "boolean"
+                },
+                "guests": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "molecule_name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "interaction_type": {
+                                "type": "string",
+                                "description": "Binding mechanism (e.g., hydrogen bonding)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "other_properties": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "Additional measured characteristics",
+                "properties": {
+                    "property_name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "number"
+                    },
+                    "unit": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "stereochemistry": {
+            "type": "object",
+            "description": "Geometric and spatial arrangement details",
+            "properties": {
+                "geometry": {
+                    "type": "string",
+                    "description": "Cage topology (e.g., tetrahedral)"
+                },
+                "chirality": {
+                    "type": "string",
+                    "description": "Chiral configuration if applicable"
+                }
+            }
+        }
+    }
+}

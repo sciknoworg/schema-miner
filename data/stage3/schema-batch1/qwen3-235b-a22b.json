@@ -1,0 +1,365 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MetalOrganicCageSynthesisSchema",
+    "type": "object",
+    "description": "JSON schema representing the Metal-Organic Cage (MOC) synthesis process with host-guest chemistry applications",
+    "required": [
+        "moc_properties",
+        "components",
+        "process_parameters",
+        "characterization",
+        "host_guest_properties",
+        "structural_properties"
+    ],
+    "properties": {
+        "moc_properties": {
+            "type": "object",
+            "description": "Chemical formula and structural characteristics of MOC",
+            "required": [
+                "formula",
+                "name",
+                "structural_type"
+            ],
+            "properties": {
+                "formula": {
+                    "type": "string",
+                    "description": "Chemical formula in [MxLy]n[counter_ion]-n format. Stoichiometry defines geometry."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Common identifier (e.g., 'MOC 1' or 'Cage 1')"
+                },
+                "structural_type": {
+                    "type": "string",
+                    "description": "Structural classification (e.g., hexahedral, sandwich)"
+                },
+                "anion_binding_hierarchy": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Anion selectivity ranking (e.g., NTf\u2082\u207b > OTf\u207b > BF\u2084\u207b)"
+                },
+                "cavity_volume": {
+                    "type": "number",
+                    "description": "Volume of the MOC cavity in \u00c5\u00b3 (varies by isomer)"
+                },
+                "cavity_diameter": {
+                    "type": "number",
+                    "description": "Diameter of the spherical cavity in \u00c5 (e.g., 7.5 \u00c5)"
+                },
+                "coordination_mode": {
+                    "type": "string",
+                    "description": "Key coordination patterns (e.g., \u03bc\u2083-\u03ba\u00b2O1:\u03baO2:\u03baN2:\u03baO5)"
+                },
+                "solvent_effect": {
+                    "type": "string",
+                    "description": "Solvent-induced structural changes (e.g., acetonitrile \u2192 methanol transition)"
+                },
+                "stability": {
+                    "type": "object",
+                    "properties": {
+                        "solution_stability": {
+                            "type": "string",
+                            "description": "Stability in solution confirmed by HRESI-MS"
+                        },
+                        "thermal_stability": {
+                            "type": "string",
+                            "description": "Thermal stability from TGA analysis"
+                        }
+                    }
+                }
+            }
+        },
+        "components": {
+            "type": "object",
+            "description": "Chemical components used in synthesis",
+            "required": [
+                "metal_sources",
+                "ligands",
+                "counter_ions",
+                "template_anions"
+            ],
+            "properties": {
+                "metal_sources": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "purity": {
+                                "type": "number"
+                            },
+                            "source": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "ligands": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "purity": {
+                                "type": "number"
+                            },
+                            "source": {
+                                "type": "string"
+                            },
+                            "synthesis": {
+                                "type": "object",
+                                "description": "Synthesis steps for ligand preparation",
+                                "properties": {
+                                    "steps": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "step_number": {
+                                                    "type": "integer"
+                                                },
+                                                "action": {
+                                                    "type": "string"
+                                                },
+                                                "parameters": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "temperature": {
+                                                            "type": "number"
+                                                        },
+                                                        "time": {
+                                                            "type": "number"
+                                                        },
+                                                        "solvent": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "counter_ions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "binding_strength": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "template_anions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "chemical_formula": {
+                                "type": "string"
+                            },
+                            "role": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "process_parameters": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "step_number": {
+                        "type": "integer"
+                    },
+                    "action": {
+                        "type": "string"
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "temperature": {
+                                "type": "number"
+                            },
+                            "time": {
+                                "type": "number"
+                            },
+                            "solvent": {
+                                "type": "string"
+                            },
+                            "pressure": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "vacuum": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "reaction_medium": {
+                                "type": "string"
+                            },
+                            "anion_concentration": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "characterization": {
+            "type": "object",
+            "description": "Analytical techniques used for structural and functional analysis",
+            "properties": {
+                "spectroscopic_methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Techniques like NMR, IR, NIR emission"
+                },
+                "structural_analysis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Methods like SCXRD, PXRD"
+                },
+                "thermal_analysis": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "TGA and DSC results"
+                }
+            }
+        },
+        "structural_properties": {
+            "type": "object",
+            "properties": {
+                "geometry": {
+                    "type": "string",
+                    "description": "Overall cage geometry (e.g., quadruple-stranded helicate)"
+                },
+                "symmetry": {
+                    "type": "string",
+                    "description": "Crystallographic symmetry (e.g., tetragonal P4\u0305n2 space group)"
+                },
+                "metal_stereochemistry": {
+                    "type": "string",
+                    "description": "Coordination environment of metal ions"
+                },
+                "window_dimensions": {
+                    "type": "object",
+                    "properties": {
+                        "minor_axis": {
+                            "type": "number"
+                        },
+                        "major_axis": {
+                            "type": "number"
+                        }
+                    },
+                    "description": "Dimensions of open windows in \u00c5 (e.g., 4.8 \u00c5 and 7.8 \u00c5)"
+                }
+            }
+        },
+        "host_guest_properties": {
+            "type": "object",
+            "properties": {
+                "guest_binding_selectivity": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Preferred guest binding hierarchy based on size and electronic effects"
+                },
+                "binding_thermodynamics": {
+                    "type": "object",
+                    "properties": {
+                        "association_constant": {
+                            "type": "number"
+                        },
+                        "delta_g": {
+                            "type": "number"
+                        },
+                        "delta_h": {
+                            "type": "number"
+                        },
+                        "t_delta_s": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "catalytic_activity": {
+                    "type": "object",
+                    "description": "Three-component aza-Darzens reaction parameters",
+                    "properties": {
+                        "reaction_conditions": {
+                            "type": "object",
+                            "properties": {
+                                "solvent": {
+                                    "type": "string"
+                                },
+                                "catalyst_loading": {
+                                    "type": "number"
+                                },
+                                "temperature": {
+                                    "type": "number"
+                                },
+                                "time": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "results": {
+                            "type": "object",
+                            "properties": {
+                                "yield": {
+                                    "type": "number"
+                                },
+                                "selectivity": {
+                                    "type": "string"
+                                },
+                                "substrate_scope": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

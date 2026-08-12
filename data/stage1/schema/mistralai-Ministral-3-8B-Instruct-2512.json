@@ -1,0 +1,394 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/metal_organic_cage_synthesis.schema.json",
+    "title": "Metal-Organic Cage Synthesis Process",
+    "description": "A schema for defining the synthesis process of Metal-Organic Cages (MOCs), including reactants, process parameters, characterization, and properties.",
+    "type": "object",
+    "properties": {
+        "moc_type": {
+            "type": "object",
+            "description": "The type and formula of the Metal-Organic Cage (MOC).",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the MOC, often denoted as '[MxLy]n[counter_ion]-n' or a shorthand like 'MOC 1'.",
+                    "example": "[Cu2I2(L1)2]0"
+                },
+                "formula": {
+                    "type": "string",
+                    "description": "The chemical formula of the MOC, including metal ion (M), ligand (L), and counter ion.",
+                    "example": "Cu2I2(L1)2"
+                },
+                "stoichiometry": {
+                    "type": "object",
+                    "description": "The stoichiometric ratios of metal ions, ligands, and counter ions.",
+                    "properties": {
+                        "metal_ion": {
+                            "type": "string",
+                            "description": "The metal ion used in the synthesis, represented as 'Mx' where x is the stoichiometric coefficient.",
+                            "example": "Cu2"
+                        },
+                        "ligand": {
+                            "type": "string",
+                            "description": "The ligand used in the synthesis, represented as 'Ly' where y is the stoichiometric coefficient.",
+                            "example": "I2(L1)2"
+                        },
+                        "counter_ion": {
+                            "type": "string",
+                            "description": "The counter ion used for charge balancing, represented as '[counter_ion]-n'.",
+                            "example": "PF6-"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "stoichiometry"
+            ]
+        },
+        "reactants": {
+            "type": "object",
+            "description": "The reactants used in the synthesis of the MOC.",
+            "properties": {
+                "metal_ion_source": {
+                    "type": "object",
+                    "description": "The source of the metal ion, typically a salt.",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name or formula of the metal ion source.",
+                            "example": "CuI"
+                        },
+                        "source_type": {
+                            "type": "string",
+                            "description": "Whether the source is commercially available or synthesized.",
+                            "enum": [
+                                "commercial",
+                                "synthesized"
+                            ],
+                            "example": "commercial"
+                        },
+                        "quantity": {
+                            "type": "string",
+                            "description": "The amount of metal ion source used, typically in millimoles (mmol) or moles (mol).",
+                            "example": "2 mmol"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "source_type",
+                        "quantity"
+                    ]
+                },
+                "ligand": {
+                    "type": "object",
+                    "description": "The ligand used in the synthesis.",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name or formula of the ligand.",
+                            "example": "L1"
+                        },
+                        "source_type": {
+                            "type": "string",
+                            "description": "Whether the ligand source is commercially available or synthesized.",
+                            "enum": [
+                                "commercial",
+                                "synthesized"
+                            ],
+                            "example": "synthesized"
+                        },
+                        "quantity": {
+                            "type": "string",
+                            "description": "The amount of ligand used, typically in millimoles (mmol) or moles (mol).",
+                            "example": "2 mmol"
+                        },
+                        "synthesis_details": {
+                            "type": "object",
+                            "description": "Details about the synthesis of the ligand if it was not commercially available.",
+                            "properties": {
+                                "steps": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Steps involved in the synthesis of the ligand."
+                                    },
+                                    "example": [
+                                        "Mix reagents A and B in solvent X at 25\u00b0C for 2 hours",
+                                        "Add catalyst Y and stir for 16 hours"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "source_type",
+                        "quantity"
+                    ]
+                },
+                "counter_ion_source": {
+                    "type": "object",
+                    "description": "The source of the counter ion, if applicable.",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The chemical name or formula of the counter ion source.",
+                            "example": "NH4PF6"
+                        },
+                        "source_type": {
+                            "type": "string",
+                            "description": "Whether the source is commercially available or synthesized.",
+                            "enum": [
+                                "commercial",
+                                "synthesized"
+                            ],
+                            "example": "commercial"
+                        },
+                        "quantity": {
+                            "type": "string",
+                            "description": "The amount of counter ion source used, typically in millimoles (mmol) or moles (mol).",
+                            "example": "4 mmol"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "metal_ion_source",
+                "ligand"
+            ]
+        },
+        "process_parameters": {
+            "type": "object",
+            "description": "The parameters and steps involved in the synthesis process.",
+            "properties": {
+                "steps": {
+                    "type": "array",
+                    "description": "The sequence of steps in the synthesis process.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "step_number": {
+                                "type": "integer",
+                                "description": "The step number in the synthesis process.",
+                                "minimum": 1
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "A description of the step, including any actions taken."
+                            },
+                            "solvent": {
+                                "type": "object",
+                                "description": "The solvent used in the step.",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "The name of the solvent."
+                                    },
+                                    "volume": {
+                                        "type": "string",
+                                        "description": "The volume of the solvent used, typically in milliliters (mL)."
+                                    },
+                                    "temperature": {
+                                        "type": "number",
+                                        "description": "The temperature at which the solvent is used, in Celsius (\u00b0C)."
+                                    }
+                                }
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "The temperature at which the reaction is conducted, in Celsius (\u00b0C).",
+                                "minimum": -273.15,
+                                "maximum": 1000
+                            },
+                            "pressure": {
+                                "type": "number",
+                                "description": "The pressure at which the reaction is conducted, in Pascals (Pa).",
+                                "minimum": 0,
+                                "maximum": 100000000
+                            },
+                            "time": {
+                                "type": "string",
+                                "description": "The duration of the step, typically in hours or minutes."
+                            },
+                            "stirring": {
+                                "type": "object",
+                                "description": "Stirring conditions during the step.",
+                                "properties": {
+                                    "speed": {
+                                        "type": "number",
+                                        "description": "The stirring speed in revolutions per minute (rpm)."
+                                    },
+                                    "method": {
+                                        "type": "string",
+                                        "description": "The method of stirring (e.g., magnetic stirrer, mechanical stirrer)."
+                                    }
+                                }
+                            },
+                            "solvent_removal": {
+                                "type": "object",
+                                "description": "Details on solvent removal if applicable.",
+                                "properties": {
+                                    "method": {
+                                        "type": "string",
+                                        "description": "The method of solvent removal (e.g., rotary evaporation, vacuum drying)."
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "description": "The duration of solvent removal."
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "step_number",
+                            "description"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "steps"
+            ]
+        },
+        "characterization": {
+            "type": "object",
+            "description": "The characterization methods used to analyze the MOC.",
+            "properties": {
+                "methods": {
+                    "type": "array",
+                    "description": "The list of characterization methods used.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "The name of the characterization method (e.g., NMR, mass-spec, PXRD).",
+                                "enum": [
+                                    "NMR",
+                                    "mass-spec",
+                                    "PXRD",
+                                    "IR",
+                                    "DOSY",
+                                    "XRD",
+                                    "UV-Vis",
+                                    "conductivity",
+                                    "TGA",
+                                    "other"
+                                ]
+                            },
+                            "details": {
+                                "type": "string",
+                                "description": "Additional details about the method, such as equipment used or specific parameters."
+                            }
+                        },
+                        "required": [
+                            "name"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "methods"
+            ]
+        },
+        "host_guest_properties": {
+            "type": "object",
+            "description": "The host-guest properties and applications of the MOC.",
+            "properties": {
+                "guest_molecules": {
+                    "type": "array",
+                    "description": "The small molecules (guests) trapped by the MOC.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "The name of the guest molecule."
+                            },
+                            "quantity": {
+                                "type": "string",
+                                "description": "The amount of guest molecule used, typically in millimoles (mmol) or moles (mol)."
+                            },
+                            "binding_affinity": {
+                                "type": "string",
+                                "description": "The binding affinity or interaction details with the MOC."
+                            }
+                        }
+                    }
+                },
+                "applications": {
+                    "type": "array",
+                    "description": "Applications of the MOC based on its host-guest properties.",
+                    "items": {
+                        "type": "string",
+                        "description": "Possible applications such as catalysis, separation, or sensing."
+                    }
+                }
+            }
+        },
+        "other_properties": {
+            "type": "object",
+            "description": "Additional properties of the MOC, such as stability, stereochemistry, etc.",
+            "properties": {
+                "stability": {
+                    "type": "object",
+                    "description": "The stability of the MOC under various conditions.",
+                    "properties": {
+                        "solvent": {
+                            "type": "array",
+                            "description": "Solvents in which the MOC is stable.",
+                            "items": {
+                                "type": "string",
+                                "description": "Name of a solvent."
+                            }
+                        },
+                        "temperature_range": {
+                            "type": "object",
+                            "description": "The temperature range over which the MOC remains stable.",
+                            "properties": {
+                                "min": {
+                                    "type": "number",
+                                    "description": "Minimum temperature in Celsius (\u00b0C).",
+                                    "minimum": -273.15
+                                },
+                                "max": {
+                                    "type": "number",
+                                    "description": "Maximum temperature in Celsius (\u00b0C).",
+                                    "minimum": -273.15
+                                }
+                            }
+                        }
+                    }
+                },
+                "stereochemistry": {
+                    "type": "string",
+                    "description": "The stereochemical configuration of the MOC, if applicable."
+                },
+                "other_characterizations": {
+                    "type": "array",
+                    "description": "Other characterization methods or properties measured.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "Name of the characterization method or property."
+                            },
+                            "details": {
+                                "type": "string",
+                                "description": "Details about the characterization or property."
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "moc_type",
+        "reactants",
+        "process_parameters",
+        "characterization"
+    ]
+}
