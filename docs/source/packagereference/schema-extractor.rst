@@ -189,9 +189,53 @@ semantic use.
 Python API
 ==========
 
-The same workflow is implemented by the functions below.
+The same three-stage workflow can be called directly from Python. These
+functions read provider, process, input-path, and output-path settings from the
+same ``.env`` configuration used by the CLI.
 
-.. automodule:: schema_miner.schema_extractor
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. code-block:: python
+
+   from pathlib import Path
+
+   from schema_miner.schema_extractor import (
+       extract_schema_stage1,
+       extract_schema_stage2,
+       extract_schema_stage3,
+   )
+
+   # Stage 1: read STAGE1_SPECS_PATH from .env and create the first schema.
+   initial_schema = extract_schema_stage1(save_schema=True)
+
+   # Stage 2: refine the schema with expert feedback and one scientific paper.
+   refined_schema = extract_schema_stage2(
+       initial_schema=Path("data/stage1/schema/<model>.json"),
+       expert_review=Path("data/stage1/feedback/<model>.txt"),
+       scientific_paper=Path("data/stage2/batch1/Bairagiya_2024.pdf"),
+       save_schema=True,
+   )
+
+   # Stage 3: continue refinement with the broader corpus.
+   final_schema = extract_schema_stage3(
+       refined_schema=Path("data/stage2/schema-batch1/<model>.json"),
+       expert_review=Path("data/stage2/feedback-batch1/<model>.txt"),
+       scientific_paper=Path("data/stage3/batch1/<paper>.pdf"),
+       save_schema=True,
+   )
+
+``extract_schema_stage1(save_schema=False)``
+   Reads the process specification from ``STAGE1_SPECS_PATH`` and returns the
+   initial schema as a ``dict``. When ``save_schema=True``, the schema is also
+   written to ``RESULTS_PATH/<model>.json``.
+
+``extract_schema_stage2(initial_schema, expert_review, scientific_paper, save_schema=False)``
+   Refines a Stage 1 schema using one expert-feedback input and one scientific
+   paper. ``initial_schema`` may be a dictionary or JSON file path;
+   ``expert_review`` may be inline text or a text/Markdown file path; and
+   ``scientific_paper`` may be a PDF or text file path. The function returns the
+   updated schema as a ``dict`` and optionally writes it to ``RESULTS_PATH``.
+
+``extract_schema_stage3(refined_schema, expert_review, scientific_paper, save_schema=False)``
+   Applies the same refinement pattern to a Stage 2 schema and a broader
+   scientific-paper corpus. ``refined_schema`` may be a dictionary or JSON file
+   path. The returned dictionary is the final schema used for downstream
+   ontology grounding.
