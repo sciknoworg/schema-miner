@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-usage-scenarios">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-linked-data-paths">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -68,6 +68,7 @@
           <p>
             These four input variables apply to every stage of the workflow. They are part of what makes <code>schema-miner</code> plug-and-play over LLM providers and scientific processes. The normal starting point is to declare these variables in the project-level <code>.env</code> file.
           </p>
+          <a class="env-example-link" href="https://github.com/sciknoworg/schema-miner/blob/main/.env.example" rel="noopener">View .env.example</a>
         </div>
 
         <div class="workflow-steps">
@@ -105,7 +106,7 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
                 </ul>
               </dd>
               <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the directory where <code>data/stage1/schema/[model-name].json</code> and <code>data/stage1/schema/stage1.log</code> are written; for example, <code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>.</dd>
+              <dd><code>RESULTS_PATH</code> points to the directory where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/schema" rel="noopener"><code>data/stage1/schema/[model-name].json</code></a> and <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/schema" rel="noopener"><code>data/stage1/schema/stage1.log</code></a> are written; for example, <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/schema/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></a>.</dd>
               <dt>CLI tags</dt>
               <dd><code>--stage 1</code>.</dd>
               <dt>Command line usage scenarios</dt>
@@ -113,7 +114,7 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
                 <pre class="workflow-command"><code>schema-miner --stage 1</code></pre>
               </dd>
               <dt>Expert feedback</dt>
-              <dd><code>data/stage1/feedback/[model-name].txt</code> stores expert feedback used as input to Stage 2.</dd>
+              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/feedback" rel="noopener"><code>data/stage1/feedback/[model-name].txt</code></a> stores expert feedback used as input to Stage 2.</dd>
               </dl>
             </div>
           </article>
@@ -132,13 +133,13 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <dt>Stage input variables</dt>
               <dd>
                 <ul class="file-list">
-                  <li><code>STAGE2_PAPERS_PATH</code> points to the curated seed-paper directory, for example <code>data/stage2/batch1</code> with papers such as <code>Bairagya_2024.pdf</code> and <code>Browne_2013.pdf</code>. Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</li>
-                  <li>The first paper starts from the Stage 1 schema supplied with <code>--schema</code>, for example <code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>.</li>
-                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <code>data/stage1/feedback/[model-name].txt</code>.</li>
+                  <li><code>STAGE2_PAPERS_PATH</code> points to the curated seed-paper directory, for example <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/batch1" rel="noopener"><code>data/stage2/batch1</code></a> with papers such as <code>Bairagya_2024.pdf</code> and <code>Browne_2013.pdf</code>. Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</li>
+                  <li>The first paper starts from the Stage 1 schema supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/schema/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
+                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage1/feedback" rel="noopener"><code>data/stage1/feedback/[model-name].txt</code></a>.</li>
                 </ul>
               </dd>
               <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the Stage 2 batch output directory, where <code>data/stage2/schema-batchN/[model-name].json</code>, <code>data/stage2/schema-batchN/stage2-batchN.log</code>, and intermediate schemas under <code>data/stage2/schema-batchN/intermediate-schema/[model-name]/</code> are written.</dd>
+              <dd><code>RESULTS_PATH</code> points to the Stage 2 batch output directory, where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1" rel="noopener"><code>data/stage2/schema-batchN/[model-name].json</code></a>, <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1" rel="noopener"><code>data/stage2/schema-batchN/stage2-batchN.log</code></a>, and intermediate schemas under <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/schema-batch1/intermediate-schema" rel="noopener"><code>data/stage2/schema-batchN/intermediate-schema/[model-name]/</code></a> are written.</dd>
               <dt>CLI tags</dt>
               <dd>
                 <ul class="file-list">
@@ -176,7 +177,7 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
                 </div>
               </dd>
               <dt>Expert feedback</dt>
-              <dd><code>data/stage2/feedback-batchN/[model-name].txt</code> records expert feedback for the next Stage 2 batch or the Stage 3 starting point; for example, <code>data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt</code>.</dd>
+              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/feedback-batch1" rel="noopener"><code>data/stage2/feedback-batchN/[model-name].txt</code></a> records expert feedback for the next Stage 2 batch or the Stage 3 starting point; for example, <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt" rel="noopener"><code>data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt</code></a>.</dd>
               </dl>
             </div>
           </article>
@@ -195,13 +196,13 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <dt>Stage input variables</dt>
               <dd>
                 <ul class="file-list">
-                  <li><code>STAGE3_PAPERS_PATH</code> points to the extended-corpus directory, for example <code>data/stage3/batch1</code> with papers such as <code>1-s2.0-S0022286025034994-main.pdf</code>. Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</li>
-                  <li>The first Stage 3 paper starts from the refined Stage 2 schema supplied with <code>--schema</code>, for example <code>data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code>.</li>
-                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <code>data/stage2/feedback-batch2/[model-name].txt</code>.</li>
+                  <li><code>STAGE3_PAPERS_PATH</code> points to the extended-corpus directory, for example <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/batch1" rel="noopener"><code>data/stage3/batch1</code></a> with papers such as <code>1-s2.0-S0022286025034994-main.pdf</code>. Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</li>
+                  <li>The first Stage 3 paper starts from the refined Stage 2 schema supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
+                  <li>Optional <code>--expert-feedback &lt;text or path&gt;</code> can provide inline feedback or a file such as <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/feedback-batch2" rel="noopener"><code>data/stage2/feedback-batch2/[model-name].txt</code></a>.</li>
                 </ul>
               </dd>
               <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the Stage 3 batch output directory, where <code>data/stage3/schema-batchN/[model-name].json</code>, <code>data/stage3/schema-batchN/stage3-batchN.log</code>, and intermediate schemas under <code>data/stage3/schema-batchN/intermediate-schema/[model-name]/</code> are written.</dd>
+              <dd><code>RESULTS_PATH</code> points to the Stage 3 batch output directory, where <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1" rel="noopener"><code>data/stage3/schema-batchN/[model-name].json</code></a>, <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1" rel="noopener"><code>data/stage3/schema-batchN/stage3-batchN.log</code></a>, and intermediate schemas under <a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/schema-batch1/intermediate-schema" rel="noopener"><code>data/stage3/schema-batchN/intermediate-schema/[model-name]/</code></a> are written.</dd>
               <dt>CLI tags</dt>
               <dd>
                 <ul class="file-list">
@@ -239,7 +240,7 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
                 </div>
               </dd>
               <dt>Expert feedback</dt>
-              <dd><code>data/stage3/feedback-batchN/[model-name].txt</code> is used when another refinement batch follows; the final Stage 3 schema is the input to ontology grounding.</dd>
+              <dd><a href="https://github.com/sciknoworg/schema-miner/tree/main/data/stage3/feedback-batch1" rel="noopener"><code>data/stage3/feedback-batchN/[model-name].txt</code></a> is used when another refinement batch follows; the final Stage 3 schema is the input to ontology grounding.</dd>
               </dl>
             </div>
           </article>
@@ -258,13 +259,13 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               <dt>Stage input variables</dt>
               <dd>
                 <ul class="file-list">
-                  <li>The final refined schema is supplied with <code>--schema</code>, for example <code>data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code>.</li>
+                  <li>The final refined schema is supplied with <code>--schema</code>, for example <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json" rel="noopener"><code>data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></a>.</li>
                   <li><code>--ontology-grounding</code> selects <code>prompt</code> or <code>agentic</code> grounding.</li>
                   <li>Shared <code>.env</code> variables such as <code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, and <code>PROCESS_DESCRIPTION</code> provide the model and process context.</li>
                 </ul>
               </dd>
               <dt>Output path</dt>
-              <dd><code>RESULTS_PATH</code> points to the directory where ontology-aligned JSON is written, typically as <code>[schema-name]-with-qudt.json</code>; reference outputs include <code>results/Ideal Schema/Atomic-Layer-Deposition/*-with-qudt.json</code> and <code>results/Ideal Schema/Atomic-Layer-Etching/*-with-qudt.json</code>.</dd>
+              <dd><code>RESULTS_PATH</code> points to the directory where ontology-aligned JSON is written, typically as <code>[schema-name]-with-qudt.json</code>; reference outputs include <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema/Atomic-Layer-Deposition" rel="noopener"><code>results/Ideal Schema/Atomic-Layer-Deposition/*-with-qudt.json</code></a> and <a href="https://github.com/sciknoworg/schema-miner/tree/main/results/Ideal%20Schema/Atomic-Layer-Etching" rel="noopener"><code>results/Ideal Schema/Atomic-Layer-Etching/*-with-qudt.json</code></a>.</dd>
               <dt>CLI tags</dt>
               <dd><code>--ontology-grounding prompt</code> or <code>--ontology-grounding agentic</code>, plus <code>--schema</code>.</dd>
               <dt>Command line usage scenarios</dt>
@@ -302,50 +303,6 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
               </figure>
             </div>
           </article>
-        </div>
-
-        <div class="env-panel" aria-label="Environment configuration">
-          <div class="env-heading">
-            <div>
-              <p class="stage-label">Configuration Reference</p>
-              <h3>.env file variables</h3>
-            </div>
-            <a class="env-example-link" href="https://github.com/sciknoworg/schema-miner/blob/main/.env.example" rel="noopener">View .env.example</a>
-          </div>
-          <p>
-            The CLI reads a project-level <code>.env</code> file before each command. Keep the provider and process variables stable, then update only the stage path and output path for the stage being run.
-          </p>
-          <div class="env-layout">
-            <pre class="env-snippet"><code># -- Active LLM Provider --
-LLM_PROVIDER = 'SAIA'
-LLM_MODEL = 'qwen3-30b-a3b-instruct-2507'
-SAIA_API_KEY = 'Your API key'
-SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'
-
-# -- Process Configuration --
-PROCESS_NAME = 'Atomic Layer Deposition'
-PROCESS_DESCRIPTION = 'ALD experimental schema mining workflow'
-
-# -- Data Path Configuration --
-STAGE1_SPECS_PATH = 'data/stage1/process-description.pdf'
-STAGE2_PAPERS_PATH = 'data/stage2/batch1'
-STAGE3_PAPERS_PATH = 'data/stage3/batch1'
-
-# -- Output Path Configuration --
-RESULTS_PATH = 'data/stage1/schema'</code></pre>
-            <dl class="env-stage-notes">
-              <dt>Provider</dt>
-              <dd>Use <code>OPENAI_API_KEY</code> for OpenAI, <code>SAIA_API_KEY</code>/<code>SAIA_BASE_URL</code> for KISSKI SAIA or OpenRouter, or <code>HuggingFace_Access_Token</code> with <code>HUGGINGFACE_USE_LOCAL</code> for Hugging Face GPU runs.</dd>
-              <dt>Stage 1</dt>
-              <dd><code>STAGE1_SPECS_PATH</code> points to the process specification; <code>RESULTS_PATH</code> points to the Stage 1 schema directory.</dd>
-              <dt>Stage 2</dt>
-              <dd><code>STAGE2_PAPERS_PATH</code> points to a curated batch such as <code>data/stage2/batch1</code>; update <code>RESULTS_PATH</code> to the matching schema batch output directory.</dd>
-              <dt>Stage 3</dt>
-              <dd><code>STAGE3_PAPERS_PATH</code> points to a broader-corpus batch such as <code>data/stage3/batch1</code>; update <code>RESULTS_PATH</code> to the matching Stage 3 output directory.</dd>
-              <dt>Grounding</dt>
-              <dd>Ontology grounding uses the final schema passed with <code>--schema</code> and writes grounded output under <code>RESULTS_PATH</code>.</dd>
-            </dl>
-          </div>
         </div>
       </section>
 
@@ -452,31 +409,6 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
               For ALD, GPT-4o and LLaMA 3.1 (8B) maintained the most coherent schema structures across refinement stages. For ALE, GPT-4o and GPT-4-turbo were the most reliable at capturing the process structure. The hybrid grounding strategy reduced unnecessary LLM calls by using direct ontology lookups before semantic search.
             </p>
           </div>
-        </div>
-      </section>
-
-      <section class="section wide" id="resources">
-        <div class="resource-panel">
-          <div>
-            <h2>Submit And Resources</h2>
-            <p>
-              Evaluate your system by running <code>schema-miner</code><sup>pro</sup> on the released ALD and ALE specifications, literature corpora, and ideal schemas. The repository includes the data, results, and installation guide for reproducing the workflow.
-            </p>
-            <div class="resource-row left">
-              <a class="pill code" href="https://github.com/sciknoworg/schema-miner/tree/main/data" rel="noopener">GitHub Dataset</a>
-              <a class="pill code" href="https://github.com/sciknoworg/schema-miner/tree/main/results" rel="noopener">Results</a>
-              <a class="pill docs" href="https://schema-miner.readthedocs.io/en/latest/gettingstarted/installation.html" rel="noopener">Install Guide</a>
-            </div>
-          </div>
-          <aside class="contact-box" aria-label="Community and contact">
-            <h3>Community</h3>
-            <p>
-              Collaboration inquiries: Jennifer D&#39;Souza, jennifer.dsouza [at] tib.eu.
-            </p>
-            <p>
-              Development questions: open an issue or contact Sameer Sadruddin, sameer.sadruddin [at] tib.eu.
-            </p>
-          </aside>
         </div>
       </section>
 
