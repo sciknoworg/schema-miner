@@ -309,17 +309,15 @@ If you use this repository in your research or applications, please cite the fol
   }
   ```
 - **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow**
-  > Sameer Sadruddin, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels.
-  > **SCHEMA-MINER<sup>pro</sup>: Agentic AI for Ontology Grounding over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow.**
-  > In *Semantic Web Journal.*
-  > [https://www.semantic-web-journal.net/system/files/swj3871.pdf](https://www.semantic-web-journal.net/system/files/swj3871.pdf)
+  > Sadruddin, Sameer, Jennifer D’Souza, Eleni Poupaki, Alex Watkins, Bora Karasulu, Sören Auer, Adrie Mackus, and Erwin Kessels. "Schema-miner pro: Agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow." *Semantic web* 17, no. 3 (2026): 22104968261431521.
+  > [https://doi.org/10.1177/22104968261431521](https://doi.org/10.1177/22104968261431521)
 
   ### 📌 BibTeX
   ```bibtex
 	@article{sadruddin2026schema,
 	  title={Schema-miner pro: Agentic AI for ontology grounding over LLM-discovered scientific schemas in a human-in-the-loop workflow},
 	  author={Sadruddin, Sameer and D’Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
-	  journal={Semantic Web},
+	  journal={Semantic web},
 	  volume={17},
 	  number={3},
 	  pages={22104968261431521},
