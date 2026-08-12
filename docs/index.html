@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-linked-data-paths">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-citation-tutorial-order">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -306,43 +306,6 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
         </div>
       </section>
 
-      <section class="section wide" id="tutorials">
-        <div class="section-copy">
-          <h2>Tutorial Notebooks</h2>
-          <p>
-            Use the provider-specific notebooks for guided, end-to-end runs of the <code>schema-miner</code><sup>pro</sup> workflow.
-          </p>
-        </div>
-
-        <div class="workflow-tutorials" aria-label="Workflow tutorial notebooks">
-          <article class="tutorial-card tutorial-card-hf">
-            <p class="tutorial-provider">Hugging Face GPU</p>
-            <h3>Local model notebook</h3>
-            <p>Run the three-stage workflow with a local Hugging Face model on a CUDA-enabled GPU.</p>
-            <p class="tutorial-meta">Example model: mistralai/Ministral-3-3B-Instruct-2512</p>
-            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb" rel="noopener">Open notebook</a>
-          </article>
-          <article class="tutorial-card tutorial-card-saia">
-            <p class="tutorial-provider">KISSKI SAIA</p>
-            <h3>Academic Cloud API notebook</h3>
-            <p>Run the workflow through the SAIA OpenAI-compatible endpoint without a local GPU.</p>
-            <p class="tutorial-meta">Endpoint: chat-ai.academiccloud.de/v1</p>
-            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb" rel="noopener">Open notebook</a>
-          </article>
-          <article class="tutorial-card tutorial-card-openrouter">
-            <p class="tutorial-provider">OpenRouter</p>
-            <h3>Remote API notebook</h3>
-            <p>Run the same staged workflow with OpenRouter through <code>schema-miner</code>'s SAIA-compatible backend.</p>
-            <p class="tutorial-meta">Endpoint: openrouter.ai/api/v1</p>
-            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb" rel="noopener">Open notebook</a>
-          </article>
-        </div>
-
-        <p class="workflow-data-note">
-          <strong>File naming:</strong> tutorial outputs use a model-specific <code>&lt;model&gt;</code> stem such as <code>mistralai-Ministral-3-8B-Instruct-2512</code>, <code>qwen3-30b-a3b-instruct-2507</code>, or <code>qwen3-235b-a22b</code>. Stage 2 and Stage 3 detect available <code>batchN/</code> folders and write matching <code>schema-batchN/</code>, <code>feedback-batchN/</code>, and log files.
-        </p>
-      </section>
-
       <section class="section wide" id="example-output">
         <div class="section-copy">
           <h2>Example Output from <code>schema-miner</code></h2>
@@ -412,12 +375,69 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
         </div>
       </section>
 
+      <section class="section wide" id="tutorials">
+        <div class="section-copy">
+          <h2>Tutorial Notebooks</h2>
+          <p>
+            Use the provider-specific notebooks for guided, end-to-end runs of the <code>schema-miner</code><sup>pro</sup> workflow.
+          </p>
+        </div>
+        <div class="workflow-tutorials" aria-label="Workflow tutorial notebooks">
+          <article class="tutorial-card tutorial-card-hf">
+            <p class="tutorial-provider">Hugging Face GPU</p>
+            <h3>Local model notebook</h3>
+            <p>Run the three-stage workflow with a local Hugging Face model on a CUDA-enabled GPU.</p>
+            <p class="tutorial-meta">Example model: mistralai/Ministral-3-3B-Instruct-2512</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+          <article class="tutorial-card tutorial-card-saia">
+            <p class="tutorial-provider">KISSKI SAIA</p>
+            <h3>Academic Cloud API notebook</h3>
+            <p>Run the workflow through the SAIA OpenAI-compatible endpoint without a local GPU.</p>
+            <p class="tutorial-meta">Endpoint: chat-ai.academiccloud.de/v1</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+          <article class="tutorial-card tutorial-card-openrouter">
+            <p class="tutorial-provider">OpenRouter</p>
+            <h3>Remote API notebook</h3>
+            <p>Run the same staged workflow with OpenRouter through <code>schema-miner</code>'s SAIA-compatible backend.</p>
+            <p class="tutorial-meta">Endpoint: openrouter.ai/api/v1</p>
+            <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb" rel="noopener">Open notebook</a>
+          </article>
+        </div>
+
+        <p class="workflow-data-note">
+          <strong>File naming:</strong> tutorial outputs use a model-specific <code>&lt;model&gt;</code> stem such as <code>mistralai-Ministral-3-8B-Instruct-2512</code>, <code>qwen3-30b-a3b-instruct-2507</code>, or <code>qwen3-235b-a22b</code>. Stage 2 and Stage 3 detect available <code>batchN/</code> folders and write matching <code>schema-batchN/</code>, <code>feedback-batchN/</code>, and log files.
+        </p>
+      </section>
+
       <section class="section narrow" id="citation">
         <div class="citation-heading">
           <h2>Citation</h2>
-          <button class="copy-button" type="button" data-copy-target="bibtex">Copy BibTeX</button>
         </div>
-        <pre><code id="bibtex">@article{sadruddin2026schema,
+        <div class="citation-entry">
+          <div class="citation-heading">
+            <h3>ESWC 2025</h3>
+            <button class="copy-button" type="button" data-copy-target="bibtex-eswc">Copy BibTeX</button>
+          </div>
+          <pre><code id="bibtex-eswc">@InProceedings{10.1007/978-3-031-94578-6_14,
+  author    = {Sadruddin, Sameer and D'Souza, Jennifer and Poupaki, Eleni and Watkins, Alex and Babaei Giglou, Hamed and Rula, Anisa and Karasulu, Bora and Auer, S{\"o}ren and Mackus, Adrie and Kessels, Erwin},
+  editor    = {Curry, Edward and Acosta, Maribel and Poveda-Villal{\'o}n, Maria and van Erp, Marieke and Ojo, Adegboyega and Hose, Katja and Shimizu, Cogan and Lisena, Pasquale},
+  title     = {LLMs4SchemaDiscovery: A Human-in-the-Loop Workflow for Scientific Schema Mining with Large Language Models},
+  booktitle = {The Semantic Web},
+  year      = {2025},
+  publisher = {Springer Nature Switzerland},
+  address   = {Cham},
+  pages     = {244--261},
+  isbn      = {978-3-031-94578-6}
+}</code></pre>
+        </div>
+        <div class="citation-entry">
+          <div class="citation-heading">
+            <h3>Semantic Web 2026</h3>
+            <button class="copy-button" type="button" data-copy-target="bibtex-semantic-web">Copy BibTeX</button>
+          </div>
+          <pre><code id="bibtex-semantic-web">@article{sadruddin2026schema,
   title = {SCHEMA-MINERpro: Agentic AI for Ontology Grounding Over LLM-Discovered Scientific Schemas in a Human-in-the-Loop Workflow},
   author = {Sadruddin, Sameer and Poupaki, Eleni and Watkins, Alex and Karasulu, Bora and Mackus, Adriaan J. M. and Kessels, Erwin and Auer, S{\"o}ren and D'Souza, Jennifer},
   journal = {Semantic Web},
@@ -427,6 +447,7 @@ RESULTS_PATH = [path where the output schema and log will be stored]</code></pre
   year = {2026},
   doi = {10.1177/22104968261431521}
 }</code></pre>
+        </div>
         <p class="citation-links">
           ESWC 2025 paper DOI:
           <a href="https://doi.org/10.1007/978-3-031-94578-6_14" rel="noopener">10.1007/978-3-031-94578-6_14</a>.
