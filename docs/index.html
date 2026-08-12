@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-workflow-cli">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-env-reference">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -59,21 +59,6 @@
           </p>
         </div>
 
-        <div class="env-panel" aria-label="Environment configuration">
-          <h3>.env file variables</h3>
-          <p>
-            The CLI reads configuration from a project-level <code>.env</code> file. Set the shared workflow variables once, then update the stage-specific paths for the stage you intend to run.
-          </p>
-          <dl class="env-grid">
-            <dt>Core workflow</dt>
-            <dd><code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>, <code>RESULTS_PATH</code>.</dd>
-            <dt>Provider credentials</dt>
-            <dd><code>OPENAI_API_KEY</code> for OpenAI; <code>SAIA_API_KEY</code> and <code>SAIA_BASE_URL</code> for KISSKI SAIA or OpenRouter; <code>HuggingFace_Access_Token</code> and <code>HUGGINGFACE_USE_LOCAL</code> for Hugging Face.</dd>
-            <dt>Stage data paths</dt>
-            <dd><code>STAGE1_SPECS_PATH=data/stage1/process-description.pdf</code>, <code>STAGE2_PAPERS_PATH=data/stage2/batch1</code> or <code>data/stage2/batch2</code>, and <code>STAGE3_PAPERS_PATH=data/stage3/batch1</code> or <code>data/stage3/batch2</code>.</dd>
-          </dl>
-        </div>
-
         <div class="workflow-steps">
           <article class="workflow-step">
             <div class="workflow-step-heading">
@@ -91,11 +76,7 @@
               <dt>CLI tags</dt>
               <dd><code>--stage 1</code>.</dd>
               <dt>Usage scenario</dt>
-              <dd><pre class="workflow-command"><code># .env
-STAGE1_SPECS_PATH=data/stage1/process-description.pdf
-RESULTS_PATH=data/stage1/schema
-
-schema-miner --stage 1</code></pre></dd>
+              <dd><pre class="workflow-command"><code>schema-miner --stage 1</code></pre></dd>
               <dt>Input files</dt>
               <dd><code>data/stage1/process-description.pdf</code> and the companion process metadata in <code>data/stage1/process.txt</code>.</dd>
               <dt>Output files</dt>
@@ -122,11 +103,7 @@ schema-miner --stage 1</code></pre></dd>
               <dt>CLI tags</dt>
               <dd><code>--stage 2</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
               <dt>Usage scenario</dt>
-              <dd><pre class="workflow-command"><code># .env for Stage 2 batch 1
-STAGE2_PAPERS_PATH=data/stage2/batch1
-RESULTS_PATH=data/stage2/schema-batch1
-
-schema-miner --stage 2 \
+              <dd><pre class="workflow-command"><code>schema-miner --stage 2 \
     --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt \
     --papers all</code></pre></dd>
@@ -156,11 +133,7 @@ schema-miner --stage 2 \
               <dt>CLI tags</dt>
               <dd><code>--stage 3</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
               <dt>Usage scenario</dt>
-              <dd><pre class="workflow-command"><code># .env for Stage 3 batch 1
-STAGE3_PAPERS_PATH=data/stage3/batch1
-RESULTS_PATH=data/stage3/schema-batch1
-
-schema-miner --stage 3 \
+              <dd><pre class="workflow-command"><code>schema-miner --stage 3 \
     --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt \
     --papers all</code></pre></dd>
@@ -190,10 +163,7 @@ schema-miner --stage 3 \
               <dt>CLI tags</dt>
               <dd><code>--ontology-grounding prompt</code> or <code>--ontology-grounding agentic</code>, plus <code>--schema</code>.</dd>
               <dt>Usage scenario</dt>
-              <dd><pre class="workflow-command"><code># .env
-RESULTS_PATH=results/grounded-schema
-
-schema-miner --ontology-grounding prompt \
+              <dd><pre class="workflow-command"><code>schema-miner --ontology-grounding prompt \
     --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json
 
 schema-miner --ontology-grounding agentic \
@@ -222,6 +192,50 @@ schema-miner --ontology-grounding agentic \
               </figure>
             </div>
           </article>
+        </div>
+
+        <div class="env-panel" aria-label="Environment configuration">
+          <div class="env-heading">
+            <div>
+              <p class="stage-label">Configuration Reference</p>
+              <h3>.env file variables</h3>
+            </div>
+            <a class="env-example-link" href="https://github.com/sciknoworg/schema-miner/blob/main/.env.example" rel="noopener">View .env.example</a>
+          </div>
+          <p>
+            The CLI reads a project-level <code>.env</code> file before each command. Keep the provider and process variables stable, then update only the stage path and output path for the stage being run.
+          </p>
+          <div class="env-layout">
+            <pre class="env-snippet"><code># -- Active LLM Provider --
+LLM_PROVIDER = 'SAIA'
+LLM_MODEL = 'qwen3-30b-a3b-instruct-2507'
+SAIA_API_KEY = 'Your API key'
+SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'
+
+# -- Process Configuration --
+PROCESS_NAME = 'Atomic Layer Deposition'
+PROCESS_DESCRIPTION = 'ALD experimental schema mining workflow'
+
+# -- Data Path Configuration --
+STAGE1_SPECS_PATH = 'data/stage1/process-description.pdf'
+STAGE2_PAPERS_PATH = 'data/stage2/batch1'
+STAGE3_PAPERS_PATH = 'data/stage3/batch1'
+
+# -- Output Path Configuration --
+RESULTS_PATH = 'data/stage1/schema'</code></pre>
+            <dl class="env-stage-notes">
+              <dt>Provider</dt>
+              <dd>Use <code>OPENAI_API_KEY</code> for OpenAI, <code>SAIA_API_KEY</code>/<code>SAIA_BASE_URL</code> for KISSKI SAIA or OpenRouter, or <code>HuggingFace_Access_Token</code> with <code>HUGGINGFACE_USE_LOCAL</code> for Hugging Face GPU runs.</dd>
+              <dt>Stage 1</dt>
+              <dd><code>STAGE1_SPECS_PATH</code> points to the process specification; <code>RESULTS_PATH</code> points to the Stage 1 schema directory.</dd>
+              <dt>Stage 2</dt>
+              <dd><code>STAGE2_PAPERS_PATH</code> points to a curated batch such as <code>data/stage2/batch1</code>; update <code>RESULTS_PATH</code> to the matching schema batch output directory.</dd>
+              <dt>Stage 3</dt>
+              <dd><code>STAGE3_PAPERS_PATH</code> points to a broader-corpus batch such as <code>data/stage3/batch1</code>; update <code>RESULTS_PATH</code> to the matching Stage 3 output directory.</dd>
+              <dt>Grounding</dt>
+              <dd>Ontology grounding uses the final schema passed with <code>--schema</code> and writes grounded output under <code>RESULTS_PATH</code>.</dd>
+            </dl>
+          </div>
         </div>
       </section>
 
