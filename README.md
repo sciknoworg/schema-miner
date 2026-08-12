@@ -79,7 +79,7 @@ HUGGINGFACE_USE_LOCAL = False                            # True = load model loc
 
 #### Supported LLM Providers
 
-Schema-Miner ships a dedicated integration for each provider listed below. Any other service that exposes an **OpenAI-compatible API** can be used through the `SAIA` provider type — just supply your API key and the service's base URL.
+Schema-Miner ships a dedicated integration for each provider listed below. Any other service that exposes an **OpenAI-compatible API** can be used through the `SAIA` provider type — just supply your API key and the service's base URL. The current default is `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1`.
 
 | Provider | `LLM_PROVIDER` value | Example models | Notes |
 |---|---|---|---|
@@ -94,18 +94,18 @@ Schema-Miner ships a dedicated integration for each provider listed below. Any o
 
 ### 🔬 Process Configuration
 
-Define the scientific process whose schema you want to discover:
+In the `.env` file, declare the variables for the scientific process whose schema you want to discover.
 
 ```ini
 PROCESS_NAME = '<your-process-name>'
-PROCESS_DESCRIPTION = '<a brief description of the process>'
+PROCESS_DESCRIPTION = '<a brief description of the process in 2 or 3 sentences>'
 ```
 
 These values are injected into every LLM prompt as scientific context.
 
 ### 📂 Data Paths
 
-Point schema-miner to your input documents where each stage reads only its own data path:
+Point schema-miner to your input documents pertinent to the respective specified stage. Stage 1 i.e. initial schema mining relies on just one document which is often a list of 5 to 15 properties written by a domain expert to get the schema mining started. Stages 2 and 3, on the other hand, are collections of scientific papers that deepen the schema mining process.
 
 ```ini
 # Stage 1 — path to the process specification document (PDF or plain text)
@@ -120,7 +120,7 @@ STAGE3_PAPERS_PATH = 'data/stage-3/my-process/papers/'
 
 ### 📤 Output Configuration
 
-Set the directory where extracted schemas will be saved:
+Set the directory where the mined schema as the output of that stage will be saved.
 
 ```ini
 RESULTS_PATH = 'results/my-run/'
@@ -134,36 +134,8 @@ Schemas are saved at path `RESULTS_PATH/<model>.json`, where `<model>` is `LLM_M
 
 Schema-Miner can be used in two ways:
 
-1. **Interactive tutorial notebooks** — guided, end-to-end workflows for running Schema-Miner with different LLM providers and incorporating expert feedback between refinement steps
-2. **CLI** — command-line interface for direct execution of the Schema-Miner workflow
-
----
-
-## 📓 Tutorial Notebooks
-
-For a quick start, choose the tutorial corresponding to your preferred LLM provider:
-
-<div align="center">
-
-|  | Tutorial | Inference | Example Model | GPU Required |
-| --- | --- | --- | --- | --- |
-| 1 | [Hugging Face — Local GPU](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb) | Local | `mistralai/Ministral-3-8B-Instruct-2512` | Yes |
-| 2 | [SAIA](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb) | Remote API | `qwen3-30b-a3b-instruct-2507` | No |
-| 3 | [OpenRouter](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb) | Remote API | `qwen/qwen3-235b-a22b` | No |
-
-</div>
-
-Each tutorial demonstrates the complete three-stage human-in-the-loop workflow:
-
-1. **Stage 1 — Initial Schema Mining**
-2. **Stage 2 — Preliminary Schema Refinement**
-3. **Stage 3 — Final Schema Refinement**
-
-Stages 2 and 3 support iterative processing over one or more batches of scientific papers, allowing expert feedback to be incorporated between successive schema-refinement runs.
-
-### Additional Example
-
-- [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb)
+1. **[CLI](#️-cli-reference)** — command-line interface for direct execution of the Schema-Miner workflow
+2. **[Interactive tutorial notebooks](#-tutorial-notebooks)** — guided, end-to-end demonstrations of the three-stage workflow with different LLM providers and expert-feedback configurations
 
 ---
 
@@ -191,7 +163,7 @@ schema-miner [OPTIONS]
 
 ### 🧩 Stage 1 — Initial Schema Mining
 
-Generates an initial JSON schema from a process specification document using the configured LLM.
+Generates an initial JSON schema using the specified LLM config from a process specification document. Visit an example [process spec. document](https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process-description.pdf)
 
 **Prerequisite**: set `STAGE1_SPECS_PATH` in `.env` (PDF or plain text file).
 
@@ -210,29 +182,32 @@ Refines the Stage 1 schema using domain-expert feedback and a curated corpus of 
 **Prerequisites**: set `STAGE2_PAPERS_PATH` in `.env`; have a Stage 1 schema file available.
 
 ```bash
-# Basic — process papers one by one (default) without initial expert feedback and prompt user for feedback after each paper
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json
+# Basic — process papers one at a time (default), starting without expert feedback on the Stage 1 schema and prompting for iterative feedback after each paper is processed.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json
 
-# With inline expert feedback for the first batch, and prompt user for feedback after each subsequent paper
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json \
-    --expert-feedback "Please add units for all temperature and pressure fields."
+# With initial expert feedback — process papers one at a time (default), applying the feedback supplied via the CLI to the Stage 1 schema and prompting for further feedback after each paper.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json \
+  --expert-feedback "Please add units for all temperature and pressure fields."
 
-# With expert feedback for the first batch, and prompt user for feedback after each subsequent paper
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json \
-    --expert-feedback data/stage-2/reviews/mistral-large-3-675b-instruct-2512.txt
+# With initial expert feedback from a file — process papers one at a time (default), applying the feedback from the specified file to the Stage 1 schema and prompting for further feedback after each paper.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json \
+  --expert-feedback data/stage1/feedback/qwen3-235b-a22b.txt
 
-# Process papers in batches of 3, and NO expert feedback is provided for the first batch but user is prompted to provided feedback after each batch
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers 3
+# Batchwise feedback — read papers from STAGE2_PAPERS_PATH and process them in batches of 3. Start without expert feedback on the Stage 1 schema; after each batch of 3 papers has been processed, prompt the user for feedback before continuing with the next batch. Unlike the earlier examples, feedback is collected after a batch of papers rather than after every individual paper.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json --papers 3
 
-# Process all papers in a single batch with NO expert feedback
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers all
+# Single batch, no feedback — read all papers from STAGE2_PAPERS_PATH and process them iteratively, one by one, as a single batch without prompting for expert feedback. The --expert-feedback argument is optional and can therefore be omitted entirely.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json --papers all
 
-# Process papers in batches of 3 with inline expert feedback for the first batch, and prompt user for feedback after each subsequent batch
-schema-miner --stage 2 --schema results/stage-1/mistral-large-3-675b-instruct-2512.json --papers 3 \
-    --expert-feedback "Please add units for all temperature and pressure fields."
+# Batchwise feedback with initial expert feedback — process papers from STAGE2_PAPERS_PATH in batches of 3. For the first batch, apply the feedback supplied via the CLI to the Stage 1 schema and to each schema iteratively mined after processing a paper in that batch. Papers within each batch are processed one at a time, with the schema updated iteratively after each paper. The feedback available at the start of a batch is reused for every paper in that batch. After each batch is processed, prompt the user for further feedback before continuing with the next batch.
+schema-miner --stage 2 --schema data/stage1/schema/qwen3-235b-a22b.json --papers 3 \
+  --expert-feedback "Please add units for all temperature and pressure fields."
 ```
 
 Schema-Miner iteratively processes the papers, updating the schema after each paper and optionally incorporating expert feedback. The intermediate schemas after each iteration and the final refined schema are saved to `RESULTS_PATH`.
+
+> [!NOTE]
+> When the `--papers N` argument is supplied, `schema-miner` randomly creates batches of `N` papers. If you prefer to define your own batches for Stage 2 or Stage 3, see the [tutorial notebooks](#-tutorial-notebooks). As will be shown in the tutorials, a simple approach is to set `STAGE2_PAPERS_PATH` to a directory containing your predefined batch of papers for Stage 2 (e.g., [data/stage2/batch1](https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/batch1) or [data/stage2/batch2](https://github.com/sciknoworg/schema-miner/tree/main/data/stage2/batch2)) and use `--papers all`. In this case, all papers in that directory are treated as a single batch, and the feedback supplied at the start of the batch is reused when each paper in that batch is processed.
 
 ---
 
@@ -240,32 +215,20 @@ Schema-Miner iteratively processes the papers, updating the schema after each pa
 
 Validates and finalises the schema using a larger, non-curated paper corpus and expert review, ensuring generalisability and semantic robustness.
 
-**Prerequisites**: set `STAGE3_PAPERS_PATH` in `.env`; have a Stage 2 schema file available.
+**Prerequisites**: set `STAGE3_PAPERS_PATH` in `.env` and have the final Stage 2 schema available—the schema obtained after all papers in Stage 2 have been processed iteratively.
+
+All CLI usage patterns are the same as for Stage 2. The differences are the input paper collection (`STAGE3_PAPERS_PATH`) and the starting schema, which is the final schema produced by iterative mining in Stage 2. Any initial expert feedback is likewise supplied for this resulting Stage 2 schema and reused as the papers in the first batch are processed iteratively. We therefore show only one usage scenario here. Please refer to the [tutorial notebooks](#-tutorial-notebooks) for complete end-to-end usage demonstrations.
 
 ```bash
-# Basic — process papers one by one (default) without initial expert feedback and prompt user for feedback after each paper
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json
-
-# With inline expert feedback for the first batch, and prompt user for feedback after each subsequent paper
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json \
-    --expert-feedback "Ensure all quantities reference standard SI units."
-
-# With expert feedback  for the first batch, and prompt user for feedback after each subsequent paper
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json \
-    --expert-feedback data/stage-3/reviews/mistral-large-3-675b-instruct-2512.txt
-
-# Process papers in batches of 5, and NO expert feedback is provided for the first batch but user is prompted to provided feedback after each batch
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers 5
-
-# Process all papers in a single batch with NO expert feedback
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers all
-
-# Process papers in batches of 5 with inline expert feedback for the first batch, and prompt user for feedback after each subsequent batch
-schema-miner --stage 3 --schema results/stage-2/mistral-large-3-675b-instruct-2512.json --papers 5 \
-    --expert-feedback "Ensure all quantities reference standard SI units."
+# Process papers in batches of 5 with initial expert feedback from a file, and prompt the user for further feedback after each batch
+schema-miner --stage 3 --schema data/stage2/schema-batch2/qwen3-235b-a22b.json --papers 5 \
+    --expert-feedback data/stage2/feedback-batch2/qwen3-235b-a22b.txt
 ```
 
 Schema-Miner processes the papers iteratively, updating the schema after each paper and optionally incorporating expert feedback. The intermediate schemas after each iteration and the final refined schema are saved to `RESULTS_PATH`.
+
+> [!NOTE]
+> In general, the organization of the input data directories is entirely user-defined. The folder structures shown in the usage scenarios above follow those used in our three [demonstration tutorials](#-tutorial-notebooks). Before getting started, we recommend defining a consistent directory structure for papers, schemas, and feedback. For example, if you are mining schemas for multiple scientific processes, each with its own paper collection, you might use the process name as the top-level directory and keep the underlying stage-specific subdirectory structure consistent. This makes it straightforward to automate schema mining programmatically, for example by iterating over processes, stages, and even LLMs in a loop.
 
 ---
 
@@ -282,13 +245,44 @@ Two grounding methods are available:
 
 ```bash
 # Prompt-based grounding
-schema-miner --ontology-grounding prompt --schema results/stage-3/mistral-large-3-675b-instruct-2512.json
+schema-miner --ontology-grounding prompt --schema data/stage3/schema-batch2/qwen3-235b-a22b.json
 
 # Agentic grounding (recommended)
-schema-miner --ontology-grounding agentic --schema results/stage-3/mistral-large-3-675b-instruct-2512.json
+schema-miner --ontology-grounding agentic --schema data/stage3/schema-batch2/qwen3-235b-a22b.json
 ```
 
 The grounded schema is saved to `RESULTS_PATH`.
+
+---
+
+## 📓 Tutorial Notebooks
+
+For complete end-to-end demonstrations, choose the tutorial corresponding to your preferred LLM provider:
+
+<div align="center">
+
+|  | Tutorial | Inference | Example Model | GPU Required |
+| --- | --- | --- | --- | --- |
+| 1 | [Hugging Face — Local GPU](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_huggingface_gpu_tutorial.ipynb) | Local | `mistralai/Ministral-3-8B-Instruct-2512` | Yes |
+| 2 | [SAIA](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_saia_tutorial.ipynb) | Remote API | `qwen3-30b-a3b-instruct-2507` | No |
+| 3 | [OpenRouter](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb) | Remote API | `qwen/qwen3-235b-a22b` | No |
+
+</div>
+
+Each tutorial demonstrates the complete three-stage human-in-the-loop workflow:
+
+1. **Stage 1 — Initial Schema Mining**
+2. **Stage 2 — Preliminary Schema Refinement**
+3. **Stage 3 — Final Schema Refinement**
+
+Stages 2 and 3 support iterative processing over one or more batches of scientific papers, allowing expert feedback to be incorporated between successive schema-refinement runs.
+
+### Additional Example
+
+- [Schema Ontology Grounding Example](https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_mining_ontology_grounding_example.ipynb)
+
+---
+
 
 ## 📚 Citing this Work
 
@@ -347,4 +341,6 @@ Let’s build better schema-mining tools—together!
 
 ## 📃 License
 
-This work is licensed under a [MIT License](LICENSE.txt)
+This project is released under the **[MIT License](LICENSE.txt)**.
+
+SPDX-License-Identifier: `MIT`
