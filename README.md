@@ -339,8 +339,4 @@ Whether you're interested in collaborating on `Schema-MinerPro` or have ideas to
 
 Let’s build better schema-mining tools—together!
 
-## 📃 License
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
-
 This work is licensed under the [MIT License](LICENSE.txt).
