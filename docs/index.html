@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260806-simple">
-    <link rel="stylesheet" href="css/styles.css?v=20260811-cli-docs">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-workflow-cli">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -59,6 +59,21 @@
           </p>
         </div>
 
+        <div class="env-panel" aria-label="Environment configuration">
+          <h3>.env file variables</h3>
+          <p>
+            The CLI reads configuration from a project-level <code>.env</code> file. Set the shared workflow variables once, then update the stage-specific paths for the stage you intend to run.
+          </p>
+          <dl class="env-grid">
+            <dt>Core workflow</dt>
+            <dd><code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>, <code>RESULTS_PATH</code>.</dd>
+            <dt>Provider credentials</dt>
+            <dd><code>OPENAI_API_KEY</code> for OpenAI; <code>SAIA_API_KEY</code> and <code>SAIA_BASE_URL</code> for KISSKI SAIA or OpenRouter; <code>HuggingFace_Access_Token</code> and <code>HUGGINGFACE_USE_LOCAL</code> for Hugging Face.</dd>
+            <dt>Stage data paths</dt>
+            <dd><code>STAGE1_SPECS_PATH=data/stage1/process-description.pdf</code>, <code>STAGE2_PAPERS_PATH=data/stage2/batch1</code> or <code>data/stage2/batch2</code>, and <code>STAGE3_PAPERS_PATH=data/stage3/batch1</code> or <code>data/stage3/batch2</code>.</dd>
+          </dl>
+        </div>
+
         <div class="workflow-steps">
           <article class="workflow-step">
             <div class="workflow-step-heading">
@@ -72,11 +87,19 @@
               </div>
               <dl class="workflow-details">
               <dt>Input variables</dt>
-              <dd><code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>; provider credentials such as <code>HuggingFace_Access_Token</code> or <code>SAIA_API_KEY</code>/<code>SAIA_BASE_URL</code>.</dd>
+              <dd><code>LLM_PROVIDER</code>, <code>LLM_MODEL</code>, <code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>, <code>STAGE1_SPECS_PATH</code>, and <code>RESULTS_PATH</code>; provider credentials such as <code>HuggingFace_Access_Token</code> or <code>SAIA_API_KEY</code>/<code>SAIA_BASE_URL</code>.</dd>
+              <dt>CLI tags</dt>
+              <dd><code>--stage 1</code>.</dd>
+              <dt>Usage scenario</dt>
+              <dd><pre class="workflow-command"><code># .env
+STAGE1_SPECS_PATH=data/stage1/process-description.pdf
+RESULTS_PATH=data/stage1/schema
+
+schema-miner --stage 1</code></pre></dd>
               <dt>Input files</dt>
-              <dd><code>data/stage1/process.txt</code> with <code>process name:</code> and <code>process description:</code>, plus <code>data/stage1/process-description.pdf</code>.</dd>
+              <dd><code>data/stage1/process-description.pdf</code> and the companion process metadata in <code>data/stage1/process.txt</code>.</dd>
               <dt>Output files</dt>
-              <dd><code>data/stage1/schema/&lt;model&gt;.json</code> and <code>data/stage1/schema/stage1.log</code>.</dd>
+              <dd><code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>, <code>data/stage1/schema/qwen3-235b-a22b.json</code>, <code>data/stage1/schema/mistralai-Ministral-3-8B-Instruct-2512.json</code>, and <code>data/stage1/schema/stage1.log</code>.</dd>
               <dt>Review files</dt>
               <dd><code>data/stage1/feedback/&lt;model&gt;.txt</code> stores expert feedback used as input to Stage 2.</dd>
               </dl>
@@ -95,13 +118,24 @@
               </div>
               <dl class="workflow-details">
               <dt>Input variables</dt>
-              <dd><code>batch</code>, <code>available_batches</code>, <code>schema_path</code>, <code>feedback_path</code>, <code>papers_dir</code>, and <code>results_dir</code>, alongside the provider/model variables from Stage 1.</dd>
+              <dd><code>STAGE2_PAPERS_PATH</code>, <code>RESULTS_PATH</code>, the provider/model variables from the <code>.env</code> file, and a Stage 1 schema passed with <code>--schema</code>.</dd>
+              <dt>CLI tags</dt>
+              <dd><code>--stage 2</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
+              <dt>Usage scenario</dt>
+              <dd><pre class="workflow-command"><code># .env for Stage 2 batch 1
+STAGE2_PAPERS_PATH=data/stage2/batch1
+RESULTS_PATH=data/stage2/schema-batch1
+
+schema-miner --stage 2 \
+    --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
+    --expert-feedback data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt \
+    --papers all</code></pre></dd>
               <dt>Input files</dt>
-              <dd>For <code>batch1</code>: <code>data/stage1/schema/&lt;model&gt;.json</code>, <code>data/stage1/feedback/&lt;model&gt;.txt</code>, and <code>data/stage2/batch1/*.pdf</code>. For <code>batchN</code> where <code>N &gt; 1</code>: <code>data/stage2/schema-batch{N-1}/&lt;model&gt;.json</code>, <code>data/stage2/feedback-batch{N-1}/&lt;model&gt;.txt</code>, and <code>data/stage2/batchN/*.pdf</code>.</dd>
+              <dd>For batch 1: <code>data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>, <code>data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt</code>, and curated papers such as <code>data/stage2/batch1/Bairagya_2024.pdf</code> and <code>data/stage2/batch1/Browne_2013.pdf</code>.</dd>
               <dt>Output files</dt>
-              <dd><code>data/stage2/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage2/schema-batchN/stage2-batchN.log</code>, and per-paper intermediate files under <code>data/stage2/schema-batchN/intermediate-schema/&lt;model&gt;/</code>.</dd>
+              <dd>Batch outputs such as <code>data/stage2/schema-batch1/qwen3-30b-a3b-instruct-2507.json</code>, <code>data/stage2/schema-batch1/stage2-batch1.log</code>, and intermediate schemas under <code>data/stage2/schema-batch1/intermediate-schema/qwen3-30b-a3b-instruct-2507/</code>.</dd>
               <dt>Review files</dt>
-              <dd><code>data/stage2/feedback-batchN/&lt;model&gt;.txt</code> records expert review for the next Stage 2 batch or the Stage 3 starting point.</dd>
+              <dd><code>data/stage2/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt</code> and <code>data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt</code> record expert review for the next Stage 2 batch or the Stage 3 starting point.</dd>
               </dl>
             </div>
           </article>
@@ -118,13 +152,24 @@
               </div>
               <dl class="workflow-details">
               <dt>Input variables</dt>
-              <dd><code>batch</code>, <code>available_batches</code>, <code>schema_path</code>, <code>feedback_path</code>, <code>papers_dir</code>, and <code>results_dir</code>; Stage 3 resolves the latest reviewed Stage 2 checkpoint for its first batch.</dd>
+              <dd><code>STAGE3_PAPERS_PATH</code>, <code>RESULTS_PATH</code>, the provider/model variables from the <code>.env</code> file, and a Stage 2 schema passed with <code>--schema</code>.</dd>
+              <dt>CLI tags</dt>
+              <dd><code>--stage 3</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
+              <dt>Usage scenario</dt>
+              <dd><pre class="workflow-command"><code># .env for Stage 3 batch 1
+STAGE3_PAPERS_PATH=data/stage3/batch1
+RESULTS_PATH=data/stage3/schema-batch1
+
+schema-miner --stage 3 \
+    --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
+    --expert-feedback data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt \
+    --papers all</code></pre></dd>
               <dt>Input files</dt>
-              <dd>For <code>batch1</code>: latest matching <code>data/stage2/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage2/feedback-batchN/&lt;model&gt;.txt</code>, and <code>data/stage3/batch1/*.pdf</code>. For <code>batchN</code> where <code>N &gt; 1</code>: <code>data/stage3/schema-batch{N-1}/&lt;model&gt;.json</code>, <code>data/stage3/feedback-batch{N-1}/&lt;model&gt;.txt</code>, and <code>data/stage3/batchN/*.pdf</code>.</dd>
+              <dd>For Stage 3 batch 1: <code>data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code>, <code>data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt</code>, and broader-corpus papers in <code>data/stage3/batch1/</code>, such as <code>1-s2.0-S0022286025034994-main.pdf</code>.</dd>
               <dt>Output files</dt>
-              <dd><code>data/stage3/schema-batchN/&lt;model&gt;.json</code>, <code>data/stage3/schema-batchN/stage3-batchN.log</code>, and per-paper intermediate files under <code>data/stage3/schema-batchN/intermediate-schema/&lt;model&gt;/</code>.</dd>
+              <dd>Batch outputs such as <code>data/stage3/schema-batch1/qwen3-30b-a3b-instruct-2507.json</code>, <code>data/stage3/schema-batch1/stage3-batch1.log</code>, and intermediate schemas under <code>data/stage3/schema-batch1/intermediate-schema/qwen3-30b-a3b-instruct-2507/</code>.</dd>
               <dt>Review files</dt>
-              <dd><code>data/stage3/feedback-batchN/&lt;model&gt;.txt</code> is needed only when another refinement batch follows; the final schema is the input to ontology grounding.</dd>
+              <dd><code>data/stage3/feedback-batch1/qwen3-30b-a3b-instruct-2507.txt</code> is used when another refinement batch follows; the final Stage 3 schema is the input to ontology grounding.</dd>
               </dl>
             </div>
           </article>
@@ -141,9 +186,20 @@
               </div>
               <dl class="workflow-details">
               <dt>Input variables</dt>
-              <dd><code>--ontology-grounding</code> set to <code>prompt</code> or <code>agentic</code>, <code>--schema</code> pointing to the final schema JSON, and <code>RESULTS_PATH</code> for the grounded output directory.</dd>
+              <dd><code>RESULTS_PATH</code>, the provider/model variables from the <code>.env</code> file, <code>--ontology-grounding</code> set to <code>prompt</code> or <code>agentic</code>, and <code>--schema</code> pointing to the final schema JSON.</dd>
+              <dt>CLI tags</dt>
+              <dd><code>--ontology-grounding prompt</code> or <code>--ontology-grounding agentic</code>, plus <code>--schema</code>.</dd>
+              <dt>Usage scenario</dt>
+              <dd><pre class="workflow-command"><code># .env
+RESULTS_PATH=results/grounded-schema
+
+schema-miner --ontology-grounding prompt \
+    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json
+
+schema-miner --ontology-grounding agentic \
+    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre></dd>
               <dt>Input files</dt>
-              <dd>A final schema such as <code>data/stage3/schema-batch2/&lt;model&gt;.json</code> or a benchmark schema from <code>results/stage-3/.../*.json</code>, plus QUDT/OLS ontology terms retrieved during grounding.</dd>
+              <dd>A final schema such as <code>data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code>, plus QUDT/OLS ontology terms retrieved during grounding.</dd>
               <dt>Output files</dt>
               <dd>Ontology-aligned JSON saved under <code>RESULTS_PATH</code>; reference outputs include <code>results/Ideal Schema/Atomic-Layer-Deposition/*-with-qudt.json</code> and <code>results/Ideal Schema/Atomic-Layer-Etching/*-with-qudt.json</code>.</dd>
               <dt>Validation</dt>
@@ -204,97 +260,6 @@
         <p class="workflow-data-note">
           <strong>File naming:</strong> tutorial outputs use a model-specific <code>&lt;model&gt;</code> stem such as <code>mistralai-Ministral-3-8B-Instruct-2512</code>, <code>qwen3-30b-a3b-instruct-2507</code>, or <code>qwen3-235b-a22b</code>. Stage 2 and Stage 3 detect available <code>batchN/</code> folders and write matching <code>schema-batchN/</code>, <code>feedback-batchN/</code>, and log files.
         </p>
-      </section>
-
-      <section class="section wide" id="cli">
-        <div class="section-copy">
-          <h2>CLI Usage</h2>
-          <p>
-            The <code>schema-miner</code> command runs the same staged workflow from an environment file. Configure the provider, process metadata, stage data paths, and output directory in <code>.env</code>, then run one stage at a time.
-          </p>
-        </div>
-
-        <div class="cli-layout">
-          <article class="cli-card cli-commands">
-            <h3>Typical command sequence</h3>
-            <pre><code># Stage 1: initial schema mining from a process specification
-schema-miner --stage 1
-
-# Stage 2: preliminary refinement with curated papers and optional feedback
-schema-miner --stage 2 --schema results/stage-1/&lt;model&gt;.json --papers 3 \
-    --expert-feedback data/stage-2/reviews/&lt;model&gt;.txt
-
-# Stage 3: final refinement with a broader paper corpus
-schema-miner --stage 3 --schema results/stage-2/&lt;model&gt;.json --papers all
-
-# Stage 4: QUDT ontology grounding
-schema-miner --ontology-grounding agentic --schema results/stage-3/&lt;model&gt;.json</code></pre>
-            <p class="cli-note">
-              <code>--papers</code> accepts a positive integer batch size or <code>all</code>. If omitted, stages 2 and 3 process one paper per batch and prompt for feedback between batches.
-            </p>
-          </article>
-
-          <article class="cli-card">
-            <h3>Provider and environment variables</h3>
-            <table class="cli-table">
-              <thead>
-                <tr>
-                  <th>Run mode</th>
-                  <th>Required variables</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Hugging Face local GPU</td>
-                  <td><code>LLM_PROVIDER=HUGGINGFACE</code>, <code>LLM_MODEL</code>, <code>HuggingFace_Access_Token</code>, <code>HUGGINGFACE_USE_LOCAL=True</code></td>
-                </tr>
-                <tr>
-                  <td>KISSKI SAIA</td>
-                  <td><code>LLM_PROVIDER=SAIA</code>, <code>LLM_MODEL</code>, <code>SAIA_API_KEY</code>, <code>SAIA_BASE_URL=https://chat-ai.academiccloud.de/v1</code></td>
-                </tr>
-                <tr>
-                  <td>OpenRouter</td>
-                  <td><code>LLM_PROVIDER=SAIA</code>, <code>LLM_MODEL</code>, <code>SAIA_API_KEY</code>, <code>SAIA_BASE_URL=https://openrouter.ai/api/v1</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </article>
-        </div>
-
-        <div class="cli-card cli-files">
-          <h3>Inputs, outputs, and applicable files</h3>
-          <table class="cli-table">
-            <thead>
-              <tr>
-                <th>Step</th>
-                <th>Inputs</th>
-                <th>Outputs</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Stage 1</td>
-                <td><code>PROCESS_NAME</code>, <code>PROCESS_DESCRIPTION</code>, <code>STAGE1_SPECS_PATH</code> pointing to a <code>.txt</code>, <code>.md</code>, or <code>.pdf</code> process specification.</td>
-                <td>Initial JSON schema and logs under <code>RESULTS_PATH</code>.</td>
-              </tr>
-              <tr>
-                <td>Stage 2</td>
-                <td><code>STAGE2_PAPERS_PATH</code> curated paper directory, <code>--schema</code> Stage 1 JSON, optional <code>--expert-feedback</code>, optional <code>--papers</code>.</td>
-                <td>Refined schema, logs, and <code>RESULTS_PATH/intermediate-schema/&lt;model&gt;/schema_iter_N.json</code>.</td>
-              </tr>
-              <tr>
-                <td>Stage 3</td>
-                <td><code>STAGE3_PAPERS_PATH</code> broader paper directory, <code>--schema</code> Stage 2 JSON, optional <code>--expert-feedback</code>, optional <code>--papers</code>.</td>
-                <td>Final refined schema, logs, and per-paper intermediate schemas under <code>RESULTS_PATH</code>.</td>
-              </tr>
-              <tr>
-                <td>Ontology grounding</td>
-                <td><code>--ontology-grounding prompt</code> or <code>agentic</code>, plus <code>--schema</code> pointing to the final JSON schema.</td>
-                <td>QUDT-grounded JSON schema saved under <code>RESULTS_PATH</code>.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
       <section class="section wide" id="example-output">
