@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-shared-vars-trim">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-shared-vars-list">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -61,11 +61,12 @@
 
         <div class="workflow-context">
           <h3>Shared workflow variables</h3>
+          <ol>
+            <li><code>LLM_PROVIDER</code> and <code>LLM_MODEL</code> select the inference backend and model.</li>
+            <li><code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> initialize the scientific process being mined.</li>
+          </ol>
           <p>
-            <code>LLM_PROVIDER</code> and <code>LLM_MODEL</code> select the inference backend and model, while <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> define the scientific process being mined. These four values are input variables for every stage of the workflow.
-          </p>
-          <p>
-            <code>PROCESS_NAME</code> names the scientific process being mined, and <code>PROCESS_DESCRIPTION</code> gives the model the domain context it needs to interpret the initial specification, the refinement papers, expert feedback, and ontology-grounding decisions. These two variables are part of what makes Schema-Miner plug-and-play across scientific processes, not only across LLM providers.
+            These four input variables apply to every stage of the workflow. They are part of what makes Schema-Miner plug-and-play over LLM providers and scientific processes.
           </p>
           <p>
             The normal starting point is the project-level <code>.env</code> file, where these variables are declared once with the selected LLM provider, model, stage input path, and output path.
