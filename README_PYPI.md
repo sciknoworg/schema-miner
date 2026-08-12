@@ -49,27 +49,32 @@ cp .env.example .env
 Required workflow settings:
 
 ```ini
-LLM_PROVIDER = "SAIA"      # OPENAI, SAIA, OLLAMA, or HUGGINGFACE
-LLM_MODEL = "qwen3-30b-a3b-instruct-2507"
+# Active provider — options: OPENAI | SAIA | OPENROUTER | OLLAMA | HUGGINGFACE
+# Use SAIA for any other endpoint exposing an OpenAI-compatible API
+LLM_PROVIDER = '<Your LLM provider here>'
+LLM_MODEL = '<Your model here>'                          # e.g. mistral-large-3-675b-instruct-2512, gemma-3-27b-it
 
-PROCESS_NAME = "Atomic Layer Deposition"
-PROCESS_DESCRIPTION = "Layer-by-layer thin film growth process."
+# OpenAI
+OPENAI_API_KEY = '<your-openai-api-key>'
+OPENAI_ORGANIZATION_ID = '<your-openai-organization-id>' # Optional, only needed if you have multiple organizations in OpenAI
 
-STAGE1_SPECS_PATH = "data/stage1/process-description.pdf"
-STAGE2_PAPERS_PATH = "data/stage2/"
-STAGE3_PAPERS_PATH = "data/stage3/"
-RESULTS_PATH = "results/my-run/"
+# SAIA / Any OpenAI-compatible endpoint
+# Schema-Miner supports any service exposing an OpenAI-compatible API.
+# Provide your API key and the base URL for your preferred provider.
+SAIA_API_KEY = '<your-api-key>'
+SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'   # GWDG/SAIA (Germany)
+
+# OpenRouter
+OPENROUTER_API_KEY = '<your-openrouter-api-key>'
+OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
+
+# Ollama  (leave blank if running locally on the same machine)
+OLLAMA_BASE_URL = '<OLLAMA Server Base URL>'
+
+# HuggingFace
+HuggingFace_Access_Token = '<your-huggingface-access-token>'
+HUGGINGFACE_USE_LOCAL = False                            # True = load model locally (GPU recommended) | False = use Inference API
 ```
-
-Provider credentials:
-
-| Provider | Set in `.env` |
-| --- | --- |
-| OpenAI | `LLM_PROVIDER=OPENAI`, `OPENAI_API_KEY` |
-| KISSKI SAIA / GWDG | `LLM_PROVIDER=SAIA`, `SAIA_API_KEY`, `SAIA_BASE_URL=https://chat-ai.academiccloud.de/v1` |
-| OpenRouter | `LLM_PROVIDER=SAIA`, `SAIA_API_KEY`, `SAIA_BASE_URL=https://openrouter.ai/api/v1` |
-| Ollama | `LLM_PROVIDER=OLLAMA`, optional `OLLAMA_BASE_URL` |
-| Hugging Face | `LLM_PROVIDER=HUGGINGFACE`, `HuggingFace_Access_Token`, `HUGGINGFACE_USE_LOCAL` |
 
 ## CLI Quick Start
 
@@ -98,7 +103,7 @@ Common options:
 | `--stage 3` | Final refinement using `STAGE3_PAPERS_PATH`; requires `--schema`. |
 | `--schema <path>` | Input JSON schema for stages 2, 3, or ontology grounding. |
 | `--expert-feedback <text-or-file>` | Optional feedback for stages 2 and 3. |
-| `--papers <N|all>` | Paper batch size for stages 2 and 3. |
+| `--papers <N or all>` | Paper batch size for stages 2 and 3. |
 | `--ontology-grounding prompt` | Prompt-based QUDT grounding. |
 | `--ontology-grounding agentic` | Agentic QUDT grounding with lexical and semantic lookup. |
 
@@ -113,7 +118,7 @@ schema-miner --help
 schema-miner --version
 ```
 
-### Scenario 1: Initial Schema Mining
+### Stage 1: Initial Schema Mining
 
 Use this when you have a process specification and want the first JSON schema.
 
@@ -133,7 +138,7 @@ schema-miner --stage 1
 
 The command reads `STAGE1_SPECS_PATH` and writes the initial schema to `RESULTS_PATH`.
 
-### Scenario 2: Preliminary Refinement
+### Stage 2: Preliminary Refinement
 
 Use this when you have a Stage 1 schema and a small curated paper corpus.
 
@@ -142,80 +147,64 @@ Required inputs:
 - `STAGE2_PAPERS_PATH` in `.env`
 - `--schema` pointing to the Stage 1 JSON schema
 
-Run one paper per batch:
+Process one paper per batch:
 
 ```bash
-schema-miner --stage 2 --schema results/stage-1/<model>.json
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json
 ```
 
-Run with inline expert feedback for the first batch:
+Process with inline expert feedback for the first batch:
 
 ```bash
-schema-miner --stage 2 --schema results/stage-1/<model>.json \
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json \
     --expert-feedback "Add units for temperature and pressure fields."
 ```
 
-Run with expert feedback from a file:
+Process with expert feedback from a file:
 
 ```bash
-schema-miner --stage 2 --schema results/stage-1/<model>.json \
-    --expert-feedback data/stage-2/reviews/<model>.txt
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json \
+    --expert-feedback data/stage1/feedback/<model>.txt
 ```
 
-Run papers in fixed-size batches:
+Process papers in fixed-size batches:
 
 ```bash
-schema-miner --stage 2 --schema results/stage-1/<model>.json --papers 3
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json --papers 3
 ```
 
-Run all curated papers in one batch:
+Process all curated papers in one batch:
 
 ```bash
-schema-miner --stage 2 --schema results/stage-1/<model>.json --papers all
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json --papers all
 ```
 
-### Scenario 3: Final Refinement
+Process papers in fixed-size batches with initial inline expert feedback:
 
-Use this when you have a Stage 2 schema and a broader validation/refinement corpus.
+```bash
+schema-miner --stage 2 --schema data/stage1/schema/<model>.json --papers 3 \
+    --expert-feedback "Add units for temperature and pressure fields."
+```
+
+### Stage 3: Final Refinement
+
+Use this when you have the final Stage 2 schema and a broader validation/refinement corpus.
 
 Required inputs:
 
 - `STAGE3_PAPERS_PATH` in `.env`
-- `--schema` pointing to the Stage 2 JSON schema
+- `--schema` pointing to the final Stage 2 JSON schema
 
-Run one paper per batch:
+All CLI usage patterns are the same as for Stage 2. One example is shown below.
 
-```bash
-schema-miner --stage 3 --schema results/stage-2/<model>.json
-```
-
-Run with inline expert feedback:
+Run papers in batches of 5 with initial expert feedback from a file:
 
 ```bash
-schema-miner --stage 3 --schema results/stage-2/<model>.json \
-    --expert-feedback "Ensure measurable properties use standard SI units."
+schema-miner --stage 3 --schema results/stage-2/<model>.json --papers 5 \
+    --expert-feedback data/stage-2/feedback/<model>.txt
 ```
 
-Run with expert feedback from a file:
-
-```bash
-schema-miner --stage 3 --schema results/stage-2/<model>.json \
-    --expert-feedback data/stage-3/reviews/<model>.txt
-```
-
-Run papers in fixed-size batches:
-
-```bash
-schema-miner --stage 3 --schema results/stage-2/<model>.json --papers 5
-```
-
-Run all broader-corpus papers in one batch:
-
-```bash
-schema-miner --stage 3 --schema results/stage-2/<model>.json --papers all
-```
-
-### Scenario 4: Ontology Grounding
+### Stage 4: Ontology Grounding
 
 Use this when you have a final schema and want QUDT quantity/unit grounding.
 
