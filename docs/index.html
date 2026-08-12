@@ -93,10 +93,10 @@
                 <div class="usage-scenarios">
                   <div class="file-example">
                     <p><strong><code>.env</code> entries:</strong> the usual configuration for a single process run.</p>
-                    <pre><code>PROCESS_NAME = 'Metal-organic cages synthesis'
-PROCESS_DESCRIPTION = 'Coordination-driven self-assembly of metal ions and organic ligands.'
-STAGE1_SPECS_PATH = 'data/stage1/process-description.pdf'
-RESULTS_PATH = 'data/stage1/schema'</code></pre>
+                    <pre><code>PROCESS_NAME = [name the process]
+PROCESS_DESCRIPTION = [short 2 or 3 sentence description of the process]
+STAGE1_SPECS_PATH = [path to the process specification file]
+RESULTS_PATH = [path where the output schema and log will be stored]</code></pre>
                   </div>
                   <div class="file-example">
                     <p><strong>Python or batch override:</strong> for many processes, a script can read <a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process.txt" rel="noopener"><code>data/stage1/process.txt</code></a> and set <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> before invoking the same command.</p>
@@ -111,7 +111,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
               <dd>
                 <ul class="file-list">
                   <li><a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process.txt" rel="noopener"><code>data/stage1/process.txt</code></a> is useful when running many processes as a batch job: it stores the process name and short process description so a script can initialize <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> for each run.</li>
-                  <li><a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process-description.pdf" rel="noopener"><code>data/stage1/process-description.pdf</code></a> provides an example of the expert-written, loosely structured process specification used to initiate schema mining. The specification consists of a numbered list of 5–15 key properties that researchers commonly report, with each property accompanied by a one- or two-sentence description.</li>
+                  <li><a href="https://github.com/sciknoworg/schema-miner/blob/main/data/stage1/process-description.pdf" rel="noopener"><code>data/stage1/process-description.pdf</code></a> provides an example of the expert-written, loosely structured process specification used to initiate schema mining. This is the value expected against <code>STAGE1_SPECS_PATH</code>. The specification consists of a numbered list of 5–15 key properties that researchers commonly report, with each property accompanied by a one- or two-sentence description.</li>
                 </ul>
               </dd>
               <dt>Output files</dt>
