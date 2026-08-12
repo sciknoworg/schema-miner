@@ -63,11 +63,11 @@ cp .env.example .env
 
 ### 🤖 Model Configuration
 
-Select your LLM provider and model, then fill in **only** the credentials block for that provider:
+Select your LLM provider and model, then fill in the credentials block for that provider:
 
 ```ini
-# Active provider — options: OPENAI | SAIA | OLLAMA | HUGGINGFACE
-# Use SAIA for any OpenAI-compatible endpoint (GWDG/SAIA, OpenRouter, etc.)
+# Active provider — options: OPENAI | SAIA | OPENROUTER | OLLAMA | HUGGINGFACE
+# Use SAIA for any other endpoint exposing an OpenAI-compatible API
 LLM_PROVIDER = '<Your LLM provider here>'
 LLM_MODEL = '<Your model here>'                          # e.g. mistral-large-3-675b-instruct-2512, gemma-3-27b-it
 
@@ -78,8 +78,12 @@ OPENAI_ORGANIZATION_ID = '<your-openai-organization-id>' # Optional, only needed
 # SAIA / Any OpenAI-compatible endpoint
 # Schema-Miner supports any service exposing an OpenAI-compatible API.
 # Provide your API key and the base URL for your preferred provider.
-SAIA_API_KEY = '<your-api-key>'                         # SAIA key  OR  OpenRouter key 
-SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'   # GWDG/SAIA (Germany) | or use https://openrouter.ai/api/v1 for OpenRouter
+SAIA_API_KEY = '<your-api-key>'
+SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'   # GWDG/SAIA (Germany)
+
+# OpenRouter
+OPENROUTER_API_KEY = '<your-openrouter-api-key>'
+OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
 
 # Ollama  (leave blank if running locally on the same machine)
 OLLAMA_BASE_URL = '<OLLAMA Server Base URL>'
@@ -91,15 +95,15 @@ HUGGINGFACE_USE_LOCAL = False                            # True = load model loc
 
 #### Supported LLM Providers
 
-Schema-Miner supports **any service that exposes an OpenAI-compatible API** via the `SAIA` provider type — just supply your API key and the service's base URL.
+Schema-Miner ships a dedicated integration for each provider listed below. Any other service that exposes an **OpenAI-compatible API** can be used through the `SAIA` provider type — just supply your API key and the service's base URL.
 
 | Provider | `LLM_PROVIDER` value | Example models | Notes |
 |---|---|---|---|
 | OpenAI | `OPENAI` | `gpt-4o`, `o3-mini` | Requires `OPENAI_API_KEY` |
-| GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-30b-a3b-instruct-2507` | OpenAI-compatible; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
-| OpenRouter | `SAIA` | `qwen/qwen3-235b-a22b-2507`, `anthropic/claude-sonnet-4.6` | OpenAI-compatible; set `SAIA_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
+| GWDG / SAIA | `SAIA` | `gemma-3-27b-it`, `qwen3-30b-a3b-instruct-2507` | Requires `SAIA_API_KEY`; set `SAIA_BASE_URL = https://chat-ai.academiccloud.de/v1` |
+| OpenRouter | `OPENROUTER` | `qwen/qwen3-235b-a22b-2507`, `anthropic/claude-sonnet-4.6` | Requires `OPENROUTER_API_KEY`; set `OPENROUTER_BASE_URL = https://openrouter.ai/api/v1` — see [openrouter.ai/docs](https://openrouter.ai/docs/quickstart) |
 | Ollama | `OLLAMA` | `llama3.2:3b`, `ministral-3:3b` | Local or remote server; no API key needed |
-| HuggingFace | `HUGGINGFACE` | `Qwen/Qwen3-4B-Instruct-2507` | Local GPU mode or serverless Inference API. Requires `HuggingFace_Access_Token` | 
+| HuggingFace | `HUGGINGFACE` | `Qwen/Qwen3-4B-Instruct-2507` | Local GPU mode or serverless Inference API. Requires `HuggingFace_Access_Token` |
 
 > [!NOTE]
 > **HuggingFace local mode** (`HUGGINGFACE_USE_LOCAL = True`) downloads and runs the model on your machine. A CUDA-compatible GPU is strongly recommended for models larger than 1B parameters. For CPU-only machines, use the **Inference API** (`HUGGINGFACE_USE_LOCAL = False`) instead.
@@ -117,7 +121,7 @@ These values are injected into every LLM prompt as scientific context.
 
 ### 📂 Data Paths
 
-Point schema-miner to your input documents. Only set the path for the stage you intend to run:
+Point schema-miner to your input documents where each stage reads only its own data path:
 
 ```ini
 # Stage 1 — path to the process specification document (PDF or plain text)
@@ -137,6 +141,8 @@ Set the directory where extracted schemas will be saved:
 ```ini
 RESULTS_PATH = 'results/my-run/'
 ```
+
+Schemas are saved at path `RESULTS_PATH/<model>.json`, where `<model>` is `LLM_MODEL`. Stages 2 and 3 additionally save the schema after each paper under `RESULTS_PATH/intermediate-schema/<model>/`.
 
 ---
 
@@ -180,7 +186,7 @@ schema-miner [OPTIONS]
 | `--ontology-grounding` | `prompt`, `agentic` | Mutually exclusive with `--stage` | Run ontology grounding |
 | `--schema` | `<path>` | Stages 2, 3, and ontology grounding | Path to the input JSON schema file |
 | `--expert-feedback` | `<text or path>` | Optional (stages 2 & 3) | Inline review text, or path to a `.txt` / `.md` file |
-| `--papers` | `N` or `all` | Optional (stages 2 & 3) | Number of papers to process per batch (default: `1`) |
+| `--papers` | `N`, `all`, or `<path>` | Optional (stages 2 & 3) | Papers per batch (default: `1`), `all` to process every paper in one batch, or a path to a single paper |
 | `--version` | — | — | Display the installed version and exit |
 | `--help` | — | — | Show possible options and exit |
 
