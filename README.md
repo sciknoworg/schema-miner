@@ -9,7 +9,7 @@
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/schema-miner)](https://pepy.tech/projects/schema-miner)
 [![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)](https://github.com/sciknoworg/schema-miner/blob/main/MAINTENANCE.md)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
-[![DOI](https://zenodo.org/badge/900734076.svg)](https://doi.org/10.5281/zenodo.14781824)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.14781824-blue)](https://doi.org/10.5281/zenodo.14781824)
 [![Read the Docs](https://img.shields.io/badge/Read%20the%20Docs-8CA1AF?logo=readthedocs&logoColor=fff)](https://schema-miner.readthedocs.io/en/latest/)
 
 </div>
