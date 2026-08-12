@@ -231,37 +231,6 @@ Agentic grounding:
 schema-miner --ontology-grounding agentic --schema results/stage-3/<model>.json
 ```
 
-### Scenario 5: Provider-Specific Runs
-
-The CLI command stays the same across providers; only `.env` changes.
-
-KISSKI SAIA:
-
-```ini
-LLM_PROVIDER = "SAIA"
-LLM_MODEL = "qwen3-30b-a3b-instruct-2507"
-SAIA_API_KEY = "<your-saia-key>"
-SAIA_BASE_URL = "https://chat-ai.academiccloud.de/v1"
-```
-
-OpenRouter:
-
-```ini
-LLM_PROVIDER = "SAIA"
-LLM_MODEL = "qwen/qwen3-235b-a22b"
-SAIA_API_KEY = "<your-openrouter-key>"
-SAIA_BASE_URL = "https://openrouter.ai/api/v1"
-```
-
-Hugging Face local GPU:
-
-```ini
-LLM_PROVIDER = "HUGGINGFACE"
-LLM_MODEL = "mistralai/Ministral-3-8B-Instruct-2512"
-HuggingFace_Access_Token = "<your-huggingface-token>"
-HUGGINGFACE_USE_LOCAL = True
-```
-
 ## Tutorial Notebooks
 
 | Notebook | Inference mode |

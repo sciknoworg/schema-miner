@@ -5,7 +5,7 @@
 <div align="center">
 
 [![Project Website](https://img.shields.io/badge/Project%20Website-GitHub%20Pages-2f80ed?logo=githubpages&logoColor=white)](https://sciknoworg.github.io/schema-miner/)
-[![PyPI - Version](https://img.shields.io/pypi/v/schema-miner)](https://pypi.org/project/schema-miner/)
+[![PyPI - Version](https://img.shields.io/badge/pypi-v3.2.6-blue)](https://pypi.org/project/schema-miner/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/schema-miner)](https://pepy.tech/projects/schema-miner)
 [![Maintained Yes](https://img.shields.io/badge/maintained-yes-green)](https://github.com/sciknoworg/schema-miner/blob/main/MAINTENANCE.md)
 [![MIT License](https://img.shields.io/github/license/sciknoworg/schema-miner)](LICENSE)
