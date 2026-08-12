@@ -120,6 +120,10 @@ schema-miner --stage 1</code></pre>
               <dd><code>STAGE2_PAPERS_PATH</code>, <code>RESULTS_PATH</code>, the provider/model variables from the <code>.env</code> file, and a Stage 1 schema passed with <code>--schema</code>.</dd>
               <dt>CLI tags</dt>
               <dd><code>--stage 2</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
+              <dt>Paper set</dt>
+              <dd>Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</dd>
+              <dt>Batching behavior</dt>
+              <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch, and <code>--papers all</code> processes the available papers together. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, Schema-Miner creates five batches and asks for updated expert feedback after each batch.</dd>
               <dt>Usage scenarios</dt>
               <dd>
                 <div class="usage-scenarios">
@@ -146,7 +150,7 @@ schema-miner --stage 2 \
                 <ul class="file-list">
                   <li>Starting schema for the first paper: <code>--schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>, produced by Stage 1.</li>
                   <li>Iterative schema handoff: after the first paper, Schema-Miner uses the modified schema generated from the previous paper within the same stage; intermediate files are written under <code>data/stage2/schema-batch1/intermediate-schema/&lt;model&gt;/</code>.</li>
-                  <li>Curated paper batch from <code>STAGE2_PAPERS_PATH</code>, for example <code>data/stage2/batch1/Bairagya_2024.pdf</code> and <code>data/stage2/batch1/Browne_2013.pdf</code>.</li>
+                  <li>Curated seed papers from <code>STAGE2_PAPERS_PATH</code>, for example <code>data/stage2/batch1/Bairagya_2024.pdf</code> and <code>data/stage2/batch1/Browne_2013.pdf</code>; in a full run, this folder should represent the expert-checked seed set.</li>
                   <li>Optional expert feedback via <code>--expert-feedback &lt;text or path&gt;</code>, either as inline text or a <code>.txt</code>/<code>.md</code> file such as <code>data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt</code>.</li>
                 </ul>
               </dd>
@@ -173,6 +177,10 @@ schema-miner --stage 2 \
               <dd><code>STAGE3_PAPERS_PATH</code>, <code>RESULTS_PATH</code>, the provider/model variables from the <code>.env</code> file, and a Stage 2 schema passed with <code>--schema</code>.</dd>
               <dt>CLI tags</dt>
               <dd><code>--stage 3</code>, <code>--schema</code>, optional <code>--expert-feedback</code>, and optional <code>--papers</code>.</dd>
+              <dt>Paper set</dt>
+              <dd>Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</dd>
+              <dt>Batching behavior</dt>
+              <dd><code>--papers N</code> again controls the batch size. For example, <code>--papers 3</code> processes three papers at a time, writes an updated schema for that batch, and then expects the feedback file to be reviewed before the next batch continues refinement.</dd>
               <dt>Usage scenarios</dt>
               <dd>
                 <div class="usage-scenarios">
@@ -199,7 +207,7 @@ schema-miner --stage 3 \
                 <ul class="file-list">
                   <li>Starting schema for the first Stage 3 paper: <code>--schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code>, produced by the previous refinement stage.</li>
                   <li>Iterative schema handoff: after each paper, the next paper starts from the modified schema generated for the previous paper within Stage 3; intermediate files are written under <code>data/stage3/schema-batch1/intermediate-schema/&lt;model&gt;/</code>.</li>
-                  <li>Broader-corpus papers from <code>STAGE3_PAPERS_PATH</code>, for example <code>data/stage3/batch1/1-s2.0-S0022286025034994-main.pdf</code>, <code>data/stage3/batch1/1-s2.0-S1001841725005169-main.pdf</code>, and <code>data/stage3/batch1/a-discrete-3d-4f-metallacage-as-an-efficient-catalytic-nanoreactor-for-a-three-component-aza-darzens-reaction.pdf</code>.</li>
+                  <li>Extended-corpus papers from <code>STAGE3_PAPERS_PATH</code>, for example <code>data/stage3/batch1/1-s2.0-S0022286025034994-main.pdf</code>, <code>data/stage3/batch1/1-s2.0-S1001841725005169-main.pdf</code>, and <code>data/stage3/batch1/a-discrete-3d-4f-metallacage-as-an-efficient-catalytic-nanoreactor-for-a-three-component-aza-darzens-reaction.pdf</code>.</li>
                   <li>Optional expert feedback via <code>--expert-feedback &lt;text or path&gt;</code>, either as inline text or a <code>.txt</code>/<code>.md</code> file such as <code>data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt</code>.</li>
                 </ul>
               </dd>
