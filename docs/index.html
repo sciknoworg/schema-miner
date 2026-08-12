@@ -123,7 +123,7 @@ schema-miner --stage 1</code></pre>
               <dt>Paper set</dt>
               <dd>Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</dd>
               <dt>Batching behavior</dt>
-              <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch, and <code>--papers all</code> processes the available papers together. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, Schema-Miner creates five batches and asks for updated expert feedback after each batch.</dd>
+              <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, Schema-Miner creates five batches and asks for updated expert feedback after each batch. With <code>--papers all</code>, all available papers are processed together in one run, reusing the expert feedback provided at the beginning without reprompting between papers.</dd>
               <dt>Usage scenarios</dt>
               <dd>
                 <div class="usage-scenarios">
@@ -180,7 +180,7 @@ schema-miner --stage 2 \
               <dt>Paper set</dt>
               <dd>Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</dd>
               <dt>Batching behavior</dt>
-              <dd><code>--papers N</code> again controls the batch size. For example, <code>--papers 3</code> processes three papers at a time, writes an updated schema for that batch, and then expects the feedback file to be reviewed before the next batch continues refinement.</dd>
+              <dd><code>--papers N</code> again controls the batch size. For example, <code>--papers 3</code> processes three papers at a time, writes an updated schema for that batch, and then expects the feedback file to be reviewed before the next batch continues refinement. With <code>--papers all</code>, the extended-corpus papers are processed together and the initial expert feedback is reused throughout that run without reprompting.</dd>
               <dt>Usage scenarios</dt>
               <dd>
                 <div class="usage-scenarios">
