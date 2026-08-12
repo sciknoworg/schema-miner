@@ -341,6 +341,6 @@ Let’s build better schema-mining tools—together!
 
 ## 📃 License
 
-This project is released under the **[MIT License](LICENSE.txt)**.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
 
-SPDX-License-Identifier: `MIT`
+This work is licensed under the [MIT License](LICENSE.txt).
