@@ -22,6 +22,25 @@ with open(os.path.abspath("../../pyproject.toml"), "rb") as pyproject:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = ["sphinx.ext.autodoc"]
+autodoc_mock_imports = [
+    "dotenv",
+    "faiss",
+    "langchain",
+    "langchain_classic",
+    "langchain_community",
+    "langchain_core",
+    "langchain_huggingface",
+    "langchain_ollama",
+    "langchain_openai",
+    "langchain_text_splitters",
+    "pydantic",
+    "rdflib",
+    "sentence_transformers",
+    "torch",
+    "tqdm",
+    "transformers",
+    "yaml",
+]
 
 templates_path = ["_templates"]
 
