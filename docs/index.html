@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-workflow-spacing">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-cli-separation">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -93,20 +93,26 @@
               <dd><code>RESULTS_PATH</code> points to the directory where the Stage 1 schema and log are written.</dd>
               <dt>CLI tags</dt>
               <dd><code>--stage 1</code>.</dd>
-              <dt>Usage scenarios</dt>
+              <dt>Configuration examples</dt>
               <dd>
                 <div class="usage-scenarios">
-                  <pre class="workflow-command"><code># Batch-friendly process metadata file:
-# PROCESS_NAME and PROCESS_DESCRIPTION can be read from data/stage1/process.txt
-schema-miner --stage 1</code></pre>
-                  <pre class="workflow-command"><code># Equivalent .env configuration
-PROCESS_NAME = 'Metal-organic cages synthesis'
+                  <div class="file-example">
+                    <p><strong>Batch metadata file:</strong> a script can read <code>data/stage1/process.txt</code> and initialize <code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> before launching the stage.</p>
+                    <pre><code>process name: Metal-organic cages synthesis
+process description: Metal-organic cages are synthesized through coordination-driven self-assembly, where metal ions and multitopic organic ligands are mixed in solution under controlled conditions.</code></pre>
+                  </div>
+                  <div class="file-example">
+                    <p><strong>Equivalent <code>.env</code> entries:</strong> useful for a single process run.</p>
+                    <pre><code>PROCESS_NAME = 'Metal-organic cages synthesis'
 PROCESS_DESCRIPTION = 'Coordination-driven self-assembly of metal ions and organic ligands.'
 STAGE1_SPECS_PATH = 'data/stage1/process-description.pdf'
-RESULTS_PATH = 'data/stage1/schema'
-
-schema-miner --stage 1</code></pre>
+RESULTS_PATH = 'data/stage1/schema'</code></pre>
+                  </div>
                 </div>
+              </dd>
+              <dt>Command line</dt>
+              <dd>
+                <pre class="workflow-command"><code>schema-miner --stage 1</code></pre>
               </dd>
               <dt>Input files</dt>
               <dd>
@@ -145,25 +151,33 @@ schema-miner --stage 1</code></pre>
               <dd>Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</dd>
               <dt>Batching behavior</dt>
               <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, Schema-Miner creates five batches and asks for updated expert feedback after each batch. With <code>--papers all</code>, all available papers are processed together in one run, reusing the expert feedback provided at the beginning without reprompting between papers.</dd>
-              <dt>Usage scenarios</dt>
+              <dt>Command line</dt>
               <dd>
                 <div class="usage-scenarios">
-                  <pre class="workflow-command"><code># default: process one paper per batch
-schema-miner --stage 2 \
+                  <div class="command-scenario">
+                    <p class="scenario-title">Default: process one paper per batch.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 2 \
     --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  <pre class="workflow-command"><code># add inline expert feedback
-schema-miner --stage 2 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Add expert feedback directly on the command line.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 2 \
     --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback "Please add units for all temperature and pressure fields."</code></pre>
-                  <pre class="workflow-command"><code># add expert feedback from a file
-schema-miner --stage 2 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Read expert feedback from a file and process all available papers in one run.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 2 \
     --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt \
     --papers all</code></pre>
-                  <pre class="workflow-command"><code># choose batch size explicitly
-schema-miner --stage 2 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Choose an explicit paper batch size.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 2 \
     --schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json \
     --papers 2</code></pre>
+                  </div>
                 </div>
               </dd>
               <dt>Input files</dt>
@@ -204,25 +218,33 @@ schema-miner --stage 2 \
               <dd>Use an extended corpus of about 50-70 additional full-text papers from bibliographic sources such as journal sites, themed databases, or Google Scholar. The papers do not all need full manual quality review, but titles should at least be checked for process relevance and for experimental or simulation parameters.</dd>
               <dt>Batching behavior</dt>
               <dd><code>--papers N</code> again controls the batch size. For example, <code>--papers 3</code> processes three papers at a time, writes an updated schema for that batch, and then expects the feedback file to be reviewed before the next batch continues refinement. With <code>--papers all</code>, the extended-corpus papers are processed together and the initial expert feedback is reused throughout that run without reprompting.</dd>
-              <dt>Usage scenarios</dt>
+              <dt>Command line</dt>
               <dd>
                 <div class="usage-scenarios">
-                  <pre class="workflow-command"><code># default: process one paper per batch
-schema-miner --stage 3 \
+                  <div class="command-scenario">
+                    <p class="scenario-title">Default: process one paper per batch.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 3 \
     --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
-                  <pre class="workflow-command"><code># add inline expert feedback
-schema-miner --stage 3 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Add expert feedback directly on the command line.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 3 \
     --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback "Ensure all quantities reference standard SI units."</code></pre>
-                  <pre class="workflow-command"><code># add expert feedback from a file
-schema-miner --stage 3 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Read expert feedback from a file and process the extended corpus in one run.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 3 \
     --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
     --expert-feedback data/stage2/feedback-batch2/qwen3-30b-a3b-instruct-2507.txt \
     --papers all</code></pre>
-                  <pre class="workflow-command"><code># choose batch size explicitly
-schema-miner --stage 3 \
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Choose an explicit paper batch size.</p>
+                    <pre class="workflow-command"><code>schema-miner --stage 3 \
     --schema data/stage2/schema-batch2/qwen3-30b-a3b-instruct-2507.json \
     --papers 3</code></pre>
+                  </div>
                 </div>
               </dd>
               <dt>Input files</dt>
@@ -259,16 +281,19 @@ schema-miner --stage 3 \
               <dd><code>RESULTS_PATH</code> points to the directory where grounded schema outputs are written.</dd>
               <dt>CLI tags</dt>
               <dd><code>--ontology-grounding prompt</code> or <code>--ontology-grounding agentic</code>, plus <code>--schema</code>.</dd>
-              <dt>Usage scenarios</dt>
+              <dt>Command line</dt>
               <dd>
                 <div class="usage-scenarios">
-                  <pre class="workflow-command"><code># prompt-based grounding
-schema-miner --ontology-grounding prompt \
-    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json
-
-# agentic grounding with ontology lookup and semantic search
-schema-miner --ontology-grounding agentic \
+                  <div class="command-scenario">
+                    <p class="scenario-title">Prompt-based grounding.</p>
+                    <pre class="workflow-command"><code>schema-miner --ontology-grounding prompt \
     --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
+                  </div>
+                  <div class="command-scenario">
+                    <p class="scenario-title">Agentic grounding with ontology lookup and semantic search.</p>
+                    <pre class="workflow-command"><code>schema-miner --ontology-grounding agentic \
+    --schema data/stage3/schema-batch2/qwen3-30b-a3b-instruct-2507.json</code></pre>
+                  </div>
                 </div>
               </dd>
               <dt>Input files</dt>
