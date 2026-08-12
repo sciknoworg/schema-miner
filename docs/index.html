@@ -9,7 +9,7 @@
       content="LLMs4SchemaDiscovery: a human-in-the-loop workflow for scientific schema mining with large language models and AI agents."
     >
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20260812-atom-schema">
-    <link rel="stylesheet" href="css/styles.css?v=20260812-shared-vars-list">
+    <link rel="stylesheet" href="css/styles.css?v=20260812-stage-branding">
     <script src="js/main.js?v=20260806-copy-citation" defer></script>
   </head>
   <body>
@@ -46,7 +46,7 @@
         <figure class="main-figure">
           <img src="assets/schema-miner-workflow-enhanced-figure.png?v=20260810-enhanced-workflow" alt="Four-stage LLMs4SchemaDiscovery workflow covering initial schema mining, preliminary refinement, final refinement, and ontology grounding.">
           <figcaption>
-            Overview of the <code>schema-miner</code> workflow: <i>Stage 1</i> initial schema mining, <i>Stage 2</i> preliminary refinement with curated literature and expert feedback, <i>Stage 3</i> final refinement with a broader corpus, and <i>Stage 4</i> ontology grounding.
+            Overview of the <code>schema-miner</code> workflow: <span class="caption-stage">Stage 1</span> initial schema mining, <span class="caption-stage">Stage 2</span> preliminary refinement with curated literature and expert feedback, <span class="caption-stage">Stage 3</span> final refinement with a broader corpus, and <span class="caption-stage">Stage 4</span> ontology grounding.
           </figcaption>
         </figure>
       </header>
@@ -55,7 +55,7 @@
         <div class="section-copy">
           <h2>Workflow Description</h2>
           <p>
-            SCHEMA-MINER<sup>pro</sup> progresses through four stages, moving from a process specification to a refined, ontology-grounded scientific schema. Each stage has a defined input, output, and validation signal so that experts can inspect and guide the workflow.
+            <code>schema-miner</code><sup>pro</sup> progresses through four stages, moving from a process specification to a refined, ontology-grounded scientific schema. Each stage has a defined input, output, and validation signal so that experts can inspect and guide the workflow.
           </p>
         </div>
 
@@ -66,7 +66,7 @@
             <li><code>PROCESS_NAME</code> and <code>PROCESS_DESCRIPTION</code> initialize the scientific process being mined.</li>
           </ol>
           <p>
-            These four input variables apply to every stage of the workflow. They are part of what makes Schema-Miner plug-and-play over LLM providers and scientific processes. The normal starting point is to declare these variables in the project-level <code>.env</code> file.
+            These four input variables apply to every stage of the workflow. They are part of what makes <code>schema-miner</code> plug-and-play over LLM providers and scientific processes. The normal starting point is to declare these variables in the project-level <code>.env</code> file.
           </p>
         </div>
 
@@ -143,7 +143,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
               <dt>Paper set</dt>
               <dd>Use a curated seed set of about 10 full-text papers that a domain expert has personally checked for quality and relevance. This seed set extends the initial process specification from Stage 1 into a richer schema with additional process parameters and conditions.</dd>
               <dt>Batching behavior</dt>
-              <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, Schema-Miner creates five batches and asks for updated expert feedback after each batch. With <code>--papers all</code>, all available papers are processed together in one run, reusing the expert feedback provided at the beginning without reprompting between papers.</dd>
+              <dd><code>--papers N</code> controls how many papers are processed per batch; omitting it processes one paper per batch. For example, if Stage 2 has 10 papers and the user runs <code>--papers 2</code>, <code>schema-miner</code> creates five batches and asks for updated expert feedback after each batch. With <code>--papers all</code>, all available papers are processed together in one run, reusing the expert feedback provided at the beginning without reprompting between papers.</dd>
               <dt>Command line</dt>
               <dd>
                 <div class="usage-scenarios">
@@ -177,7 +177,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
               <dd>
                 <ul class="file-list">
                   <li>Starting schema for the first paper: <code>--schema data/stage1/schema/qwen3-30b-a3b-instruct-2507.json</code>, produced by Stage 1.</li>
-                  <li>Iterative schema handoff: after the first paper, Schema-Miner uses the modified schema generated from the previous paper within the same stage; intermediate files are written under <code>data/stage2/schema-batch1/intermediate-schema/&lt;model&gt;/</code>.</li>
+                  <li>Iterative schema handoff: after the first paper, <code>schema-miner</code> uses the modified schema generated from the previous paper within the same stage; intermediate files are written under <code>data/stage2/schema-batch1/intermediate-schema/&lt;model&gt;/</code>.</li>
                   <li>Curated seed papers from <code>STAGE2_PAPERS_PATH</code>, for example <code>data/stage2/batch1/Bairagya_2024.pdf</code> and <code>data/stage2/batch1/Browne_2013.pdf</code>; in a full run, this folder should represent the expert-checked seed set.</li>
                   <li>Optional expert feedback via <code>--expert-feedback &lt;text or path&gt;</code>, either as inline text or a <code>.txt</code>/<code>.md</code> file such as <code>data/stage1/feedback/qwen3-30b-a3b-instruct-2507.txt</code>.</li>
                 </ul>
@@ -370,7 +370,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
         <div class="section-copy">
           <h2>Tutorial Notebooks</h2>
           <p>
-            Use the provider-specific notebooks for guided, end-to-end runs of the SCHEMA-MINER<sup>pro</sup> workflow.
+            Use the provider-specific notebooks for guided, end-to-end runs of the <code>schema-miner</code><sup>pro</sup> workflow.
           </p>
         </div>
 
@@ -392,7 +392,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
           <article class="tutorial-card tutorial-card-openrouter">
             <p class="tutorial-provider">OpenRouter</p>
             <h3>Remote API notebook</h3>
-            <p>Run the same staged workflow with OpenRouter through Schema-Miner's SAIA-compatible backend.</p>
+            <p>Run the same staged workflow with OpenRouter through <code>schema-miner</code>'s SAIA-compatible backend.</p>
             <p class="tutorial-meta">Endpoint: openrouter.ai/api/v1</p>
             <a href="https://github.com/sciknoworg/schema-miner/blob/main/tutorials/notebooks/schema_miner_openrouter_tutorial.ipynb" rel="noopener">Open notebook</a>
           </article>
@@ -405,7 +405,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
 
       <section class="section wide" id="example-output">
         <div class="section-copy">
-          <h2>Example Output from schema-miner</h2>
+          <h2>Example Output from <code>schema-miner</code></h2>
           <h3>atomic layer deposition (ALD) experimental schema</h3>
         </div>
 
@@ -477,7 +477,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
           <div>
             <h2>Submit And Resources</h2>
             <p>
-              Evaluate your system by running SCHEMA-MINER<sup>pro</sup> on the released ALD and ALE specifications, literature corpora, and ideal schemas. The repository includes the data, results, and installation guide for reproducing the workflow.
+              Evaluate your system by running <code>schema-miner</code><sup>pro</sup> on the released ALD and ALE specifications, literature corpora, and ideal schemas. The repository includes the data, results, and installation guide for reproducing the workflow.
             </p>
             <div class="resource-row left">
               <a class="pill code" href="https://github.com/sciknoworg/schema-miner/tree/main/data" rel="noopener">GitHub Dataset</a>
@@ -526,7 +526,7 @@ RESULTS_PATH = 'data/stage1/schema'</code></pre>
         Website source/design inspired by the Nerfies project page template:
         <a href="https://github.com/nerfies/nerfies.github.io" rel="noopener">https://github.com/nerfies/nerfies.github.io</a>
       </p>
-      <p>SCHEMA-MINER<sup>pro</sup> is released under the MIT License.</p>
+      <p><code>schema-miner</code><sup>pro</sup> is released under the MIT License.</p>
     </footer>
   </body>
 </html>
