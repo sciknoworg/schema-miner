@@ -39,45 +39,69 @@ To work with the development version or contribute to the project, clone the Git
     cd schema-miner
     pip install -r requirements.txt
 
-Configuration of API keys
-*************************
+Configuration
+*************
 
-Schema-miner pro uses large language models (LLMs) that require API access (e.g., OpenAI). API keys and other secrets are managed either via a .env file at the project root or with the EnvConfig Class.
+Schema-miner pro is configured from a project-level ``.env`` file. This file
+selects the LLM provider and model, stores provider credentials, defines the
+scientific process being mined, and points each workflow stage to its input and
+output locations. Start from the repository
+`.env.example <https://github.com/sciknoworg/schema-miner/blob/main/.env.example>`_
+template.
 
-Configuration Using ``.env``
-----------------------------
-
-1. Copy the example configuration file:
+1. Copy the example configuration file into your project root:
 
 .. code-block:: bash
 
     cp .env.example .env
 
-2. Open .env in a text editor and add your keys:
+2. Open ``.env`` and fill in the provider block and workflow paths relevant to
+   your run:
 
-.. code-block:: bash
+.. code-block:: text
 
+    # -- Active LLM provider --
+    # Options: OPENAI, SAIA, OLLAMA, HUGGINGFACE, OPENROUTER
+    # Use SAIA for any OpenAI-compatible endpoint.
+    LLM_PROVIDER = '<Your LLM provider here>'
+    LLM_MODEL = '<Your model here>'
+
+    # -- OpenAI --
     OPENAI_API_KEY = 'Your OpenAI API key'
-    OPENAI_ORGANIZATION_ID = 'Your OpenAI Organization ID'
+    OPENAI_ORGANIZATION_ID = 'Your OpenAI Organization ID'  # Optional
 
-3. Schema-miner automatically loads these values at runtime using the provided configuration utilities.
+    # -- SAIA / OpenAI-compatible endpoint --
+    SAIA_API_KEY = 'Your API key'
+    SAIA_BASE_URL = 'https://chat-ai.academiccloud.de/v1'
 
-Configuration Using ``EnvConfig``
----------------------------------
+    # -- Ollama --
+    OLLAMA_BASE_URL = 'OLLAMA Server Base URL'
 
-.. code-block:: python
+    # -- Hugging Face --
+    HuggingFace_Access_Token = 'HuggingFace access token'
+    HUGGINGFACE_USE_LOCAL = False
 
-    from schema_miner.config.envConfig import EnvConfig
+    # -- OpenRouter --
+    OPENROUTER_API_KEY = 'Your OpenRouter API key'
+    OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
 
-    # OpenAI Keys
-    EnvConfig.OPENAI_api_key = '<insert-your-openai-key>'
-    EnvConfig.OPENAI_organization_id = '<insert-your-openi-organization-id>'
+    # -- Process configuration --
+    PROCESS_NAME = 'Your process name here'
+    PROCESS_DESCRIPTION = 'Your process description here'
 
-    # Ollama
-    EnvConfig.OLLAMA_base_url = '<Ollama Base URL or empty if Ollama running locally>'
+    # -- Data path configuration --
+    STAGE1_SPECS_PATH = 'Path to the process specification document for stage 1'
+    STAGE2_PAPERS_PATH = 'Path to the directory containing research papers for stage 2'
+    STAGE3_PAPERS_PATH = 'Path to the directory containing research papers for stage 3'
 
-    # HuggingFace
-    EnvConfig.HUGGINGFACE_access_token = '<Your huggingface access token>'
+    # -- Output path configuration --
+    RESULTS_PATH = 'Path to the directory where results will be saved'
+
+``LLM_PROVIDER`` and ``LLM_MODEL`` select the inference backend. ``PROCESS_NAME``
+and ``PROCESS_DESCRIPTION`` define the scientific process being mined and are
+reused across all stages. The stage-specific path variables point to the input
+files for the workflow, while generated schemas, logs, and intermediate outputs
+are written under ``RESULTS_PATH``.
 
 Next steps
 **********
