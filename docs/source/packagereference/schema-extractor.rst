@@ -11,6 +11,18 @@ Configure the provider, process metadata, stage input paths, and output path in
 ``.env`` before running these commands. See :doc:`../gettingstarted/installation`
 for the full configuration template.
 
+Tutorial Demo
+=============
+
+The short video below shows a quick run of the first tutorial notebook using the
+Hugging Face local GPU setup.
+
+.. raw:: html
+
+   <a href="https://youtu.be/faQMPtWzF2g" target="_blank" rel="noopener" style="display:block; max-width:560px; margin:1rem 0;">
+     <img src="https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg" alt="Quick demo of the Schema-Miner local GPU tutorial notebook" style="width:100%; border:1px solid #d8dee4; border-radius:8px; box-shadow:0 8px 24px rgba(15,23,42,0.12);">
+   </a>
+
 CLI Options
 ===========
 

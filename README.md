@@ -269,6 +269,12 @@ For complete end-to-end demonstrations, choose the tutorial corresponding to you
 
 </div>
 
+### Quick GPU Tutorial Demo
+
+[![Quick demo of the Schema-Miner local GPU tutorial notebook](https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg)](https://youtu.be/faQMPtWzF2g)
+
+This short video shows a quick run of the first tutorial notebook using the Hugging Face local GPU setup.
+
 Each tutorial demonstrates the complete three-stage human-in-the-loop workflow:
 
 1. **Stage 1 — Initial Schema Mining**
