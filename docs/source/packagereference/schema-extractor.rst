@@ -19,9 +19,14 @@ Hugging Face local GPU setup.
 
 .. raw:: html
 
-   <a href="https://youtu.be/faQMPtWzF2g" target="_blank" rel="noopener" style="display:block; max-width:560px; margin:1rem 0;">
-     <img src="https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg" alt="Quick demo of the Schema-Miner local GPU tutorial notebook" style="width:100%; border:1px solid #d8dee4; border-radius:8px; box-shadow:0 8px 24px rgba(15,23,42,0.12);">
-   </a>
+   <div style="display:flex; justify-content:center; margin:1.25rem 0 1.5rem;">
+     <a href="https://youtu.be/faQMPtWzF2g" target="_blank" rel="noopener" aria-label="Watch a quick demo of the Schema-Miner local GPU tutorial notebook" style="position:relative; display:block; width:min(560px, 100%); line-height:0;">
+       <img src="https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg" alt="Quick demo of the Schema-Miner local GPU tutorial notebook" style="width:100%; border:1px solid #d8dee4; border-radius:8px; box-shadow:0 8px 24px rgba(15,23,42,0.12);">
+       <span aria-hidden="true" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); width:76px; height:54px; border-radius:14px; background:#ff0000; box-shadow:0 8px 22px rgba(0,0,0,0.28); display:flex; align-items:center; justify-content:center;">
+         <span style="width:0; height:0; border-top:13px solid transparent; border-bottom:13px solid transparent; border-left:21px solid #fff; margin-left:5px;"></span>
+       </span>
+     </a>
+   </div>
 
 CLI Options
 ===========

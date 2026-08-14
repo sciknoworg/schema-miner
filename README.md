@@ -271,7 +271,16 @@ For complete end-to-end demonstrations, choose the tutorial corresponding to you
 
 ### Quick GPU Tutorial Demo
 
-[![Quick demo of the Schema-Miner local GPU tutorial notebook](https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg)](https://youtu.be/faQMPtWzF2g)
+<p align="center">
+  <a href="https://youtu.be/faQMPtWzF2g" aria-label="Watch a quick demo of the Schema-Miner local GPU tutorial notebook">
+    <img src="https://img.shields.io/badge/Watch%20demo-YouTube-red?logo=youtube&logoColor=white" alt="Watch demo on YouTube" />
+  </a>
+</p>
+<p align="center">
+  <a href="https://youtu.be/faQMPtWzF2g" aria-label="Watch a quick demo of the Schema-Miner local GPU tutorial notebook">
+    <img width="560" src="https://img.youtube.com/vi/faQMPtWzF2g/hqdefault.jpg" alt="Quick demo of the Schema-Miner local GPU tutorial notebook" />
+  </a>
+</p>
 
 This short video shows a quick run of the first tutorial notebook using the Hugging Face local GPU setup.
 
